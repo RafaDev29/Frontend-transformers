@@ -2,21 +2,21 @@
   <header class="relative w-full h-56 md:h-72 flex flex-col items-center justify-center bg-gradient-to-r from-color1 via-color2 to-color3">
     <!-- Imagen de fondo -->
     <img
-      src="@/assets/solution/solution.jpg"
-      alt="Monitoreo de transformadores"
+      src="@/assets/plan/plans.jpg"
+      alt="Planes de monitoreo de transformadores"
       class="absolute inset-0 w-full h-full object-cover opacity-30"
     />
 
     <!-- Contenido -->
     <div class="relative z-10 text-center text-white px-4">
       <h1 class="text-xl md:text-3xl font-semibold tracking-wide drop-shadow-lg">
-        SOLUCIÓN DE SOFTWARE PARA MONITOREO DE TRANSFORMADORES
+        NUESTROS PLANES
       </h1>
 
       <p class="mt-2 text-sm md:text-lg font-light tracking-wide opacity-90 max-w-3xl mx-auto">
-        Nuestra plataforma se integra con sensores y equipos IoT para capturar variables críticas de los transformadores
-        (tensión, corriente, temperatura, carga, aceite y más), analiza su desempeño en tiempo real y genera alertas
-        tempranas para prevenir fallas, optimizar la operación y reducir costos de mantenimiento y energía.
+        Te ayudamos a elegir la mejor combinación para el <span class="font-semibold">monitoreo de transformadores</span>:
+        telemetría en tiempo real, alertas tempranas, análisis histórico y reportes ejecutivos. 
+        Selecciona el plan que mejor se adapte a la operación y tamaño de tu empresa.
       </p>
 
       <button
@@ -26,6 +26,7 @@
       </button>
     </div>
 
+    <!-- Formulario de cotización -->
     <QuoteForm v-model="showQuoteForm" />
   </header>
 </template>

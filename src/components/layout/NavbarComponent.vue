@@ -29,19 +29,19 @@
         <!-- Menu Desktop -->
         <div class="hidden lg:flex space-x-8 items-center">
           <router-link 
-            to="/" 
+            to="/start" 
             class="text-white hover:text-color4 transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-color2/20"
           >
             Inicio
           </router-link>
           <router-link 
-            to="/soluciones" 
+            to="/solution" 
             class="text-white hover:text-color4 transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-color2/20"
           >
             Soluciones
           </router-link>
           <router-link 
-            to="/planes" 
+            to="/plans" 
             class="text-white hover:text-color4 transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-color2/20"
           >
             Planes

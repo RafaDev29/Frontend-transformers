@@ -2,15 +2,14 @@
     <section class="w-full py-16 bg-white flex justify-center items-center">
       <div class="container mx-auto px-6 text-center">
         
-        <!-- Título -->
+
         <h2 class="text-3xl md:text-5xl font-bold text-blue-900 mb-10">
           ¿Cómo Funciona? ⚙️
         </h2>
   
-        <!-- Pasos -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          <!-- Paso 1 -->
+   
           <div class="flex flex-col items-center text-center animate-fade-in">
             <div class="bg-blue-100 p-4 rounded-full shadow-lg">
               <img :src="iconMeasurement" alt="Medición Inteligente" class="w-16 h-16">

@@ -6,8 +6,9 @@ import PublicLayout from '@/layouts/PublicLayout.vue'
 
 // Vistas públicas
 import Home from '@/views/HomeView.vue'
-//import About from '@/views/About.vue'
-//import NotFound from '@/views/NotFound.vue'
+import Solution from '@/views/SolutionView.vue'
+import Plan from '@/views/PlanView.vue'
+
 
 // Rutas principales 
 const routes = [
@@ -15,8 +16,9 @@ const routes = [
     path: '/',
     component: PublicLayout,
     children: [
-      { path: '', component: Home },
-     // { path: 'about', component: About },
+      { path: 'start', component: Home },
+      { path: 'solution', component: Solution },
+      {path : 'plans', component : Plan}
     ],
   },
   {
