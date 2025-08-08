@@ -1,28 +1,27 @@
 <template>
   <header
     class="relative w-full h-56 md:h-72 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
-    <!-- Imagen de fondo -->
+
     <div class="absolute inset-0 bg-cover bg-center opacity-30" :style="{ backgroundImage: `url(${backgroundImage})` }">
     </div>
 
-    <!-- Contenido -->
+
     <div class="relative z-10 text-center text-white px-4">
       <h1 class="text-xl md:text-3xl font-semibold tracking-wide drop-shadow-lg">
-        SISTEMA DE ADMINISTRACIÓN EFICIENTE DE ENERGÍA
+        SOLUCIÓN DE SOFTWARE
       </h1>
-
-      <p class="mt-2 text-sm md:text-lg font-light tracking-wide opacity-90 max-w-xl mx-auto">
-        Sistema centralizado que permite la gestión, monitoreo, análisis y optimización del consumo de energía eléctrica
-        en tiempo real, tanto en instalaciones industriales, comerciales e institucionales.
+      <p class="mt-2 text-sm md:text-lg font-light tracking-wide opacity-90 max-w-3xl mx-auto">
+        Nuestra Aplicación se conecta con dispositivos electrónicos de última generación que miden el consumo de
+        energía, se realiza un análisis completo y se identifican parámetros para la eficiencia energética eléctrica que
+        reducirán el consumo y por ende el costo.
       </p>
 
       <button
-        class="mt-4 bg-[#66A3F2] text-white px-5 py-2 font-bold rounded-lg shadow-lg hover:bg-[#4465A6] transform transition-all duration-500"
+        class="mt-4 bg-[#66A3F2] text-white px-5 py-2 font-bold rounded-lg shadow-lg hover:bg-[#4465A6] transform  transition-all duration-500"
         @click="dialog = true">
         Cotizar
       </button>
     </div>
-
     <!-- Diálogo -->
     <v-dialog v-model="dialog" max-width="500" @click:outside="resetForm">
       <v-card color="white">
@@ -59,8 +58,7 @@
                 density="compact" style="flex: 1" @blur="touched.telefono = true"
                 :error="touched.telefono && !phoneRegex.test(formData.telefono)"
                 :error-messages="touched.telefono && !phoneRegex.test(formData.telefono) ? 'Debe tener 9 dígitos' : ''" />
-
-            </div>
+            </div> 
 
             <v-textarea v-model="formData.mensaje" label="Mensaje*" variant="outlined" density="compact" rows="4"
               class=""></v-textarea>
@@ -75,7 +73,6 @@
               ]">
                 ENVIAR
               </button>
-
             </div>
 
           </v-form>
@@ -85,7 +82,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="resetForm">Cancelar</v-btn>
-
+     
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -94,17 +91,19 @@
   <SuccessAlert />
   <ErrorAlert />
   <WarningAlert />
-  <LoadingAlert />
+  <LoadingAlert/>
 </template>
+
+
 
 
 <script setup>
 import { ref, defineProps, computed } from 'vue'
-import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
-import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
-import WarningAlert from '@/components/ui/alert/WarningAlert.vue';
-import LoadingAlert from '@/components/ui/alert/LoadingAlert.vue';
-import eventBus from '@/plugins/eventBus';
+import SuccessAlert from '@/components/alert/SuccessAlert.vue';
+import ErrorAlert from '@/components/alert/ErrorAlert.vue';
+import WarningAlert from '@/components/alert/WarningAlert.vue';
+import LoadingAlert from '@/components/alert/LoadingAlert.vue';
+import eventBus from '@/eventBus';
 
 const resetForm = () => {
   formData.value = {
