@@ -46,7 +46,7 @@
           </router-link>
         </div>
 
-        Botón móvil mejorado -->
+
         <button 
           class="lg:hidden focus:outline-none p-3 rounded-xl hover:bg-white/10 transition-all duration-200 backdrop-blur-sm border border-white/20" 
           @click="toggleMenu"
