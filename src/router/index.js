@@ -13,7 +13,7 @@ import Plan from '@/views/PlanView.vue'
 // Rutas principales 
 const routes = [
   {
-    path: '/',
+    path: '',
     component: PublicLayout,
     children: [
       { path: 'start', component: Home },

@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import QuoteForm from '@/components/forms/QuotationForm.vue'
+import QuoteForm from '@/components/ui/forms/QuotationForm.vue'
 
 const showQuoteForm = ref(false)
 </script>

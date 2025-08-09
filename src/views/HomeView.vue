@@ -1,21 +1,16 @@
 <template>
   <div class="overflow-y-auto h-screen bg-gray-100">
-    <div class=" pb-24">
-      <div
-        v-for="(component, index) in componentsList"
-        :key="index"
-        class="fade-in scale-effect"
-        ref="animatedComponents"
-      >
+    <div class="">
+      <div v-for="(component, index) in componentsList" :key="index" class="fade-in scale-effect"
+        ref="animatedComponents">
         <component :is="component" />
       </div>
 
-      <!-- Footer al final del contenido -->
-      <footer class="text-center text-xs text-gray-600 pt-10 border-t border-gray-300">
-        SAEE Sistema de Administración Eficiente de Energía - D&A Intelligent Solutions © 2025 Todos los derechos reservados.
-      </footer>
     </div>
+      <FooterComponent />
   </div>
+  
+ 
 </template>
 
 
@@ -25,6 +20,7 @@ import headComponent from "@/components/home/headComponent.vue";
 import SubHeadComponent from "@/components/home/SubHeadComponent.vue";
 import BodyComponent from "@/components/home/BodyComponent.vue";
 import SubBodyComponent from "@/components/home/SubBodyComponent.vue";
+import FooterComponent from "@/components/ui/FooterComponent.vue";
 
 export default {
   components: {
@@ -32,6 +28,7 @@ export default {
     SubHeadComponent,
     BodyComponent,
     SubBodyComponent,
+    FooterComponent
   },
   setup() {
     const animatedComponents = ref([]);
@@ -62,7 +59,6 @@ export default {
 </script>
 
 <style>
-
 .fade-in {
   opacity: 0;
   filter: blur(10px);

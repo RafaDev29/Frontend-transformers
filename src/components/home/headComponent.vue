@@ -1,13 +1,11 @@
 <template>
   <header class="relative w-full h-56 md:h-72 flex flex-col items-center justify-center bg-gradient-to-r from-color1 via-color2 to-color3">
-    <!-- Imagen de fondo -->
     <img
       src="@/assets/home/transformes.png"
       alt="Transformes energía"
       class="absolute inset-0 w-full h-full object-cover opacity-30"
     />
 
-    <!-- Contenido -->
     <div class="relative z-10 text-center text-white px-4">
   <h1 class="text-xl md:text-3xl font-semibold tracking-wide drop-shadow-lg">
      SISTEMA EFICIENTE DE MONITOREO DE TRANSFORMADORES
@@ -34,7 +32,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import QuoteForm from '@/components/forms/QuotationForm.vue'
+import QuoteForm from '@/components/ui/forms/QuotationForm.vue'
 
 const showQuoteForm = ref(false)
 </script>

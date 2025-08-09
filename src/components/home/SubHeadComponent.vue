@@ -1,47 +1,42 @@
 <template>
-  <section class="w-full py-16 bg-gray-100 flex justify-center items-center">
+  <section class="w-full py-16 bg-color5/10 flex justify-center items-center">
     <div class="container mx-auto px-6 flex flex-col md:flex-row items-center md:space-x-10">
-      
-      <!-- Imagen principal -->
-      <div 
-        class="relative w-full md:w-[500px] lg:w-[650px] shadow-2xl rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-        <img :src="dashboardImage" alt="Dashboard" class="w-full h-auto">
+      <div
+        class="relative w-full md:w-[500px] lg:w-[500px] shadow-2xl rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-500"
+      >
+        <img
+          src="@/assets/home/monitoring.png"
+          alt="Dashboard de monitoreo de transformadores"
+          class="w-auto h-auto"
+        />
       </div>
- 
-      <div class="mt-6 md:mt-0 max-w-lg text-gray-700 text-left animate-fade-in">
-        <h2 class="text-2xl md:text-4xl font-bold text-blue-900 mb-4">
-          Monitorea y gestiona el consumo eléctrico en tiempo real ⚡
+
+      <!-- Texto -->
+      <div class="mt-6 md:mt-0 max-w-lg text-petroleum text-left animate-fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold text-colorDark1 mb-4">
+          Monitorea y gestiona tus transformadores en tiempo real ⚡
         </h2>
 
-        <p class="text-sm md:text-base leading-relaxed">
-          Nuestro sistema de distribución de energía proporciona datos en tiempo real, gráficos intuitivos y reportes automáticos para un mejor control y transparencia en la facturación.
+        <p class="text-sm md:text-base leading-relaxed text-petroleum/90">
+          Visualiza variables críticas (tensión, corriente, temperatura, carga y aceite) con gráficos claros y reportes
+          automáticos. Detecta anomalías a tiempo, reduce riesgos de falla y prolonga la vida útil de tus equipos.
         </p>
 
-        <ul class="mt-4 space-y-2 text-sm text-gray-600">
-          <li>✅ Control preciso del consumo</li>
-          <li>✅ Reportes automáticos</li>
-          <li>✅ Integración con sistemas de facturación</li>
+        <ul class="mt-4 space-y-2 text-sm text-petroleum/80">
+          <li>- Alertas tempranas por sobrecarga, sobretemperatura y desequilibrios</li>
+          <li>- Análisis histórico y tendencias para mantenimiento predictivo</li>
+          <li>- Integración con sistemas existentes y reportes ejecutivos</li>
         </ul>
       </div>
-
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    dashboardImage: {
-      type: String,
-      required: false,
-      default: "/home/billing.png", 
-    }
-  }
-};
+<script setup>
+// sin props: la imagen se importa vía etiqueta <img> desde /src/assets/...
 </script>
 
 <style>
-
 @keyframes fadeIn {
   from {
     opacity: 0;
