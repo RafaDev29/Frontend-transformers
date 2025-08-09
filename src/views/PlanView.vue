@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-y-auto h-screen bg-gray-100 ">
     
-    <div class="pb-24 ">
+    <div >
       <div
         v-for="(component, index) in componentsList"
         :key="index"
@@ -11,11 +11,8 @@
         <component :is="component" />
       </div>
 
-  
-      <p class="text-center text-xs text-gray-500 pt-10 border-t border-gray-300">
-        SAEE Sistema de Administración Eficiente de Energía - D&A Intelligent Solutions © 2025 Todos los derechos reservados.
-      </p>
     </div>
+     <FooterComponent />
 
   </div>
 </template>
@@ -25,12 +22,14 @@
 import { ref, onMounted } from "vue";
 import headComponent from "@/components/plan/headComponent.vue";
 import SubHeadComponent from "@/components/plan/SubHeadComponent.vue";
+import FooterComponent from "@/components/ui/FooterComponent.vue";
 
 
 export default {
   components: {
     headComponent,
-    SubHeadComponent
+    SubHeadComponent,
+    FooterComponent
 
   },
   setup() {
