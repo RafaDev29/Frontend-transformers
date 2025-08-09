@@ -15,6 +15,13 @@ import {
   mdiGauge,                // gauge (telemetría)
   mdiCellphone,            // cellphone (app móvil)
   mdiTransmissionTower,
+  mdiLightbulbOn ,// foco de idea
+  mdiHomeAnalytics, // casa
+  mdiLogin, //login
+  mdiMenu, // menu 
+  mdiCloseBoxOutline, //close con borde
+  mdiCloseThick // close sin marco
+
 } from '@mdi/js'
 
 export default {
@@ -33,4 +40,10 @@ export default {
   gauge: mdiGauge,
   cellphone: mdiCellphone,
   transmissionTower: mdiTransmissionTower,
+  light : mdiLightbulbOn,
+  home : mdiHomeAnalytics,
+  login: mdiLogin,
+  menu : mdiMenu,
+  close : mdiCloseBoxOutline,
+  closes : mdiCloseThick
 }
