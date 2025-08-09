@@ -6,7 +6,6 @@
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Paso 1 -->
         <div class="flex flex-col items-center text-center animate-fade-in">
           <div class="bg-color5 p-4 rounded-full shadow-lg">
             <img src="@/assets/home/datos.png" alt="Adquisición de datos" class="w-16 h-16" />
@@ -17,7 +16,6 @@
           </p>
         </div>
 
-        <!-- Paso 2 -->
         <div class="flex flex-col items-center text-center animate-fade-in delay-200">
           <div class="bg-color5 p-4 rounded-full shadow-lg">
             <img src="@/assets/home/analytics.png" alt="Análisis inteligente" class="w-16 h-16" />

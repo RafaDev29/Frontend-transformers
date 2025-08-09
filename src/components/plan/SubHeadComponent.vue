@@ -1,5 +1,5 @@
 <template>
-  <section class="w-auto pl-10 pr-10 py-12 md:py-20 bg-color5/40">
+  <section class="w-auto pl-10 pr-10 py-12 md:py-20 bg-color5/5">
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
         <div

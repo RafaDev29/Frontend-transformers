@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full py-16 bg-color5/10 flex justify-center items-center">
+  <section class="w-full py-16 bg-color5/5 flex justify-center items-center">
     <div class="container mx-auto px-6 flex flex-col md:flex-row items-center md:space-x-10">
       <div
         class="relative w-full md:w-[500px] lg:w-[500px] shadow-2xl rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-500"

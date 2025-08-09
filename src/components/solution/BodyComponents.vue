@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full py-12 bg-color5/40 flex justify-center items-center">
+  <section class="w-full py-12 bg-color5/5 flex justify-center items-center">
     <div class="mx-auto px-6 md:px-16 max-w-7xl text-center">
       <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide text-colorDark1">
         Principales desafíos en la operación de transformadores

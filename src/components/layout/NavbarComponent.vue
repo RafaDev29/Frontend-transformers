@@ -39,7 +39,7 @@
             Planes
           </router-link>
           <router-link
-            to="/login"
+            to="/auth/login"
             class="bg-gradient-to-r from-color2 to-color1 hover:from-color3 hover:to-color2 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-white/20 backdrop-blur-sm"
           >
             Iniciar Sesión
@@ -143,7 +143,7 @@
 
         <div class="px-4 pt-6">
           <router-link
-            to="/login"
+            to="/auth/login"
             class="flex items-center justify-center space-x-2 w-full bg-gradient-to-r from-color2/80 to-color1/80 hover:from-color3 hover:to-color2 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 backdrop-blur-sm border border-white/20"
             @click="closeMenu"
           >

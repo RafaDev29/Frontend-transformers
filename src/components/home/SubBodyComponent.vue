@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full py-16 bg-color5/40 flex justify-center items-center">
+  <section class="w-full py-16 bg-color5/5 flex justify-center items-center">
     <div class="container mx-auto px-6">
       <h2 class="text-3xl md:text-5xl font-bold text-colorDark1 text-center mb-10">
         Beneficios clave

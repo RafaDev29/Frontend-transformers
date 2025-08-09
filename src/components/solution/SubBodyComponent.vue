@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-color5/40 text-colorDark1  py-16 px-6">
+  <section class="bg-color5/5 text-colorDark1  py-16 px-6">
     <div class="max-w-6xl mx-auto text-center">
       <!-- Título -->
       <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide mb-4">
@@ -9,7 +9,7 @@
         Plataforma centralizada que monitorea el estado y rendimiento de cada transformador, detectando anomalías y optimizando su operación en tiempo real.
       </p>
 
-      <!-- Cards -->
+      
       <div class="grid md:grid-cols-2 gap-8">
         <!-- Card 1 -->
         <div class="sol-card">
@@ -72,7 +72,7 @@
 
 <style scoped>
 .sol-card {
-  @apply bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105;
+  @apply bg-color5/40 p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105;
 }
 .card-title {
   @apply mt-3 text-lg font-semibold text-colorDark1;
