@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-6">
-    <!-- Email field -->
+
     <div>
       <label for="email" class="block text-sm font-medium text-slate-200 mb-2">
         Correo electrónico
@@ -35,7 +35,7 @@
       <p v-if="errors.email" class="mt-1 text-sm text-accent-danger">{{ errors.email }}</p>
     </div>
 
-    <!-- Password field -->
+
     <div>
       <label for="password" class="block text-sm font-medium text-slate-200 mb-2">
         Contraseña
@@ -75,7 +75,7 @@
       <p v-if="errors.password" class="mt-1 text-sm text-accent-danger">{{ errors.password }}</p>
     </div>
 
-    <!-- Remember me checkbox -->
+
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <input
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <!-- Submit button -->
+
     <div>
       <button
         type="submit"
@@ -114,7 +114,7 @@
       </button>
     </div>
 
-    <!-- Security notice -->
+
     <div class="mt-4 p-3 bg-accent-primary/10 border border-accent-primary/20 rounded-lg backdrop-blur-sm">
       <div class="flex items-start space-x-2">
         <svg class="w-5 h-5 text-accent-primary mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">

@@ -5,7 +5,7 @@
         Beneficios clave
       </h2>
 
-      <!-- Beneficios -->
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div
           class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center animate-fade-in hover:scale-105 transition-all duration-300">
@@ -46,7 +46,6 @@
 
   
       <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Antes -->
         <div class="bg-slate-50 p-6 rounded-lg shadow-md">
           <h3 class="text-xl font-semibold text-accent-danger mb-4">Antes (operación reactiva)</h3>
           <ul class="text-sm text-petroleum/90 space-y-3">

@@ -11,7 +11,7 @@
         />
       </div>
 
-      <!-- Texto -->
+
       <div class="mt-6 md:mt-0 max-w-lg text-petroleum text-left animate-fade-in">
         <h2 class="text-2xl md:text-4xl font-bold text-colorDark1 mb-4">
           Monitorea y gestiona tus transformadores en tiempo real ⚡
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-// sin props: la imagen se importa vía etiqueta <img> desde /src/assets/...
+
 </script>
 
 <style>

@@ -25,7 +25,7 @@
 </div>
 
 
-    <!-- Componente del formulario de cotización -->
+
     <QuoteForm v-model="showQuoteForm" />
   </header>
 </template>

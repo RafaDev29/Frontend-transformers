@@ -46,7 +46,7 @@
           </router-link>
         </div>
 
-        <!-- Botón móvil mejorado -->
+        Botón móvil mejorado -->
         <button 
           class="lg:hidden focus:outline-none p-3 rounded-xl hover:bg-white/10 transition-all duration-200 backdrop-blur-sm border border-white/20" 
           @click="toggleMenu"
@@ -155,7 +155,7 @@
         </div>
       </div>
 
-      <!-- Footer del menú móvil mejorado -->
+
       <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-white/5 backdrop-blur-sm">
         <div class="text-center text-color5/80">
           <p class="font-medium text-lg">SEMT</p>

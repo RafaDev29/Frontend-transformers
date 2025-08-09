@@ -1,18 +1,18 @@
 <template>
   <v-dialog v-model="visible" max-width="400px" persistent transition="fade-scale">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto text-center relative animate-toast">
-      <!-- Icono y Título de Éxito -->
+
       <div class="flex items-center justify-center mb-4">
         <v-icon color="green" class="mr-2 text-3xl">mdi-check-circle</v-icon>
         <span class="text-2xl font-bold text-green-600">¡Éxito!</span>
       </div>
 
-      <!-- Mensaje de Éxito -->
+
       <div class="text-gray-700 mb-4">
         <span>{{ message }}</span>
       </div>
 
-      <!-- Barra de Cierre Automático (Animación) -->
+
       <div class="absolute bottom-0 left-0 w-full h-1 bg-green-500 rounded-b-lg" :class="{'animate-fadeout': visible}"></div>
     </div>
   </v-dialog>

@@ -7,13 +7,13 @@
           :key="index"
           class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 flex flex-col border border-color4/60"
         >
-          <!-- Header del Plan -->
+
           <div :class="['p-6 text-white text-center', plan.bgClass]">
             <h3 class="text-2xl font-bold">{{ plan.nombre }}</h3>
             <p class="text-sm mt-1 opacity-90">{{ plan.descripcion }}</p>
           </div>
 
-          <!-- Lista de módulos -->
+
           <div class="p-6 flex-grow">
             <h4 class="text-xl font-bold text-center mb-4 text-colorDark1">Módulos</h4>
             <ul class="space-y-4 mb-6">
@@ -23,7 +23,7 @@
                 class="flex items-center justify-between text-petroleum/90 w-full"
               >
                 <div class="flex items-center gap-2">
-                  <!-- check -->
+
                   <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent-success/10 text-accent-success">
                     <svg viewBox="0 0 24 24" class="h-4 w-4">
                       <path :d="$icons.checkCircle" fill="currentColor" />
@@ -32,7 +32,7 @@
                   <span class="text-sm">{{ mod.titulo }}</span>
                 </div>
 
-                <!-- icono del módulo -->
+
                 <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-color5/60 text-colorDark2">
                   <svg viewBox="0 0 24 24" class="h-5 w-5">
                     <path :d="$icons[mod.icon]" fill="currentColor" />
@@ -42,7 +42,7 @@
             </ul>
           </div>
 
-          <!-- Botón de Cotización -->
+
           <div class="p-6 text-center">
             <span v-if="index === 1 || index === 2" class="mb-2 pb-2 block italic text-start text-petroleum/90">
               <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-color3/20 text-colorDark2 mr-2">

@@ -26,7 +26,6 @@
           </p>
         </div>
 
-        <!-- Paso 3 -->
         <div class="flex flex-col items-center text-center animate-fade-in delay-400">
           <div class="bg-color5 p-4 rounded-full shadow-lg">
             <img src="@/assets/home/analytics.png" alt="Alertas y reportes" class="w-16 h-16" />

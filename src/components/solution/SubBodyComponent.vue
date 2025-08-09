@@ -1,7 +1,7 @@
 <template>
   <section class="bg-color5/5 text-colorDark1  py-16 px-6">
     <div class="max-w-6xl mx-auto text-center">
-      <!-- Título -->
+
       <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide mb-4">
         Nuestra Solución
       </h1>
@@ -11,7 +11,7 @@
 
       
       <div class="grid md:grid-cols-2 gap-8">
-        <!-- Card 1 -->
+
         <div class="sol-card">
           <div class="chip chip-primary">
             <svg viewBox="0 0 24 24" class="w-5 h-5">
@@ -36,7 +36,7 @@
           </p>
         </div>
 
-        <!-- Card 3 -->
+
         <div class="sol-card">
           <div class="chip chip-success">
             <svg viewBox="0 0 24 24" class="w-5 h-5">
@@ -49,7 +49,7 @@
           </p>
         </div>
 
-        <!-- Card 4 -->
+
         <div class="sol-card">
           <div class="chip chip-accent">
             <svg viewBox="0 0 24 24" class="w-5 h-5">
@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-// $icons ya está en globalProperties desde main.js
+
 </script>
 
 <style scoped>

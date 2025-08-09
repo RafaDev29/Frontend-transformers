@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visible" max-width="280px" persistent transition="dialog-bottom-transition">
     <div class="bg-[#F2F2F2] backdrop-blur-md rounded-2xl shadow-2xl p-6 mx-auto text-center relative border border-[#C4D8F2]">
-      <!-- Ícono de Cargando -->
+
       <div class="flex items-center justify-center">
         <v-icon :color="'#66A3F2'" class="text-6xl animate-spin">mdi-loading</v-icon>
       </div>
@@ -19,7 +19,7 @@ export default {
   setup() {
     const visible = ref(false);
 
-    // Escuchar el evento global para mostrar/ocultar la alerta de carga
+
     eventBus.on('loading', (isLoading) => {
       visible.value = isLoading;
     });

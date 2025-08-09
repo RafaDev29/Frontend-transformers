@@ -1,9 +1,6 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-petroleum px-4 sm:px-6 lg:px-8 relative overflow-hidden">
   
-    
-
-
     <div class="w-full max-w-5xl flex items-center justify-center lg:justify-between relative z-10">
      
       <div class="hidden lg:flex lg:w-1/2 justify-center items-center pr-8">
@@ -17,13 +14,9 @@
         </div>
       </div>
 
-      <!-- Formulario lado derecho -->
       <div class="w-full lg:w-1/2 max-w-md relative">
-        <!-- Header con logo SEMT -->
         <div class="text-center mb-8">
           
-          
-          <!-- Logo SEMT con colores -->
           <div class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3">
             <span class="text-color5 drop-shadow-sm">S</span>
             <span class="text-color4 drop-shadow-sm">E</span>
@@ -34,11 +27,9 @@
           <p class="text-slate-300 text-sm">Ingresa a tu cuenta del Sistema de Monitoreo</p>
         </div>
 
-        <!-- Card principal más transparente -->
         <div class="bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 p-8 hover:bg-white/10 transition-all duration-300">
           <FormLogin @submit="handleLogin" :loading="isLoading" />
           
-          <!-- Divider con colores SEMT -->
           <div class="mt-6 mb-6">
             <div class="relative">
               <div class="absolute inset-0 flex items-center">
@@ -47,7 +38,7 @@
             </div>
           </div>
 
-          <!-- Footer links con colores SEMT -->
+
           <div class="mt-6 text-center space-y-2">
             <a href="#" class="text-color4/80 hover:text-color3 text-sm transition-colors duration-200 font-medium">
               ¿Olvidaste tu contraseña?
@@ -61,9 +52,9 @@
           </div>
         </div>
 
-        <!-- Footer info mejorado -->
+
         <div class="mt-8 text-center">
-          <!-- Logo pequeño SEMT -->
+
           <div class="flex items-center justify-center space-x-1 text-sm font-bold tracking-wider mb-2 opacity-60">
             <span class="text-color5">S</span>
             <span class="text-color4">E</span>
@@ -95,14 +86,12 @@ const handleLogin = async (credentials) => {
   isLoading.value = true
   
   try {
-    // Aquí iría tu lógica de autenticación
+
     console.log('Login attempt:', credentials)
-    
-    // Simular delay de API
+
+
     await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Redirect o manejo de éxito
-    // this.$router.push('/dashboard')
+
     
   } catch (error) {
     console.error('Login error:', error)

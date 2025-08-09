@@ -1,18 +1,18 @@
 <template>
   <v-dialog v-model="visible" max-width="400px" persistent transition="dialog-bottom-transition">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto text-center relative">
-      <!-- Encabezado con ícono de advertencia -->
+
       <div class="flex items-center justify-center mb-4">
         <v-icon color="blue" class="mr-2 text-3xl">mdi-alert-circle</v-icon>
         <span class="text-2xl font-semibold text-[#263173]">¡Advertencia!</span>
       </div>
 
-      <!-- Mensaje de advertencia -->
+
       <div class="text-gray-700 mb-4">
         <span>{{ message }}</span>
       </div>
 
-      <!-- Botones de acción -->
+
       <div class="flex justify-end space-x-2">
         <v-btn
           @click="closeAlert"

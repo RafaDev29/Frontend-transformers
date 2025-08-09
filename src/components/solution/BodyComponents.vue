@@ -68,7 +68,7 @@
           </ul>
         </div>
 
-        <!-- Con Transformes -->
+
         <div class="cmp-card bg-white border-l-4 border-accent-success">
           <div class="cmp-header text-accent-success">
             <svg viewBox="0 0 24 24" class="w-5 h-5">
@@ -102,11 +102,11 @@
 </template>
 
 <script setup>
-// Usando $icons global desde main.js (no necesitas importar nada aquí)
+
 </script>
 
 <style scoped>
-/* Cards básicas */
+
 .card {
   @apply bg-white p-6 rounded-lg shadow-lg text-left transition-transform transform hover:scale-105;
 }
@@ -117,7 +117,7 @@
   @apply text-petroleum/80;
 }
 
-/* Chips de icono */
+
 .chip {
   @apply inline-flex h-9 w-9 items-center justify-center rounded-full;
 }
