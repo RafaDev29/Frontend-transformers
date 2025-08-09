@@ -1,20 +1,13 @@
 <template>
   <div class="overflow-y-auto h-screen bg-gray-100">
-    
-    <div class=" pb-24">
-      <div
-        v-for="(component, index) in componentsList"
-        :key="index"
-        class="fade-in scale-effect"
-        ref="animatedComponents"
-      >
+
+    <div class=" ">
+      <div v-for="(component, index) in componentsList" :key="index" class="fade-in scale-effect"
+        ref="animatedComponents">
         <component :is="component" />
       </div>
 
-      <!-- Pie de página con <p> -->
-      <p class="text-center text-xs text-gray-500 pt-10 border-t border-gray-300">
-        SAEE Sistema de Administración Eficiente de Energía - D&A Intelligent Solutions © 2025 Todos los derechos reservados.
-      </p>
+      <FooterComponent />
     </div>
 
   </div>
@@ -25,12 +18,14 @@ import { ref, onMounted } from "vue";
 import headComponent from "@/components/solution/headComponent.vue";
 import BodyComponents from "@/components/solution/BodyComponents.vue"
 import SubBodyComponent from '@/components/solution/SubBodyComponent.vue'
+import FooterComponent from "@/components/ui/FooterComponent.vue";
 
 export default {
   components: {
     headComponent,
     BodyComponents,
-    SubBodyComponent
+    SubBodyComponent,
+    FooterComponent
 
   },
   setup() {
@@ -63,7 +58,6 @@ export default {
 
 
 <style>
-
 .fade-in {
   opacity: 0;
   filter: blur(10px);

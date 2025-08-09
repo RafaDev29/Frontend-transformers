@@ -1,50 +1,92 @@
 <template>
-    <div class="bg-white text-blue-900 min-h-screen py-16 px-6">
-      <div class="max-w-5xl mx-auto text-center">
-        <h1 class="text-4xl font-extrabold tracking-wide mb-4 text-blue-900">2️⃣ Nuestra Solución ⚙️</h1>
-        <p class="text-lg text-blue-700 mb-8">
-          Nuestro sistema optimiza la medición, facturación y administración del consumo energético en edificios.
-        </p>
+  <section class="bg-color5/40 text-colorDark1  py-16 px-6">
+    <div class="max-w-6xl mx-auto text-center">
+      <!-- Título -->
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide mb-4">
+        Nuestra Solución
+      </h1>
+      <p class="text-base md:text-lg text-petroleum/90 mb-10 max-w-3xl mx-auto">
+        Plataforma centralizada que monitorea el estado y rendimiento de cada transformador, detectando anomalías y optimizando su operación en tiempo real.
+      </p>
 
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="solucion-card">
-            <h3 class="text-xl font-semibold text-blue-900">🔹 Medición en tiempo real</h3>
-            <p class="text-blue-700">La electrónica registra el consumo de cada piso con precisión.</p>
+      <!-- Cards -->
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Card 1 -->
+        <div class="sol-card">
+          <div class="chip chip-primary">
+            <svg viewBox="0 0 24 24" class="w-5 h-5">
+              <path :d="$icons.chart" fill="currentColor" />
+            </svg>
           </div>
-          <div class="solucion-card">
-            <h3 class="text-xl font-semibold text-blue-900">🔹 Tarifas siempre actualizadas</h3>
-            <p class="text-blue-700">Validación con Osinergmin para asegurar tarifas correctas.</p>
-          </div>
-          <div class="solucion-card">
-            <h3 class="text-xl font-semibold text-blue-900">🔹 Generación automática de recibos</h3>
-            <p class="text-blue-700">Recibos listos para enviar automáticamente a los inquilinos.</p>
-          </div>
-          <div class="solucion-card">
-            <h3 class="text-xl font-semibold text-blue-900">🔹 Panel de administración</h3>
-            <p class="text-blue-700">Los clientes tienen control total sobre la facturación y consumos.</p>
-          </div>
+          <h3 class="card-title">Monitoreo en tiempo real</h3>
+          <p class="card-text">
+            Sensores registran tensión, corriente, temperatura y carga con precisión milimétrica.
+          </p>
         </div>
-  
-     
-        <div class="mt-16">
-          <h2 class="text-3xl font-bold mb-6 text-blue-900">📌 Proceso de Facturación en Acción</h2>
-          <div class="flex justify-center">
-            <img src="/images/animacion-recibo.gif" alt="Generación de Recibo" class="w-full max-w-md rounded-lg shadow-lg">
+
+        <div class="sol-card">
+          <div class="chip chip-warning">
+            <svg viewBox="0 0 24 24" class="w-5 h-5">
+              <path :d="$icons.alert" fill="currentColor" />
+            </svg>
           </div>
+          <h3 class="card-title">Alertas inteligentes</h3>
+          <p class="card-text">
+            Notificaciones automáticas ante sobrecargas, sobrecalentamientos o fallas críticas.
+          </p>
         </div>
-  
-      
+
+        <!-- Card 3 -->
+        <div class="sol-card">
+          <div class="chip chip-success">
+            <svg viewBox="0 0 24 24" class="w-5 h-5">
+              <path :d="$icons.document" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="card-title">Reportes automáticos</h3>
+          <p class="card-text">
+            Informes listos para auditoría, mantenimiento y análisis de desempeño.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="sol-card">
+          <div class="chip chip-accent">
+            <svg viewBox="0 0 24 24" class="w-5 h-5">
+              <path :d="$icons.cog" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="card-title">Panel de control</h3>
+          <p class="card-text">
+            Visualización completa del estado y parámetros de cada transformador desde un solo lugar.
+          </p>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <style scoped>
-  .solucion-card {
-    @apply bg-blue-100 p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105;
-  }
-  
-  .screenshot {
-    @apply w-full max-w-md rounded-lg shadow-lg border border-blue-300;
-  }
-  </style>
-  
+  </section>
+</template>
+
+<script setup>
+// $icons ya está en globalProperties desde main.js
+</script>
+
+<style scoped>
+.sol-card {
+  @apply bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105;
+}
+.card-title {
+  @apply mt-3 text-lg font-semibold text-colorDark1;
+}
+.card-text {
+  @apply text-petroleum/80 mt-1;
+}
+
+/* Chips */
+.chip {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-full;
+}
+.chip-primary { @apply bg-color3/10 text-color3; }
+.chip-warning { @apply bg-accent-warning/10 text-accent-warning; }
+.chip-success { @apply bg-accent-success/10 text-accent-success; }
+.chip-accent  { @apply bg-petroleum/10 text-petroleum; }
+</style>

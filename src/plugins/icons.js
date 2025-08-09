@@ -1,4 +1,4 @@
-// src/plugins/icons.js
+
 import {
   mdiAlertCircleOutline,
   mdiTimerSand,
@@ -6,8 +6,9 @@ import {
   mdiFileDocumentOutline,
   mdiBellAlertOutline,
   mdiChartTimelineVariant,
-  mdiChartLine,
+  mdiChartBoxOutline,
   mdiShieldCheck,
+  mdiFileCogOutline
 } from '@mdi/js'
 
 export default {
@@ -17,6 +18,7 @@ export default {
   document: mdiFileDocumentOutline,
   bell: mdiBellAlertOutline,
   timeline: mdiChartTimelineVariant,
-  chart: mdiChartLine,
+  chart: mdiChartBoxOutline,
   shield: mdiShieldCheck,
+  cog : mdiFileCogOutline
 }
