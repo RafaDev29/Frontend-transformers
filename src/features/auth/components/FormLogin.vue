@@ -1,39 +1,34 @@
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-6">
 
-    <div>
-      <label for="email" class="block text-sm font-medium text-slate-200 mb-2">
-        Correo electrónico
-      </label>
-      <div class="relative">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="currentColor">
-            <path :d="$icons.account" />
-          </svg>
-        </div>
-        <input
-          id="email"
-          v-model="form.email"
-          type="email"
-          required
-          autocomplete="email"
-          class="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-color3 focus:ring-2 focus:ring-color3/20 transition-all duration-200 backdrop-blur-sm"
-          :class="{ 
-            'border-accent-danger focus:border-accent-danger focus:ring-accent-danger/20': errors.email,
-            'border-color2 focus:border-color2': form.email && !errors.email && form.email.length > 0
-          }"
-          placeholder="tu@empresa.com"
-          @blur="validateEmail"
-          @input="errors.email = ''"
-        />
-        <div v-if="form.email && !errors.email" class="absolute inset-y-0 right-0 pr-4 flex items-center">
-          <svg class="h-5 w-5 text-color2" viewBox="0 0 24 24" fill="currentColor">
-            <path :d="$icons.checkCircle" />
-          </svg>
-        </div>
-      </div>
-      <p v-if="errors.email" class="mt-1 text-sm text-accent-danger">{{ errors.email }}</p>
+   <div>
+  <label for="username" class="block text-sm font-medium text-slate-200 mb-2">
+    Usuario
+  </label>
+  <div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="currentColor">
+        <path :d="$icons.account" />
+      </svg>
     </div>
+    <input
+      id="username"
+      v-model="form.username"
+      type="text"
+      required
+      class="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-color3 focus:ring-2 focus:ring-color3/20 transition-all duration-200 backdrop-blur-sm"
+      :class="{ 
+        'border-accent-danger focus:border-accent-danger focus:ring-accent-danger/20': errors.username,
+        'border-color2 focus:border-color2': form.username && !errors.username
+      }"
+      placeholder="master01"
+      @blur="validateUsername"
+      @input="errors.username = ''"
+    />
+  </div>
+  <p v-if="errors.username" class="mt-1 text-sm text-accent-danger">{{ errors.username }}</p>
+</div>
+
 
 
     <div>
@@ -132,8 +127,7 @@
 <script setup>
 import { ref, computed, defineEmits, defineProps } from 'vue'
 
-
- defineProps({
+defineProps({
   loading: {
     type: Boolean,
     default: false
@@ -145,13 +139,12 @@ const emit = defineEmits(['submit'])
 
 // Reactive data
 const form = ref({
-  email: '',
-  password: '',
-  remember: false
+  username: '', // ahora usamos username
+  password: ''
 })
 
 const errors = ref({
-  email: '',
+  username: '',
   password: ''
 })
 
@@ -159,23 +152,19 @@ const showPassword = ref(false)
 
 // Computed
 const isFormValid = computed(() => {
-  return form.value.email && 
-         form.value.password && 
-         !errors.value.email && 
+  return form.value.username &&
+         form.value.password &&
+         !errors.value.username &&
          !errors.value.password &&
-         form.value.email.length > 0 && 
          form.value.password.length >= 6
 })
 
 // Methods
-const validateEmail = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!form.value.email) {
-    errors.value.email = 'El correo electrónico es requerido'
-  } else if (!emailRegex.test(form.value.email)) {
-    errors.value.email = 'Ingresa un correo electrónico válido'
+const validateUsername = () => {
+  if (!form.value.username) {
+    errors.value.username = 'El usuario es requerido'
   } else {
-    errors.value.email = ''
+    errors.value.username = ''
   }
 }
 
@@ -190,16 +179,13 @@ const validatePassword = () => {
 }
 
 const handleSubmit = () => {
-  // Validar todos los campos antes del submit
-  validateEmail()
+  validateUsername()
   validatePassword()
-  
-  // Solo emitir si no hay errores
+
   if (isFormValid.value) {
     emit('submit', {
-      email: form.value.email,
-      password: form.value.password,
-      remember: form.value.remember
+      username: form.value.username,
+      password: form.value.password
     })
   }
 }

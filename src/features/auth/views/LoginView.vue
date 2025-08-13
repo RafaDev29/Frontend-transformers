@@ -1,35 +1,36 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-petroleum px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-  
+  <div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-petroleum px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+
     <div class="w-full max-w-5xl flex items-center justify-center lg:justify-between relative z-10">
-     
+
       <div class="hidden lg:flex lg:w-1/2 justify-center items-center pr-8">
         <div class="relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-color2/20 via-color3/30 to-color1/20 rounded-3xl transform rotate-3 blur-2xl scale-110"></div>
-          <img 
-            src="@/assets/auth/login2.png" 
-            alt="SEMT - Hombre con casco verde" 
-            class="relative w-96 h-96 object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-700 ease-out"
-          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-color2/20 via-color3/30 to-color1/20 rounded-3xl transform rotate-3 blur-2xl scale-110">
+          </div>
+          <img src="@/assets/auth/login2.png" alt="SEMT - Hombre con casco verde"
+            class="relative w-96 h-96 object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-700 ease-out" />
         </div>
       </div>
 
       <div class="w-full lg:w-1/2 max-w-md relative">
         <div class="text-center mb-8">
-          
+
           <div class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3">
             <span class="text-color5 drop-shadow-sm">S</span>
             <span class="text-color4 drop-shadow-sm">E</span>
             <span class="text-color3 drop-shadow-sm">M</span>
             <span class="text-color2 drop-shadow-sm">T</span>
           </div>
-          
+
           <p class="text-slate-300 text-sm">Ingresa a tu cuenta del Sistema de Monitoreo</p>
         </div>
 
-        <div class="bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 p-8 hover:bg-white/10 transition-all duration-300">
+        <div
+          class="bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 p-8 hover:bg-white/10 transition-all duration-300">
           <FormLogin @submit="handleLogin" :loading="isLoading" />
-          
+          <p v-if="errorMsg" class="mt-3 text-sm text-accent-danger">{{ errorMsg }}</p>
           <div class="mt-6 mb-6">
             <div class="relative">
               <div class="absolute inset-0 flex items-center">
@@ -44,7 +45,7 @@
               ¿Olvidaste tu contraseña?
             </a>
             <div class="text-slate-400 text-xs">
-              ¿No tienes cuenta? 
+              ¿No tienes cuenta?
               <a href="#" class="text-color3 hover:text-color2 font-medium transition-colors duration-200">
                 Solicitar acceso
               </a>
@@ -77,24 +78,33 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import FormLogin from '../components/FormLogin.vue'
+import { login as apiLogin } from '../services/authService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
+
+ const router = useRouter()
+const route = useRoute()
+const auth  = useAuthStore()
 
 const isLoading = ref(false)
+const errorMsg  = ref('')
+const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 
 const handleLogin = async (credentials) => {
   isLoading.value = true
-  
+  errorMsg.value = ''
   try {
+    const { access_token, user } = await apiLogin(credentials)
 
-    console.log('Login attempt:', credentials)
+    auth.setSession({ access_token, user })
 
-
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    
-  } catch (error) {
-    console.error('Login error:', error)
+    bus?.emit?.('success', 'Sesión iniciada correctamente')
+     router.push(route.query.redirect || '/')
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'Credenciales inválidas'
+    bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
   }
