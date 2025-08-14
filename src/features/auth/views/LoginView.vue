@@ -9,25 +9,23 @@
           <div
             class="absolute inset-0 bg-gradient-to-r from-color2/20 via-color3/30 to-color1/20 rounded-3xl transform rotate-3 blur-2xl scale-110">
           </div>
-          <img src="@/assets/auth/login2.png" alt="SIMTRA - Hombre con casco verde"
-            class="relative w-96 h-96 object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-700 ease-out" />
+          <img src="@/assets/auth/login3.png" alt="SIMTRA - Hombre con casco verde"
+            class="relative w-100 h-100 pr-10 mr-100 pb-15 object-contain drop-shadow-1xl transform hover:scale-105 transition-transform duration-700 ease-out" />
         </div>
       </div>
 
       <div class="w-full lg:w-1/2 max-w-md relative">
         <div class="text-center mb-8">
 
-      <router-link 
-  to="/start" 
-  class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3 cursor-pointer hover:opacity-80 transition-opacity"
->
-  <span class="text-color1">S</span>
-  <span class="text-accent-success">I</span>
-  <span class="text-color2">M</span>
-  <span class="text-color3">T</span>
-  <span class="text-color4">R</span>
-  <span class="text-accent-primary">A</span>
-</router-link>
+          <router-link to="/start"
+            class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3 cursor-pointer hover:opacity-80 transition-opacity">
+            <span class="text-color1">S</span>
+            <span class="text-accent-success">I</span>
+            <span class="text-color2">M</span>
+            <span class="text-color3">T</span>
+            <span class="text-color4">R</span>
+            <span class="text-accent-primary">A</span>
+          </router-link>
 
 
           <p class="text-slate-300 text-sm">Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real</p>
@@ -73,10 +71,8 @@
             <span class="text-accent-primary">A</span>
           </div>
 
-          <p class="text-slate-400 text-xs mb-2">
-            Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real
-          </p>
-          <p class="text-slate-500 text-xs">© 2025 Todos los derechos reservados</p>
+
+          <p class="text-slate-500 text-xs">SIMTRA - D&A Intelligent Solutions © 2025 Todos los derechos reservados</p>
           <div class="flex justify-center items-center mt-3 space-x-4 text-slate-500">
             <a href="#" class="hover:text-color4 transition-colors text-xs">Política de Privacidad</a>
             <span class="w-1 h-1 bg-color3/50 rounded-full"></span>

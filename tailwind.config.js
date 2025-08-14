@@ -16,6 +16,7 @@ module.exports = {
         colorDark1: '#145214',
         colorDark2: '#1a5e1a',
         colorDark3: '#266326',
+        colorDark4 : '#186d33',
         petroleum: '#0f3d3e',
         
      
