@@ -14,7 +14,7 @@ export function installInterceptors() {
       const { response } = error
       if (response?.status === 401) {
         const auth = useAuthStore()
-        auth.logout(true) // true: silencioso
+        auth.logout(true) 
       }
       return Promise.reject(error)
     }

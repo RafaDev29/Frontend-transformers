@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PublicLayout from '@/layouts/PublicLayout.vue'
+import PrivateLayout from '@/layouts/PrivateLayout.vue'
 import Home from '@/views/HomeView.vue'
 import Solution from '@/views/SolutionView.vue'
 import Plan from '@/views/PlanView.vue'
 import authRoutes from '@/features/auth/routes'
+import welcomeRoutes from '@/features/welcome/routes'   
 import { authGuard } from './guards/auth'
 
 const routes = [
+  // Público
   {
     path: '/',
     component: PublicLayout,
@@ -18,13 +21,22 @@ const routes = [
     ],
   },
 
-  // Rutas del feature auth
+  // Auth (login/register con AuthLayout)
   ...authRoutes,
 
-  // Rutas protegidas de ejemplo (marca las tuyas con meta según rol)
-  { path: '/power', component: () => import('@/features/power/views/PowerHome.vue'),
-    meta: { requiresAuth: true, roles: ['CUSTOMER'] } },
- 
+  // Privado (todo lo de /app requiere sesión)
+  {
+    path: '/app',
+    component: PrivateLayout,
+    meta: { requiresAuth: true },
+    children: [
+     
+      ...welcomeRoutes,
+
+      // Default dentro del layout privado
+      { path: '', redirect: '/app/welcome' },
+    ],
+  },
 
   // 404
   { path: '/:pathMatch(.*)*', redirect: '/start' },
@@ -35,7 +47,5 @@ const router = createRouter({
   routes,
 })
 
-// Registro del guard
 router.beforeEach((to) => authGuard(to))
-
 export default router

@@ -1,3 +1,4 @@
+// src/router/guards/auth.js
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import { routeByRole } from '@/services/util/routeByRole'
 
@@ -7,27 +8,33 @@ export function authGuard(to) {
   const role   = auth.user?.role
   const home   = routeByRole(role)
 
-  // Si requiere sesión y no la hay → login con redirect
-  if (to.meta?.requiresAuth && !isAuth) {
+  const requiresAuth  = !!to.meta?.requiresAuth
+  const isGuestOnly   = !!to.meta?.requiresGuest
+  const declaresRoles = Array.isArray(to.meta?.roles)
+
+  // 1) privada sin sesión -> login
+  if (requiresAuth && !isAuth) {
     return { name: 'auth.login', query: { redirect: to.fullPath } }
   }
 
-  // Si es ruta de invitados y ya hay sesión → manda al home por rol (o redirect si vino)
-  if (to.meta?.requiresGuest && isAuth) {
-    return { path: to.query.redirect || home }
-  }
-
-  // Si la ruta define roles permitidos, verifica
-  if (to.meta?.roles && Array.isArray(to.meta.roles)) {
-    if (!role || !to.meta.roles.includes(role)) {
-      // sin permiso → al home por rol (o 403 si prefieres)
-      return { path: home }
+  // 2) ya hay sesión
+  if (isAuth) {
+    // público/guest -> a home por rol (si no estamos ya ahí)
+    if (isGuestOnly || !requiresAuth) {
+      if (to.path !== home) return { path: home }
+      return true
+    }
+    // roles no permitidos -> a home por rol
+    if (declaresRoles && (!role || !to.meta.roles.includes(role))) {
+      if (to.path !== home) return { path: home }
+      return true
     }
   }
 
-  // Si cae a "/" (o a /auth base) y ya está logueado → home por rol
-  if ((to.path === '/' || to.path === '/auth') && isAuth) {
-    return { path: home }
+  // 3) si cae a "/" o "/auth" logueado -> home por rol
+  if (isAuth && (to.path === '/' || to.path === '/auth')) {
+    if (to.path !== home) return { path: home }
+    return true
   }
 
   return true

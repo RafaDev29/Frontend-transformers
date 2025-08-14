@@ -1,33 +1,13 @@
+<!-- src/layouts/PrivateLayout.vue -->
 <template>
   <v-app>
-    <!-- App bar superior con botón para abrir/cerrar el sidebar en móviles -->
-    <v-app-bar app flat color="white">
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="d-lg-none" />
-      <v-toolbar-title class="font-semibold text-slate-700">
-        Panel
-      </v-toolbar-title>
-      <v-spacer />
-      <!-- Info de usuario + logout -->
-      <div class="flex items-center gap-3 mr-2">
-        <v-chip v-if="auth.user" size="small" color="primary" variant="flat">
-          {{ auth.user.username }} • {{ auth.user.role }}
-        </v-chip>
-        <v-btn size="small" variant="text" color="red" @click="onLogout">
-          Cerrar sesión
-        </v-btn>
-      </div>
-    </v-app-bar>
+    <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="menuItems" :user="auth.user" @toggle="toggleSidebar"
+      @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
 
-    <!-- Sidebar -->
-    <SidebarComponent
-      v-model="drawer"
-      :items="menuItems"
-      class="hidden-lg-and-down:block"
-    />
-
-    <!-- Contenido -->
-    <v-main class="bg-gray-100 min-h-screen">
-      <div class="p-4 md:p-6">
+    <!-- Dejamos que Vuetify calcule ancho/alto; ocultamos overflow global para full-bleed -->
+    <v-main class="min-h-screen overflow-hidden">
+      <!-- contenedor base relativo para que las vistas full-bleed posicionen absolute -->
+      <div :class="[$route.meta.fullScreen ? 'content-bleed' : 'content-shell']">
         <router-view />
       </div>
     </v-main>
@@ -36,32 +16,62 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const router = useRouter()
-const route = useRoute()
 const auth = useAuthStore()
-
-// drawer visible en desktop por defecto
 const drawer = ref(true)
+const sidebarOpen = ref(true)
 
-// Menú según rol (ajusta rutas a tus features reales)
 const menuItems = computed(() => {
   const role = auth.user?.role
   const base = [
-    { title: 'Inicio',      icon: 'mdi-home',        to: '/start',       roles: ['ADMIN','CUSTOMER','OPERATOR','ROOT'] },
-    { title: 'Power',       icon: 'mdi-flash',       to: '/power',       roles: ['CUSTOMER','ROOT'] },
-    { title: 'Monitoreo',   icon: 'mdi-monitor-eye', to: '/monitor',     roles: ['OPERATOR','ADMIN','ROOT'] },
-    { title: 'Administrar', icon: 'mdi-shield-key',  to: '/admin',       roles: ['ADMIN'] },
-    { title: 'Perfil',      icon: 'mdi-account',     to: '/profile',     roles: ['ADMIN','CUSTOMER','OPERATOR','ROOT'] },
+    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER'] },
+    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER'] },
+    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER'] },
+    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER'] },
+    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER'] },
+    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER'] },
+    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER'] },
   ]
   return base.filter(i => !i.roles || i.roles.includes(role))
 })
 
-function onLogout() {
-  auth.clearSession()
-  router.push({ name: 'auth.login' })
-}
+function toggleSidebar() { sidebarOpen.value = !sidebarOpen.value }
+function onLogout() { auth.clearSession(); router.push({ name: 'auth.login' }) }
+function onSettings() { router.push({ name: 'settings' }) }
 </script>
+
+<style scoped>
+/* Vistas normales: padding + scroll local si hace falta */
+.content-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 16px;
+  margin: 2px;
+  margin-left: 5px;
+  overflow: auto;
+ 
+}
+
+@media (min-width: 960px) {
+  .content-shell {
+    padding: 24px;
+  }
+}
+
+/* Full-bleed (fondos o lienzos) */
+.content-bleed {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0;
+  overflow: hidden;
+
+}
+</style>
