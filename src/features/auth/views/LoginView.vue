@@ -17,14 +17,20 @@
       <div class="w-full lg:w-1/2 max-w-md relative">
         <div class="text-center mb-8">
 
-          <div class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3">
-            <span class="text-color5 drop-shadow-sm">S</span>
-            <span class="text-color4 drop-shadow-sm">E</span>
-            <span class="text-color3 drop-shadow-sm">M</span>
-            <span class="text-color2 drop-shadow-sm">T</span>
-          </div>
+      <router-link 
+  to="/start" 
+  class="flex items-center justify-center space-x-1 text-3xl font-bold tracking-wider mb-3 cursor-pointer hover:opacity-80 transition-opacity"
+>
+  <span class="text-color1">S</span>
+  <span class="text-accent-success">I</span>
+  <span class="text-color2">M</span>
+  <span class="text-color3">T</span>
+  <span class="text-color4">R</span>
+  <span class="text-accent-primary">A</span>
+</router-link>
 
-          <p class="text-slate-300 text-sm">Ingresa a tu cuenta del Sistema de Monitoreo</p>
+
+          <p class="text-slate-300 text-sm">Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real</p>
         </div>
 
         <div
@@ -56,14 +62,19 @@
 
         <div class="mt-8 text-center">
 
-          <div class="flex items-center justify-center space-x-1 text-sm font-bold tracking-wider mb-2 opacity-60">
-            <span class="text-color5">S</span>
-            <span class="text-color4">E</span>
-            <span class="text-color3">M</span>
-            <span class="text-color2">T</span>
+          <div
+            class="flex items-center justify-center space-x-1 text-sm font-bold tracking-wider mb-2 opacity-60 cursor-pointer"
+            @click="$router.push('/start')">
+            <span class="text-color1">S</span>
+            <span class="text-accent-success">I</span>
+            <span class="text-color2">M</span>
+            <span class="text-color3">T</span>
+            <span class="text-color4">R</span>
+            <span class="text-accent-primary">A</span>
           </div>
+
           <p class="text-slate-400 text-xs mb-2">
-            Sistema Eficiente de Monitoreo de Transformadores
+            Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real
           </p>
           <p class="text-slate-500 text-xs">© 2025 Todos los derechos reservados</p>
           <div class="flex justify-center items-center mt-3 space-x-4 text-slate-500">
@@ -84,12 +95,12 @@ import FormLogin from '../components/FormLogin.vue'
 import { login as apiLogin } from '../services/authService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
- const router = useRouter()
+const router = useRouter()
 const route = useRoute()
-const auth  = useAuthStore()
+const auth = useAuthStore()
 
 const isLoading = ref(false)
-const errorMsg  = ref('')
+const errorMsg = ref('')
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 
 const handleLogin = async (credentials) => {
@@ -101,7 +112,7 @@ const handleLogin = async (credentials) => {
     auth.setSession({ access_token, user })
 
     bus?.emit?.('success', 'Sesión iniciada correctamente')
-     router.push(route.query.redirect || '/')
+    router.push(route.query.redirect || '/')
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Credenciales inválidas'
     bus?.emit?.('error', errorMsg.value)

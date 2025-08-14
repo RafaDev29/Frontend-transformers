@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <!-- Footer con acciones -->
+
     <template #append>
       <div class="border-t border-slate-200">
         <!-- Toggle rail -->

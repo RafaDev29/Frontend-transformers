@@ -8,7 +8,8 @@
 
     <div class="relative z-10 text-center text-white px-4">
   <h1 class="text-xl md:text-3xl font-semibold tracking-wide drop-shadow-lg">
-     SISTEMA EFICIENTE DE MONITOREO DE TRANSFORMADORES
+     SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES EN TIEMPO REAL 
+
   </h1>
 
   <p class="mt-2 text-sm md:text-lg font-light tracking-wide opacity-90 max-w-xl mx-auto">

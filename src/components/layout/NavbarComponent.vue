@@ -9,13 +9,16 @@
           </div>
           <div class="flex flex-col">
             <div class="flex items-center space-x-1 text-2xl font-bold tracking-wider">
-              <span class="text-color5 drop-shadow-sm">S</span>
-              <span class="text-color4 drop-shadow-sm">E</span>
-              <span class="text-color3 drop-shadow-sm">M</span>
-              <span class="text-color2 drop-shadow-sm">T</span>
+             <span class="text-color1">S</span>
+            <span class="text-accent-success">I</span>
+            <span class="text-color2">M</span>
+            <span class="text-color3">T</span>
+            <span class="text-color4">R</span>
+            <span class="text-accent-primary">A</span>
+
             </div>
             <div class="text-color5/80 text-sm font-medium leading-tight -mt-1">
-              Sistema Eficiente de Monitoreo de Transformadores
+              Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real
             </div>
           </div>
         </router-link>
