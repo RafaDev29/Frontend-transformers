@@ -133,8 +133,8 @@
 
       <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-white/5 backdrop-blur-sm">
         <div class="text-center text-color5/80">
-          <p class="font-medium text-lg">SEMT</p>
-          <p class="text-sm opacity-70">Monitoreo Inteligente</p>
+          <p class="font-medium text-lg">SIMTRA</p>
+          <p class="text-sm opacity-70">Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real</p>
           <div class="mt-2 flex justify-center space-x-1">
             <div class="w-2 h-2 bg-color4 rounded-full opacity-50"></div>
             <div class="w-2 h-2 bg-color3 rounded-full opacity-70"></div>

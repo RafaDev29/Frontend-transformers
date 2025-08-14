@@ -88,7 +88,7 @@
           </ul>
         </div>
         <div class="bg-color5 p-6 rounded-lg shadow-md">
-          <h3 class="text-xl font-semibold text-colorDark1 mb-4">Con SEMT (operación proactiva)</h3>
+          <h3 class="text-xl font-semibold text-colorDark1 mb-4">Con SIMTRA (operación proactiva)</h3>
           <ul class="text-sm text-petroleum/90 space-y-3">
             <li class="flex items-start gap-3">
               <span

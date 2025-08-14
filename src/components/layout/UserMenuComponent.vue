@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-gradient-to-r from-color5/20 to-color4/10 rounded-xl p-4 border border-color4/20">
+  <div class="bg-gradient-to-r from-color5/20 to-color4/10 rounded-xl p-1 border border-color4/20">
     <!-- Header usuario + botón Ver/Ocultar -->
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-gradient-to-br from-color3 to-color1 rounded-full flex items-center justify-center shadow-sm">
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-9 bg-gradient-to-br from-color3 to-color1 rounded-full flex items-center justify-center shadow-sm">
         <span class="text-white font-bold text-sm">
           {{ user?.username?.charAt(0).toUpperCase() }}
         </span>
@@ -14,7 +14,7 @@
 
       <!-- Botón VER: único disparador -->
       <button
-        class="text-xs px-2 py-1 rounded-md text-color1 hover:bg-color5/50 transition-colors"
+        class="text-xs px-3 py-3 rounded-md text-color1 hover:bg-color5/50 transition-colors"
         @click="open = !open"
       >
         {{ open ? 'Ocultar' : 'Ver' }}

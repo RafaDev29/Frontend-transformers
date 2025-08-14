@@ -4,8 +4,8 @@
       <div class="flex flex-col items-center justify-center text-center">
 
         <div class="mb-4">
-          <h3 class="text-xl font-bold text-color3 mb-2">SEMT</h3>
-          <p class="text-sm text-color5">Sistema Eficiente de Monitoreo de Transformadores</p>
+          <h3 class="text-xl font-bold text-color3 mb-2">SIMTRA</h3>
+          <p class="text-sm text-color5">Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real</p>
         </div>
         
 

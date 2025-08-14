@@ -9,7 +9,7 @@
           <div
             class="absolute inset-0 bg-gradient-to-r from-color2/20 via-color3/30 to-color1/20 rounded-3xl transform rotate-3 blur-2xl scale-110">
           </div>
-          <img src="@/assets/auth/login2.png" alt="SEMT - Hombre con casco verde"
+          <img src="@/assets/auth/login2.png" alt="SIMTRA - Hombre con casco verde"
             class="relative w-96 h-96 object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-700 ease-out" />
         </div>
       </div>
