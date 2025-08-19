@@ -1,9 +1,10 @@
 // src/services/util/routeByRole.js
 export function routeByRole(role) {
-  const home = '/app/welcome'        // ← ruta REAL bajo el PrivateLayout
+  const home = '/app/welcome'  
+  const transformer = '/app/transformer'
   const map = {
-    ADMIN: home,
-    CUSTOMER: home,
+    MASTER: transformer,
+    CUSTOMER: transformer,
     OPERATOR: home,
     ROOT: home,
   }

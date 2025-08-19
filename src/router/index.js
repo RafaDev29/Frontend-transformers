@@ -5,7 +5,8 @@ import Home from '@/views/HomeView.vue'
 import Solution from '@/views/SolutionView.vue'
 import Plan from '@/views/PlanView.vue'
 import authRoutes from '@/features/auth/routes'
-import welcomeRoutes from '@/features/welcome/routes'   
+import welcomeRoutes from '@/features/welcome/routes'
+import transformerRoutes from '@/features/transformer/route'
 import { authGuard } from './guards/auth'
 
 const routes = [
@@ -32,8 +33,8 @@ const routes = [
     children: [
      
       ...welcomeRoutes,
-
-      // Default dentro del layout privado
+      ...transformerRoutes,
+      
       { path: '', redirect: '/app/welcome' },
     ],
   },

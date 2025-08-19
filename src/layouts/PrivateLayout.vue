@@ -1,12 +1,13 @@
-<!-- src/layouts/PrivateLayout.vue -->
 <template>
-  <v-app>
-    <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="menuItems" :user="auth.user" @toggle="toggleSidebar"
-      @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
+  <!-- Si debemos ocultar el layout completo -->
+  <router-view v-if="hideLayout" />
 
-    <!-- Dejamos que Vuetify calcule ancho/alto; ocultamos overflow global para full-bleed -->
+  <!-- Si NO, renderizamos el layout normal -->
+  <v-app v-else>
+    <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
+      @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
+
     <v-main class="min-h-screen overflow-hidden">
-      <!-- contenedor base relativo para que las vistas full-bleed posicionen absolute -->
       <div :class="[$route.meta.fullScreen ? 'content-bleed' : 'content-shell']">
         <router-view />
       </div>
@@ -14,9 +15,11 @@
   </v-app>
 </template>
 
+
+
 <script setup>
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter , useRoute} from 'vue-router'
 import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
@@ -24,24 +27,67 @@ const router = useRouter()
 const auth = useAuthStore()
 const drawer = ref(true)
 const sidebarOpen = ref(true)
+const route = useRoute()
+const noLayoutRoutes = ['/app/transformer']
+const hideLayout = computed(() => noLayoutRoutes.includes(route.path))
 
-const menuItems = computed(() => {
+// Items de monitoreo (existentes)
+const monitoringItems = computed(() => {
   const role = auth.user?.role
-  const base = [
-    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER'] },
-    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER'] },
-    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER'] },
-    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER'] },
-    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER'] },
-    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER'] },
-    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER'] },
+  const items = [
+    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
   ]
-  return base.filter(i => !i.roles || i.roles.includes(role))
+  return items.filter(i => !i.roles || i.roles.includes(role))
 })
 
-function toggleSidebar() { sidebarOpen.value = !sidebarOpen.value }
-function onLogout() { auth.clearSession(); router.push({ name: 'auth.login' }) }
-function onSettings() { router.push({ name: 'settings' }) }
+
+const maintenanceItems = computed(() => {
+  const role = auth.user?.role
+  const items = [
+    {
+      title: 'Transformadores',
+      icon: 'gauge',
+      to: '/app/transformer',
+      roles: [ 'ROOT'],
+      category: 'maintenance'
+    },
+
+    {
+      title: 'Empresas',
+      icon: 'user',
+      to: '/mantenimiento/usuarios',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+   
+
+  ]
+  return items.filter(i => !i.roles || i.roles.includes(role))
+})
+
+// Combinamos todos los items
+const allMenuItems = computed(() => {
+  return [...monitoringItems.value, ...maintenanceItems.value]
+})
+
+function toggleSidebar() {
+  sidebarOpen.value = !sidebarOpen.value
+}
+
+function onLogout() {
+  auth.clearSession()
+  router.push({ name: 'auth.login' })
+}
+
+function onSettings() {
+  router.push({ name: 'settings' })
+}
 </script>
 
 <style scoped>
@@ -55,7 +101,6 @@ function onSettings() { router.push({ name: 'settings' }) }
   margin: 2px;
   margin-left: 5px;
   overflow: auto;
- 
 }
 
 @media (min-width: 960px) {
@@ -72,6 +117,5 @@ function onSettings() { router.push({ name: 'settings' }) }
   min-height: 100vh;
   padding: 0;
   overflow: hidden;
-
 }
 </style>

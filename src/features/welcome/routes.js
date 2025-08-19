@@ -7,7 +7,7 @@ export default [
     path: 'welcome',              
     name: 'welcome',
     component: WelcomeHome,
-    meta: { requiresAuth: true, roles: ['CUSTOMER', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['CUSTOMER','MASTER', 'ROOT'] }
   },
 
 ]

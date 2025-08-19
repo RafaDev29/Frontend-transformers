@@ -1,5 +1,6 @@
 // tailwind.config.js - COLORES ADICIONALES RECOMENDADOS
 module.exports = {
+   darkMode: 'class',
   content: [
     './public/index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',

@@ -5,27 +5,32 @@
     permanent
     :width="rail ? 80 : 320"
     :rail="rail"
-    class="sidebar-elegant"
+    class="bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-r border-slate-200 dark:border-gray-700 transition-all duration-300 ease-out"
     elevation="0"
   >
     <!-- Header con mejor diseño -->
-    <div class="header-section">
+    <div class="bg-gradient-to-br from-slate-50 to-slate-200 dark:from-gray-800 dark:to-gray-900 border-b border-slate-300 dark:border-gray-600 relative overflow-hidden">
+      <!-- Overlay decorativo -->
+      <div class="absolute inset-0 bg-gradient-to-br from-color1/5 via-transparent to-transparent dark:from-color3/10 pointer-events-none"></div>
+      
       <!-- Modo abierto -->
-      <div v-if="!rail" class="header-expanded">
-        <div class="logo-container">
-          <div class="logo-text">
-            <span class="text-color1">S</span>
-            <span class="text-accent-success">I</span>
-            <span class="text-color2">M</span>
-            <span class="text-color3">T</span>
-            <span class="text-color4">R</span>
-            <span class="text-accent-primary">A</span>
+      <div v-if="!rail" class="p-6 flex items-center justify-between relative z-10">
+        <div class="flex-1">
+          <div class="text-3xl font-extrabold tracking-widest mb-1 drop-shadow-sm">
+            <span class="text-color1 dark:text-color3">S</span>
+            <span class="text-accent-success dark:text-color4">I</span>
+            <span class="text-color2 dark:text-color5">M</span>
+            <span class="text-color3 dark:text-color2">T</span>
+            <span class="text-color4 dark:text-color1">R</span>
+            <span class="text-accent-primary dark:text-accent-success">A</span>
           </div>
-          <div class="logo-subtitle">Panel de Parámetros</div>
+          <div class="text-xs text-slate-500 dark:text-gray-400 font-medium tracking-wider uppercase">
+            Panel de Parámetros
+          </div>
         </div>
 
         <!-- Botón toggle mejorado -->
-        <div @click="$emit('toggle')" class="toggle-btn toggle-btn-expanded">
+        <div @click="$emit('toggle')" class="w-8 h-8 bg-gradient-to-br from-color1 to-colorDark1 dark:from-color2 dark:to-color3 border border-color1/20 dark:border-color3/20 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 hover:from-colorDark1 hover:to-colorDark2 dark:hover:from-color3 dark:hover:to-color4 hover:-translate-y-0.5 shadow-lg hover:shadow-color1/25 dark:hover:shadow-color3/25">
           <svg viewBox="0 0 24 24" class="h-4 w-4 text-white">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor" />
           </svg>
@@ -33,62 +38,139 @@
       </div>
 
       <!-- Modo cerrado -->
-      <div v-else class="header-collapsed">
-        <div @click="$emit('toggle')" class="toggle-btn toggle-btn-collapsed">
-          <div class="logo-mini">
-            <span class="text-white font-bold text-lg">S</span>
-          </div>
+      <div v-else class="p-5 flex justify-center relative z-10">
+        <div @click="$emit('toggle')" class="w-9 h-9 bg-gradient-to-br from-color1 via-colorDark1 to-accent-primary dark:from-color2 dark:via-color3 dark:to-accent-success rounded-xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:scale-105 shadow-xl hover:shadow-color1/30 dark:hover:shadow-color3/30 border-2 border-white/90 dark:border-gray-200/20">
+          <span class="text-white font-bold text-lg drop-shadow-sm">S</span>
         </div>
       </div>
     </div>
 
     <!-- Navegación mejorada -->
-    <div class="navigation-section">
-      <div v-for="(item, i) in items" :key="i" class="nav-item-wrapper">
+    <div class="p-3 flex-1 overflow-y-auto">
+      <!-- Items de monitoreo (sin título) -->
+      <div v-for="(item, i) in monitoringItems" :key="`monitoring-${i}`" class="mb-0.5">
         <v-tooltip :disabled="!rail" :text="item.title" location="end">
           <template #activator="{ props: tooltipProps }">
             <router-link
               v-bind="rail ? tooltipProps : {}"
               :to="item.to"
-              class="nav-item"
+              class="flex items-center rounded-xl transition-all duration-300 relative overflow-hidden border backdrop-blur-sm"
               :class="[
-                rail ? 'nav-item-rail' : 'nav-item-full',
-                $route.path === item.to ? 'nav-item-active' : 'nav-item-inactive'
+                rail ? 'p-2 justify-center mx-2' : 'p-2 gap-2',
+                $route.path === item.to 
+                  ? 'bg-gradient-to-r from-color1/10 via-color2/8 to-accent-primary/10 dark:from-color3/15 dark:via-color4/12 dark:to-accent-success/15 border-color1/15 dark:border-color3/20 shadow-lg shadow-color1/10 dark:shadow-color3/10' 
+                  : 'bg-gradient-to-r from-slate-50/70 to-slate-100/50 dark:from-gray-800/50 dark:to-gray-700/30 border-color1/5 dark:border-gray-600/30 hover:from-color1/8 hover:to-accent-primary/5 dark:hover:from-color3/10 dark:hover:to-accent-success/8 hover:border-color2/20 dark:hover:border-color3/30 hover:translate-x-1 hover:shadow-lg hover:shadow-color1/10 dark:hover:shadow-color3/10'
               ]"
             >
               <!-- Indicador lateral activo -->
               <div 
                 v-if="$route.path === item.to" 
-                class="active-indicator"
+                class="absolute left-0 top-1/5 bottom-1/5 w-1 bg-gradient-to-b from-color1 to-colorDark1 dark:from-color3 dark:to-color2 rounded-r shadow-sm shadow-color1/30 dark:shadow-color3/30"
               />
 
               <!-- Icono mejorado -->
-              <div class="icon-container" :class="$route.path === item.to ? 'icon-active' : 'icon-inactive'">
+              <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10"
+                   :class="$route.path === item.to 
+                     ? 'bg-gradient-to-br from-color1 to-colorDark1 dark:from-color2 dark:to-color3 text-white shadow-lg shadow-color1/25 dark:shadow-color3/25' 
+                     : 'bg-gradient-to-br from-color1/10 to-accent-primary/8 dark:from-color3/15 dark:to-accent-success/12 text-color1 dark:text-color3 border border-color1/10 dark:border-color3/20 hover:bg-gradient-to-br hover:from-color2 hover:to-accent-primary dark:hover:from-color3 dark:hover:to-accent-success hover:text-white hover:scale-105 hover:shadow-lg hover:shadow-color2/30 dark:hover:shadow-color3/30 hover:border-transparent'
+                   ">
                 <svg viewBox="0 0 24 24" class="h-5 w-5">
                   <path :d="$icons[item.icon]" fill="currentColor" />
                 </svg>
               </div>
 
               <!-- Texto con mejor tipografía -->
-              <div v-if="!rail" class="text-container">
-                <span class="nav-text" :class="$route.path === item.to ? 'text-active' : 'text-inactive'">
+              <div v-if="!rail" class="flex-1 min-w-0">
+                <span class="text-sm font-semibold tracking-wide transition-colors duration-300"
+                      :class="$route.path === item.to 
+                        ? 'text-colorDark1 dark:text-color4' 
+                        : 'text-slate-600 dark:text-gray-300'
+                      ">
                   {{ item.title }}
                 </span>
               </div>
 
               <!-- Efecto hover -->
-              <div class="hover-effect" />
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-color2/5 to-transparent dark:via-color3/10 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </router-link>
           </template>
         </v-tooltip>
+      </div>
+
+      <!-- CONTENEDOR PARA MANTENIMIENTO -->
+      <div v-if="maintenanceItems.length > 0" class="mt-6">
+        <!-- Contenedor rectangular para mantenimiento -->
+        <div class="bg-gradient-to-br from-green-50/80 to-emerald-50/60 dark:from-green-900/20 dark:to-emerald-900/15 border border-green-200/40 dark:border-green-700/30 rounded-2xl p-3 shadow-lg shadow-green-100/50 dark:shadow-green-900/20 backdrop-blur-sm">
+          
+          <!-- Título de mantenimiento -->
+          <div v-if="!rail" class="mb-3 px-1">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-gradient-to-r from-color2 to-accent-success rounded-full animate-pulse"></div>
+              <h3 class="text-xs font-bold text-color1 dark:text-color3 tracking-wider uppercase">
+                Mantenimiento
+              </h3>
+              <div class="flex-1 h-px bg-gradient-to-r from-color2/50 to-transparent dark:from-color3/30"></div>
+            </div>
+          </div>
+
+          <!-- Items de mantenimiento más delgados -->
+          <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`" class="mb-1">
+            <v-tooltip :disabled="!rail" :text="item.title" location="end">
+              <template #activator="{ props: tooltipProps }">
+                <router-link
+                  v-bind="rail ? tooltipProps : {}"
+                  :to="item.to"
+                  class="flex items-center rounded-lg transition-all duration-300 relative overflow-hidden border backdrop-blur-sm"
+                  :class="[
+                    rail ? 'p-1.5 justify-center mx-1' : 'px-2 py-1.5 gap-2',
+                    $route.path === item.to 
+                      ? 'bg-gradient-to-r from-color2/15 to-accent-success/10 dark:from-color3/20 dark:to-color4/15 border-color2/25 dark:border-color3/30 shadow-md shadow-color2/15 dark:shadow-color3/15' 
+                      : 'bg-gradient-to-r from-white/60 to-green-50/40 dark:from-gray-800/40 dark:to-green-900/20 border-color2/20 dark:border-color3/20 hover:from-green-100/60 hover:to-emerald-100/40 dark:hover:from-green-800/30 dark:hover:to-emerald-800/20 hover:border-color2/30 dark:hover:border-color3/40 hover:shadow-md hover:shadow-green-200/20 dark:hover:shadow-green-800/20'
+                  ]"
+                >
+                  <!-- Indicador lateral activo más sutil -->
+                  <div 
+                    v-if="$route.path === item.to" 
+                    class="absolute left-0 top-2 bottom-2 w-0.5 bg-gradient-to-b from-color2 to-accent-success dark:from-color3 dark:to-color4 rounded-r"
+                  />
+
+                  <!-- Icono más pequeño -->
+                  <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10"
+                       :class="$route.path === item.to 
+                         ? 'bg-gradient-to-br from-color2 to-accent-success dark:from-color3 dark:to-color4 text-white shadow-md shadow-color2/25 dark:shadow-color3/25' 
+                         : 'bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-800/50 dark:to-emerald-800/40 text-color1 dark:text-color3 border border-color2/30 dark:border-color3/30 hover:bg-gradient-to-br hover:from-color2 hover:to-accent-success dark:hover:from-color3 dark:hover:to-color4 hover:text-white hover:scale-105 hover:shadow-md hover:shadow-color2/30 dark:hover:shadow-color3/30 hover:border-transparent'
+                       ">
+                    <svg viewBox="0 0 24 24" class="h-4 w-4">
+                      <path :d="$icons[item.icon]" fill="currentColor" />
+                    </svg>
+                  </div>
+
+                  <!-- Texto más compacto -->
+                  <div v-if="!rail" class="flex-1 min-w-0">
+                    <span class="text-xs font-medium tracking-wide transition-colors duration-300"
+                          :class="$route.path === item.to 
+                            ? 'text-colorDark1 dark:text-color4' 
+                            : 'text-color1 dark:text-color3'
+                          ">
+                      {{ item.title }}
+                    </span>
+                  </div>
+
+                  <!-- Efecto hover sutil -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-color2/8 to-transparent dark:via-color3/10 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-lg" />
+                </router-link>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Footer mejorado -->
     <template #append>
-      <div class="footer-section">
+      <div class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
         <!-- Card de usuario mejorado -->
-        <div v-if="!rail" class="user-card">
+        <div v-if="!rail" class="p-2.5">
           <UserActionsCard
             :user="user"
             @profile="goToProfile"
@@ -98,21 +180,24 @@
         </div>
 
         <!-- Avatar minimalista -->
-        <div v-else class="user-avatar-mini">
-          <div class="avatar-container" @click="$emit('toggle')">
-            <span class="avatar-text">
+        <div v-else class="flex justify-center py-3">
+          <div class="w-11 h-11 bg-gradient-to-br from-color1 via-colorDark1 to-accent-primary dark:from-color2 dark:via-color3 dark:to-accent-success rounded-xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:scale-105 shadow-xl hover:shadow-color1/30 dark:hover:shadow-color3/30 border-2 border-white/90 dark:border-gray-200/20" 
+               @click="$emit('toggle')">
+            <span class="text-white font-bold text-base drop-shadow-sm">
               {{ user?.username?.charAt(0).toUpperCase() }}
             </span>
           </div>
         </div>
 
         <!-- Copyright con mejor diseño -->
-        <div class="copyright">
-          <div class="copyright-text">© 2025 SIMTRA</div>
-          <div class="copyright-dots">
-            <div class="dot dot-1"></div>
-            <div class="dot dot-2"></div>
-            <div class="dot dot-3"></div>
+        <div class="p-2.5 text-center relative">
+          <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider mb-1">
+            © 2025 SIMTRA
+          </div>
+          <div class="flex justify-center gap-1">
+            <div class="w-1 h-1 bg-color1 dark:bg-color3 rounded-full animate-pulse" style="animation-delay: 0s;"></div>
+            <div class="w-1 h-1 bg-color2 dark:bg-color4 rounded-full animate-pulse" style="animation-delay: 0.3s;"></div>
+            <div class="w-1 h-1 bg-accent-primary dark:bg-accent-success rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
           </div>
         </div>
       </div>
@@ -141,365 +226,36 @@ const model = computed({
   set: (v) => emit('update:modelValue', v),
 })
 
+// Separamos los items en dos categorías
+const monitoringItems = computed(() => {
+  return props.items.filter(item => item.category === 'monitoring' || !item.category)
+})
+
+const maintenanceItems = computed(() => {
+  return props.items.filter(item => item.category === 'maintenance')
+})
+
 function goToProfile() {
   router.push({ name: 'profile' })
 }
 </script>
 
 <style scoped>
-/* Sidebar principal */
-.sidebar-elegant {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 30%, #f1f5f9 100%);
-  border-right: 1px solid #e2e8f0;
-  box-shadow: 0 4px 20px rgba(30, 127, 20, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Header Section */
-.header-section {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-bottom: 1px solid #cbd5e1;
-  position: relative;
-  overflow: hidden;
-}
-
-.header-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(30, 127, 20, 0.02) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.header-expanded {
-  padding: 24px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
-}
-
-.header-collapsed {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-
-.logo-container {
-  flex: 1;
-}
-
-.logo-text {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-.logo-subtitle {
-  font-size: 11px;
-  color: #64748b;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.toggle-btn {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.toggle-btn-expanded {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #1e7f14 0%, #4d9f3f 100%);
-  border: 1px solid rgba(30, 127, 20, 0.2);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(30, 127, 20, 0.15);
-}
-
-.toggle-btn-expanded:hover {
-  background: linear-gradient(135deg, #145214 0%, #4d9f3f 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(30, 127, 20, 0.25);
-}
-
-.toggle-btn-collapsed {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, #1e7f14 0%, #4d9f3f 100%);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 10px rgba(30, 127, 20, 0.2);
-}
-
-.toggle-btn-collapsed:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(30, 127, 20, 0.3);
-}
-
-.logo-mini {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Navigation Section */
-.navigation-section {
-  padding: 10px 12px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.nav-item-wrapper {
-  margin-bottom: 2px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  border-radius: 11px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid transparent;
-  backdrop-filter: blur(5px);
-}
-
-.nav-item-full {
-  padding: 8px 8px;
-  gap: 8px;
-}
-
-.nav-item-rail {
-  padding: 8px;
-  justify-content: center;
-  margin: 0 8px;
-}
-
-.nav-item-active {
-  background: linear-gradient(135deg, rgba(30, 127, 20, 0.08) 0%, rgba(77, 159, 63, 0.06) 100%);
-  border-color: rgba(30, 127, 20, 0.15);
-  box-shadow: 0 2px 8px rgba(30, 127, 20, 0.08);
-}
-
-.nav-item-inactive {
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.7) 0%, rgba(241, 245, 249, 0.5) 100%);
-  border-color: rgba(10, 112, 68, 0.139);
-}
-
-.nav-item-inactive:hover {
-  background: linear-gradient(135deg, rgba(30, 127, 20, 0.05) 0%, rgba(77, 159, 63, 0.03) 100%);
-  border-color: rgba(125, 191, 107, 0.3);
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(30, 127, 20, 0.08);
-}
-
-.active-indicator {
-  position: absolute;
-  left: 0;
-  top: 20%;
-  bottom: 20%;
-  width: 4px;
-  background: linear-gradient(180deg, #1e7f14 0%, #4d9f3f 100%);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 6px rgba(30, 127, 20, 0.3);
-}
-
-.icon-container {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.icon-active {
-  background: linear-gradient(135deg, #1e7f14 0%, #4d9f3f 100%);
-  color: white;
-  box-shadow: 0 3px 10px rgba(30, 127, 20, 0.25);
-}
-
-.icon-inactive {
-  background: linear-gradient(135deg, rgba(30, 127, 20, 0.08) 0%, rgba(77, 159, 63, 0.05) 100%);
-  color: #1e7f14;
-  border: 1px solid rgba(30, 127, 20, 0.1);
-}
-
-.nav-item-inactive:hover .icon-inactive {
-  background: linear-gradient(135deg, #4d9f3f 0%, #7dbf6b 100%);
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 3px 10px rgba(77, 159, 63, 0.3);
-  border-color: transparent;
-}
-
-.text-container {
-  flex: 1;
-  min-width: 0;
-}
-
-.nav-text {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  transition: color 0.3s ease;
-}
-
-.text-active {
-  color: #1e7f14;
-}
-
-.text-inactive {
-  color: #475569;
-}
-
-.hover-effect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(125, 191, 107, 0.05) 50%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.nav-item:hover .hover-effect {
-  opacity: 1;
-}
-
-/* Footer Section */
-.footer-section {
-  border-top: 1px solid #e2e8f0;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-.user-card {
-  padding: 10px;
-}
-
-.user-avatar-mini {
-  display: flex;
-  justify-content: center;
-}
-
-.avatar-container {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #1e7f14 0%, #4d9f3f 50%, #059669 100%);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(30, 127, 20, 0.2);
-  border: 2px solid rgba(255,255,255,0.9);
-}
-
-.avatar-container:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(30, 127, 20, 0.3);
-}
-
-.avatar-text {
-  color: white;
-  font-weight: 700;
-  font-size: 16px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-.copyright {
-  padding: 10px;
-  text-align: center;
-  position: relative;
-}
-
-.copyright-text {
-  font-size: 11px;
-  color: #94a3b8;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  margin-bottom: 1px;
-}
-
-.copyright-dots {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-}
-
-.dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-.dot-1 {
-  background: #1e7f14;
-  animation-delay: 0s;
-}
-
-.dot-2 {
-  background: #4d9f3f;
-  animation-delay: 0.3s;
-}
-
-.dot-3 {
-  background: #059669;
-  animation-delay: 0.6s;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Transiciones globales */
-.v-navigation-drawer {
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
 /* Scroll personalizado */
-.navigation-section::-webkit-scrollbar {
+.overflow-y-auto::-webkit-scrollbar {
   width: 4px;
 }
 
-.navigation-section::-webkit-scrollbar-track {
+.overflow-y-auto::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.navigation-section::-webkit-scrollbar-thumb {
-  background: rgba(125, 191, 107, 0.3);
-  border-radius: 2px;
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  @apply bg-color2/30 dark:bg-color3/30 rounded-sm;
 }
 
-.navigation-section::-webkit-scrollbar-thumb:hover {
-  background: rgba(125, 191, 107, 0.5);
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  @apply bg-color2/50 dark:bg-color3/50;
 }
 
 /* Mejoras de rendimiento */
@@ -509,10 +265,24 @@ function goToProfile() {
   backface-visibility: hidden;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar-elegant {
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+/* Transición suave para el drawer */
+:deep(.v-navigation-drawer) {
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Animación personalizada para los puntos */
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1); 
   }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2); 
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
 }
 </style>
