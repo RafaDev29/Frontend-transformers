@@ -7,21 +7,17 @@
     <div class="px-2 py-1">
       <NavigationComponent
         :breadcrumbs="[
-          { label: 'Panel de Transformadores', path: '/app/welcome' },
-
+          { label: 'Panel de Transformadores', path: '/app/transfor' },
+             { label: 'Panel de Transformadores', path: '/app/transformer' },
         ]"
       />
     </div>
 
-    <!-- Tabla con margen mínimo -->
-    <div class="px-2 pb-1">
-      <TableComponent />
-    </div>
+ 
   </div>
 </template>
 
 <script setup>
 import HeadMaster from '@/components/head/HeadMaster.vue'
-import TableComponent from '@/features/transformer/components/TableComponent.vue'
 import NavigationComponent from '@/features/transformer/components/NavigationComponent.vue'
 </script>

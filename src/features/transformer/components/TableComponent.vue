@@ -38,6 +38,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function goToStrain() {
-  router.push('/app/strain')
+  router.push('/app/welcome')
 }
 </script>
