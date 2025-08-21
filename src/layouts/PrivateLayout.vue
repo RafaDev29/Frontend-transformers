@@ -1,7 +1,6 @@
 <template>
 
 
-  <!-- Si NO, renderizamos el layout normal -->
   <v-app >
     <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
       @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
@@ -110,13 +109,14 @@ function onSettings() {
   min-height: 100vh;
   padding: 16px;
   margin: 2px;
-  margin-left: 5px;
+
   overflow: auto;
 }
 
 @media (min-width: 960px) {
   .content-shell {
     padding: 24px;
+     @apply dark:bg-slate-900/100;
   }
 }
 

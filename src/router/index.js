@@ -7,6 +7,7 @@ import Plan from '@/views/PlanView.vue'
 import authRoutes from '@/features/auth/routes'
 import welcomeRoutes from '@/features/welcome/routes'
 import transformerRoutes from '@/features/transformer/route'
+import factoryRoutes from '@/features/factory/router'
 import { authGuard } from './guards/auth'
 
 const routes = [
@@ -34,6 +35,7 @@ const routes = [
      
       ...welcomeRoutes,
       ...transformerRoutes,
+      ...factoryRoutes,
       
       { path: '', redirect: '/app/welcome' },
     ],

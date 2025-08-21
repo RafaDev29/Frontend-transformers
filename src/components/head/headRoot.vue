@@ -66,9 +66,9 @@
 import { reactive } from 'vue'
 
 const company = reactive({
-  name: 'FABRICA DE TRANSFORMADORES S.A.C',
+  name: 'DYA SOLUTIONS S.A.C',
   ruc: '20601578901',
   address: 'Av. Los Próceres 1250 – Lima, Perú',
-  logo: 'https://t4.ftcdn.net/jpg/03/17/25/45/360_F_317254576_lKDALRrvGoBr7gQSa1k4kJBx7O2D15dc.jpg'
+  logo: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=270,fit=crop,q=95/YanyD0979KFpJyko/logo_dya-AVLp0x16W8HD5DL0.png'
 })
 </script>
