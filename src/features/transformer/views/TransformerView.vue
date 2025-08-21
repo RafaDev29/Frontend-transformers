@@ -15,7 +15,7 @@
    
 
     <!-- Tabla con margen mínimo -->
-    <div class="px-2 pb-1">
+    <div class=" pb-1">
       <TableComponent />
     </div>
   </div>
