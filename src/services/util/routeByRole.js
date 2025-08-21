@@ -4,8 +4,7 @@ export function routeByRole(role) {
   const transformer = '/app/transformer'
   const map = {
     MASTER: transformer,
-    CUSTOMER: transformer,
-    OPERATOR: home,
+    CUSTOMER: home,
     ROOT: home,
   }
   return map[role] || '/start'

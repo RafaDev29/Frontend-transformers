@@ -1,9 +1,7 @@
 <template>
   <!-- Contenedor principal con margen mínimo -->
   <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1">
-    <HeadMaster />
-
-    <!-- Navegación con margen mínimo -->
+     <!-- Navegación con margen mínimo -->
     <div class="px-2 py-1">
       <NavigationComponent
         :breadcrumbs="[
@@ -12,6 +10,9 @@
         ]"
       />
     </div>
+    <HeadMaster />
+
+   
 
     <!-- Tabla con margen mínimo -->
     <div class="px-2 pb-1">

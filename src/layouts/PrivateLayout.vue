@@ -1,9 +1,8 @@
 <template>
-  <!-- Si debemos ocultar el layout completo -->
-  <router-view v-if="hideLayout" />
+
 
   <!-- Si NO, renderizamos el layout normal -->
-  <v-app v-else>
+  <v-app >
     <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
       @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
 
@@ -19,7 +18,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useRouter , useRoute} from 'vue-router'
+import { useRouter } from 'vue-router'
 import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
@@ -27,21 +26,19 @@ const router = useRouter()
 const auth = useAuthStore()
 const drawer = ref(true)
 const sidebarOpen = ref(true)
-const route = useRoute()
-const noLayoutRoutes = ['/app/transformer']
-const hideLayout = computed(() => noLayoutRoutes.includes(route.path))
+
 
 // Items de monitoreo (existentes)
 const monitoringItems = computed(() => {
   const role = auth.user?.role
   const items = [
-    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
-    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'MASTER'], category: 'monitoring' },
+    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'MASTER' , 'ROOT'], category: 'monitoring' },
+    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
 })
@@ -53,14 +50,28 @@ const maintenanceItems = computed(() => {
     {
       title: 'Transformadores',
       icon: 'gauge',
-      to: '/app/transformer',
+      to: '/app/mtransformer',
       roles: [ 'ROOT'],
       category: 'maintenance'
     },
 
     {
       title: 'Empresas',
-      icon: 'user',
+       icon: 'gauge',
+      to: '/mantenimiento/usuarios',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+     {
+      title: 'Fabricas',
+         icon: 'gauge',
+      to: '/mantenimiento/usuarios',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+    {
+      title: 'Alertas',
+      icon: 'gauge',
       to: '/mantenimiento/usuarios',
       roles: ['ROOT'],
       category: 'maintenance'
