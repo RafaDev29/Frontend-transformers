@@ -70,7 +70,7 @@
       </div>
 
       <div class="flex flex-col">
-        <span class="text-slate-500 dark:text-slate-400">Año de Fábricación</span>
+        <span class="text-slate-500 dark:text-slate-400">Año de Fabricación</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
           {{ data.yearManufacture }}
         </span>

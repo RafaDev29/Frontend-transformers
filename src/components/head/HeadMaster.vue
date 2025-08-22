@@ -66,7 +66,7 @@
 import { reactive } from 'vue'
 
 const company = reactive({
-  name: 'FABRICA DE TRANSFORMADORES S.A.C',
+  name: 'FÁBRICA DE TRANSFORMADORES S.A.C',
   ruc: '20601578901',
   address: 'Av. Los Próceres 1250 – Lima, Perú',
   logo: 'https://t4.ftcdn.net/jpg/03/17/25/45/360_F_317254576_lKDALRrvGoBr7gQSa1k4kJBx7O2D15dc.jpg'

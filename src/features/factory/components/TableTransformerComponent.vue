@@ -94,7 +94,7 @@ const rows = [
 ]
 
 function goToStrain() {
-  router.push('/app/transformerDetail')
+  router.push('/app/factoryTransformerDetail')
 }
 </script>
 

@@ -4,7 +4,6 @@
       <NavigationComponent
         :breadcrumbs="[
           { label: 'Panel de Transformadores', path: '/app/welcome' },
-
         ]"
       />
     </div>

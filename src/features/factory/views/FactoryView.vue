@@ -3,7 +3,7 @@
     <div class=" py-1">
       <NavigationComponent
         :breadcrumbs="[
-          { label: 'Panel de Fabricas', path: '/app/factory' },
+          { label: 'Panel de Fábricas', path: '/app/factory' },
 
         ]"
       />
