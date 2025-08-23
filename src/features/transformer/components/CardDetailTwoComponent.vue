@@ -95,12 +95,12 @@
 import { computed } from 'vue'
 
 const data = {
-  type: 'SECO',
-  apparentPowerKVA: 1000,
-  primaryVoltageKV: 22.90,
-  secondaryVoltageKV: 0.23,
-  serialNumber: 'TS22666',
-  yearManufacture: 2025,
+  type: 'EN ACEITE',
+  apparentPowerKVA: 630,
+  primaryVoltageKV: 33,
+  secondaryVoltageKV: 6.6,
+  serialNumber: 'TA22666',
+  yearManufacture: 2024,
   isActive: true,
 }
 

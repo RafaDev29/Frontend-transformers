@@ -1,13 +1,12 @@
 <template>
   <div class="">
     <div
-      class=" overflow-hidden border border-slate-200/70 dark:border-slate-700/60
+      class="overflow-hidden border border-slate-200/70 dark:border-slate-700/60
              bg-gradient-to-br from-white via-slate-50 to-white
              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800
              shadow-sm backdrop-blur-sm transition-all duration-300"
     >
       <table class="min-w-full">
-        <!-- Header con gradiente y sutil separación -->
         <thead
           class="bg-gradient-to-r from-color1/95 via-color2/85 to-color1/95
                  dark:from-color3/90 dark:via-color4/80 dark:to-color3/90
@@ -18,11 +17,10 @@
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Nombre</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Tipo</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Año Fabricación</th>
-             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Estado</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Estado</th>
           </tr>
         </thead>
 
-        <!-- Body con zebra, divide y hover “Claude style” -->
         <tbody
           class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300"
@@ -32,14 +30,13 @@
             :key="row.code"
             role="button"
             tabindex="0"
-            @click="goToStrain"
-            @keydown.enter="goToStrain"
+            @click="goToStrain(row)"
+            @keydown.enter="goToStrain(row)"
             class="group cursor-pointer select-none
                    odd:bg-white/90 even:bg-slate-50/70
                    dark:odd:bg-slate-800/70 dark:even:bg-slate-800/60
                    transition-all duration-300"
           >
-            <!-- Overlay de hover con gradiente y sombra sutil -->
             <td colspan="5" class="relative p-0">
               <div
                 class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300
@@ -93,25 +90,11 @@ const rows = [
   { code: 'TRF003', name: 'Transformador Backup',    type: 'Aceite', year: 2016 , state : "En Fábrica"},
 ]
 
-function goToStrain() {
-  router.push('/app/transformerDetail')
+function goToStrain(row) {
+  if (row.type.toLowerCase() === 'seco') {
+    router.push('/app/transformerDetail')
+  } else if (row.type.toLowerCase() === 'aceite') {
+    router.push('/app/transformerDetailTwo')
+  }
 }
 </script>
-
-<style scoped>
-/* Suaviza texto y remueve “jaggies” en ambas plataformas */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  backface-visibility: hidden;
-}
-
-/* Accesibilidad: foco visible sin romper el layout */
-tr:focus {
-  outline: 2px solid theme('colors.color2');
-  outline-offset: 2px;
-}
-:global(.dark) tr:focus {
-  outline-color: theme('colors.color3');
-}
-</style>
