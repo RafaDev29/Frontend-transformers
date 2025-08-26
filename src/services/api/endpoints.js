@@ -9,6 +9,8 @@ export const TRANSFORMER = {
   CREATE: '/transformer/add',
   UPDATE: '/transformer/update',
   LIST: '/transformer/list',
+  LIST_ROOT : '/transformer/all',
   DELETE: '/transformer/delete',
+
 }
 
