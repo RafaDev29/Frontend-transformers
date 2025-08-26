@@ -14,7 +14,8 @@ export function installInterceptors() {
       const { response } = error
       if (response?.status === 401) {
         const auth = useAuthStore()
-        auth.logout(true) 
+        auth.clearSession() 
+        location.reload()    
       }
       return Promise.reject(error)
     }

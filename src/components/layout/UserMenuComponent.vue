@@ -95,10 +95,10 @@
           </div>
         </div>
 
-        <!-- Cerrar Sesión -->
+
         <button @click="$emit('logout')"
           class="w-full flex items-center gap-2.5 p-2.5 border border-accent-danger/15 dark:border-red-400/25 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-accent-danger/8 via-red-500/5 to-transparent dark:from-red-400/12 dark:via-red-300/8 dark:to-transparent text-accent-danger dark:text-red-400 hover:from-accent-danger/12 hover:via-red-500/8 hover:to-transparent dark:hover:from-red-400/15 dark:hover:via-red-300/12 dark:hover:to-transparent hover:border-accent-danger/25 dark:hover:border-red-400/35 hover:translate-x-1 group">
-          <!-- Efecto shimmer -->
+
           <div
             class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out">
           </div>
@@ -130,15 +130,13 @@ defineEmits(['profile', 'logout', 'theme-toggle'])
 const open = ref(false)
 const isDarkMode = ref(false)
 
-// Detectar el tema actual al montar
+
 onMounted(() => {
   isDarkMode.value = document.documentElement.classList.contains('dark')
 })
 
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value
-
-  // Agregamos o quitamos la clase 'dark' al <html>
   const htmlEl = document.documentElement
   if (isDarkMode.value) {
     htmlEl.classList.add('dark')

@@ -226,7 +226,7 @@ const model = computed({
   set: (v) => emit('update:modelValue', v),
 })
 
-// Separamos los items en dos categorías
+
 const monitoringItems = computed(() => {
   return props.items.filter(item => item.category === 'monitoring' || !item.category)
 })
