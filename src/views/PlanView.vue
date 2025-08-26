@@ -22,7 +22,7 @@
 import { ref, onMounted } from "vue";
 import headComponent from "@/components/plan/headComponent.vue";
 import SubHeadComponent from "@/components/plan/SubHeadComponent.vue";
-import FooterComponent from "@/components/ui/FooterComponent.vue";
+import FooterComponent from "@/components/ui/footer/FooterComponent.vue";
 
 
 export default {

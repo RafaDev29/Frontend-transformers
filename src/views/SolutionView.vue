@@ -18,7 +18,7 @@ import { ref, onMounted } from "vue";
 import headComponent from "@/components/solution/headComponent.vue";
 import BodyComponents from "@/components/solution/BodyComponents.vue"
 import SubBodyComponent from '@/components/solution/SubBodyComponent.vue'
-import FooterComponent from "@/components/ui/FooterComponent.vue";
+import FooterComponent from "@/components/ui/footer/FooterComponent.vue";
 
 export default {
   components: {

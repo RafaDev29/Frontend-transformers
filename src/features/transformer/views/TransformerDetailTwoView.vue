@@ -23,7 +23,7 @@
 
 <script setup>
 import CardDetailTwoComponent from '../components/CardDetailTwoComponent.vue'
-import NavigationComponent from '@/features/transformer/components/NavigationComponent.vue'
+import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import bg from '@/assets/transformer/transformerOil.jpeg'
 
 const bgStyle = { backgroundImage: `url(${bg})` }

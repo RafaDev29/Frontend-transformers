@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import HeadFactory from '@/components/head/HeadFactory.vue'
+import HeadFactory from '@/components/ui/head/HeadFactory.vue'
 import TableComponent from '@/features/factory/components/TableTransformerComponent.vue'
-import NavigationComponent from '@/features/transformer/components/NavigationComponent.vue'
+import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 </script>

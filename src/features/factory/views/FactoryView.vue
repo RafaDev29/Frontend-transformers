@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import headRoot from '@/components/head/headRoot.vue';
+import headRoot from '@/components/ui/head/headRoot.vue';
 import TableComponent from '@/features/factory/components/TableComponent.vue'
-import NavigationComponent from '@/features/factory/components/NavigationComponent.vue'
+import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 </script>

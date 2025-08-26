@@ -7,6 +7,14 @@ export async function createTransformer(payload) {
   return res.data?.data
 }
 
+
+export async function createTransformerRoot(payload) {
+
+  const res = await client.post(TRANSFORMER.CREATE_ROOT, payload)
+  return res.data?.data
+}
+
+
 export async function updateTransformer(payload, id) {
   const { data } = await client.patch(`${TRANSFORMER.UPDATE}/${id}`, payload)
   return data
@@ -28,5 +36,13 @@ export async function deleteTransformer(id) {
   const { data } = await client.delete(`${TRANSFORMER.DELETE}/${id}`)
   return data
 }
+
+
+export async function deleteTransformerRoot(id) {
+  const { data } = await client.delete(`${TRANSFORMER.DELETE_ROOT}/${id}`)
+  return data
+}
+
+
 
 

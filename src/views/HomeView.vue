@@ -20,7 +20,7 @@ import headComponent from "@/components/home/headComponent.vue";
 import SubHeadComponent from "@/components/home/SubHeadComponent.vue";
 import BodyComponent from "@/components/home/BodyComponent.vue";
 import SubBodyComponent from "@/components/home/SubBodyComponent.vue";
-import FooterComponent from "@/components/ui/FooterComponent.vue";
+import FooterComponent from "@/components/ui/footer/FooterComponent.vue";
 
 export default {
   components: {

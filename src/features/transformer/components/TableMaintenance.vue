@@ -125,8 +125,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue'
-
+import { defineProps, computed, defineEmits } from 'vue'
+const emit = defineEmits(['edit', 'delete'])
 const props = defineProps({
     items: {
         type: Array,
@@ -136,6 +136,7 @@ const props = defineProps({
 
 const rows = computed(() => {
     return props.items.map(item => ({
+        uid: item.uid,
         code: item.serialNumber,
         name: item.factory.businessName,
         type: item.type,
@@ -145,12 +146,10 @@ const rows = computed(() => {
 })
 
 function editRow(row) {
-    console.log('Editar:', row)
-
+    emit('edit', row)
 }
 
 function deleteRow(row) {
-    console.log('Eliminar:', row)
-    // Aquí pones la lógica de eliminar
+    emit('delete', row)
 }
 </script>
