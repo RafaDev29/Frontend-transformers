@@ -8,28 +8,28 @@ export default [
     path: 'transformer',              
     name: 'transformer',
     component: Transformer,
-    meta: { requiresAuth: true, roles: ['MASTER', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },
 
   {
     path: 'mtransformer',              
     name: 'mtransformer',
     component: Mtransformer,
-    meta: { requiresAuth: true, roles: ['MASTER', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },
 
    {
     path: 'transformerDetail',              
     name: 'transformerDetail',
     component: Dtransformer,
-    meta: { requiresAuth: true, roles: ['MASTER', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },
 
    {
     path: 'transformerDetailTwo',              
     name: 'transformerDetailTwo',
     component: DTtransformer,
-    meta: { requiresAuth: true, roles: ['MASTER', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },
 
 ]

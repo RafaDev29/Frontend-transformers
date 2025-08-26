@@ -3,7 +3,7 @@ export function routeByRole(role) {
   const home = '/app/factory'  
   const transformer = '/app/transformer'
   const map = {
-    MASTER: transformer,
+    FACTORY: transformer,
     CUSTOMER: home,
     ROOT: home,
   }

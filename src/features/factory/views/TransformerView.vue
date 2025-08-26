@@ -6,7 +6,7 @@
         { label: 'Panel de Transformadores', path: '/app/transformer' },
       ]" />
     </div>
-    <HeadMaster />
+    <HeadFactory />
 
 
     <div class=" pb-1">
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import HeadMaster from '@/components/head/HeadMaster.vue'
+import HeadFactory from '@/components/head/HeadFactory.vue'
 import TableComponent from '@/features/factory/components/TableTransformerComponent.vue'
 import NavigationComponent from '@/features/transformer/components/NavigationComponent.vue'
 </script>

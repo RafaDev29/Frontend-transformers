@@ -16,7 +16,7 @@
           :class="{
             'border-accent-danger focus:border-accent-danger focus:ring-accent-danger/20': errors.username,
             'border-color2 focus:border-color2': form.username && !errors.username
-          }" placeholder="master01" @blur="validateUsername" @input="errors.username = ''" />
+          }" placeholder="factory01" @blur="validateUsername" @input="errors.username = ''" />
       </div>
       <p v-if="errors.username" class="mt-1 text-sm text-accent-danger">{{ errors.username }}</p>
     </div>

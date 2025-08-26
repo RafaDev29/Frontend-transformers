@@ -31,13 +31,13 @@ const sidebarOpen = ref(true)
 const monitoringItems = computed(() => {
   const role = auth.user?.role
   const items = [
-    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
-    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
-    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
-    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
-    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'MASTER' , 'ROOT'], category: 'monitoring' },
-    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
-    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'MASTER', 'ROOT'], category: 'monitoring' },
+    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'FACTORY' , 'ROOT'], category: 'monitoring' },
+    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
 })

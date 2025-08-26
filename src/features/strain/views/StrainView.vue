@@ -1,7 +1,7 @@
 <template>
   <!-- Contenedor principal con margen mínimo -->
   <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1">
-    <HeadMaster />
+    <HeadFactory />
 
     <!-- Navegación con margen mínimo -->
     <div class="px-2 py-1">
@@ -18,6 +18,6 @@
 </template>
 
 <script setup>
-import HeadMaster from '@/components/head/HeadMaster.vue'
+import HeadFactory from '@/components/head/HeadFactory.vue'
 import NavigationComponent from '@/features/transformer/components/NavigationComponent.vue'
 </script>
