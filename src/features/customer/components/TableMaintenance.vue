@@ -13,17 +13,24 @@
                         <tr>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Ruc
+                                Código
                             </th>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Razón social
+                                Fábrica
                             </th>
-                               <th
+                            <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Usuario
+                                Tipo
                             </th>
-
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Año Fabricación
+                            </th>
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Estado
+                            </th>
                             <th
                                 class="px-4 py-3 text-center text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Acciones
@@ -38,17 +45,43 @@
 
                             <td
                                 class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.ruc }}
+                                {{ row.code }}
                             </td>
 
                             <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.businessName }}
+                                {{ row.name }}
                             </td>
 
-                            <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.username }}
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold
+                           bg-gradient-to-r from-color1/10 via-color2/10 to-color1/5
+                           dark:from-colorDark3/20 dark:via-colorDark4/15 dark:to-colorDark3/10
+                           text-color1 dark:text-color3 border border-color1/20 dark:border-colorDark3/30
+                           transition-all duration-300 group-hover:shadow-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-color2 dark:bg-color3 
+                                       shadow-[0_0_6px] shadow-color2/50 dark:shadow-color3/50"></span>
+                                    {{ row.type }}
+                                </span>
                             </td>
 
+                            <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                                {{ row.year }}
+                            </td>
+
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <span :class="[
+                                    'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
+                                    row.state === 'Activo'
+                                        ? 'bg-color1/10 text-color1 border border-color1/20 dark:bg-color3/20 dark:text-color3 dark:border-color3/30'
+                                        : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600'
+                                ]">
+                                    <span :class="[
+                                        'w-1.5 h-1.5 rounded-full mr-1.5',
+                                        row.state === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
+                                    ]"></span>
+                                    {{ row.state }}
+                                </span>
+                            </td>
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <div class="flex justify-center gap-2">
@@ -104,10 +137,11 @@ const props = defineProps({
 const rows = computed(() => {
     return props.items.map(item => ({
         uid: item.uid,
-        businessName: item.businessName,
-        ruc: item.ruc,
-        username: item.user.username
-        // state: item.isActive ? 'Activo' : 'Inactivo'
+        code: item.serialNumber,
+        name: item.factory.businessName,
+        type: item.type,
+        year: item.yearManufacture,
+        state: item.isActive ? 'Activo' : 'Inactivo'
     }))
 })
 

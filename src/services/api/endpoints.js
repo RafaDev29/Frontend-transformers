@@ -18,6 +18,19 @@ export const TRANSFORMER = {
 
 export const FACTORY = {
   LIST: '/factory/list',
+  CREATE: '/factory/add',
+  UPDATE: '/factory/update',
+  DELETE: '/factory/delete',
+}
+
+export const CUSTOMER = {
+  CREATE: '/customers/add',
+  CREATE_ROOT: '/customers/add-root',
+  UPDATE: '/customers/update',
+  LIST: '/customers/list',
+  LIST_ROOT: '/customers/all',
+  DELETE: '/customers/delete',
+  DELETE_ROOT: '/customers/delete-root'
 }
 
 

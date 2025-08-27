@@ -57,8 +57,8 @@ const maintenanceItems = computed(() => {
     {
       title: 'Clientes',
        icon: 'gauge',
-      to: '/mantenimiento/usuarios',
-      roles: ['ROOT'],
+      to: '/app/mcustomer',
+      roles: ['ROOT', 'FACTORY'],
       category: 'maintenance'
     },
      {
