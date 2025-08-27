@@ -55,16 +55,16 @@ const maintenanceItems = computed(() => {
     },
 
     {
-      title: 'Empresas',
+      title: 'Clientes',
        icon: 'gauge',
       to: '/mantenimiento/usuarios',
       roles: ['ROOT'],
       category: 'maintenance'
     },
      {
-      title: 'Fabricas',
+      title: 'Fábricas',
          icon: 'gauge',
-      to: '/mantenimiento/usuarios',
+      to: '/app/mfactory',
       roles: ['ROOT'],
       category: 'maintenance'
     },
