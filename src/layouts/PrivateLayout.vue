@@ -13,8 +13,6 @@
   </v-app>
 </template>
 
-
-
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -27,7 +25,6 @@ const drawer = ref(true)
 const sidebarOpen = ref(true)
 
 
-// Items de monitoreo (existentes)
 const monitoringItems = computed(() => {
   const role = auth.user?.role
   const items = [
@@ -81,7 +78,6 @@ const maintenanceItems = computed(() => {
   return items.filter(i => !i.roles || i.roles.includes(role))
 })
 
-// Combinamos todos los items
 const allMenuItems = computed(() => {
   return [...monitoringItems.value, ...maintenanceItems.value]
 })
@@ -101,7 +97,6 @@ function onSettings() {
 </script>
 
 <style scoped>
-/* Vistas normales: padding + scroll local si hace falta */
 .content-shell {
   position: relative;
   width: 100%;
@@ -109,7 +104,6 @@ function onSettings() {
   min-height: 100vh;
   padding: 16px;
   margin: 2px;
-
   overflow: auto;
 }
 
@@ -120,7 +114,6 @@ function onSettings() {
   }
 }
 
-/* Full-bleed (fondos o lienzos) */
 .content-bleed {
   position: relative;
   width: 100%;
