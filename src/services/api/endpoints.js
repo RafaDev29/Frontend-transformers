@@ -34,3 +34,9 @@ export const CUSTOMER = {
 }
 
 
+export const RANGE = {
+  CREATE: '/customers/add',
+  UPDATE: '/customers/update',
+  LIST: '/customers/list',
+  DELETE: '/customers/delete',
+}

@@ -93,18 +93,87 @@
         </v-tooltip>
       </div>
 
-      <div v-if="maintenanceItems.length > 0" class="mt-6">
-        <!-- Contenedor principal con animación -->
-        <div
-          class="bg-gradient-to-br from-emerald-50/90 via-green-50/80 to-teal-50/70 dark:from-emerald-900/25 dark:via-green-900/20 dark:to-teal-900/15 border border-emerald-200/50 dark:border-emerald-700/40 rounded-2xl overflow-hidden shadow-lg shadow-emerald-100/60 dark:shadow-emerald-900/30 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:shadow-emerald-200/40 dark:hover:shadow-emerald-800/40">
+      <!-- MENÚ DE MANTENIMIENTO CON APERTURA HACIA ARRIBA -->
+      <div v-if="maintenanceItems.length > 0" class="mt-6 relative">
+        <!-- Contenido colapsible que aparece ARRIBA del header -->
+        <div 
+          class="absolute bottom-full left-0 right-0 mb-2 transition-all duration-500 ease-out overflow-hidden z-20"
+          :class="isMaintenanceExpanded ? 'max-h-96 opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-4'">
+          
+          <!-- Items de mantenimiento -->
+          <div class="bg-gradient-to-br from-emerald-50/95 via-green-50/90 to-teal-50/85 dark:from-emerald-900/30 dark:via-green-900/25 dark:to-teal-900/20 border border-emerald-200/60 dark:border-emerald-700/50 rounded-2xl shadow-xl shadow-emerald-200/40 dark:shadow-emerald-800/40 backdrop-blur-sm p-3 space-y-1">
+            <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
+              class="transform transition-all duration-300 hover:scale-[1.02]"
+              :style="{ transitionDelay: `${i * 50}ms` }">
 
-          <!-- Header clickeable mejorado -->
-          <div @click="toggleMaintenance"
-            class="px-4 py-3 bg-gradient-to-r from-emerald-100/80 to-green-100/60 dark:from-emerald-800/40 dark:to-green-800/30 border-b border-emerald-200/50 dark:border-emerald-700/30 cursor-pointer transition-all duration-300 hover:from-emerald-200/80 hover:to-green-200/60 dark:hover:from-emerald-700/50 dark:hover:to-green-700/40 group">
+              <v-tooltip :disabled="!rail" :text="item.title" location="end">
+                <template #activator="{ props: tooltipProps }">
+                  <router-link v-bind="rail ? tooltipProps : {}" :to="item.to"
+                    class="flex items-center rounded-xl transition-all duration-300 relative overflow-hidden border backdrop-blur-sm group"
+                    :class="[
+                      rail ? 'p-2 justify-center mx-1' : 'px-3 py-2.5 gap-3',
+                      $route.path === item.to
+                        ? 'bg-gradient-to-r from-emerald-200/70 to-green-200/50 dark:from-emerald-700/50 dark:to-green-700/40 border-emerald-300/60 dark:border-emerald-600/50 shadow-lg shadow-emerald-200/30 dark:shadow-emerald-700/30'
+                        : 'bg-gradient-to-r from-white/80 to-emerald-50/60 dark:from-gray-800/60 dark:to-emerald-900/30 border-emerald-200/40 dark:border-emerald-700/30 hover:from-emerald-100/80 hover:to-green-100/60 dark:hover:from-emerald-800/50 dark:hover:to-green-800/40 hover:border-emerald-300/60 dark:hover:border-emerald-600/50 hover:shadow-lg hover:shadow-emerald-200/25 dark:hover:shadow-emerald-800/25 hover:translate-x-1'
+                    ]">
+
+                    <!-- Indicador lateral activo mejorado -->
+                    <div v-if="$route.path === item.to"
+                      class="absolute left-0 top-3 bottom-3 w-1 bg-gradient-to-b from-emerald-500 to-green-600 dark:from-emerald-400 dark:to-green-500 rounded-r shadow-sm" />
+
+                    <!-- Icono mejorado con animación -->
+                    <div
+                      class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10 group-hover:scale-110"
+                      :class="$route.path === item.to
+                        ? 'bg-gradient-to-br from-emerald-500 to-green-600 dark:from-emerald-400 dark:to-green-500 text-white shadow-lg shadow-emerald-500/30 dark:shadow-emerald-400/30'
+                        : 'bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-800/60 dark:to-green-800/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-700/40 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-green-600 dark:group-hover:from-emerald-400 dark:group-hover:to-green-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-emerald-500/30 dark:group-hover:shadow-emerald-400/30 group-hover:border-transparent'
+                        ">
+                      <svg viewBox="0 0 24 24"
+                        class="h-5 w-5 transition-transform duration-300 group-hover:rotate-12">
+                        <path :d="$icons[item.icon]" fill="currentColor" />
+                      </svg>
+                    </div>
+
+                    <!-- Texto mejorado -->
+                    <div v-if="!rail" class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 mb-0.5">
+                        <span class="text-sm font-semibold tracking-wide transition-colors duration-300" :class="$route.path === item.to
+                          ? 'text-emerald-800 dark:text-emerald-100'
+                          : 'text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-100'
+                          ">
+                          {{ item.title }}
+                        </span>
+                      </div>
+
+                      <!-- Descripción opcional -->
+                      <p class="text-xs text-emerald-600 dark:text-emerald-400 opacity-80">
+                        Gestión y configuración
+                      </p>
+                    </div>
+
+                    <!-- Efecto hover mejorado -->
+                    <div
+                      class="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/10 to-transparent dark:via-emerald-600/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl" />
+
+                    <!-- Brillo sutil -->
+                    <div
+                      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl" />
+                  </router-link>
+                </template>
+              </v-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header clickeable (ahora abajo) -->
+        <div @click="toggleMaintenance"
+          class="bg-gradient-to-br from-emerald-50/90 via-green-50/80 to-teal-50/70 dark:from-emerald-900/25 dark:via-green-900/20 dark:to-teal-900/15 border border-emerald-200/50 dark:border-emerald-700/40 rounded-2xl overflow-hidden shadow-lg shadow-emerald-100/60 dark:shadow-emerald-900/30 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:shadow-emerald-200/40 dark:hover:shadow-emerald-800/40 cursor-pointer group relative z-10">
+
+          <div class="px-4 py-3 bg-gradient-to-r from-emerald-100/80 to-green-100/60 dark:from-emerald-800/40 dark:to-green-800/30 transition-all duration-300 hover:from-emerald-200/80 hover:to-green-200/60 dark:hover:from-emerald-700/50 dark:hover:to-green-700/40 rounded-2xl">
 
             <!-- Fondo animado -->
             <div
-              class="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/10 to-transparent dark:via-emerald-600/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              class="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/10 to-transparent dark:via-emerald-600/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl">
             </div>
 
             <div class="flex items-center justify-between relative z-10">
@@ -119,7 +188,6 @@
                   </svg>
                 </div>
 
-
                 <div v-if="!rail">
                   <h3 class="text-sm font-bold text-emerald-800 dark:text-emerald-200 tracking-wide mb-0.5">
                     Mantenimiento
@@ -132,86 +200,13 @@
 
               <!-- Indicadores y flecha -->
               <div class="flex items-center gap-2">
-              
-
-                <!-- Flecha animada -->
+                <!-- Flecha animada (apunta hacia arriba cuando está expandido) -->
                 <div v-if="!rail" class="transition-transform duration-300 ease-out"
-                  :class="{ 'rotate-180': isMaintenanceExpanded }">
+                  :class="{ 'rotate-180': !isMaintenanceExpanded }">
                   <svg viewBox="0 0 24 24" class="h-5 w-5 text-emerald-600 dark:text-emerald-300">
-                    <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                    <path d="M7 14l5-5 5 5z" fill="currentColor" />
                   </svg>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Contenido colapsible con animación -->
-          <div class="transition-all duration-500 ease-out overflow-hidden"
-            :class="isMaintenanceExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'">
-
-            <!-- Items de mantenimiento -->
-            <div class="p-3 space-y-1">
-              <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
-                class="transform transition-all duration-300 hover:scale-[1.02]"
-                :style="{ transitionDelay: `${i * 50}ms` }">
-
-                <v-tooltip :disabled="!rail" :text="item.title" location="end">
-                  <template #activator="{ props: tooltipProps }">
-                    <router-link v-bind="rail ? tooltipProps : {}" :to="item.to"
-                      class="flex items-center rounded-xl transition-all duration-300 relative overflow-hidden border backdrop-blur-sm group"
-                      :class="[
-                        rail ? 'p-2 justify-center mx-1' : 'px-3 py-2.5 gap-3',
-                        $route.path === item.to
-                          ? 'bg-gradient-to-r from-emerald-200/70 to-green-200/50 dark:from-emerald-700/50 dark:to-green-700/40 border-emerald-300/60 dark:border-emerald-600/50 shadow-lg shadow-emerald-200/30 dark:shadow-emerald-700/30'
-                          : 'bg-gradient-to-r from-white/80 to-emerald-50/60 dark:from-gray-800/60 dark:to-emerald-900/30 border-emerald-200/40 dark:border-emerald-700/30 hover:from-emerald-100/80 hover:to-green-100/60 dark:hover:from-emerald-800/50 dark:hover:to-green-800/40 hover:border-emerald-300/60 dark:hover:border-emerald-600/50 hover:shadow-lg hover:shadow-emerald-200/25 dark:hover:shadow-emerald-800/25 hover:translate-x-1'
-                      ]">
-
-                      <!-- Indicador lateral activo mejorado -->
-                      <div v-if="$route.path === item.to"
-                        class="absolute left-0 top-3 bottom-3 w-1 bg-gradient-to-b from-emerald-500 to-green-600 dark:from-emerald-400 dark:to-green-500 rounded-r shadow-sm" />
-
-                      <!-- Icono mejorado con animación -->
-                      <div
-                        class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10 group-hover:scale-110"
-                        :class="$route.path === item.to
-                          ? 'bg-gradient-to-br from-emerald-500 to-green-600 dark:from-emerald-400 dark:to-green-500 text-white shadow-lg shadow-emerald-500/30 dark:shadow-emerald-400/30'
-                          : 'bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-800/60 dark:to-green-800/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-700/40 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-green-600 dark:group-hover:from-emerald-400 dark:group-hover:to-green-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-emerald-500/30 dark:group-hover:shadow-emerald-400/30 group-hover:border-transparent'
-                          ">
-                        <svg viewBox="0 0 24 24"
-                          class="h-5 w-5 transition-transform duration-300 group-hover:rotate-12">
-                          <path :d="$icons[item.icon]" fill="currentColor" />
-                        </svg>
-                      </div>
-
-                      <!-- Texto mejorado -->
-                      <div v-if="!rail" class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-0.5">
-                          <span class="text-sm font-semibold tracking-wide transition-colors duration-300" :class="$route.path === item.to
-                            ? 'text-emerald-800 dark:text-emerald-100'
-                            : 'text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-100'
-                            ">
-                            {{ item.title }}
-                          </span>
-
-
-                        </div>
-
-                        <!-- Descripción opcional -->
-                        <p class="text-xs text-emerald-600 dark:text-emerald-400 opacity-80">
-                          Gestión y configuración
-                        </p>
-                      </div>
-
-                      <!-- Efecto hover mejorado -->
-                      <div
-                        class="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/10 to-transparent dark:via-emerald-600/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl" />
-
-                      <!-- Brillo sutil -->
-                      <div
-                        class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl" />
-                    </router-link>
-                  </template>
-                </v-tooltip>
               </div>
             </div>
           </div>
@@ -275,7 +270,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'toggle', 'logout', 'settings'])
 
 // Estado para el colapso del mantenimiento
-const isMaintenanceExpanded = ref(true)
+const isMaintenanceExpanded = ref(false) // Cambié a false por defecto para que inicie cerrado
 
 const model = computed({
   get: () => props.modelValue,
@@ -333,13 +328,10 @@ function goToProfile() {
 
 /* Animación personalizada para los puntos */
 @keyframes pulse {
-
-  0%,
-  100% {
+  0%, 100% {
     opacity: 0.4;
     transform: scale(1);
   }
-
   50% {
     opacity: 1;
     transform: scale(1.2);
@@ -350,7 +342,7 @@ function goToProfile() {
   animation: pulse 2s infinite;
 }
 
-/* Animación para el contenido colapsible */
+/* Animación para el contenido colapsible hacia arriba */
 .max-h-96 {
   max-height: 24rem;
 }
@@ -359,13 +351,12 @@ function goToProfile() {
   max-height: 0;
 }
 
-/* Efectos adicionales */
-@keyframes slideInUp {
+/* Efectos adicionales para animación hacia arriba */
+@keyframes slideInDown {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -373,6 +364,17 @@ function goToProfile() {
 }
 
 .maintenance-item-enter-active {
-  animation: slideInUp 0.3s ease-out forwards;
+  animation: slideInDown 0.3s ease-out forwards;
+}
+
+/* Asegurar que el contenido expandido tenga z-index apropiado */
+.relative {
+  position: relative;
+}
+
+/* Mejora la transición del contenido expandido */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
