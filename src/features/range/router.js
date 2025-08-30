@@ -5,10 +5,10 @@ export default [
 
 
   {
-    path: 'mrange',              
+    path: 'mrange',
     name: 'mrange',
     component: Mrange,
-    meta: { requiresAuth: true, roles: [ 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['ROOT'] }
   },
 
 ]
