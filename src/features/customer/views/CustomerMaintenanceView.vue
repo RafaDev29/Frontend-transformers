@@ -26,7 +26,7 @@ import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { listCustomer, deleteCustomer, createCustomer } from '../services/customerService'
+import { allCustomer, deleteCustomer, createCustomer } from '../services/customerService'
 
 const dataItem = ref()
 const isLoading = ref(false)
@@ -38,7 +38,7 @@ const listTranformer = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await listCustomer()
+    const response = await allCustomer()
 
     if (response) {
       dataItem.value = response.data

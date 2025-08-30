@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1">
+  <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1 pl-1 ml-1">
     <div class="px-2 py-1 flex items-center justify-between">
       <div class="flex-grow">
         <NavigationComponent :breadcrumbs="[
@@ -15,8 +15,22 @@
       <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
-      @save="handleCreate" />
+    <!-- Modal de Crear -->
+    <FormCreateComponent 
+      v-if="showCreateModal" 
+      :show="showCreateModal" 
+      @close="closeCreateModal"
+      @save="handleCreate" 
+    />
+
+    <!-- Modal de Editar -->
+    <FormUpdateComponent 
+      v-if="showUpdateModal"
+      :show="showUpdateModal" 
+      :transformerData="selectedTransformer"
+      @close="closeUpdateModal"
+      @update="handleUpdate" 
+    />
   </div>
 </template>
 
@@ -24,14 +38,27 @@
 import TableMaintenance from '@/features/transformer/components/TableMaintenance.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
+import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { listTransformerRoot, deleteTransformerRoot, createTransformerRoot } from '../services/transformerService'
+import { 
+  listTransformerRoot, 
+  deleteTransformerRoot, 
+  createTransformerRoot,
+  updateTransformerRoot 
+} from '../services/transformerService'
 
 const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
+
+// Estados para Create Modal
 const showCreateModal = ref(false)
+
+// Estados para Update Modal
+const showUpdateModal = ref(false)
+const selectedTransformer = ref({})
+
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 
 const listTranformer = async () => {
@@ -79,10 +106,45 @@ const handleCreate = async (formData) => {
   }
 }
 
-const handleEdit = (transformer) => {
-  console.log('Editar transformador:', transformer)
+// UPDATE MODAL FUNCTIONS
+const openUpdateModal = (transformerData) => {
+  selectedTransformer.value = { ...transformerData }
+  showUpdateModal.value = true
 }
 
+const closeUpdateModal = () => {
+  showUpdateModal.value = false
+  selectedTransformer.value = {}
+}
+
+const handleUpdate = async (updateData) => {
+
+  isLoading.value = true
+  errorMsg.value = ''
+
+  try {
+
+    const response = await updateTransformerRoot(updateData.data , updateData.uid)
+
+    if (response) {
+      bus?.emit?.('success', 'Transformador actualizado correctamente')
+      closeUpdateModal()
+      listTranformer() 
+    }
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'Error al actualizar transformador'
+    bus?.emit?.('error', errorMsg.value)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+
+const handleEdit = (transformer) => {
+  openUpdateModal(transformer)
+}
+
+// DELETE HANDLER
 const handleDelete = async (payload) => {
   isLoading.value = true
   errorMsg.value = ''

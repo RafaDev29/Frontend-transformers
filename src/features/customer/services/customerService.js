@@ -17,6 +17,12 @@ export async function listCustomer() {
   return data
 }
 
+export async function allCustomer() {
+  const { data } = await client.get(CUSTOMER.LIST_ROOT)
+  return data
+}
+
+
 export async function deleteCustomer(id) {
   const { data } = await client.delete(`${CUSTOMER.DELETE}/${id}`)
   return data

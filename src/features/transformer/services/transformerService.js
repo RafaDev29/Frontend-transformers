@@ -20,6 +20,15 @@ export async function updateTransformer(payload, id) {
   return data
 }
 
+export async function updateTransformerRoot(payload, id) {
+  const { data } = await client.patch(`${TRANSFORMER.UPDATE_ROOT}/${id}`, payload)
+  return data
+}
+
+
+
+
+
 export async function listTransformer() {
   const { data } = await client.get(TRANSFORMER.LIST)
   return data

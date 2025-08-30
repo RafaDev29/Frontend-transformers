@@ -15,17 +15,19 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Código
                             </th>
+
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Ruc
+                            </th>
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Razón social
+                            </th>
+
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Fábrica
-                            </th>
-                            <th
-                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Tipo
-                            </th>
-                            <th
-                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Año Fabricación
                             </th>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
@@ -48,9 +50,6 @@
                                 {{ row.code }}
                             </td>
 
-                            <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.name }}
-                            </td>
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold
@@ -58,15 +57,19 @@
                            dark:from-colorDark3/20 dark:via-colorDark4/15 dark:to-colorDark3/10
                            text-color1 dark:text-color3 border border-color1/20 dark:border-colorDark3/30
                            transition-all duration-300 group-hover:shadow-sm">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-color2 dark:bg-color3 
-                                       shadow-[0_0_6px] shadow-color2/50 dark:shadow-color3/50"></span>
-                                    {{ row.type }}
+
+                                    {{ row.ruc }}
                                 </span>
                             </td>
 
                             <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-                                {{ row.year }}
+                                {{ row.businessName }}
                             </td>
+
+                            <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                                {{ row.factory }}
+                            </td>
+
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <span :class="[
@@ -137,9 +140,10 @@ const props = defineProps({
 const rows = computed(() => {
     return props.items.map(item => ({
         uid: item.uid,
-        code: item.serialNumber,
-        name: item.factory.businessName,
-        type: item.type,
+        code: item.code,
+        factory: item.factory.businessName,
+        businessName: item.businessname,
+        ruc: item.ruc,
         year: item.yearManufacture,
         state: item.isActive ? 'Activo' : 'Inactivo'
     }))

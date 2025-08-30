@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="visible" max-width="400px" persistent transition="dialog-bottom-transition">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto text-center relative">
+  <v-dialog v-model="visible" max-width="400px" persistent transition="dialog-bottom-transition" class="z-[9000]">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto text-center relative z-[9000]">
 
       <div class="flex items-center justify-center mb-4">
         <v-icon color="red" class="mr-2 text-3xl">mdi-alert-circle</v-icon>

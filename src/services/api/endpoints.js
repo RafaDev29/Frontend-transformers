@@ -9,6 +9,7 @@ export const TRANSFORMER = {
   CREATE: '/transformer/add',
   CREATE_ROOT: '/transformer/add-root',
   UPDATE: '/transformer/update',
+  UPDATE_ROOT : '/transformer/update-root',
   LIST: '/transformer/list',
   LIST_ROOT: '/transformer/all',
   DELETE: '/transformer/delete',
@@ -35,8 +36,8 @@ export const CUSTOMER = {
 
 
 export const RANGE = {
-  CREATE: '/customers/add',
-  UPDATE: '/customers/update',
-  LIST: '/customers/list',
-  DELETE: '/customers/delete',
+  CREATE: '/range/add',
+  UPDATE: '/range/update',
+  LIST: '/range/list',
+  DELETE: '/range/delete',
 }

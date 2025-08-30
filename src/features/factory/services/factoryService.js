@@ -8,6 +8,7 @@ export async function createFactory(payload) {
 }
 
 export async function updateFactory(payload, id) {
+  console.log(payload)
   const { data } = await client.patch(`${FACTORY.UPDATE}/${id}`, payload)
   return data
 }

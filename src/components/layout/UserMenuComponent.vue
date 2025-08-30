@@ -55,21 +55,21 @@
           <span class="text-sm font-semibold flex-1 text-left relative z-10">Mi Perfil</span>
         </button>
 
-        <!-- Toggle Modo Oscuro/Claro -->
+
         <button @click="toggleTheme"
           class="w-full flex items-center gap-2.5 p-2.5 border border-color3/15 dark:border-color4/25 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-color3/8 via-color4/5 to-transparent dark:from-color4/12 dark:via-color5/8 dark:to-transparent text-color2 dark:text-color4 hover:from-color3/12 hover:via-color4/8 hover:to-transparent dark:hover:from-color4/15 dark:hover:via-color5/12 dark:hover:to-transparent hover:border-color3/25 dark:hover:border-color4/35 hover:translate-x-1 group">
-          <!-- Efecto shimmer -->
+
           <div
             class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out">
           </div>
 
           <div
             class="w-8 h-8 bg-gradient-to-br from-color3 to-color4 dark:from-color4 dark:to-color5 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md shadow-color3/25 dark:shadow-color4/25 relative z-10">
-            <!-- Icono Luna (Modo Oscuro) -->
+
             <svg v-if="!isDarkMode" viewBox="0 0 24 24" class="w-4 h-4 text-white">
               <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor" />
             </svg>
-            <!-- Icono Sol (Modo Claro) -->
+
             <svg v-else viewBox="0 0 24 24" class="w-4 h-4 text-white">
               <path
                 d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"

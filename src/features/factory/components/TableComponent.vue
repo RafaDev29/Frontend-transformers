@@ -7,7 +7,6 @@
              shadow-sm backdrop-blur-sm transition-all duration-300"
     >
       <table class="min-w-full">
-        <!-- Header con gradiente -->
         <thead
           class="bg-gradient-to-r from-color1/95 via-color2/85 to-color1/95
                  dark:from-color3/90 dark:via-color4/80 dark:to-color3/90
@@ -20,7 +19,6 @@
           </tr>
         </thead>
 
-        <!-- Body -->
         <tbody
           class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300"
@@ -37,7 +35,6 @@
                    dark:odd:bg-slate-800/70 dark:even:bg-slate-800/60
                    transition-all duration-300"
           >
-            <!-- Overlay hover -->
             <td colspan="3" class="relative p-0">
               <div
                 class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300

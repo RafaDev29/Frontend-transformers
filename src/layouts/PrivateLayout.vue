@@ -1,7 +1,7 @@
 <template>
 
 
-  <v-app >
+  <v-app>
     <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
       @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
 
@@ -32,7 +32,7 @@ const monitoringItems = computed(() => {
     { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'FACTORY' , 'ROOT'], category: 'monitoring' },
+    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
   ]
@@ -47,20 +47,20 @@ const maintenanceItems = computed(() => {
       title: 'Transformadores',
       icon: 'gauge',
       to: '/app/mtransformer',
-      roles: [ 'ROOT'],
+      roles: ['ROOT'],
       category: 'maintenance'
     },
 
     {
       title: 'Clientes',
-       icon: 'gauge',
+      icon: 'gauge',
       to: '/app/mcustomer',
       roles: ['ROOT', 'FACTORY'],
       category: 'maintenance'
     },
-     {
+    {
       title: 'Fábricas',
-         icon: 'gauge',
+      icon: 'gauge',
       to: '/app/mfactory',
       roles: ['ROOT'],
       category: 'maintenance'
@@ -72,7 +72,23 @@ const maintenanceItems = computed(() => {
       roles: ['ROOT'],
       category: 'maintenance'
     },
-   
+
+    {
+      title: 'Rangos',
+      icon: 'gauge',
+      to: '/app/mrange',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+
+    {
+      title: 'Reglas',
+      icon: 'gauge',
+      to: '/app/mrules',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+
 
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
@@ -110,7 +126,7 @@ function onSettings() {
 @media (min-width: 960px) {
   .content-shell {
     padding: 24px;
-     @apply dark:bg-slate-900/100;
+    @apply dark:bg-slate-900/100;
   }
 }
 

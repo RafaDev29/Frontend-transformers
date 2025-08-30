@@ -17,6 +17,10 @@
 
     <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
       @save="handleCreate" />
+
+    <FormUpdateComponent v-if="showUpdateModal" :show="showUpdateModal" :factory="selectedFactory"
+      @close="closeUpdateModal" @save="handleUpdate" />
+
   </div>
 </template>
 
@@ -24,15 +28,29 @@
 import TableMaintenance from '@/features/factory/components/TableMaintenance.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
+import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { listFactory, deleteFactory, createFactory } from '../services/factoryService'
+import { listFactory, deleteFactory, createFactory, updateFactory } from '../services/factoryService'
 
+const showUpdateModal = ref(false)
+const selectedFactory = ref(null)
 const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
 const showCreateModal = ref(false)
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
+
+
+const handleEdit = (factory) => {
+  selectedFactory.value = factory
+  showUpdateModal.value = true
+}
+
+const closeUpdateModal = () => {
+  showUpdateModal.value = false
+  selectedFactory.value = null
+}
 
 const listTranformer = async () => {
   isLoading.value = true
@@ -69,7 +87,7 @@ const handleCreate = async (formData) => {
     if (response) {
       bus?.emit?.('success', 'Transformador creado correctamente')
       closeCreateModal()
-      listTranformer() 
+      listTranformer()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
@@ -79,9 +97,30 @@ const handleCreate = async (formData) => {
   }
 }
 
-const handleEdit = (transformer) => {
-  console.log('Editar transformador:', transformer)
+
+
+
+const handleUpdate = async (payload) => {
+  isLoading.value = true
+  errorMsg.value = ''
+  try {
+
+    const response = await updateFactory(payload, payload.uid)
+    if (response.status) {
+      bus?.emit?.('success', 'Fábrica actualizada correctamente')
+      closeUpdateModal()
+      listTranformer()
+    }
+
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'Error al actualizar fábrica'
+    bus?.emit?.('error', errorMsg.value)
+  } finally {
+    isLoading.value = false
+  }
 }
+
+
 
 const handleDelete = async (payload) => {
   isLoading.value = true

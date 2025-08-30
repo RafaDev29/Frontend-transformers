@@ -40,16 +40,16 @@
 
                     <tbody class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300">
-                        <tr v-for="row in rows" :key="row.code"
+                        <tr v-for="row in rows" :key="row.serialNumber"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
 
                             <td
                                 class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.code }}
+                                {{ row.serialNumber }}
                             </td>
 
                             <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.name }}
+                                {{ row.factoryName }}
                             </td>
 
                             <td class="px-4 py-4 whitespace-nowrap">
@@ -65,21 +65,21 @@
                             </td>
 
                             <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-                                {{ row.year }}
+                                {{ row.yearManufacture }}
                             </td>
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <span :class="[
                                     'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
-                                    row.state === 'Activo'
+                                    row.isActive === 'Activo'
                                         ? 'bg-color1/10 text-color1 border border-color1/20 dark:bg-color3/20 dark:text-color3 dark:border-color3/30'
                                         : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600'
                                 ]">
                                     <span :class="[
                                         'w-1.5 h-1.5 rounded-full mr-1.5',
-                                        row.state === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
+                                        row.isActive === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
                                     ]"></span>
-                                    {{ row.state }}
+                                    {{ row.isActive }}
                                 </span>
                             </td>
 
@@ -136,12 +136,18 @@ const props = defineProps({
 
 const rows = computed(() => {
     return props.items.map(item => ({
+        voltagePrimary: item.voltagePrimary,
+        voltageSecondary: item.voltageSecondary,
+        apparentPowerKVA : item.apparentPowerKVA,
         uid: item.uid,
-        code: item.serialNumber,
-        name: item.factory.businessName,
+        serialNumber: item.serialNumber,
+        factoryName: item.factory.businessName,
+        uidFactory : item.factory.uid,
         type: item.type,
-        year: item.yearManufacture,
-        state: item.isActive ? 'Activo' : 'Inactivo'
+        zone : item.zone,
+        yearManufacture: item.yearManufacture,
+        factory : item.factory,
+        isActive: item.isActive ? 'Activo' : 'Inactivo'
     }))
 })
 

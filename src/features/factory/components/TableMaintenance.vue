@@ -11,6 +11,11 @@
                  dark:from-color3/90 dark:via-color4/80 dark:to-color3/90
                  text-white">
                         <tr>
+
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Código
+                            </th>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Ruc
@@ -19,9 +24,14 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Razón social
                             </th>
-                               <th
+                            <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Usuario
+                            </th>
+
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Estado
                             </th>
 
                             <th
@@ -36,6 +46,11 @@
                         <tr v-for="row in rows" :key="row.code"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
 
+                              <td
+                                class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                                {{ row.code }}
+                            </td>
+
                             <td
                                 class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
                                 {{ row.ruc }}
@@ -47,6 +62,21 @@
 
                             <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
                                 {{ row.username }}
+                            </td>
+
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <span :class="[
+                                    'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
+                                    row.isActive === 'Activo'
+                                        ? 'bg-color1/10 text-color1 border border-color1/20 dark:bg-color3/20 dark:text-color3 dark:border-color3/30'
+                                        : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600'
+                                ]">
+                                    <span :class="[
+                                        'w-1.5 h-1.5 rounded-full mr-1.5',
+                                        row.isActive === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
+                                    ]"></span>
+                                    {{ row.isActive }}
+                                </span>
                             </td>
 
 
@@ -103,11 +133,16 @@ const props = defineProps({
 
 const rows = computed(() => {
     return props.items.map(item => ({
+
         uid: item.uid,
+        username : item.user.username ,
+        user : item.user,
+        address : item.address ,
+        distric : item.distric,
+        code : item.code ,
         businessName: item.businessName,
         ruc: item.ruc,
-        username: item.user.username
-        // state: item.isActive ? 'Activo' : 'Inactivo'
+        isActive: item.isActive ? 'Activo' : 'Inactivo'
     }))
 })
 

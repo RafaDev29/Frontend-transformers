@@ -4,7 +4,7 @@
       class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-          Crear Nuevo Transformador
+          Editar Transformador
         </h2>
         <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@
             <p v-if="errors.apparentPowerKVA" class="mt-1 text-sm text-red-600">{{ errors.apparentPowerKVA }}</p>
           </div>
 
-            <!-- Número de Serie -->
+          <!-- Número de Serie -->
           <div>
             <label for="serialNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Número de Serie *
@@ -151,7 +151,7 @@
             <p v-if="errors.voltageSecondary" class="mt-1 text-sm text-red-600">{{ errors.voltageSecondary }}</p>
           </div>
 
-        
+
 
           <!-- Año de Fabricación -->
           <div>
@@ -201,15 +201,15 @@
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500">
             Cancelar
           </button>
-          <button type="submit" 
+          <button type="submit"
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
-            <span  class="flex items-center">
+            <span class="flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4 4 8-8"></path>
               </svg>
-              Crear Transformador
+              Actualizar Transformador
             </span>
-           
+
           </button>
         </div>
       </form>
@@ -226,24 +226,31 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: false
+  },
+  transformerData: {
+    type: Object,
+    default: () => ({})
   }
 })
 
-const emit = defineEmits(['close', 'save'])
+console.log(props.transformerData, "aaaaa")
+
+const emit = defineEmits(['close', 'update'])
 
 const dataFactory = ref([])
 const dataRange = ref([])
 const isLoading = ref(false)
 const errors = ref({})
+const dataLoaded = ref(false) // Nueva variable para controlar cuando los datos están cargados
 
 const form = reactive({
   type: '',
-  zone: '', // Nuevo campo zona
+  zone: '',
   apparentPowerKVA: null,
-  primaryRangeUid: '', // UID del rango primario
-  voltagePrimary: '', // Voltaje específico del rango
-  secondaryRangeUid: '', // UID del rango secundario
-  voltageSecondary: '', // Voltaje específico del rango
+  primaryRangeUid: '',
+  voltagePrimary: '',
+  secondaryRangeUid: '',
+  voltageSecondary: '',
   serialNumber: '',
   yearManufacture: new Date().getFullYear(),
   isActive: true,
@@ -268,6 +275,7 @@ const getRange = async () => {
     if (response) {
       console.log(response.data, "ranges")
       dataRange.value = response.data
+      dataLoaded.value = true // Marcar que los datos están cargados
     }
   } catch {
     console.error("error al listar rangos")
@@ -296,6 +304,67 @@ const resetPrimaryVoltage = () => {
 // Reset voltaje secundario cuando cambia el rango
 const resetSecondaryVoltage = () => {
   form.voltageSecondary = ''
+}
+
+// Función para encontrar el UID del rango basado en el voltaje
+const findRangeByVoltage = (voltage) => {
+  const voltageNumber = parseFloat(voltage)
+  for (const range of dataRange.value) {
+    if (range.voltageValue && range.voltageValue.some(v => parseFloat(v) === voltageNumber)) {
+      return range.uid
+    }
+  }
+  return ''
+}
+
+// Llenar formulario con datos del transformador
+const fillForm = (data) => {
+  if (!data || Object.keys(data).length === 0) return
+
+  console.log('Llenando formulario con:', data)
+
+  // Llenar campos básicos
+  form.type = data.type || ''
+  form.zone = String(data.zone) || '' // Convertir a string para el select
+  form.apparentPowerKVA = parseFloat(data.apparentPowerKVA) || null
+  form.serialNumber = data.serialNumber || ''
+  form.yearManufacture = parseInt(data.yearManufacture) || new Date().getFullYear()
+  form.isActive = data.isActive === 'Activo' || data.isActive === true
+  form.factoryUid = data.uidFactory || data.factory?.uid || ''
+
+  // Guardar los voltajes originales
+  const primaryVoltage = String(data.voltagePrimary) // Convertir a string para el select
+  const secondaryVoltage = String(data.voltageSecondary) // Convertir a string para el select
+
+  // Buscar y asignar los rangos basados en los voltajes
+  if (dataRange.value.length > 0) {
+    // Encontrar rangos
+    const primaryRangeUid = findRangeByVoltage(primaryVoltage)
+    const secondaryRangeUid = findRangeByVoltage(secondaryVoltage)
+
+    console.log('Rangos encontrados:', {
+      primaryRangeUid,
+      secondaryRangeUid,
+      primaryVoltage,
+      secondaryVoltage,
+      dataRange: dataRange.value
+    })
+
+    // Asignar rangos primero
+    form.primaryRangeUid = primaryRangeUid
+    form.secondaryRangeUid = secondaryRangeUid
+
+    // Luego asignar los voltajes (estos deben mantenerse como los valores originales)
+    // Usar setTimeout para asegurar que los selects de rango se actualicen primero
+    setTimeout(() => {
+      form.voltagePrimary = primaryVoltage
+      form.voltageSecondary = secondaryVoltage
+      console.log('Voltajes asignados:', {
+        voltagePrimary: form.voltagePrimary,
+        voltageSecondary: form.voltageSecondary
+      })
+    }, 100)
+  }
 }
 
 const resetForm = () => {
@@ -363,34 +432,54 @@ const validateForm = () => {
 const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
-    
-    // Preparar datos para enviar
-    const dataToSend = {
-      type: form.type,
-      zone: form.zone, // Se envía como string "7.5" o "5"
-      apparentPowerKVA: form.apparentPowerKVA,
-      voltagePrimary: form.voltagePrimary, // Voltaje específico como string
-      voltageSecondary: form.voltageSecondary, // Voltaje específico como string
-      serialNumber: form.serialNumber,
-      yearManufacture: form.yearManufacture,
-      isActive: form.isActive,
-      factoryUid: form.factoryUid // Solo el UID de la fábrica
+
+    const updateData = {
+      uid: props.transformerData.uid, // UID del transformador
+      data: {
+        type: form.type,
+        zone: form.zone,
+        apparentPowerKVA: form.apparentPowerKVA,
+        voltagePrimary: form.voltagePrimary,
+        voltageSecondary: form.voltageSecondary,
+        serialNumber: form.serialNumber,
+        yearManufacture: form.yearManufacture,
+        isActive: form.isActive,
+        factoryUid: form.factoryUid
+      }
     }
-    
-    emit('save', dataToSend)
+
+    emit('update', updateData)
   }
 }
 
+// Watcher para cuando se abra el modal
 watch(() => props.show, (newVal) => {
   if (newVal) {
     resetForm()
+    // Esperar a que los datos estén cargados antes de llenar el formulario
+    if (dataLoaded.value && Object.keys(props.transformerData).length > 0) {
+      fillForm(props.transformerData)
+    }
   } else {
     isLoading.value = false
   }
 })
 
-onMounted(() => {
-  getRange();
-  getFactory();
+// Watcher para cuando lleguen los datos del transformador
+watch(() => props.transformerData, (newData) => {
+  if (newData && Object.keys(newData).length > 0 && dataLoaded.value && props.show) {
+    fillForm(newData)
+  }
+}, { deep: true })
+
+// Watcher para cuando se carguen los datos de rango
+watch(dataLoaded, (loaded) => {
+  if (loaded && props.show && Object.keys(props.transformerData).length > 0) {
+    fillForm(props.transformerData)
+  }
+})
+
+onMounted(async () => {
+  await Promise.all([getRange(), getFactory()])
 })
 </script>
