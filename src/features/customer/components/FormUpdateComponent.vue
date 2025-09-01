@@ -13,20 +13,19 @@
         </button>
       </div>
 
-      <!-- Form -->
       <form @submit.prevent="handleSubmit" class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           <div>
-            <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label for="businessName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Razón social *
             </label>
-            <input id="businessname" v-model="form.businessname" type="text" :class="[
+            <input id="businessName" v-model="form.businessName" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.businessname ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              errors.businessName ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
               'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
             ]" required />
-            <p v-if="errors.businessname" class="mt-1 text-sm text-red-600">{{ errors.businessname }}</p>
+            <p v-if="errors.businessName" class="mt-1 text-sm text-red-600">{{ errors.businessName }}</p>
           </div>
 
           <div>
@@ -43,15 +42,17 @@
 
           <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Ruc *
+              RUC *
             </label>
             <input id="ruc" v-model="form.ruc" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
               errors.ruc ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
               'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" placeholder="" required />
+            ]" required />
             <p v-if="errors.ruc" class="mt-1 text-sm text-red-600">{{ errors.ruc }}</p>
           </div>
+
+
 
           <div>
             <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -89,6 +90,7 @@
             <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
           </div>
 
+
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Contraseña *
@@ -97,9 +99,10 @@
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
               errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
               'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" placeholder="" required />
+            ]" placeholder="" />
             <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
           </div>
+
 
           <div>
             <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -128,20 +131,15 @@
           </div>
         </div>
 
-        <!-- Buttons -->
+
         <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-slate-600">
           <button type="button" @click="$emit('close')"
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500">
             Cancelar
           </button>
-          <button type="submit"
+          <button type="submit" 
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
-            <span class="flex items-center">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4 4 8-8"></path>
-              </svg>
-              Actualizar Cliente
-            </span>
+            Actualizar 
           </button>
         </div>
       </form>
@@ -150,7 +148,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
+import { ref, reactive, watch, defineProps, defineEmits, onMounted, nextTick } from 'vue'
 import { listFactory } from '@/features/factory/services/factoryService'
 
 const props = defineProps({
@@ -164,19 +162,16 @@ const props = defineProps({
   }
 })
 
-console.log(props.clientData, "datos del cliente")
-
 const emit = defineEmits(['close', 'update'])
 
 const dataFactory = ref([])
 const isLoading = ref(false)
 const errors = ref({})
-const dataLoaded = ref(false) // Nueva variable para controlar cuando los datos están cargados
 
 const form = reactive({
-  businessname: '',
-  code: '',
+  businessName: '',
   ruc: '',
+  code: '',
   address: '',
   distric: '',
   username: '',
@@ -188,37 +183,45 @@ const form = reactive({
 const getFactory = async () => {
   try {
     const response = await listFactory()
-    if (response) {
-      console.log(response.data, "factories")
+    if (response && response.data) {
+      console.log('Fábricas cargadas:', response.data)
       dataFactory.value = response.data
-      dataLoaded.value = true // Marcar que los datos están cargados
     }
-  } catch {
-    console.error("error al listar fabricas")
+  } catch (error) {
+    console.error("Error al listar fábricas:", error)
   }
 }
 
-// Llenar formulario con datos del cliente
 const fillForm = (data) => {
   if (!data || Object.keys(data).length === 0) return
 
-  console.log('Llenando formulario con:', data)
+  console.log('Llenando formulario con datos:', data)
 
-  form.businessname = data.businessName || data.businessname || ''
-  form.code = data.code || ''
+
+  form.businessName = data.businessName || ''
   form.ruc = data.ruc || ''
+  form.code = data.code || ''
   form.address = data.address || ''
   form.distric = data.distric || ''
   form.username = data.username || ''
   form.password = data.password || ''
-  form.isActive = data.isActive === 'Activo' || data.isActive === true
+
+  if (typeof data.isActive === 'string') {
+    form.isActive = data.isActive === 'Activo'
+  } else {
+    form.isActive = Boolean(data.isActive)
+  }
+
+  // Manejar el UID de la fábrica
   form.factoryUid = data.uidFactory || data.factory?.uid || ''
+
+  console.log('Formulario después de llenar:', { ...form })
 }
 
 const resetForm = () => {
-  form.businessname = ''
-  form.code = ''
+  form.businessName = ''
   form.ruc = ''
+  form.code = ''
   form.address = ''
   form.distric = ''
   form.username = ''
@@ -228,36 +231,15 @@ const resetForm = () => {
   errors.value = {}
 }
 
-// Validar formulario
 const validateForm = () => {
   errors.value = {}
 
-  if (!form.businessname) {
-    errors.value.businessname = 'La razón social es requerida'
+  if (!form.businessName || form.businessName.trim() === '') {
+    errors.value.businessName = 'La razón social es requerida'
   }
 
-  if (!form.code) {
-    errors.value.code = 'El código es requerido'
-  }
-
-  if (!form.ruc) {
+  if (!form.ruc || form.ruc.trim() === '') {
     errors.value.ruc = 'El RUC es requerido'
-  }
-
-  if (!form.address) {
-    errors.value.address = 'La dirección es requerida'
-  }
-
-  if (!form.distric) {
-    errors.value.distric = 'El distrito es requerido'
-  }
-
-  if (!form.username) {
-    errors.value.username = 'El usuario es requerido'
-  }
-
-  if (!form.password) {
-    errors.value.password = 'La contraseña es requerida'
   }
 
   if (!form.factoryUid) {
@@ -272,29 +254,46 @@ const handleSubmit = () => {
     isLoading.value = true
 
     const updateData = {
-      uid: props.clientData.uid, // UID del cliente
+      uid: props.clientData.uid,
       data: {
-        businessname: form.businessname,
-        code: form.code,
+        businessname: form.businessName,
         ruc: form.ruc,
+        code: form.code,
         address: form.address,
         distric: form.distric,
         username: form.username,
-        password: form.password,
         isActive: form.isActive,
         factoryUid: form.factoryUid
       }
+    }
+
+    if (form.password && form.password.trim() !== '') {
+      updateData.data.password = form.password
     }
 
     emit('update', updateData)
   }
 }
 
-// Watcher para cuando se abra el modal
-watch(() => props.show, (newVal) => {
+// Cargar fábricas al montar el componente
+onMounted(async () => {
+  await getFactory()
+})
+
+// Watcher para cuando se abre el modal
+watch(() => props.show, async (newVal) => {
   if (newVal) {
+    console.log('Modal abierto, datos del cliente:', props.clientData)
     resetForm()
-    if (Object.keys(props.clientData).length > 0) {
+
+    if (dataFactory.value.length === 0) {
+      await getFactory()
+    }
+
+    await nextTick()
+
+    // Llenar el formulario si hay datos
+    if (props.clientData && Object.keys(props.clientData).length > 0) {
       fillForm(props.clientData)
     }
   } else {
@@ -302,14 +301,14 @@ watch(() => props.show, (newVal) => {
   }
 })
 
-// Watcher para cuando lleguen los datos del cliente
+// Watcher para cambios en clientData
 watch(() => props.clientData, (newData) => {
+  console.log('Datos del cliente cambiaron:', newData)
   if (newData && Object.keys(newData).length > 0 && props.show) {
     fillForm(newData)
   }
-}, { deep: true })
-
-onMounted(() => {
-  getFactory()
+}, {
+  deep: true,
+  immediate: true
 })
 </script>

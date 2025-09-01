@@ -143,10 +143,13 @@ const rows = computed(() => {
         code: item.code,
         businessName: item.businessname,
         ruc: item.ruc,
+        address: item.address,
+        distric: item.distric,
+        username: item.user.username,
         isActive: item.isActive ? 'Activo' : 'Inactivo',
         factoryName: item.factory.businessName,
-        uidFactory : item.factory.uid,
-        factory : item.factory,
+        uidFactory: item.factory.uid,
+        factory: item.factory,
     }))
 })
 

@@ -28,7 +28,7 @@ export const CUSTOMER = {
   CREATE: '/customers/add',
   CREATE_ROOT: '/customers/add-root',
   UPDATE: '/customers/update',
-  UPDATE_ROOT: '/customers/update-roo',
+  UPDATE_ROOT: '/customers/update-root',
   LIST: '/customers/list',
   LIST_ROOT: '/customers/all',
   DELETE: '/customers/delete',

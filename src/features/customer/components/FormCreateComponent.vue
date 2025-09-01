@@ -173,8 +173,8 @@ const errors = ref({})
 
 const form = reactive({
   businessname: null,
-  code: '',
   ruc: '',
+  code: '',
   address: '',
   distric: '',
   username: '',
@@ -244,7 +244,7 @@ const handleSubmit = () => {
       code: form.code,
       ruc: form.ruc,
       address: form.address,
-      distric: form.address,
+      distric: form.distric,
       username: form.username,
       password: form.password,
       isActive: form.isActive,

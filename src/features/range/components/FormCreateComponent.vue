@@ -16,10 +16,9 @@
                 </button>
             </div>
 
-            <!-- Form -->
+
             <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
                 
-                <!-- Código -->
                 <div>
                     <label for="code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Código *
@@ -29,7 +28,6 @@
                     <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
                 </div>
 
-                <!-- Tipo -->
                 <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Tipo *

@@ -65,16 +65,15 @@
           </label>
         </div>
 
-        <!-- Buttons -->
+
         <div class="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-slate-600">
           <button type="button" @click="$emit('close')"
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
             Cancelar
           </button>
-          <button type="submit" :disabled="isLoading"
+          <button type="submit" 
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 rounded-md">
-            <span v-if="!isLoading">Actualizar</span>
-            <span v-else>Actualizando...</span>
+          Actualizar
           </button>
         </div>
       </form>

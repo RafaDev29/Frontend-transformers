@@ -207,7 +207,7 @@
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4 4 8-8"></path>
               </svg>
-              Actualizar Transformador
+              Actualizar 
             </span>
 
           </button>
@@ -233,7 +233,6 @@ const props = defineProps({
   }
 })
 
-console.log(props.transformerData, "aaaaa")
 
 const emit = defineEmits(['close', 'update'])
 
@@ -241,7 +240,7 @@ const dataFactory = ref([])
 const dataRange = ref([])
 const isLoading = ref(false)
 const errors = ref({})
-const dataLoaded = ref(false) // Nueva variable para controlar cuando los datos están cargados
+const dataLoaded = ref(false) 
 
 const form = reactive({
   type: '',
@@ -275,38 +274,33 @@ const getRange = async () => {
     if (response) {
       console.log(response.data, "ranges")
       dataRange.value = response.data
-      dataLoaded.value = true // Marcar que los datos están cargados
+      dataLoaded.value = true 
     }
   } catch {
     console.error("error al listar rangos")
   }
 }
 
-// Obtener valores de voltaje primario basado en el rango seleccionado
 const getPrimaryVoltageValues = () => {
   if (!form.primaryRangeUid) return []
   const selectedRange = dataRange.value.find(range => range.uid === form.primaryRangeUid)
   return selectedRange ? selectedRange.voltageValue : []
 }
 
-// Obtener valores de voltaje secundario basado en el rango seleccionado
 const getSecondaryVoltageValues = () => {
   if (!form.secondaryRangeUid) return []
   const selectedRange = dataRange.value.find(range => range.uid === form.secondaryRangeUid)
   return selectedRange ? selectedRange.voltageValue : []
 }
 
-// Reset voltaje primario cuando cambia el rango
 const resetPrimaryVoltage = () => {
   form.voltagePrimary = ''
 }
 
-// Reset voltaje secundario cuando cambia el rango
 const resetSecondaryVoltage = () => {
   form.voltageSecondary = ''
 }
 
-// Función para encontrar el UID del rango basado en el voltaje
 const findRangeByVoltage = (voltage) => {
   const voltageNumber = parseFloat(voltage)
   for (const range of dataRange.value) {
@@ -323,22 +317,22 @@ const fillForm = (data) => {
 
   console.log('Llenando formulario con:', data)
 
-  // Llenar campos básicos
+
   form.type = data.type || ''
-  form.zone = String(data.zone) || '' // Convertir a string para el select
+  form.zone = String(data.zone) || '' 
   form.apparentPowerKVA = parseFloat(data.apparentPowerKVA) || null
   form.serialNumber = data.serialNumber || ''
   form.yearManufacture = parseInt(data.yearManufacture) || new Date().getFullYear()
   form.isActive = data.isActive === 'Activo' || data.isActive === true
   form.factoryUid = data.uidFactory || data.factory?.uid || ''
 
-  // Guardar los voltajes originales
-  const primaryVoltage = String(data.voltagePrimary) // Convertir a string para el select
-  const secondaryVoltage = String(data.voltageSecondary) // Convertir a string para el select
 
-  // Buscar y asignar los rangos basados en los voltajes
+  const primaryVoltage = String(data.voltagePrimary) 
+  const secondaryVoltage = String(data.voltageSecondary) 
+
+
   if (dataRange.value.length > 0) {
-    // Encontrar rangos
+
     const primaryRangeUid = findRangeByVoltage(primaryVoltage)
     const secondaryRangeUid = findRangeByVoltage(secondaryVoltage)
 
