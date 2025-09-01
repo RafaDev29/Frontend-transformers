@@ -4,7 +4,7 @@
       class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-          Crear Nuevo Cliente
+          Editar Cliente
         </h2>
         <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -13,16 +13,15 @@
         </button>
       </div>
 
-
+      <!-- Form -->
       <form @submit.prevent="handleSubmit" class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
 
           <div>
             <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Razón social *
             </label>
-            <input id="businessname" v-model.number="form.businessname" type="text" min="1" step="0.01" :class="[
+            <input id="businessname" v-model="form.businessname" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
               errors.businessname ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
               'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
@@ -42,7 +41,6 @@
             <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
           </div>
 
-
           <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Ruc *
@@ -54,7 +52,6 @@
             ]" placeholder="" required />
             <p v-if="errors.ruc" class="mt-1 text-sm text-red-600">{{ errors.ruc }}</p>
           </div>
-
 
           <div>
             <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -92,7 +89,6 @@
             <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
           </div>
 
-
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Contraseña *
@@ -122,7 +118,7 @@
             <p v-if="errors.factoryUid" class="mt-1 text-sm text-red-600">{{ errors.factoryUid }}</p>
           </div>
 
-
+          <!-- Estado Activo -->
           <div class="flex items-center md:col-span-2">
             <input id="isActive" v-model="form.isActive" type="checkbox"
               class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
@@ -142,11 +138,10 @@
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
             <span class="flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4 4 8-8"></path>
               </svg>
-              Crear Cliente
+              Actualizar Cliente
             </span>
-
           </button>
         </div>
       </form>
@@ -162,17 +157,24 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: false
+  },
+  clientData: {
+    type: Object,
+    default: () => ({})
   }
 })
 
-const emit = defineEmits(['close', 'save'])
+console.log(props.clientData, "datos del cliente")
+
+const emit = defineEmits(['close', 'update'])
 
 const dataFactory = ref([])
 const isLoading = ref(false)
 const errors = ref({})
+const dataLoaded = ref(false) // Nueva variable para controlar cuando los datos están cargados
 
 const form = reactive({
-  businessname: null,
+  businessname: '',
   code: '',
   ruc: '',
   address: '',
@@ -189,18 +191,32 @@ const getFactory = async () => {
     if (response) {
       console.log(response.data, "factories")
       dataFactory.value = response.data
+      dataLoaded.value = true // Marcar que los datos están cargados
     }
   } catch {
     console.error("error al listar fabricas")
   }
 }
 
+// Llenar formulario con datos del cliente
+const fillForm = (data) => {
+  if (!data || Object.keys(data).length === 0) return
 
+  console.log('Llenando formulario con:', data)
 
+  form.businessname = data.businessName || data.businessname || ''
+  form.code = data.code || ''
+  form.ruc = data.ruc || ''
+  form.address = data.address || ''
+  form.distric = data.distric || ''
+  form.username = data.username || ''
+  form.password = data.password || ''
+  form.isActive = data.isActive === 'Activo' || data.isActive === true
+  form.factoryUid = data.uidFactory || data.factory?.uid || ''
+}
 
 const resetForm = () => {
-
-  form.businessname = null
+  form.businessname = ''
   form.code = ''
   form.ruc = ''
   form.address = ''
@@ -212,20 +228,37 @@ const resetForm = () => {
   errors.value = {}
 }
 
-
+// Validar formulario
 const validateForm = () => {
   errors.value = {}
 
-
-  if (!form.businessname || form.businessname <= 0) {
-    errors.value.businessname = 'La razón social es requerido'
+  if (!form.businessname) {
+    errors.value.businessname = 'La razón social es requerida'
   }
-
 
   if (!form.code) {
-    errors.value.code = 'El número de código es requerido'
+    errors.value.code = 'El código es requerido'
   }
 
+  if (!form.ruc) {
+    errors.value.ruc = 'El RUC es requerido'
+  }
+
+  if (!form.address) {
+    errors.value.address = 'La dirección es requerida'
+  }
+
+  if (!form.distric) {
+    errors.value.distric = 'El distrito es requerido'
+  }
+
+  if (!form.username) {
+    errors.value.username = 'El usuario es requerido'
+  }
+
+  if (!form.password) {
+    errors.value.password = 'La contraseña es requerida'
+  }
 
   if (!form.factoryUid) {
     errors.value.factoryUid = 'La fábrica es requerida'
@@ -238,32 +271,45 @@ const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
 
-    const dataToSend = {
-
-      businessname: form.businessname,
-      code: form.code,
-      ruc: form.ruc,
-      address: form.address,
-      distric: form.address,
-      username: form.username,
-      password: form.password,
-      isActive: form.isActive,
-      factoryUid: form.factoryUid
+    const updateData = {
+      uid: props.clientData.uid, // UID del cliente
+      data: {
+        businessname: form.businessname,
+        code: form.code,
+        ruc: form.ruc,
+        address: form.address,
+        distric: form.distric,
+        username: form.username,
+        password: form.password,
+        isActive: form.isActive,
+        factoryUid: form.factoryUid
+      }
     }
 
-    emit('save', dataToSend)
+    emit('update', updateData)
   }
 }
 
+// Watcher para cuando se abra el modal
 watch(() => props.show, (newVal) => {
   if (newVal) {
     resetForm()
+    if (Object.keys(props.clientData).length > 0) {
+      fillForm(props.clientData)
+    }
   } else {
     isLoading.value = false
   }
 })
 
+// Watcher para cuando lleguen los datos del cliente
+watch(() => props.clientData, (newData) => {
+  if (newData && Object.keys(newData).length > 0 && props.show) {
+    fillForm(newData)
+  }
+}, { deep: true })
+
 onMounted(() => {
-  getFactory();
+  getFactory()
 })
 </script>

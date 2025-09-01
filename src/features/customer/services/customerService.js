@@ -7,10 +7,23 @@ export async function createCustomer(payload) {
   return res.data?.data
 }
 
+export async function createCustomerRoot(payload) {
+
+  const res = await client.post(CUSTOMER.CREATE_ROOT, payload)
+  return res.data?.data
+}
+
 export async function updateCustomer(payload, id) {
   const { data } = await client.patch(`${CUSTOMER.UPDATE}/${id}`, payload)
   return data
 }
+
+export async function updateCustomerRoot(payload, id) {
+  const { data } = await client.patch(`${CUSTOMER.UPDATE_ROOT}/${id}`, payload)
+  return data
+}
+
+
 
 export async function listCustomer() {
   const { data } = await client.get(CUSTOMER.LIST)

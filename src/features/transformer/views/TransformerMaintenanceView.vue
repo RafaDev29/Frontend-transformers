@@ -15,7 +15,6 @@
       <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <!-- Modal de Crear -->
     <FormCreateComponent 
       v-if="showCreateModal" 
       :show="showCreateModal" 
@@ -23,7 +22,6 @@
       @save="handleCreate" 
     />
 
-    <!-- Modal de Editar -->
     <FormUpdateComponent 
       v-if="showUpdateModal"
       :show="showUpdateModal" 
@@ -52,10 +50,10 @@ const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
 
-// Estados para Create Modal
+
 const showCreateModal = ref(false)
 
-// Estados para Update Modal
+
 const showUpdateModal = ref(false)
 const selectedTransformer = ref({})
 
@@ -106,7 +104,7 @@ const handleCreate = async (formData) => {
   }
 }
 
-// UPDATE MODAL FUNCTIONS
+
 const openUpdateModal = (transformerData) => {
   selectedTransformer.value = { ...transformerData }
   showUpdateModal.value = true
@@ -144,7 +142,7 @@ const handleEdit = (transformer) => {
   openUpdateModal(transformer)
 }
 
-// DELETE HANDLER
+
 const handleDelete = async (payload) => {
   isLoading.value = true
   errorMsg.value = ''

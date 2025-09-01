@@ -67,22 +67,22 @@
                             </td>
 
                             <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.factory }}
+                                {{ row.factoryName }}
                             </td>
 
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <span :class="[
                                     'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
-                                    row.state === 'Activo'
+                                    row.isActive === 'Activo'
                                         ? 'bg-color1/10 text-color1 border border-color1/20 dark:bg-color3/20 dark:text-color3 dark:border-color3/30'
                                         : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600'
                                 ]">
                                     <span :class="[
                                         'w-1.5 h-1.5 rounded-full mr-1.5',
-                                        row.state === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
+                                        row.isActive === 'Activo' ? 'bg-color1 dark:bg-color3' : 'bg-slate-400 dark:bg-slate-500'
                                     ]"></span>
-                                    {{ row.state }}
+                                    {{ row.isActive }}
                                 </span>
                             </td>
 
@@ -141,11 +141,12 @@ const rows = computed(() => {
     return props.items.map(item => ({
         uid: item.uid,
         code: item.code,
-        factory: item.factory.businessName,
         businessName: item.businessname,
         ruc: item.ruc,
-        year: item.yearManufacture,
-        state: item.isActive ? 'Activo' : 'Inactivo'
+        isActive: item.isActive ? 'Activo' : 'Inactivo',
+        factoryName: item.factory.businessName,
+        uidFactory : item.factory.uid,
+        factory : item.factory,
     }))
 })
 
