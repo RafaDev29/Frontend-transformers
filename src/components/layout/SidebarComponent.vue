@@ -93,13 +93,12 @@
         </v-tooltip>
       </div>
 
-      <!-- MENÚ DE MANTENIMIENTO CON APERTURA HACIA ARRIBA -->
       <div v-if="maintenanceItems.length > 0" class="mt-4 relative">
-        <!-- Contenido colapsible que aparece ARRIBA del header -->
+
         <div class="absolute bottom-full left-0 right-0 mb-1 transition-all duration-500 ease-out overflow-hidden z-20"
           :class="isMaintenanceExpanded ? ' opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-4'">
 
-          <!-- Items de mantenimiento -->
+
           <div
             class="bg-gradient-to-br from-emerald-50/95 via-green-50/90 to-teal-50/85 dark:from-emerald-900/30 dark:via-green-900/25 dark:to-teal-900/20 border border-emerald-200/60 dark:border-emerald-700/50 rounded-2xl shadow-xl shadow-emerald-200/40 dark:shadow-emerald-800/40 backdrop-blur-sm p-3 space-y-1">
             <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
@@ -186,7 +185,7 @@
 
                 <div v-if="!rail">
                   <h3 class="text-sm font-bold text-emerald-800 dark:text-emerald-200 tracking-wide mb-0.5">
-                    Mantenimiento
+                    Mantenimientos
                   </h3>
                   <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                     {{ maintenanceItems.length }} herramienta{{ maintenanceItems.length !== 1 ? 's' : '' }}
@@ -264,8 +263,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'toggle', 'logout', 'settings'])
 
-// Estado para el colapso del mantenimiento
-const isMaintenanceExpanded = ref(false) // Cambié a false por defecto para que inicie cerrado
+
+const isMaintenanceExpanded = ref(false) 
 
 const model = computed({
   get: () => props.modelValue,

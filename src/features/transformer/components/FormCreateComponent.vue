@@ -64,7 +64,7 @@
             <p v-if="errors.apparentPowerKVA" class="mt-1 text-sm text-red-600">{{ errors.apparentPowerKVA }}</p>
           </div>
 
-            <!-- Número de Serie -->
+          <!-- Número de Serie -->
           <div>
             <label for="serialNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Número de Serie *
@@ -151,7 +151,7 @@
             <p v-if="errors.voltageSecondary" class="mt-1 text-sm text-red-600">{{ errors.voltageSecondary }}</p>
           </div>
 
-        
+
 
           <!-- Año de Fabricación -->
           <div>
@@ -165,6 +165,20 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
               ]" placeholder="2024" required />
             <p v-if="errors.yearManufacture" class="mt-1 text-sm text-red-600">{{ errors.yearManufacture }}</p>
+          </div>
+
+
+          <div>
+            <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Fecha de venta *
+            </label>
+            <input id="saleDate" v-model.number="form.saleDate" type="date" :min="1900" :max="new Date().getFullYear()"
+              :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              ]" />
+            <p v-if="errors.saleDate" class="mt-1 text-sm text-red-600">{{ errors.saleDate }}</p>
           </div>
 
           <!-- Fábrica -->
@@ -201,15 +215,15 @@
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500">
             Cancelar
           </button>
-          <button type="submit" 
+          <button type="submit"
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
-            <span  class="flex items-center">
+            <span class="flex items-center">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
               Crear Transformador
             </span>
-           
+
           </button>
         </div>
       </form>
@@ -246,6 +260,7 @@ const form = reactive({
   voltageSecondary: '', // Voltaje específico del rango
   serialNumber: '',
   yearManufacture: new Date().getFullYear(),
+  saleDate: '',
   isActive: true,
   factoryUid: ''
 })
@@ -307,6 +322,7 @@ const resetForm = () => {
   form.secondaryRangeUid = ''
   form.voltageSecondary = ''
   form.serialNumber = ''
+  form.saleDate = ''
   form.yearManufacture = new Date().getFullYear()
   form.isActive = true
   form.factoryUid = ''
@@ -363,7 +379,7 @@ const validateForm = () => {
 const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
-    
+
     // Preparar datos para enviar
     const dataToSend = {
       type: form.type,
@@ -373,10 +389,11 @@ const handleSubmit = () => {
       voltageSecondary: form.voltageSecondary, // Voltaje específico como string
       serialNumber: form.serialNumber,
       yearManufacture: form.yearManufacture,
+      saleDate: form.saleDate,
       isActive: form.isActive,
       factoryUid: form.factoryUid // Solo el UID de la fábrica
     }
-    
+
     emit('save', dataToSend)
   }
 }

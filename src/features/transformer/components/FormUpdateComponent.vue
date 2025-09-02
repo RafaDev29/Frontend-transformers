@@ -167,6 +167,21 @@
             <p v-if="errors.yearManufacture" class="mt-1 text-sm text-red-600">{{ errors.yearManufacture }}</p>
           </div>
 
+
+          <div>
+            <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Fecha de venta *
+            </label>
+            <input id="saleDate" v-model.number="form.saleDate" type="date" :min="1900" :max="new Date().getFullYear()"
+              :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              ]" />
+            <p v-if="errors.saleDate" class="mt-1 text-sm text-red-600">{{ errors.saleDate }}</p>
+          </div>
+
+
           <!-- Fábrica -->
           <div class="md:col-span-2">
             <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -207,7 +222,7 @@
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4 4 8-8"></path>
               </svg>
-              Actualizar 
+              Actualizar
             </span>
 
           </button>
@@ -240,7 +255,7 @@ const dataFactory = ref([])
 const dataRange = ref([])
 const isLoading = ref(false)
 const errors = ref({})
-const dataLoaded = ref(false) 
+const dataLoaded = ref(false)
 
 const form = reactive({
   type: '',
@@ -252,6 +267,7 @@ const form = reactive({
   voltageSecondary: '',
   serialNumber: '',
   yearManufacture: new Date().getFullYear(),
+  saleDate : '' ,
   isActive: true,
   factoryUid: ''
 })
@@ -274,7 +290,7 @@ const getRange = async () => {
     if (response) {
       console.log(response.data, "ranges")
       dataRange.value = response.data
-      dataLoaded.value = true 
+      dataLoaded.value = true
     }
   } catch {
     console.error("error al listar rangos")
@@ -319,16 +335,17 @@ const fillForm = (data) => {
 
 
   form.type = data.type || ''
-  form.zone = String(data.zone) || '' 
+  form.zone = String(data.zone) || ''
   form.apparentPowerKVA = parseFloat(data.apparentPowerKVA) || null
   form.serialNumber = data.serialNumber || ''
+  form.saleDate = data.saleDate || ''
   form.yearManufacture = parseInt(data.yearManufacture) || new Date().getFullYear()
   form.isActive = data.isActive === 'Activo' || data.isActive === true
   form.factoryUid = data.uidFactory || data.factory?.uid || ''
 
 
-  const primaryVoltage = String(data.voltagePrimary) 
-  const secondaryVoltage = String(data.voltageSecondary) 
+  const primaryVoltage = String(data.voltagePrimary)
+  const secondaryVoltage = String(data.voltageSecondary)
 
 
   if (dataRange.value.length > 0) {
@@ -371,6 +388,7 @@ const resetForm = () => {
   form.voltageSecondary = ''
   form.serialNumber = ''
   form.yearManufacture = new Date().getFullYear()
+  form.saleDate = ''
   form.isActive = true
   form.factoryUid = ''
   errors.value = {}
@@ -437,6 +455,7 @@ const handleSubmit = () => {
         voltageSecondary: form.voltageSecondary,
         serialNumber: form.serialNumber,
         yearManufacture: form.yearManufacture,
+        saleDate : form.saleDate ,
         isActive: form.isActive,
         factoryUid: form.factoryUid
       }

@@ -34,7 +34,14 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allCustomer, deleteCustomer, createCustomerRoot , updateCustomerRoot } from '../services/customerService'
+import { allCustomer, deleteCustomer, createCustomerRoot , updateCustomerRoot , listCustomer } from '../services/customerService'
+
+import { useAuthStore } from '@/features/auth/stores/authStore'
+
+const auth = useAuthStore()
+
+const role = auth.user?.role
+console.log('El rol del usuario es:', role)
 
 const dataItem = ref()
 const isLoading = ref(false)
@@ -48,18 +55,27 @@ const listTranformer = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await allCustomer()
+    let response
+
+    if (role === 'ROOT') {
+      response = await allCustomer()
+    } else if (role === 'FACTORY') {
+      response = await listCustomer()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
 
     if (response) {
       dataItem.value = response.data
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'error al cargar transformadores'
+    errorMsg.value = e?.response?.data?.message || 'Error al cargar clientes'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
   }
 }
+
 
 const openCreateModal = () => {
   showCreateModal.value = true
