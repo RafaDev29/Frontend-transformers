@@ -28,13 +28,13 @@ const sidebarOpen = ref(true)
 const monitoringItems = computed(() => {
   const role = auth.user?.role
   const items = [
-    { title: 'Tensión', icon: 'gauge', to: '/tension', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'Corriente', icon: 'flash', to: '/Corriente', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'Frecuencia', icon: 'timer', to: '/Frecuencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'Potencia', icon: 'light', to: '/Potencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'THDV', icon: 'cog', to: '/THDV', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'THDI', icon: 'cog', to: '/THDI', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'Temperatura', icon: 'shield', to: '/Temperatura', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Tensión', icon: 'tension', to: '/tension', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Corriente', icon: 'corriente', to: '/Corriente', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Frecuencia', icon: 'frecuencia', to: '/Frecuencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Potencia', icon: 'flash', to: '/Potencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'THDV', icon: 'mdiWaveform', to: '/THDV', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'THDI', icon: 'mdiWaveform', to: '/THDI', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Temperatura', icon: 'thermometer', to: '/Temperatura', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
 })
@@ -44,8 +44,16 @@ const maintenanceItems = computed(() => {
   const role = auth.user?.role
   const items = [
     {
+      title: 'Fábricas',
+      icon: 'factory',
+      to: '/app/mfactory',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+
+    { 
       title: 'Transformadores',
-      icon: 'gauge',
+      icon: 'transformer',
       to: '/app/mtransformer',
       roles: ['ROOT'],
       category: 'maintenance'
@@ -53,41 +61,38 @@ const maintenanceItems = computed(() => {
 
     {
       title: 'Clientes',
-      icon: 'gauge',
+      icon: 'customer',
       to: '/app/mcustomer',
       roles: ['ROOT', 'FACTORY'],
       category: 'maintenance'
     },
-    {
-      title: 'Fábricas',
-      icon: 'gauge',
-      to: '/app/mfactory',
+
+     {
+      title: 'Rangos',
+      icon: 'range',
+      to: '/app/mrange',
       roles: ['ROOT'],
       category: 'maintenance'
     },
     {
+      title: 'Reglas',
+      icon: 'rule',
+      to: '/app/mrules',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+    
+    {
       title: 'Alertas',
-      icon: 'gauge',
+      icon: 'Bell',
       to: '/mantenimiento/usuarios',
       roles: ['ROOT'],
       category: 'maintenance'
     },
 
-    {
-      title: 'Rangos',
-      icon: 'gauge',
-      to: '/app/mrange',
-      roles: ['ROOT'],
-      category: 'maintenance'
-    },
+   
 
-    {
-      title: 'Reglas',
-      icon: 'gauge',
-      to: '/app/mrules',
-      roles: ['ROOT'],
-      category: 'maintenance'
-    },
+    
 
 
   ]

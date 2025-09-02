@@ -22,7 +22,19 @@ import {
   mdiCloseBoxOutline, //close con borde
   mdiCloseThick,// close sin marco
   mdiPencilOutline, // editar 
-  mdiDeleteOutline // eliminar
+  mdiDeleteOutline, // eliminar
+
+  mdiCarShiftPattern, //transformador
+  mdiAccountBoxPlusOutline, //cliente
+  mdiFactory, //fabrica
+  mdiBellAlert, //alert
+  mdiChartBellCurveCumulative, // range 
+  mdiRuler, //regla
+  mdiFlashTriangle, //tension
+  mdiSineWave, //frecuencia
+  mdiCurrentAc, //corriente
+  mdiWaveform , //THDV
+  mdiThermometerLines , //temperatura
 
 } from '@mdi/js'
 
@@ -49,5 +61,16 @@ export default {
   close: mdiCloseBoxOutline,
   closes: mdiCloseThick,
   edit: mdiPencilOutline,
-  delete: mdiDeleteOutline
+  delete: mdiDeleteOutline,
+  transformer: mdiCarShiftPattern,
+  customer: mdiAccountBoxPlusOutline,
+  factory: mdiFactory,
+  Bell: mdiBellAlert,
+  range: mdiChartBellCurveCumulative,
+  rule: mdiRuler,
+  tension: mdiFlashTriangle,
+  frecuencia: mdiSineWave , 
+  corriente : mdiCurrentAc ,
+  mdiWaveform : mdiWaveform,
+  thermometer : mdiThermometerLines , 
 }

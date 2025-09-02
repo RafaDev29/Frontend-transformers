@@ -19,6 +19,30 @@
 
 
           <div>
+            <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Usuario *
+            </label>
+            <input id="username" v-model="form.username" type="text" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.username ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="" required />
+            <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
+          </div>
+
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Contraseña *
+            </label>
+            <input id="password" v-model="form.password" type="text" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="" required />
+            <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
+          </div>
+          <div>
             <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Razón social *
             </label>
@@ -80,30 +104,7 @@
             <p v-if="errors.distric" class="mt-1 text-sm text-red-600">{{ errors.distric }}</p>
           </div>
 
-          <div>
-            <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Usuario *
-            </label>
-            <input id="username" v-model="form.username" type="text" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.username ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" placeholder="" required />
-            <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
-          </div>
 
-
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Contraseña *
-            </label>
-            <input id="password" v-model="form.password" type="text" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" placeholder="" required />
-            <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
-          </div>
 
           <div>
             <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

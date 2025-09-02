@@ -1,7 +1,6 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]">
-    <div
-      class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Actualizar Fábrica
@@ -16,13 +15,7 @@
       <form @submit.prevent="handleSubmit" class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <!-- Código -->
-          <div>
-            <label for="code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Código *
-            </label>
-            <input id="code" v-model="form.code" type="text" class="w-full px-3 py-2 border rounded-md" />
-          </div>
+
 
           <!-- Usuario -->
           <div>
@@ -35,11 +28,20 @@
           <!-- Contraseña -->
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Contraseña 
+              Contraseña
             </label>
             <input id="password" v-model="form.password" type="text" class="w-full px-3 py-2 border rounded-md" />
           </div>
 
+
+          <!-- Código -->
+          <div>
+            <label for="code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Código *
+            </label>
+            <input id="code" v-model="form.code" type="text" class="w-full px-3 py-2 border rounded-md" />
+          </div>
+          
           <!-- RUC -->
           <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -53,7 +55,8 @@
             <label for="businessName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Razón social *
             </label>
-            <input id="businessName" v-model="form.businessName" type="text" class="w-full px-3 py-2 border rounded-md" />
+            <input id="businessName" v-model="form.businessName" type="text"
+              class="w-full px-3 py-2 border rounded-md" />
           </div>
 
           <!-- Dirección -->
@@ -80,7 +83,7 @@
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
             Cancelar
           </button>
-          <button type="submit" 
+          <button type="submit"
             class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 rounded-md">
             Actualizar
           </button>
