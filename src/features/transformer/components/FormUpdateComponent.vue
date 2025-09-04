@@ -172,7 +172,7 @@
             <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Fecha de venta *
             </label>
-            <input id="saleDate" v-model.number="form.saleDate" type="date" :min="1900" :max="new Date().getFullYear()"
+            <input id="saleDate" v-model="form.saleDate" type="date" 
               :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
                 errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',

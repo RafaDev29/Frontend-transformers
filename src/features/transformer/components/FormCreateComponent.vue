@@ -172,12 +172,11 @@
             <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Fecha de venta *
             </label>
-            <input id="saleDate" v-model.number="form.saleDate" type="date" :min="1900" :max="new Date().getFullYear()"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" />
+            <input id="saleDate" v-model="form.saleDate" type="date" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" />
             <p v-if="errors.saleDate" class="mt-1 text-sm text-red-600">{{ errors.saleDate }}</p>
           </div>
 
@@ -380,18 +379,18 @@ const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
 
-    // Preparar datos para enviar
+
     const dataToSend = {
       type: form.type,
-      zone: form.zone, // Se envía como string "7.5" o "5"
+      zone: form.zone,
       apparentPowerKVA: form.apparentPowerKVA,
-      voltagePrimary: form.voltagePrimary, // Voltaje específico como string
-      voltageSecondary: form.voltageSecondary, // Voltaje específico como string
+      voltagePrimary: form.voltagePrimary,
+      voltageSecondary: form.voltageSecondary,
       serialNumber: form.serialNumber,
       yearManufacture: form.yearManufacture,
       saleDate: form.saleDate,
       isActive: form.isActive,
-      factoryUid: form.factoryUid // Solo el UID de la fábrica
+      factoryUid: form.factoryUid
     }
 
     emit('save', dataToSend)

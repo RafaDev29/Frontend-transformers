@@ -10,7 +10,7 @@
 
 
     <div class=" pb-1">
-      <TableComponent />
+          <TableComponent :items="dataItem" />
     </div>
   </div>
 </template>
@@ -19,4 +19,33 @@
 import HeadFactory from '@/components/ui/head/HeadFactory.vue'
 import TableComponent from '@/features/factory/components/TableTransformerComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
+
+import { listTransformerRoot } from '@/features/transformer/services/transformerService'
+import {  onMounted ,getCurrentInstance ,  ref} from 'vue'
+
+const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
+const dataItem = ref()
+const isLoading = ref(false)
+const errorMsg = ref('')
+const listItems = async () => {
+  isLoading.value = true
+  errorMsg.value = ''
+  try {
+    const response = await listTransformerRoot()
+
+    if (response) {
+      dataItem.value = response.data
+    }
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'error al cargar transformadores'
+    bus?.emit?.('error', errorMsg.value)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  listItems()
+})
+
 </script>

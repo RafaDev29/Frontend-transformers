@@ -52,7 +52,7 @@ const closeUpdateModal = () => {
   selectedFactory.value = null
 }
 
-const listTranformer = async () => {
+const listItems = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
@@ -87,7 +87,7 @@ const handleCreate = async (formData) => {
     if (response) {
       bus?.emit?.('success', 'Transformador creado correctamente')
       closeCreateModal()
-      listTranformer()
+      listItems()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
@@ -109,7 +109,7 @@ const handleUpdate = async (payload) => {
     if (response.status) {
       bus?.emit?.('success', 'Fábrica actualizada correctamente')
       closeUpdateModal()
-      listTranformer()
+      listItems()
     }
 
   } catch (e) {
@@ -130,7 +130,7 @@ const handleDelete = async (payload) => {
 
     if (response) {
       bus?.emit?.('success', 'Se eliminó correctamente')
-      listTranformer()
+      listItems()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
@@ -141,6 +141,6 @@ const handleDelete = async (payload) => {
 }
 
 onMounted(() => {
-  listTranformer()
+  listItems()
 })
 </script>
