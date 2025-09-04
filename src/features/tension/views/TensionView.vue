@@ -7,34 +7,28 @@
                 { label: 'Panel de Fábrica', path: '/app/factory' },
                 { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
                 { label: 'Panel  detalle transformador', path: '/app/factoryTransformerDetail' },
-                  { label: 'Panel de Tensión ', path: '/app/tension' },
+                { label: 'Panel de Tensión ', path: '/app/tension' },
             ]" />
         </div>
 
-       
-        <div class="flex-1 transformer-layer" :style="bgStyle">
-            <div class="relative z-10 h-full w-full p-1">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-15 pt-8 ml-8 pl-8">
-                    <CardDetailComponent />
-                </div>
-            </div>
-        </div>
+
+
+
+        <GraphicOneComponent  />
+
+
+
 
     </div>
 </template>
 
 <script setup>
 
-import CardDetailComponent from '@/features/transformer/components/CardDetailComponent.vue'
+import GraphicOneComponent from '../components/GraphicOneComponent.vue';
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 
 </script>
 
 <style scoped>
-.transformer-layer {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    overflow: hidden;
-}
+
 </style>

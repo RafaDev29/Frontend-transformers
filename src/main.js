@@ -15,6 +15,9 @@ import { createPinia } from 'pinia'
 // Interceptores
 import { installInterceptors } from '@/services/api/interceptors'
 
+// 📊 ApexCharts
+import VueApexCharts from "vue3-apexcharts"
+
 // Crear app y store global
 const app = createApp(App)
 const pinia = createPinia()
@@ -23,6 +26,10 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 app.use(vuetify)
+
+// Registrar ApexCharts como componente global
+app.component("ApexChart", VueApexCharts)
+
 
 // Instalar interceptores después de tener Pinia
 installInterceptors(pinia)
