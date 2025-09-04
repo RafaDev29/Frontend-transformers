@@ -28,7 +28,7 @@ const sidebarOpen = ref(true)
 const monitoringItems = computed(() => {
   const role = auth.user?.role
   const items = [
-    { title: 'Tensión', icon: 'tension', to: '/tension', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'Tensión', icon: 'tension', to: '/app/tension', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Corriente', icon: 'corriente', to: '/Corriente', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Frecuencia', icon: 'frecuencia', to: '/Frecuencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Potencia', icon: 'flash', to: '/Potencia', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },

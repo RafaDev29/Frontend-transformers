@@ -3,7 +3,7 @@ const Factory = () => import('./views/FactoryView.vue')
 const Mfactory = () => import('./views/FactoryMaintenanceView.vue')
 const factoryTransformer = () => import('./views/TransformerView.vue')
 const factoryTransformerDetail = () => import('./views/TransformerDetailView.vue')
-const factoryTransformerDetailTwo = () => import('./views/TransformerDetailTwoView.vue')
+
 export default [
   {
     path: 'factory',              
@@ -31,13 +31,6 @@ export default [
     path: 'factoryTransformerDetail',              
     name: 'factoryTransformerDetail',
     component: factoryTransformerDetail,
-    meta: { requiresAuth: true, roles: [ 'ROOT'] }
-  },
-
-   {
-    path: 'factoryTransformerDetailTwo',              
-    name: 'factoryTransformerDetailTwo',
-    component: factoryTransformerDetailTwo,
     meta: { requiresAuth: true, roles: [ 'ROOT'] }
   },
 

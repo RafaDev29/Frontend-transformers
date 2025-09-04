@@ -26,9 +26,9 @@
       >
         <span
           class="w-1.5 h-1.5 rounded-full"
-          :class="data.isActive ? 'bg-accent-success' : 'bg-accent-danger'"
+          :class="transformer?.isActive ? 'bg-accent-success' : 'bg-accent-danger'"
         />
-        {{ data.isActive ? 'Activo' : 'Inactivo' }}
+        {{ transformer?.isActive ? 'Activo' : 'Inactivo' }}
       </span>
     </div>
 
@@ -37,42 +37,50 @@
       <div class="flex flex-col">
         <span class="text-slate-500 dark:text-slate-400">Tipo</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
-          {{ data.type }}
+          {{ transformer?.type || '—' }}
         </span>
       </div>
 
       <div class="flex flex-col">
         <span class="text-slate-500 dark:text-slate-400">Potencia Aparente</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
-          {{ data.apparentPowerKVA.toLocaleString() }} KVA
+          {{ transformer?.apparentPowerKVA || '—' }} KVA
         </span>
       </div>
+
 
       <div class="flex flex-col">
         <span class="text-slate-500 dark:text-slate-400">Voltaje Primario</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
-          {{ data.primaryVoltageKV }} kV
+          {{ transformer?.voltagePrimary || '—' }} V
         </span>
       </div>
 
       <div class="flex flex-col">
         <span class="text-slate-500 dark:text-slate-400">Voltaje Secundario</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
-          {{ data.secondaryVoltageKV }} kV
+          {{ transformer?.voltageSecondary || '—' }} V
         </span>
       </div>
 
       <div class="flex flex-col">
         <span class="text-slate-500 dark:text-slate-400">N° de Serie</span>
         <span class="font-semibold font-mono text-slate-800 dark:text-slate-100">
-          {{ data.serialNumber }}
+          {{ transformer?.serialNumber || '—' }}
         </span>
       </div>
 
       <div class="flex flex-col">
-        <span class="text-slate-500 dark:text-slate-400">Año de Fábricación</span>
+        <span class="text-slate-500 dark:text-slate-400">Año de Fabricación</span>
         <span class="font-semibold text-slate-800 dark:text-slate-100">
-          {{ data.yearManufacture }}
+          {{ transformer?.yearManufacture || '—' }}
+        </span>
+      </div>
+
+      <div v-if="transformer?.saleDate" class="flex flex-col">
+        <span class="text-slate-500 dark:text-slate-400">Fecha de Venta</span>
+        <span class="font-semibold text-slate-800 dark:text-slate-100">
+          {{ formatDate(transformer.saleDate) }}
         </span>
       </div>
     </div>
@@ -93,24 +101,30 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 
-const data = {
-  type: 'SECO',
-  apparentPowerKVA: 1000,
-  primaryVoltageKV: 22.90,
-  secondaryVoltageKV: 0.23,
-  serialNumber: 'TS22666',
-  yearManufacture: 2025,
-  isActive: true,
-}
+const transformerStore = useTransformerStore()
+
+const transformer = computed(() => transformerStore.selectedTransformer)
 
 const ratioVpVs = computed(() => {
-  const vp = data.primaryVoltageKV || 0
-  const vs = data.secondaryVoltageKV || 1
+  if (!transformer.value?.voltagePrimary || !transformer.value?.voltageSecondary) {
+    return '—'
+  }
+  
+  const vp = parseFloat(transformer.value.voltagePrimary) || 0
+  const vs = parseFloat(transformer.value.voltageSecondary) || 1
+  
   if (!vp || !vs) return '—'
+  
   const r = vp / vs
   return Number.isInteger(r) ? `${r}:1` : `${r.toFixed(2)}:1`
 })
+
+function formatDate(dateString) {
+  if (!dateString) return '—'
+  return new Date(dateString).toLocaleDateString('es-PE')
+}
 </script>
 
 <style scoped>

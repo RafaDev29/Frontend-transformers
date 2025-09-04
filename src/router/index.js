@@ -10,7 +10,9 @@ import transformerRoutes from '@/features/transformer/route'
 import factoryRoutes from '@/features/factory/router'
 import customerRoutes from '@/features/customer/router'
 import rangeRoutes from '@/features/range/router'
+import tensionRoute from '@/features/tension/router'
 import { authGuard } from './guards/auth'
+
 
 const routes = [
   // Público
@@ -40,6 +42,7 @@ const routes = [
       ...factoryRoutes,
       ...customerRoutes,
       ...rangeRoutes,
+      ...tensionRoute,
       { path: '', redirect: '/app/welcome' },
     ],
   },

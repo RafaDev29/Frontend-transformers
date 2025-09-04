@@ -1,28 +1,27 @@
-// feature/transformer/store/transformerStore.js
 import { defineStore } from 'pinia'
 
-const FACTORY_KEY = 'app:factory'
+const TRANSFORMER_KEY = 'app:transformer'
 
 export const useTransformerStore = defineStore('transformer', {
   state: () => ({
-    selectedFactory: JSON.parse(localStorage.getItem(FACTORY_KEY) || 'null'),
+    selectedTransformer: JSON.parse(localStorage.getItem(TRANSFORMER_KEY) || 'null'),
   }),
   getters: {
-    hasFactory: (s) => !!s.selectedFactory,
-    factoryUid: (s) => s.selectedFactory?.uid || null,
+    hasTransformer: (s) => !!s.selectedTransformer,
+    transformerUid: (s) => s.selectedTransformer?.uid || null,
   },
   actions: {
-    setFactory(factory) {
-      this.selectedFactory = factory
-      localStorage.setItem(FACTORY_KEY, JSON.stringify(factory))
+    setTransformer(transformer) {
+      this.selectedTransformer = transformer
+      localStorage.setItem(TRANSFORMER_KEY, JSON.stringify(transformer))
     },
-    clearFactory() {
-      this.selectedFactory = null
-      localStorage.removeItem(FACTORY_KEY)
+    clearTransformer() {
+      this.selectedTransformer = null
+      localStorage.removeItem(TRANSFORMER_KEY)
     },
-    loadFactory() {
-      // hidrata desde localStorage con el state inicial
-      this.selectedFactory = JSON.parse(localStorage.getItem(FACTORY_KEY) || 'null')
+    loadTransformer() {
+      // si quieres forzar la recarga desde localStorage
+      this.selectedTransformer = JSON.parse(localStorage.getItem(TRANSFORMER_KEY) || 'null')
     },
   },
 })

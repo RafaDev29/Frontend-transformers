@@ -6,11 +6,12 @@
             <NavigationComponent :breadcrumbs="[
                 { label: 'Panel de Fábrica', path: '/app/factory' },
                 { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
-                { label: 'Panel detalle transformador', path: '/app/factoryTransformerDetail' },
+                { label: 'Panel  detalle transformador', path: '/app/factoryTransformerDetail' },
+                  { label: 'Panel de Tensión ', path: '/app/tension' },
             ]" />
         </div>
 
-        <!-- Imagen que ocupa todo el resto -->
+       
         <div class="flex-1 transformer-layer" :style="bgStyle">
             <div class="relative z-10 h-full w-full p-1">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-15 pt-8 ml-8 pl-8">
@@ -23,28 +24,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+
 import CardDetailComponent from '@/features/transformer/components/CardDetailComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
-import { useTransformerStore } from '@/features/transformer/store/transformerStore'
-import transformerDry from '@/assets/transformer/transformerDry.jpeg'
-import transformerOil from '@/assets/transformer/transformerOil.jpeg'
 
-const transformerStore = useTransformerStore()
-
-// Seleccionar imagen según el tipo de transformador
-const bgStyle = computed(() => {
-  if (!transformerStore.selectedTransformer) {
-    return { backgroundImage: `url(${transformerDry})` }
-  }
-  
-  const transformerType = transformerStore.selectedTransformer.type?.toLowerCase()
-  const backgroundImage = transformerType === 'aceite' 
-    ? `url(${transformerOil})` 
-    : `url(${transformerDry})`
-    
-  return { backgroundImage }
-})
 </script>
 
 <style scoped>

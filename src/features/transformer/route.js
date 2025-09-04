@@ -1,8 +1,7 @@
 
 const Transformer = () => import('./views/TransformerView.vue')
 const Mtransformer = () => import('./views/TransformerMaintenanceView.vue')
-const Dtransformer = () => import('./views/TransformerDetailView.vue')
-const DTtransformer = () => import('./views/TransformerDetailTwoView.vue')
+const Dtransformer = () => import('./views/TransformerDetailView.vue')  
 export default [
   {
     path: 'transformer',              
@@ -25,11 +24,5 @@ export default [
     meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },
 
-   {
-    path: 'transformerDetailTwo',              
-    name: 'transformerDetailTwo',
-    component: DTtransformer,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
-  },
-
+  
 ]

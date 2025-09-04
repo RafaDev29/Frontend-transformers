@@ -17,7 +17,6 @@
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Potencia (KVA)</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Tipo</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Año Fabricación</th>
- 
           </tr>
         </thead>
 
@@ -68,7 +67,6 @@
                 <div class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
                   {{ transformer.yearManufacture }}
                 </div>
-           
               </div>
             </td>
           </tr>
@@ -82,6 +80,7 @@
 import { defineProps, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFactoryStore } from '@/features/factory/store/factoryStore'
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 
 const props = defineProps({
   items: {
@@ -92,6 +91,7 @@ const props = defineProps({
 
 const router = useRouter()
 const factoryStore = useFactoryStore()
+const transformerStore = useTransformerStore()
 
 // Filtrar transformadores que pertenezcan a la fábrica seleccionada
 const filteredTransformers = computed(() => {
@@ -104,13 +104,11 @@ const filteredTransformers = computed(() => {
   )
 })
 
-
-
 function goToTransformerDetail(transformer) {
-  if (transformer.type.toLowerCase() === 'seco') {
-    router.push('/app/factoryTransformerDetail')
-  } else if (transformer.type.toLowerCase() === 'aceite') {
-    router.push('/app/factoryTransformerDetailTwo')
-  }
+
+  transformerStore.setTransformer(transformer)
+
+
+  router.push('/app/factoryTransformerDetail')
 }
 </script>
