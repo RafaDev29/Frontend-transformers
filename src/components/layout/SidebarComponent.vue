@@ -9,12 +9,10 @@
            border-r border-slate-200 dark:border-gray-700 transition-all duration-300"
     elevation="0"
   >
-    <!-- Header -->
     <div class="sticky top-0 z-50 bg-gradient-to-r from-slate-50 to-slate-100 
                 dark:from-gray-800 dark:to-gray-900 border-b border-slate-200 
                 dark:border-gray-600 backdrop-blur-sm">
       
-      <!-- Modo abierto -->
       <div v-if="!rail" class="p-6 flex items-center justify-between">
         <div class="flex-1">
           <div class="text-2xl font-extrabold tracking-wider mb-1">
@@ -40,7 +38,6 @@
         </div>
       </div>
 
-      <!-- Modo cerrado -->
       <div v-else class="p-5 flex justify-center">
         <div @click="$emit('toggle')"
           class="w-9 h-9 bg-gradient-to-br from-color1 to-color2 dark:from-color2 dark:to-color3 

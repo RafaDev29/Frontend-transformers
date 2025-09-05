@@ -20,7 +20,6 @@ export const useTransformerStore = defineStore('transformer', {
       localStorage.removeItem(TRANSFORMER_KEY)
     },
     loadTransformer() {
-      // si quieres forzar la recarga desde localStorage
       this.selectedTransformer = JSON.parse(localStorage.getItem(TRANSFORMER_KEY) || 'null')
     },
   },

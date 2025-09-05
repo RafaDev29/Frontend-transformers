@@ -23,7 +23,6 @@ export const useFactoryStore = defineStore('factory', {
       localStorage.removeItem(FACTORY_KEY)
     },
     loadFactory() {
-      // si quieres forzar la recarga desde localStorage
       this.selectedFactory = JSON.parse(localStorage.getItem(FACTORY_KEY) || 'null')
     },
   },

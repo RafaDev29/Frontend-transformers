@@ -18,8 +18,11 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
-
+import { useFactoryStore } from '@/features/factory/store/factoryStore'
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 const router = useRouter()
+const transformer = useTransformerStore()
+const factory = useFactoryStore()
 const auth = useAuthStore()
 const drawer = ref(true)
 const sidebarOpen = ref(true)
@@ -108,7 +111,9 @@ function toggleSidebar() {
 }
 
 function onLogout() {
-  auth.clearSession()
+  auth.clearSession() 
+  factory.clearFactory()
+  transformer.clearTransformer()
   router.push({ name: 'auth.login' })
 }
 
