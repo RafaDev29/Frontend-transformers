@@ -68,7 +68,7 @@ export default {
   Bell: mdiBellAlert,
   range: mdiChartBellCurveCumulative,
   rule: mdiRuler,
-  tension: mdiFlashTriangle,
+  strain: mdiFlashTriangle,
   frecuencia: mdiSineWave , 
   corriente : mdiCurrentAc ,
   mdiWaveform : mdiWaveform,

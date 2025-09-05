@@ -7,7 +7,7 @@
                 { label: 'Panel de Fábrica', path: '/app/factory' },
                 { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
                 { label: 'Panel  detalle transformador', path: '/app/factoryTransformerDetail' },
-                { label: 'Panel de Tensión ', path: '/app/tension' },
+                { label: 'Panel de Tensión ', path: '/app/strain' },
             ]" />
         </div>
 

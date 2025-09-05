@@ -10,7 +10,7 @@ import transformerRoutes from '@/features/transformer/route'
 import factoryRoutes from '@/features/factory/router'
 import customerRoutes from '@/features/customer/router'
 import rangeRoutes from '@/features/range/router'
-import tensionRoute from '@/features/tension/router'
+import strainRoute from '@/features/strain/router'
 import { authGuard } from './guards/auth'
 
 
@@ -42,7 +42,7 @@ const routes = [
       ...factoryRoutes,
       ...customerRoutes,
       ...rangeRoutes,
-      ...tensionRoute,
+      ...strainRoute,
       { path: '', redirect: '/app/welcome' },
     ],
   },
