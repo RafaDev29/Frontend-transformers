@@ -1,10 +1,10 @@
 
-const Strain = () => import('./views/StrainView.vue')
+const Strain = () => import('./views/CurrentView.vue')
 
 export default [
   {
-    path: 'strain',              
-    name: 'strain',
+    path: 'current',              
+    name: 'current',
     component: Strain,
     meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
   },

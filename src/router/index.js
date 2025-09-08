@@ -11,11 +11,17 @@ import factoryRoutes from '@/features/factory/router'
 import customerRoutes from '@/features/customer/router'
 import rangeRoutes from '@/features/range/router'
 import strainRoute from '@/features/strain/router'
+import frequencyRoute from '@/features/frequency/router'
+import thdvRoute from '@/features/thdv/router'
+import thdiRoute from '@/features/thdi/router'
+import powerRoute from '@/features/power/router'
+import temperatureRoute from '@/features/temperature/router'
+import currentRoute from '@/features/current/router'
 import { authGuard } from './guards/auth'
 
 
+
 const routes = [
-  // Público
   {
     path: '/',
     component: PublicLayout,
@@ -27,10 +33,8 @@ const routes = [
     ],
   },
 
-  // Auth (login/register con AuthLayout)
   ...authRoutes,
 
-  // Privado (todo lo de /app requiere sesión)
   {
     path: '/app',
     component: PrivateLayout,
@@ -43,11 +47,17 @@ const routes = [
       ...customerRoutes,
       ...rangeRoutes,
       ...strainRoute,
+      ...frequencyRoute,
+      ...thdvRoute ,
+      ...thdiRoute,
+      ...powerRoute,
+      ...temperatureRoute,
+      ...currentRoute,
+
       { path: '', redirect: '/app/welcome' },
     ],
   },
 
-  // 404
   { path: '/:pathMatch(.*)*', redirect: '/start' },
 ]
 
