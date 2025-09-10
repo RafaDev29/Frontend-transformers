@@ -1,7 +1,7 @@
-<!-- src/components/Head.vue -->
+
 <template>
   <header class="p-3 relative overflow-hidden bg-gradient-to-r from-petroleum via-colorDark1 to-petroleum text-white shadow-xl mb-1">
-    <!-- Patrón decorativo de fondo -->
+
     <div class="absolute inset-0 opacity-10">
       <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
       <div class="absolute -top-10 -right-10 w-32 h-32 bg-color3/20 rounded-full blur-2xl"></div>
