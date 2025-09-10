@@ -48,7 +48,7 @@
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <ApexChart type="line" height="450" :options="chartOptions" :series="series" />
+          <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>

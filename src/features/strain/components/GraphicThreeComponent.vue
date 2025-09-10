@@ -30,7 +30,7 @@
 
         <!-- Gráfico -->
         <div class="p-6">
-          <ApexChart type="bar" height="350" :options="chartOptions" :series="series" />
+          <ApexChart type="bar" height="400" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
