@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkfrontend_transformes"]=self["webpackChunkfrontend_transformes"]||[]).push([[670],{7670:function(n,r,e){e.r(r),e.d(r,{default:function(){return c}});var t=e(6768);function u(n,r){return(0,t.uX)(),(0,t.CE)("h1",null," vista de frecuencia ")}var f=e(1241);const s={},a=(0,f.A)(s,[["render",u]]);var c=a}}]);
+//# sourceMappingURL=670.969abb07.js.map

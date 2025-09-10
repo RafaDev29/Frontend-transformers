@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkfrontend_transformes"]=self["webpackChunkfrontend_transformes"]||[]).push([[649],{9649:function(n,r,e){e.r(r),e.d(r,{default:function(){return o}});var t=e(6768);function s(n,r){return(0,t.uX)(),(0,t.CE)("h1",null," Esta es la vista de corriente ")}var u=e(1241);const a={},f=(0,u.A)(a,[["render",s]]);var o=f}}]);
+//# sourceMappingURL=649.5ed6a769.js.map
