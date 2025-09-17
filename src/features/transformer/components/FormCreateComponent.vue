@@ -77,81 +77,44 @@
             <p v-if="errors.serialNumber" class="mt-1 text-sm text-red-600">{{ errors.serialNumber }}</p>
           </div>
 
-          <!-- Rango Primario -->
-          <div>
-            <label for="primaryRange" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Rango Primario *
-            </label>
-            <select id="primaryRange" v-model="form.primaryRangeUid" @change="resetPrimaryVoltage" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.primaryRangeUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" required>
-              <option value="">Seleccionar rango</option>
-              <option v-for="range in dataRange" :key="range.uid" :value="range.uid">
-                {{ range.type }}
-              </option>
-            </select>
-            <p v-if="errors.primaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.primaryRangeUid }}</p>
-          </div>
-
           <!-- Voltaje Primario -->
           <div>
-            <label for="voltagePrimary" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Primario (kV) *
+            <label for="primaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Voltaje Primario *
             </label>
-            <select id="voltagePrimary" v-model="form.voltagePrimary" :disabled="!form.primaryRangeUid" :class="[
+            <input id="primaryVoltage" v-model="form.primaryVoltage" type="text" maxlength="20" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.voltagePrimary ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
-            ]" required>
-              <option value="">Seleccionar voltaje</option>
-              <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage">
-                {{ voltage }} kV
-              </option>
-            </select>
-            <p v-if="errors.voltagePrimary" class="mt-1 text-sm text-red-600">{{ errors.voltagePrimary }}</p>
-          </div>
-
-          <!-- Rango Secundario -->
-          <div>
-            <label for="secondaryRange" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Rango Secundario *
-            </label>
-            <select id="secondaryRange" v-model="form.secondaryRangeUid" @change="resetSecondaryVoltage" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.secondaryRangeUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              errors.primaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
               'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" required>
-              <option value="">Seleccionar rango</option>
-              <option v-for="range in dataRange" :key="range.uid" :value="range.uid">
-                {{ range.type }}
-              </option>
-            </select>
-            <p v-if="errors.secondaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.secondaryRangeUid }}</p>
+            ]" placeholder="13800V" required />
+            <p v-if="errors.primaryVoltage" class="mt-1 text-sm text-red-600">{{ errors.primaryVoltage }}</p>
           </div>
 
           <!-- Voltaje Secundario -->
           <div>
-            <label for="voltageSecondary" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Secundario (kV) *
+            <label for="secondaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Voltaje Secundario *
             </label>
-            <select id="voltageSecondary" v-model="form.voltageSecondary" :disabled="!form.secondaryRangeUid" :class="[
+            <input id="secondaryVoltage" v-model="form.secondaryVoltage" type="text" maxlength="20" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.voltageSecondary ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
-            ]" required>
-              <option value="">Seleccionar voltaje</option>
-              <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage">
-                {{ voltage }} kV
-              </option>
-            </select>
-            <p v-if="errors.voltageSecondary" class="mt-1 text-sm text-red-600">{{ errors.voltageSecondary }}</p>
+              errors.secondaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="440V" required />
+            <p v-if="errors.secondaryVoltage" class="mt-1 text-sm text-red-600">{{ errors.secondaryVoltage }}</p>
           </div>
 
-
+          <!-- Voltaje Regulado -->
+          <div>
+            <label for="regulatedVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Voltaje Regulado *
+            </label>
+            <input id="regulatedVoltage" v-model="form.regulatedVoltage" type="text" maxlength="20" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.regulatedVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="220V" required />
+            <p v-if="errors.regulatedVoltage" class="mt-1 text-sm text-red-600">{{ errors.regulatedVoltage }}</p>
+          </div>
 
           <!-- Año de Fabricación -->
           <div>
@@ -165,19 +128,6 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
               ]" placeholder="2024" required />
             <p v-if="errors.yearManufacture" class="mt-1 text-sm text-red-600">{{ errors.yearManufacture }}</p>
-          </div>
-
-
-          <div>
-            <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Fecha de venta *
-            </label>
-            <input id="saleDate" v-model="form.saleDate" type="date" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" />
-            <p v-if="errors.saleDate" class="mt-1 text-sm text-red-600">{{ errors.saleDate }}</p>
           </div>
 
           <!-- Fábrica -->
@@ -198,13 +148,49 @@
             <p v-if="errors.factoryUid" class="mt-1 text-sm text-red-600">{{ errors.factoryUid }}</p>
           </div>
 
-          <!-- Estado Activo -->
-          <div class="flex items-center md:col-span-2">
-            <input id="isActive" v-model="form.isActive" type="checkbox"
-              class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
-            <label for="isActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-              Activo
-            </label>
+          <!-- Campos opcionales -->
+          <div class="md:col-span-2 border-t border-gray-200 dark:border-slate-600 pt-4">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Campos Opcionales</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Cliente -->
+              <div>
+                <label for="customerUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Cliente
+                </label>
+                <select id="customerUid" v-model="form.customerUid" :class="[
+                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                  'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                ]">
+                  <option value="">Seleccionar cliente</option>
+                  <option v-for="customer in dataCustomer" :key="customer.uid" :value="customer.uid">
+                    {{ customer.businessname }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Fecha de Venta -->
+              <div>
+                <label for="saleDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Fecha de Venta
+                </label>
+                <input id="saleDate" v-model="form.saleDate" type="date" :class="[
+                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                  'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                ]" />
+              </div>
+
+              <!-- Estado Activo -->
+              <div class="flex items-center md:col-span-2">
+                <input id="isActive" v-model="form.isActive" type="checkbox"
+                  class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+                <label for="isActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  Activo
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -222,7 +208,6 @@
               </svg>
               Crear Transformador
             </span>
-
           </button>
         </div>
       </form>
@@ -233,7 +218,7 @@
 <script setup>
 import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
 import { listFactory } from '@/features/factory/services/factoryService'
-import { listRange } from '@/features/range/services/rangeService'
+import { allCustomer } from '@/features/customer/services/customerService'
 
 const props = defineProps({
   show: {
@@ -245,23 +230,26 @@ const props = defineProps({
 const emit = defineEmits(['close', 'save'])
 
 const dataFactory = ref([])
-const dataRange = ref([])
+const dataCustomer = ref([])
 const isLoading = ref(false)
 const errors = ref({})
 
 const form = reactive({
+  // Campos obligatorios
   type: '',
-  zone: '', // Nuevo campo zona
   apparentPowerKVA: null,
-  primaryRangeUid: '', // UID del rango primario
-  voltagePrimary: '', // Voltaje específico del rango
-  secondaryRangeUid: '', // UID del rango secundario
-  voltageSecondary: '', // Voltaje específico del rango
+  zone: '',
+  primaryVoltage: '',
+  secondaryVoltage: '',
+  regulatedVoltage: '',
   serialNumber: '',
   yearManufacture: new Date().getFullYear(),
+  factoryUid: '',
+  
+  // Campos opcionales
+  customerUid: '',
   saleDate: '',
-  isActive: true,
-  factoryUid: ''
+  isActive: true
 })
 
 const getFactory = async () => {
@@ -276,55 +264,35 @@ const getFactory = async () => {
   }
 }
 
-const getRange = async () => {
+const getCustomer = async () => {
   try {
-    const response = await listRange()
+    const response = await allCustomer()
     if (response) {
-      console.log(response.data, "ranges")
-      dataRange.value = response.data
+      console.log(response.data, "customer")
+      dataCustomer.value = response.data
     }
   } catch {
-    console.error("error al listar rangos")
+    console.error("error al listar clientes")
   }
 }
 
-// Obtener valores de voltaje primario basado en el rango seleccionado
-const getPrimaryVoltageValues = () => {
-  if (!form.primaryRangeUid) return []
-  const selectedRange = dataRange.value.find(range => range.uid === form.primaryRangeUid)
-  return selectedRange ? selectedRange.voltageValue : []
-}
-
-// Obtener valores de voltaje secundario basado en el rango seleccionado
-const getSecondaryVoltageValues = () => {
-  if (!form.secondaryRangeUid) return []
-  const selectedRange = dataRange.value.find(range => range.uid === form.secondaryRangeUid)
-  return selectedRange ? selectedRange.voltageValue : []
-}
-
-// Reset voltaje primario cuando cambia el rango
-const resetPrimaryVoltage = () => {
-  form.voltagePrimary = ''
-}
-
-// Reset voltaje secundario cuando cambia el rango
-const resetSecondaryVoltage = () => {
-  form.voltageSecondary = ''
-}
-
 const resetForm = () => {
+  // Campos obligatorios
   form.type = ''
-  form.zone = ''
   form.apparentPowerKVA = null
-  form.primaryRangeUid = ''
-  form.voltagePrimary = ''
-  form.secondaryRangeUid = ''
-  form.voltageSecondary = ''
+  form.zone = ''
+  form.primaryVoltage = ''
+  form.secondaryVoltage = ''
+  form.regulatedVoltage = ''
   form.serialNumber = ''
-  form.saleDate = ''
   form.yearManufacture = new Date().getFullYear()
-  form.isActive = true
   form.factoryUid = ''
+  
+  // Campos opcionales
+  form.customerUid = ''
+  form.saleDate = ''
+  form.isActive = true
+  
   errors.value = {}
 }
 
@@ -332,6 +300,7 @@ const resetForm = () => {
 const validateForm = () => {
   errors.value = {}
 
+  // Validaciones de campos obligatorios
   if (!form.type) {
     errors.value.type = 'El tipo es requerido'
   }
@@ -340,24 +309,20 @@ const validateForm = () => {
     errors.value.zone = 'La zona es requerida'
   }
 
-  if (!form.apparentPowerKVA || form.apparentPowerKVA <= 0) {
-    errors.value.apparentPowerKVA = 'La potencia aparente debe ser mayor a 0'
+  if (!form.apparentPowerKVA || form.apparentPowerKVA < 1) {
+    errors.value.apparentPowerKVA = 'La potencia aparente debe ser mayor o igual a 1'
   }
 
-  if (!form.primaryRangeUid) {
-    errors.value.primaryRangeUid = 'El rango primario es requerido'
+  if (!form.primaryVoltage || form.primaryVoltage.length > 20) {
+    errors.value.primaryVoltage = 'El voltaje primario es requerido (máx. 20 caracteres)'
   }
 
-  if (!form.voltagePrimary) {
-    errors.value.voltagePrimary = 'El voltaje primario es requerido'
+  if (!form.secondaryVoltage || form.secondaryVoltage.length > 20) {
+    errors.value.secondaryVoltage = 'El voltaje secundario es requerido (máx. 20 caracteres)'
   }
 
-  if (!form.secondaryRangeUid) {
-    errors.value.secondaryRangeUid = 'El rango secundario es requerido'
-  }
-
-  if (!form.voltageSecondary) {
-    errors.value.voltageSecondary = 'El voltaje secundario es requerido'
+  if (!form.regulatedVoltage || form.regulatedVoltage.length > 20) {
+    errors.value.regulatedVoltage = 'El voltaje regulado es requerido (máx. 20 caracteres)'
   }
 
   if (!form.serialNumber) {
@@ -379,20 +344,34 @@ const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
 
-
+    // Crear objeto solo con campos obligatorios
     const dataToSend = {
       type: form.type,
-      zone: form.zone,
       apparentPowerKVA: form.apparentPowerKVA,
-      voltagePrimary: form.voltagePrimary,
-      voltageSecondary: form.voltageSecondary,
+      zone: form.zone,
+      primaryVoltage: form.primaryVoltage,
+      secondaryVoltage: form.secondaryVoltage,
+      regulatedVoltage: form.regulatedVoltage,
       serialNumber: form.serialNumber,
       yearManufacture: form.yearManufacture,
-      saleDate: form.saleDate,
-      isActive: form.isActive,
       factoryUid: form.factoryUid
     }
 
+    // Solo agregar campos opcionales si tienen valor
+    if (form.customerUid) {
+      dataToSend.customerUid = form.customerUid
+    }
+
+    if (form.saleDate) {
+      dataToSend.saleDate = form.saleDate
+    }
+
+    // isActive siempre se incluye ya que tiene un valor por defecto
+    if (form.isActive !== null && form.isActive !== undefined) {
+      dataToSend.isActive = form.isActive
+    }
+
+    console.log('Datos a enviar:', dataToSend)
     emit('save', dataToSend)
   }
 }
@@ -406,7 +385,7 @@ watch(() => props.show, (newVal) => {
 })
 
 onMounted(() => {
-  getRange();
-  getFactory();
+  getFactory()
+  getCustomer()
 })
 </script>

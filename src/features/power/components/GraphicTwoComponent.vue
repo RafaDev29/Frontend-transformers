@@ -1,6 +1,7 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
+      <!-- Gradiente de fondo animado -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
@@ -18,11 +19,11 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes
+                  Monitoreo de Voltajes con Límites
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real de las 3 fases del sistema eléctrico
+                Voltajes en tiempo real con valores máximos y mínimos alcanzados
               </p>
             </div>
 
@@ -43,12 +44,12 @@
             </div>
           </div>
 
-         
+    
         </div>
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <ApexChart type="line" height="360" :options="chartOptions" :series="series" />
+          <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -70,7 +71,7 @@ const series = computed(() => [
   { 
     name: "Fase 1", 
     data: props.chartData.map(d => d.ch1),
-    color: '#059669'
+    color: '#1e7f14'
   },
   { 
     name: "Fase 2", 
@@ -84,7 +85,17 @@ const series = computed(() => [
   }
 ])
 
+const globalMin = computed(() => {
+  if (!props.chartData.length) return 0
+  const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
+  return Math.min(...allValues.filter(val => val != null && !isNaN(val)))
+})
 
+const globalMax = computed(() => {
+  if (!props.chartData.length) return 0
+  const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
+  return Math.max(...allValues.filter(val => val != null && !isNaN(val)))
+})
 
 const chartOptions = computed(() => ({
   chart: {
@@ -136,8 +147,8 @@ const chartOptions = computed(() => ({
       text: "Voltaje (V)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 210,
-    max: 250,
+    min: Math.max(200, globalMin.value - 5), // Ajuste dinámico del mínimo
+    max: Math.min(260, globalMax.value + 5), // Ajuste dinámico del máximo
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
       formatter: (val) => `${val}V`
@@ -148,16 +159,73 @@ const chartOptions = computed(() => ({
     width: 2.5,
     lineCap: 'round'
   },
-  colors: ["#1e7f14", "#ef4444", "#3b82f6"],
+  colors: ["#1e7f14", "#dc2626", "#0891b2"],
   legend: { show: false },
   tooltip: {
     theme: 'light',
     style: { fontSize: '12px' },
-    marker: { show: true }
+    marker: { show: true },
+    y: {
+      formatter: (val) => `${val}V`
+    }
   },
   markers: {
     size: 0,
     hover: { size: 8, sizeOffset: 3 }
+  },
+  
+  // Anotaciones para líneas de min/max
+  annotations: {
+    yaxis: [
+      {
+        y: globalMin.value,
+        borderColor: '#ef4444',
+        borderWidth: 2,
+        strokeDashArray: 8,
+        opacity: 0.8,
+        label: {
+          text: `Mínimo: ${globalMin.value}V`,
+          position: 'right',
+          offsetX: 0,
+          style: {
+            color: '#fff',
+            background: '#ef4444',
+            fontSize: '11px',
+            fontWeight: '600',
+            padding: {
+              left: 8,
+              right: 8,
+              top: 4,
+              bottom: 4
+            }
+          }
+        }
+      },
+      {
+        y: globalMax.value,
+        borderColor: '#10b981',
+        borderWidth: 2,
+        strokeDashArray: 8,
+        opacity: 0.8,
+        label: {
+          text: `Máximo: ${globalMax.value}V`,
+          position: 'right',
+          offsetX: 0,
+          style: {
+            color: '#fff',
+            background: '#10b981',
+            fontSize: '11px',
+            fontWeight: '600',
+            padding: {
+              left: 8,
+              right: 8,
+              top: 4,
+              bottom: 4
+            }
+          }
+        }
+      }
+    ]
   }
 }))
 </script>

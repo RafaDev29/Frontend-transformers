@@ -18,11 +18,11 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes
+                  Monitoreo de Corrientes
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real de las 3 fases del sistema eléctrico
+                Corrientes en tiempo real de las 3 fases del sistema eléctrico
               </p>
             </div>
 
@@ -48,7 +48,8 @@
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <ApexChart type="line" height="360" :options="chartOptions" :series="series" />
+        <ApexChart type="line" height="360" :options="chartOptions" :series="series" />
+
         </div>
       </div>
     </div>
@@ -69,17 +70,17 @@ const props = defineProps({
 const series = computed(() => [
   { 
     name: "Fase 1", 
-    data: props.chartData.map(d => d.ch1),
+    data: props.chartData.map(d => d.amp1),
     color: '#059669'
   },
   { 
     name: "Fase 2", 
-    data: props.chartData.map(d => d.ch2),
+    data: props.chartData.map(d => d.amp2),
     color: '#dc2626'
   },
   { 
     name: "Fase 3", 
-    data: props.chartData.map(d => d.ch3),
+    data: props.chartData.map(d => d.amp3),
     color: '#0891b2'
   }
 ])
@@ -133,14 +134,14 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Corriente (A)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 210,
-    max: 250,
+    min: 2000,
+    max: 10,
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}A`
     }
   },
   stroke: {

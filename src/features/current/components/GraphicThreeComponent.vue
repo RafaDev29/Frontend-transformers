@@ -17,11 +17,11 @@
                 </div>
             <h2
               class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-              Rango de Voltajes por Fase
+              Rango de Corrientes por Fase
             </h2>
           </div>
           <p class="text-slate-600 dark:text-slate-400 font-medium">
-            Valores mínimos y máximos registrados en cada fase
+            Valores mínimos y máximos de corriente en cada fase
           </p>
         </div>
 
@@ -47,31 +47,31 @@ const props = defineProps({
 
 // Calcular min y max por fase
 const ranges = computed(() => {
-  if (!props.chartData.length) return { ch1: { min: 0, max: 0 }, ch2: { min: 0, max: 0 }, ch3: { min: 0, max: 0 } }
+  if (!props.chartData.length) return { amp1: { min: 0, max: 0 }, amp2: { min: 0, max: 0 }, aamp3: { min: 0, max: 0 } }
 
-  const values = { ch1: [], ch2: [], ch3: [] }
+  const values = { amp1: [], amp2: [], amp3: [] }
   props.chartData.forEach(d => {
-    values.ch1.push(Number(d.ch1) || 0)
-    values.ch2.push(Number(d.ch2) || 0)
-    values.ch3.push(Number(d.ch3) || 0)
+    values.amp1.push(Number(d.amp1) || 0)
+    values.amp2.push(Number(d.amp2) || 0)
+    values.amp3.push(Number(d.amp3) || 0)
   })
 
   return {
-    ch1: { min: Math.min(...values.ch1), max: Math.max(...values.ch1) },
-    ch2: { min: Math.min(...values.ch2), max: Math.max(...values.ch2) },
-    ch3: { min: Math.min(...values.ch3), max: Math.max(...values.ch3) }
+    amp1: { min: Math.min(...values.amp1), max: Math.max(...values.amp1) },
+    amp2: { min: Math.min(...values.amp2), max: Math.max(...values.amp2) },
+    amp3: { min: Math.min(...values.amp3), max: Math.max(...values.amp3) }
   }
 })
 
-// Series con dos barras (min y max) por fase
+
 const series = computed(() => [
   {
     name: "Mínimo",
-    data: [ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min]
+    data: [ranges.value.amp1.min, ranges.value.amp2.min, ranges.value.amp3.min]
   },
   {
     name: "Máximo",
-    data: [ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max]
+    data: [ranges.value.amp1.max, ranges.value.amp2.max, ranges.value.amp3.max]
   }
 ])
 
@@ -89,10 +89,10 @@ const chartOptions = computed(() => ({
       borderRadius: 8
     }
   },
-  colors: ["#ef4444", "#10b981"], // rojo min, verde max
+  colors: ["#ef4444", "#10b981"],
   dataLabels: {
     enabled: true,
-    formatter: (val) => `${val}V`,
+    formatter: (val) => `${val}A`,
     style: { colors: ["#fff"], fontWeight: "600" }
   },
   xaxis: {
@@ -105,12 +105,12 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Corriente (A)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
     labels: {
       style: { colors: "#64748b", fontSize: "12px" },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}A`
     }
   },
   grid: {
@@ -125,7 +125,7 @@ const chartOptions = computed(() => ({
   },
   tooltip: {
     theme: "light",
-    y: { formatter: (val) => `${val}V` }
+    y: { formatter: (val) => `${val}A` }
   }
 }))
 </script>
