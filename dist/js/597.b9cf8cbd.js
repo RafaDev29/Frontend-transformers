@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkfrontend_transformes"]=self["webpackChunkfrontend_transformes"]||[]).push([[597],{2597:function(n,r,e){e.r(r),e.d(r,{default:function(){return o}});var t=e(6768);function u(n,r){return(0,t.uX)(),(0,t.CE)("h1",null," vista de thdi ")}var s=e(1241);const f={},a=(0,s.A)(f,[["render",u]]);var o=a}}]);
-//# sourceMappingURL=597.b9cf8cbd.js.map

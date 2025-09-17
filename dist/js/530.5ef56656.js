@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkfrontend_transformes"]=self["webpackChunkfrontend_transformes"]||[]).push([[530],{3530:function(n,r,e){e.r(r),e.d(r,{default:function(){return o}});var t=e(6768);function u(n,r){return(0,t.uX)(),(0,t.CE)("h1",null," vista de temperatura ")}var a=e(1241);const s={},f=(0,a.A)(s,[["render",u]]);var o=f}}]);
-//# sourceMappingURL=530.5ef56656.js.map
