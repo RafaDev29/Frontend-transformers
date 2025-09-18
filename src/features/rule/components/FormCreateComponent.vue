@@ -27,7 +27,7 @@
                      class="sr-only peer"
                      required />
               <label :for="ruleType.value" 
-                     class="flex flex-col items-center justify-center p-4 text-sm font-medium text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                     class="flex flex-col items-center justify-center p-4 text-sm font-medium text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-color1 peer-checked:border-color1 peer-checked:text-color1 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div class="text-2xl mb-2">{{ ruleType.icon }}</div>
                 {{ ruleType.label }}
                 <div class="text-xs text-gray-400 mt-1">{{ ruleType.unit }}</div>
@@ -66,50 +66,56 @@
           </div>
         </div>
 
-        <!-- Configuración de Tensión (solo se muestra si ruleType === 'tension') -->
-        <div v-if="form.ruleType === 'tension'" class="mb-8">
+        <!-- Información sobre Tolerancias -->
+        <div class="mb-8 p-4 bg-accent-primary/5 dark:bg-colorDark1/20 border border-accent-primary/20 dark:border-colorDark2/30 rounded-lg">
+          <div class="flex items-start space-x-3">
+            <div class="flex-shrink-0">
+              <svg class="w-5 h-5 text-accent-primary dark:text-color2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Tolerancias de Tensión por Zona</h4>
+              <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                <p><strong class="text-accent-primary dark:text-color2">RURAL:</strong> ±5% de la tensión nominal</p>
+                <p><strong class="text-accent-primary dark:text-color2">URBANO:</strong> ±7.5% de la tensión nominal</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tipo de Tensión Base -->
+        <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
             <span class="inline-flex items-center">
               ⚡ Configuración de Tensión
             </span>
           </h3>
           
-          <!-- Fases -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div v-for="fase in fases" :key="fase" class="space-y-4">
-              <h4 class="font-medium text-gray-900 dark:text-white">{{ fase }}</h4>
-              
-              <div>
-                <label :for="`voltajeMin${fase}`" class="block text-sm text-gray-700 dark:text-gray-300 mb-1">
-                  Voltaje Mínimo (V)
-                </label>
-                <input :id="`voltajeMin${fase}`"
-                       v-model.number="form.tensionConfig[fase].voltajeMin"
-                       type="number"
-                       step="0.1"
-                       :class="inputClasses(`voltajeMin${fase}`)"
-                       placeholder="200.0" />
-              </div>
-              
-              <div>
-                <label :for="`voltajeMax${fase}`" class="block text-sm text-gray-700 dark:text-gray-300 mb-1">
-                  Voltaje Máximo (V)
-                </label>
-                <input :id="`voltajeMax${fase}`"
-                       v-model.number="form.tensionConfig[fase].voltajeMax"
-                       type="number"
-                       step="0.1"
-                       :class="inputClasses(`voltajeMax${fase}`)"
-                       placeholder="240.0" />
-              </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="tensionBase" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Tipo de Tensión Base *
+              </label>
+              <select id="tensionBase" 
+                      v-model="form.tensionBase" 
+                      :class="inputClasses('tensionBase')" 
+                      required>
+                <option value="">Seleccionar tipo de tensión</option>
+                <option value="regulada">Tensión Regulada</option>
+                <option value="nominal">Tensión Nominal</option>
+              </select>
+              <p v-if="errors.tensionBase" class="mt-1 text-sm text-red-600">{{ errors.tensionBase }}</p>
             </div>
+
+          
           </div>
 
           <!-- Configuración de Alertas -->
           <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <h4 class="font-medium text-gray-900 dark:text-white mb-4">Configuración de Alertas</h4>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div>
                 <label for="alertType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Tipo de Alerta *
@@ -121,63 +127,14 @@
                   <option value="">Seleccionar tipo de alerta</option>
                   <option value="whatsapp">WhatsApp</option>
                   <option value="email">Email</option>
-                  <option value="sms">SMS</option>
-                  <option value="dashboard">Dashboard</option>
                 </select>
                 <p v-if="errors.alertType" class="mt-1 text-sm text-red-600">{{ errors.alertType }}</p>
               </div>
 
-              <div>
-                <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Prioridad *
-                </label>
-                <select id="priority" 
-                        v-model="form.priority" 
-                        :class="inputClasses('priority')" 
-                        required>
-                  <option value="">Seleccionar prioridad</option>
-                  <option value="baja">🟢 Baja</option>
-                  <option value="media">🟡 Media</option>
-                  <option value="alta">🔴 Alta</option>
-                  <option value="critica">🚨 Crítica</option>
-                </select>
-                <p v-if="errors.priority" class="mt-1 text-sm text-red-600">{{ errors.priority }}</p>
-              </div>
+             
             </div>
 
-            <!-- Contactos de WhatsApp (solo si alertType === 'whatsapp') -->
-            <div v-if="form.alertType === 'whatsapp'" class="mt-4">
-              <label for="whatsappContacts" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Contactos de WhatsApp
-              </label>
-              <div class="space-y-2">
-                <div v-for="(contact, index) in form.whatsappContacts" :key="index" class="flex gap-2">
-                  <input v-model="contact.number" 
-                         type="tel" 
-                         :class="inputClasses('whatsappContact')"
-                         placeholder="+51 999 999 999" />
-                  <input v-model="contact.name" 
-                         type="text" 
-                         :class="inputClasses('whatsappName')"
-                         placeholder="Nombre del contacto" />
-                  <button type="button" 
-                          @click="removeWhatsappContact(index)"
-                          class="px-3 py-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                  </button>
-                </div>
-                <button type="button" 
-                        @click="addWhatsappContact"
-                        class="flex items-center text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
-                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                  </svg>
-                  Agregar contacto
-                </button>
-              </div>
-            </div>
+          
           </div>
         </div>
 
@@ -186,7 +143,7 @@
           <input id="isActive" 
                  v-model="form.isActive" 
                  type="checkbox"
-                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                 class="h-4 w-4 text-accent-primary focus:ring-accent-primary border-gray-300 rounded" />
           <label for="isActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
             Regla activa
           </label>
@@ -200,12 +157,17 @@
             Cancelar
           </button>
           <button type="submit"
-                  class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
+                  :disabled="isLoading"
+                  class="px-6 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-color1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 dark:focus:ring-offset-slate-800">
             <span class="flex items-center">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg v-if="!isLoading" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              Crear Regla
+              <svg v-if="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              {{ isLoading ? 'Creando...' : 'Crear Regla' }}
             </span>
           </button>
         </div>
@@ -240,55 +202,34 @@ const ruleTypes = ref([
   { value: 'temperatura', label: 'Temperatura', icon: '🌡️', unit: 'Celsius (°C)' }
 ])
 
-const fases = ['Fase L1', 'Fase L2', 'Fase L3']
-
 const form = reactive({
   ruleType: '',
   ruleName: '',
   ruleCode: '',
+  tensionBase: '',
   alertType: '',
-  priority: '',
-  isActive: true,
-  whatsappContacts: [{ number: '', name: '' }],
-  tensionConfig: {
-    'Fase L1': { voltajeMin: null, voltajeMax: null },
-    'Fase L2': { voltajeMin: null, voltajeMax: null },
-    'Fase L3': { voltajeMin: null, voltajeMax: null }
-  }
+  isActive: true
 })
 
 // Función para generar clases CSS dinámicas para inputs
 const inputClasses = (fieldName) => {
   const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
   const errorClasses = 'border-red-500 focus:ring-red-500'
-  const normalClasses = 'border-gray-300 dark:border-slate-600 focus:ring-blue-500'
+  const normalClasses = 'border-gray-300 dark:border-slate-600 focus:ring-accent-primary'
   
   return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
-}
-
-const addWhatsappContact = () => {
-  form.whatsappContacts.push({ number: '', name: '' })
-}
-
-const removeWhatsappContact = (index) => {
-  if (form.whatsappContacts.length > 1) {
-    form.whatsappContacts.splice(index, 1)
-  }
 }
 
 const resetForm = () => {
   form.ruleType = ''
   form.ruleName = ''
   form.ruleCode = ''
+  form.tensionBase = ''
+  form.zona = ''
   form.alertType = ''
-  form.priority = ''
+  form.contactNumber = ''
+  form.contactName = ''
   form.isActive = true
-  form.whatsappContacts = [{ number: '', name: '' }]
-  form.tensionConfig = {
-    'Fase L1': { voltajeMin: null, voltajeMax: null },
-    'Fase L2': { voltajeMin: null, voltajeMax: null },
-    'Fase L3': { voltajeMin: null, voltajeMax: null }
-  }
   errors.value = {}
 }
 
@@ -307,22 +248,34 @@ const validateForm = () => {
     errors.value.ruleCode = 'El código de regla es requerido'
   }
 
+  if (!form.tensionBase) {
+    errors.value.tensionBase = 'El tipo de tensión base es requerido'
+  }
+
+  if (!form.zona) {
+    errors.value.zona = 'La zona es requerida'
+  }
+
   if (!form.alertType) {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
 
-  if (!form.priority) {
-    errors.value.priority = 'La prioridad es requerida'
+ 
+
+  // Validación específica para email
+  if (form.alertType === 'email' && form.contactNumber) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.contactNumber)) {
+      errors.value.contactNumber = 'Ingrese un email válido'
+    }
   }
 
-  // Validaciones específicas para tensión
-  if (form.ruleType === 'tension') {
-    fases.forEach(fase => {
-      const config = form.tensionConfig[fase]
-      if (config.voltajeMin !== null && config.voltajeMax !== null && config.voltajeMin >= config.voltajeMax) {
-        errors.value[`voltaje${fase}`] = `En ${fase}: el voltaje mínimo debe ser menor al máximo`
-      }
-    })
+  // Validación específica para WhatsApp
+  if (form.alertType === 'whatsapp' && form.contactNumber) {
+    const phoneRegex = /^\+?[\d\s-()]+$/
+    if (!phoneRegex.test(form.contactNumber)) {
+      errors.value.contactNumber = 'Ingrese un número de teléfono válido'
+    }
   }
 
   return Object.keys(errors.value).length === 0
@@ -336,14 +289,19 @@ const handleSubmit = () => {
       ruleType: form.ruleType,
       ruleName: form.ruleName,
       ruleCode: form.ruleCode,
+      tensionBase: form.tensionBase,
+      zona: form.zona,
       alertType: form.alertType,
-      priority: form.priority,
-      isActive: form.isActive,
-      whatsappContacts: form.alertType === 'whatsapp' ? form.whatsappContacts.filter(c => c.number) : [],
-      tensionConfig: form.ruleType === 'tension' ? form.tensionConfig : null
+      contactNumber: form.contactNumber,
+      contactName: form.contactName,
+      isActive: form.isActive
     }
 
-    emit('save', dataToSend)
+    // Simular delay para mostrar loading
+    setTimeout(() => {
+      emit('save', dataToSend)
+      isLoading.value = false
+    }, 1000)
   }
 }
 
@@ -355,10 +313,5 @@ watch(() => props.show, (newVal) => {
   }
 })
 
-// Reset whatsapp contacts when alert type changes
-watch(() => form.alertType, (newVal) => {
-  if (newVal !== 'whatsapp') {
-    form.whatsappContacts = [{ number: '', name: '' }]
-  }
-})
+
 </script>

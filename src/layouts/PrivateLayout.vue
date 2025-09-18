@@ -88,7 +88,7 @@ const maintenanceItems = computed(() => {
     {
       title: 'Alertas',
       icon: 'Bell',
-      to: '/mantenimiento/usuarios',
+      to: '/app/malert',
       roles: ['ROOT'],
       category: 'maintenance'
     },
