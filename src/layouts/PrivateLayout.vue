@@ -80,7 +80,7 @@ const maintenanceItems = computed(() => {
     {
       title: 'Reglas',
       icon: 'rule',
-      to: '/app/mrules',
+      to: '/app/mrule',
       roles: ['ROOT'],
       category: 'maintenance'
     },

@@ -17,6 +17,7 @@ import thdiRoute from '@/features/thdi/router'
 import powerRoute from '@/features/power/router'
 import temperatureRoute from '@/features/temperature/router'
 import currentRoute from '@/features/current/router'
+import ruleRoute from '@/features/rule/router'
 import { authGuard } from './guards/auth'
 
 
@@ -53,6 +54,7 @@ const routes = [
       ...powerRoute,
       ...temperatureRoute,
       ...currentRoute,
+      ...ruleRoute,
 
       { path: '', redirect: '/app/welcome' },
     ],
