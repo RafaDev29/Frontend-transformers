@@ -131,12 +131,13 @@
             <label for="primaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Voltaje Primario (V) *
             </label>
-            <select id="primaryVoltage" v-model.number="form.primaryVoltage" @change="calculateRegulatedVoltages" :disabled="!form.primaryRangeUid" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.primaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
-            ]" required>
+            <select id="primaryVoltage" v-model.number="form.primaryVoltage" @change="calculateRegulatedVoltages"
+              :disabled="!form.primaryRangeUid" :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.primaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
+              ]" required>
               <option value="">Seleccionar voltaje</option>
               <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage * 1000">
                 {{ voltage * 1000 }} V
@@ -150,12 +151,13 @@
             <label for="regulationPercentage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Porcentaje de Regulación
             </label>
-            <select id="regulationPercentage" v-model="regulationPercentage" @change="calculateRegulatedVoltages" :disabled="!form.primaryVoltage" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              !form.primaryVoltage ? 'opacity-50 cursor-not-allowed' : ''
-            ]">
+            <select id="regulationPercentage" v-model="regulationPercentage" @change="calculateRegulatedVoltages"
+              :disabled="!form.primaryVoltage" :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                !form.primaryVoltage ? 'opacity-50 cursor-not-allowed' : ''
+              ]">
               <option value="">Seleccionar porcentaje</option>
               <option value="1.5">±1.5%</option>
               <option value="2.5">±2.5%</option>
@@ -167,12 +169,13 @@
             <label for="regulatedVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Voltaje Regulado (V) *
             </label>
-            <select id="regulatedVoltage" v-model.number="form.regulatedVoltage" :disabled="regulatedVoltageOptions.length === 0" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.regulatedVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              regulatedVoltageOptions.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
-            ]" required>
+            <select id="regulatedVoltage" v-model.number="form.regulatedVoltage"
+              :disabled="regulatedVoltageOptions.length === 0" :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.regulatedVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                regulatedVoltageOptions.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
+              ]" required>
               <option value="">Seleccionar voltaje regulado</option>
               <option v-for="voltage in regulatedVoltageOptions" :key="voltage" :value="voltage">
                 {{ voltage }} V
@@ -204,12 +207,13 @@
             <label for="secondaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Voltaje Secundario (V) *
             </label>
-            <select id="secondaryVoltage" v-model.number="form.secondaryVoltage" :disabled="!form.secondaryRangeUid" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.secondaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
-              !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
-            ]" required>
+            <select id="secondaryVoltage" v-model.number="form.secondaryVoltage" :disabled="!form.secondaryRangeUid"
+              :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.secondaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
+              ]" required>
               <option value="">Seleccionar voltaje</option>
               <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage * 1000">
                 {{ voltage * 1000 }} V
@@ -223,12 +227,11 @@
             <label for="nominalVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Voltaje Nominal (V) *
             </label>
-            <input id="nominalVoltage" v-model.number="form.nominalVoltage" type="number" min="0" step="1"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.nominalVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" placeholder="220" required />
+            <input id="nominalVoltage" v-model.number="form.nominalVoltage" type="number" min="0" step="1" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.nominalVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="220" required />
             <p v-if="errors.nominalVoltage" class="mt-1 text-sm text-red-600">{{ errors.nominalVoltage }}</p>
           </div>
 
@@ -237,12 +240,11 @@
             <label for="altitude" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Altitud (m) *
             </label>
-            <input id="altitude" v-model.number="form.altitude" type="number" min="0" step="1"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.altitude ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" placeholder="1000" required />
+            <input id="altitude" v-model.number="form.altitude" type="number" min="0" step="1" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.altitude ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="1000" required />
             <p v-if="errors.altitude" class="mt-1 text-sm text-red-600">{{ errors.altitude }}</p>
           </div>
 
@@ -251,12 +253,11 @@
             <label for="frequency" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Frecuencia (Hz) *
             </label>
-            <input id="frequency" v-model.number="form.frequency" type="number" min="0" step="0.1"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.frequency ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" placeholder="60" required />
+            <input id="frequency" v-model.number="form.frequency" type="number" min="0" step="0.1" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.frequency ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="60" required />
             <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
           </div>
 
@@ -292,8 +293,8 @@
             <label for="oilTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Temperatura Aceite (°C)
             </label>
-            <input id="oilTemperature" v-model.number="form.oilTemperature" type="number" step="0.1"
-              :class="[
+            <input id="oilTemperature" v-model.number="form.oilTemperature" :disabled="form.type === 'SECO'"
+              type="number" step="0.1" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
                 'border-gray-300 dark:border-slate-600 focus:ring-color1',
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
@@ -304,8 +305,8 @@
             <label for="copperTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Temperatura Cobre (°C)
             </label>
-            <input id="copperTemperature" v-model.number="form.copperTemperature" type="number" step="0.1"
-              :class="[
+            <input id="copperTemperature" v-model.number="form.copperTemperature" :disabled="form.type === 'ACEITE'"
+              type="number" step="0.1" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
                 'border-gray-300 dark:border-slate-600 focus:ring-color1',
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
@@ -316,12 +317,11 @@
             <label for="ambientTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Temperatura Ambiente (°C)
             </label>
-            <input id="ambientTemperature" v-model.number="form.ambientTemperature" type="number" step="0.1"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" placeholder="25" />
+            <input id="ambientTemperature" v-model.number="form.ambientTemperature" type="number" step="0.1" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="25" />
           </div>
 
           <!-- Corrientes opcionales -->
@@ -329,12 +329,11 @@
             <label for="primaryCurrent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Corriente Primaria (A)
             </label>
-            <input id="primaryCurrent" v-model.number="form.primaryCurrent" type="number" step="0.01" min="0"
-              :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-              ]" placeholder="43.3" />
+            <input id="primaryCurrent" v-model.number="form.primaryCurrent" type="number" step="0.01" min="0" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" placeholder="43.3" />
           </div>
 
           <div>
@@ -530,17 +529,17 @@ const calculateRegulatedVoltages = () => {
 
   const baseVoltage = form.primaryVoltage
   const percentage = parseFloat(regulationPercentage.value)
-  
+
   const increment1 = Math.round(baseVoltage * (percentage / 100))
   const increment2 = Math.round(baseVoltage * (percentage / 50)) // 2 * percentage / 100
-  
+
   regulatedVoltageOptions.value = [
     baseVoltage + increment2, // +2 * percentage
     baseVoltage + increment1, // +percentage
     baseVoltage - increment1, // -percentage
     baseVoltage - increment2  // -2 * percentage
   ].sort((a, b) => b - a) // Ordenar de mayor a menor
-  
+
   // Limpiar selección actual si no está en las nuevas opciones
   if (form.regulatedVoltage && !regulatedVoltageOptions.value.includes(form.regulatedVoltage)) {
     form.regulatedVoltage = null
@@ -570,12 +569,12 @@ const findRangeByVoltage = (voltage) => {
 
 const findRegulationPercentage = (primaryVoltage, regulatedVoltage) => {
   if (!primaryVoltage || !regulatedVoltage) return ''
-  
+
   const base = parseFloat(primaryVoltage)
   const regulated = parseFloat(regulatedVoltage)
   const diff = Math.abs(base - regulated)
   const percentage = (diff / base) * 100
-  
+
   // Determinar si es ±1.5% o ±2.5% basado en la diferencia
   if (Math.abs(percentage - 1.5) < Math.abs(percentage - 2.5)) {
     return '1.5'
@@ -586,7 +585,7 @@ const findRegulationPercentage = (primaryVoltage, regulatedVoltage) => {
   } else if (Math.abs(percentage - 5.0) < 0.5) { // Para 2 * 2.5%
     return '2.5'
   }
-  
+
   return ''
 }
 
@@ -656,12 +655,12 @@ const fillForm = (data) => {
       form.primaryVoltage = primaryVoltage
       form.secondaryVoltage = secondaryVoltage
       form.regulatedVoltage = regulatedVoltage
-      
+
       // Calcular opciones de voltaje regulado
       if (form.primaryVoltage && regulationPercentage.value) {
         calculateRegulatedVoltages()
       }
-      
+
       console.log('Voltajes asignados:', {
         primaryVoltage: form.primaryVoltage,
         secondaryVoltage: form.secondaryVoltage,
@@ -702,7 +701,6 @@ const resetForm = () => {
   regulatedVoltageOptions.value = []
 }
 
-// Validar formulario
 const validateForm = () => {
   errors.value = {}
 
@@ -777,7 +775,6 @@ const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
 
-    // Crear objeto con solo los campos requeridos y opcionales que tienen valor
     const dataToSend = {
       type: form.type,
       zone: form.zone,
@@ -796,7 +793,6 @@ const handleSubmit = () => {
       isActive: form.isActive
     }
 
-    // Agregar campos opcionales solo si tienen valor
     if (form.saleDate) {
       dataToSend.saleDate = form.saleDate
     }
@@ -847,21 +843,28 @@ watch(() => props.show, (newVal) => {
   }
 })
 
-// Watcher para cuando lleguen los datos del transformador
 watch(() => props.transformerData, (newData) => {
   if (newData && Object.keys(newData).length > 0 && dataLoaded.value && props.show) {
     fillForm(newData)
   }
 }, { deep: true })
 
-// Watcher para cuando se carguen los datos de rango
 watch(dataLoaded, (loaded) => {
   if (loaded && props.show && Object.keys(props.transformerData).length > 0) {
     fillForm(props.transformerData)
   }
 })
 
-onMounted(()=>{
+watch(() => form.type, (newType) => {
+  if (newType === 'SECO') {
+    form.oilTemperature = 0
+  } else if (newType === 'ACEITE') {
+    form.copperTemperature = 0
+  }
+})
+
+
+onMounted(() => {
   getCustomer();
   getFactory();
   getRange();
