@@ -159,6 +159,7 @@ const rows = computed(() => {
         code: item.code,
         name: item.name,
         type: item.type,
+        config : item.config,
         isActive: item.isActive ? 'Activo' : 'Inactivo',
         alertsCount: item.alerts ? item.alerts.length : 0,
         alerts: item.alerts || [],

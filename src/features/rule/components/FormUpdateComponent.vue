@@ -86,36 +86,43 @@
                 <label class="block text-sm font-medium text-orange-700 dark:text-orange-300 mb-2">
                   Advertencia (°C) *
                 </label>
-                <input v-model.number="form.config.warning" 
+                <input :value="form.config.levels.warning || ''"
+                       @input="handleTemperatureInput('warning', $event)"
                        type="number" 
                        :class="inputClasses('configWarning')"
                        placeholder="80" 
                        required />
+                <p v-if="errors.configWarning" class="mt-1 text-sm text-red-600">{{ errors.configWarning }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-orange-700 dark:text-orange-300 mb-2">
                   Urgente (°C) *
                 </label>
-                <input v-model.number="form.config.urgent" 
+                <input :value="form.config.levels.urgent || ''"
+                       @input="handleTemperatureInput('urgent', $event)"
                        type="number" 
                        :class="inputClasses('configUrgent')"
                        placeholder="85" 
                        required />
+                <p v-if="errors.configUrgent" class="mt-1 text-sm text-red-600">{{ errors.configUrgent }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-orange-700 dark:text-orange-300 mb-2">
                   Crítico (°C) *
                 </label>
-                <input v-model.number="form.config.critical" 
+                <input :value="form.config.levels.critical || ''"
+                       @input="handleTemperatureInput('critical', $event)"
                        type="number" 
                        :class="inputClasses('configCritical')"
                        placeholder="90" 
                        required />
+                <p v-if="errors.configCritical" class="mt-1 text-sm text-red-600">{{ errors.configCritical }}</p>
               </div>
             </div>
+            
           </div>
 
-          <!-- Configuración de Tensión -->
+
           <div v-else-if="form.ruleType === 'TENSION'" class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3">
               <div class="flex-shrink-0">
@@ -216,7 +223,7 @@
                   class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
             <span class="flex items-center">
               <svg v-if="!isLoading" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z"></path>
               </svg>
               <svg v-if="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -249,6 +256,7 @@ const props = defineProps({
   }
 })
 
+
 const emit = defineEmits(['close', 'update'])
 
 const isLoading = ref(false)
@@ -269,9 +277,11 @@ const form = reactive({
   ruleName: '',
   ruleCode: '',
   config: {
-    warning: null,
-    urgent: null,
-    critical: null
+    levels: {
+      warning: null,
+      urgent: null,
+      critical: null
+    }
   },
   selectedAlerts: [],
   isActive: true
@@ -285,6 +295,13 @@ const inputClasses = (fieldName) => {
   const normalClasses = 'border-gray-300 dark:border-slate-600 focus:ring-accent-primary'
   
   return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
+}
+
+// Función para manejar inputs de temperatura
+const handleTemperatureInput = (type, event) => {
+  const value = event.target.value
+  const numberValue = value === '' ? null : parseFloat(value)
+  form.config.levels[type] = numberValue
 }
 
 const getRuleTypeIcon = (type) => {
@@ -315,24 +332,30 @@ const getRuleTypeDescription = (type) => {
 
 const fillForm = (data) => {
   if (!data || Object.keys(data).length === 0) return
-
-  console.log('Llenando formulario con datos:', data)
-
   form.ruleType = data.type || ''
   form.ruleName = data.name || ''
   form.ruleCode = data.code || ''
 
-  // Llenar configuración específica - PRESERVAR valores existentes
-if (data.type === 'TEMPERATURA' && data.config && data.config.levels) {
-  form.config.warning = data.config.levels.warning ?? null
-  form.config.urgent = data.config.levels.urgent ?? null
-  form.config.critical = data.config.levels.critical ?? null
-} else {
-  form.config.warning = null
-  form.config.urgent = null
-  form.config.critical = null
-}
+  if (data.config && data.config.levels) {
+    const levels = data.config.levels
+    
+    form.config.levels.warning = levels.warning ?? null
+    form.config.levels.urgent = levels.urgent ?? null
+    form.config.levels.critical = levels.critical ?? null
+    
 
+    nextTick(() => {
+      form.config.levels.warning = levels.warning ?? null
+      form.config.levels.urgent = levels.urgent ?? null
+      form.config.levels.critical = levels.critical ?? null
+    })
+  } else {
+    form.config.levels = {
+      warning: null,
+      urgent: null,
+      critical: null
+    }
+  }
 
   // Llenar alertas seleccionadas
   if (data.alerts && Array.isArray(data.alerts)) {
@@ -341,25 +364,22 @@ if (data.type === 'TEMPERATURA' && data.config && data.config.levels) {
     form.selectedAlerts = []
   }
 
-  // Estado activo
   if (typeof data.isActive === 'string') {
     form.isActive = data.isActive === 'Activo'
   } else {
     form.isActive = Boolean(data.isActive)
   }
-
-  console.log('Formulario después de llenar:', { ...form })
-  console.log('Config específico:', form.config)
 }
 
 const resetForm = () => {
   form.ruleType = ''
   form.ruleName = ''
   form.ruleCode = ''
-form.config.warning = null
-form.config.urgent = null
-form.config.critical = null
-
+  form.config.levels = {
+    warning: null,
+    urgent: null,
+    critical: null
+  }
   form.selectedAlerts = []
   form.isActive = true
   errors.value = {}
@@ -381,20 +401,20 @@ const validateForm = () => {
   }
 
   if (form.ruleType === 'TEMPERATURA') {
-    if (!form.config.warning) {
+    if (form.config.levels.warning === null || form.config.levels.warning === '') {
       errors.value.configWarning = 'El nivel de advertencia es requerido'
     }
-    if (!form.config.urgent) {
+    if (form.config.levels.urgent === null || form.config.levels.urgent === '') {
       errors.value.configUrgent = 'El nivel urgente es requerido'
     }
-    if (!form.config.critical) {
+    if (form.config.levels.critical === null || form.config.levels.critical === '') {
       errors.value.configCritical = 'El nivel crítico es requerido'
     }
     
     // Validar que los valores estén en orden lógico
-    if (form.config.warning && form.config.urgent && form.config.critical) {
-      if (form.config.warning >= form.config.urgent || 
-          form.config.urgent >= form.config.critical) {
+    if (form.config.levels.warning && form.config.levels.urgent && form.config.levels.critical) {
+      if (form.config.levels.warning >= form.config.levels.urgent || 
+          form.config.levels.urgent >= form.config.levels.critical) {
         errors.value.configCritical = 'Los valores deben ser: Advertencia < Urgente < Crítico'
       }
     }
@@ -413,17 +433,15 @@ const handleSubmit = () => {
 
     let config = {}
     
-    // Configurar según el tipo de regla
     if (form.ruleType === 'TEMPERATURA') {
       config = {
         levels: {
-          warning: form.config.warning,
-          urgent: form.config.urgent,
-          critical: form.config.critical
+          warning: form.config.levels.warning,
+          urgent: form.config.levels.urgent,
+          critical: form.config.levels.critical
         }
       }
     }
-    // Para otros tipos como TENSION, config permanece vacío
 
     const updateData = {
       uid: props.ruleData.uid,
@@ -444,16 +462,13 @@ const handleSubmit = () => {
   }
 }
 
-// Watcher para cuando se abre el modal
 watch(() => props.show, async (newVal) => {
   if (newVal) {
-    console.log('Modal abierto, datos de la regla:', props.ruleData)
     resetForm()
     availableAlerts.value = props.alerts || []
 
     await nextTick()
 
-    // Llenar el formulario si hay datos
     if (props.ruleData && Object.keys(props.ruleData).length > 0) {
       fillForm(props.ruleData)
     }
@@ -464,14 +479,10 @@ watch(() => props.show, async (newVal) => {
 
 // Watcher para cambios en ruleData
 watch(() => props.ruleData, (newData) => {
-  console.log('Datos de la regla cambiaron:', newData)
   if (newData && Object.keys(newData).length > 0 && props.show) {
     fillForm(newData)
   }
-}, {
-  deep: true,
-  immediate: true
-})
+}, { deep: true, immediate: true })
 
 // Watcher para cambios en alerts
 watch(() => [...props.alerts], (newAlerts) => {
@@ -480,19 +491,16 @@ watch(() => [...props.alerts], (newAlerts) => {
 
 // Watcher para resetear config cuando cambia el tipo
 watch(() => form.ruleType, (newType, oldType) => {
-  // Solo resetear config si es un cambio manual del usuario, no cuando se está llenando el formulario
   if (props.show && oldType && newType !== oldType) {
-    // Si cambia de TEMPERATURA a otro tipo, resetear config
     if (oldType === 'TEMPERATURA' && newType !== 'TEMPERATURA') {
-      form.config = {
+      form.config.levels = {
         warning: null,
         urgent: null,
         critical: null
       }
     }
-    // Si cambia de otro tipo a TEMPERATURA, mantener config vacío para que el usuario llene
     else if (oldType !== 'TEMPERATURA' && newType === 'TEMPERATURA') {
-      form.config = {
+      form.config.levels = {
         warning: null,
         urgent: null,
         critical: null
