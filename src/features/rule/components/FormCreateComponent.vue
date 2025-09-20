@@ -13,7 +13,6 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="p-6">
-        <!-- Tipo de Regla -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Tipo de Regla</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -37,7 +36,6 @@
           <p v-if="errors.ruleType" class="mt-2 text-sm text-red-600">{{ errors.ruleType }}</p>
         </div>
 
-        <!-- Información General -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
             <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -66,7 +64,6 @@
           </div>
         </div>
 
-        <!-- Información sobre Tolerancias -->
         <div class="mb-8 p-4 bg-accent-primary/5 dark:bg-colorDark1/20 border border-accent-primary/20 dark:border-colorDark2/30 rounded-lg">
           <div class="flex items-start space-x-3">
             <div class="flex-shrink-0">
@@ -77,68 +74,14 @@
             <div>
               <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Tolerancias de Tensión por Zona</h4>
               <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                <p><strong class="text-accent-primary dark:text-color2">RURAL:</strong> ±5% de la tensión nominal</p>
-                <p><strong class="text-accent-primary dark:text-color2">URBANO:</strong> ±7.5% de la tensión nominal</p>
+                <p><strong class="text-accent-primary dark:text-color2">RURAL:</strong> ±5% de la tensión nominal/regulada</p>
+                <p><strong class="text-accent-primary dark:text-color2">URBANO:</strong> ±7.5% de la tensión nominal/regulada</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Tipo de Tensión Base -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
-            <span class="inline-flex items-center">
-              ⚡ Configuración de Tensión
-            </span>
-          </h3>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label for="tensionBase" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Tipo de Tensión Base *
-              </label>
-              <select id="tensionBase" 
-                      v-model="form.tensionBase" 
-                      :class="inputClasses('tensionBase')" 
-                      required>
-                <option value="">Seleccionar tipo de tensión</option>
-                <option value="regulada">Tensión Regulada</option>
-                <option value="nominal">Tensión Nominal</option>
-              </select>
-              <p v-if="errors.tensionBase" class="mt-1 text-sm text-red-600">{{ errors.tensionBase }}</p>
-            </div>
 
-          
-          </div>
-
-          <!-- Configuración de Alertas -->
-          <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
-            <h4 class="font-medium text-gray-900 dark:text-white mb-4">Configuración de Alertas</h4>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-              <div>
-                <label for="alertType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tipo de Alerta *
-                </label>
-                <select id="alertType" 
-                        v-model="form.alertType" 
-                        :class="inputClasses('alertType')" 
-                        required>
-                  <option value="">Seleccionar tipo de alerta</option>
-                  <option value="whatsapp">WhatsApp</option>
-                  <option value="email">Email</option>
-                </select>
-                <p v-if="errors.alertType" class="mt-1 text-sm text-red-600">{{ errors.alertType }}</p>
-              </div>
-
-             
-            </div>
-
-          
-          </div>
-        </div>
-
-        <!-- Estado -->
         <div class="flex items-center mb-6">
           <input id="isActive" 
                  v-model="form.isActive" 
@@ -191,7 +134,6 @@ const emit = defineEmits(['close', 'save'])
 const isLoading = ref(false)
 const errors = ref({})
 
-// Tipos de reglas disponibles
 const ruleTypes = ref([
   { value: 'tension', label: 'Tensión', icon: '⚡', unit: 'Voltios (V)' },
   { value: 'corriente', label: 'Corriente', icon: '🔌', unit: 'Amperios (A)' },
@@ -211,7 +153,6 @@ const form = reactive({
   isActive: true
 })
 
-// Función para generar clases CSS dinámicas para inputs
 const inputClasses = (fieldName) => {
   const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
   const errorClasses = 'border-red-500 focus:ring-red-500'
@@ -259,10 +200,7 @@ const validateForm = () => {
   if (!form.alertType) {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
-
  
-
-  // Validación específica para email
   if (form.alertType === 'email' && form.contactNumber) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(form.contactNumber)) {
@@ -270,7 +208,6 @@ const validateForm = () => {
     }
   }
 
-  // Validación específica para WhatsApp
   if (form.alertType === 'whatsapp' && form.contactNumber) {
     const phoneRegex = /^\+?[\d\s-()]+$/
     if (!phoneRegex.test(form.contactNumber)) {
@@ -297,7 +234,6 @@ const handleSubmit = () => {
       isActive: form.isActive
     }
 
-    // Simular delay para mostrar loading
     setTimeout(() => {
       emit('save', dataToSend)
       isLoading.value = false

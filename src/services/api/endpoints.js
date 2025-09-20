@@ -42,3 +42,23 @@ export const RANGE = {
   LIST: '/range/list',
   DELETE: '/range/delete',
 }
+
+
+
+export const RULE = {
+  CREATE: '/rules/add',
+  UPDATE: '/rules/update',
+  LIST: '/rules/all',
+  DELETE: '/rules/delete',
+}
+
+
+export const ALERT = {
+  CREATE: '/alert/add',
+  UPDATE: '/alert/update',
+  LIST: '/alert/all',
+  DELETE: '/alert/delete',
+}
+
+
+

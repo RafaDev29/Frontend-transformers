@@ -3,7 +3,7 @@
     <div class="px-2 py-1 flex items-center justify-between">
       <div class="flex-grow">
         <NavigationComponent :breadcrumbs="[
-          { label: 'Mantenimiento de Reglas', path: '/app/mRule' },
+          { label: 'Mantenimiento de Alertas', path: '/app/mAlert' },
         ]" />
       </div>
       <div class="w-[5%] flex justify-end">
@@ -21,20 +21,20 @@
     <FormUpdateComponent 
       v-if="showUpdateModal"
       :show="showUpdateModal" 
-      :clientData="selectedCustomer"
+      :alertData="selectedCustomer"
       @close="closeUpdateModal"
       @update="handleUpdate"  />
   </div>
 </template>
 
 <script setup>
-import TableMaintenance from '@/features/customer/components/TableMaintenance.vue'
+import TableMaintenance from '@/features/alert/components/TableMaintenance.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allCustomer, deleteCustomer, createCustomerRoot , updateCustomerRoot , listCustomer } from '../services/alertService'
+import { allAlerts , createAlerts , updateAlerts , deleteAlerts } from '../services/alertService'
 
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
@@ -51,25 +51,17 @@ const showCreateModal = ref(false)
 const showUpdateModal = ref(false)
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 
-const listTranformer = async () => {
+const listItems = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    let response
-
-    if (role === 'ROOT') {
-      response = await allCustomer()
-    } else if (role === 'FACTORY') {
-      response = await listCustomer()
-    } else {
-      throw new Error('Rol no autorizado')
-    }
+    const  response = await allAlerts();
 
     if (response) {
       dataItem.value = response.data
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al cargar clientes'
+    errorMsg.value = e?.response?.data?.message || 'Error al cargar alertas'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -90,15 +82,15 @@ const handleCreate = async (formData) => {
   errorMsg.value = ''
 
   try {
-    const response = await createCustomerRoot(formData)
+    const response = await createAlerts(formData)
 
     if (response) {
-      bus?.emit?.('success', 'Transformador creado correctamente')
+      bus?.emit?.('success', 'Alerta creada correctamente')
       closeCreateModal()
-      listTranformer()
+      listItems()
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
+    errorMsg.value = e?.response?.data?.message || 'Error al crear alerta'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -106,8 +98,8 @@ const handleCreate = async (formData) => {
 }
 
 
-const openUpdateModal = (clientData) => {
-  selectedCustomer.value = { ...clientData }
+const openUpdateModal = (alertData) => {
+  selectedCustomer.value = { ...alertData }
   showUpdateModal.value = true
 }
 
@@ -125,15 +117,15 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateCustomerRoot(updateData.data , updateData.uid)
+    const response = await updateAlerts(updateData.data , updateData.uid)
 
     if (response) {
-      bus?.emit?.('success', 'Transformador actualizado correctamente')
+      bus?.emit?.('success', 'Alerta actualizado correctamente')
       closeUpdateModal()
-      listTranformer() 
+      listItems() 
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al actualizar transformador'
+    errorMsg.value = e?.response?.data?.message || 'Error al actualizar alerta'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -141,8 +133,8 @@ const handleUpdate = async (updateData) => {
 }
 
 
-const handleEdit = (transformer) => {
-  openUpdateModal(transformer)
+const handleEdit = (alert) => {
+  openUpdateModal(alert)
 }
 
 
@@ -150,11 +142,11 @@ const handleDelete = async (payload) => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await deleteCustomer(payload.uid)
+    const response = await deleteAlerts(payload.uid)
 
     if (response) {
       bus?.emit?.('success', 'Se eliminó correctamente')
-      listTranformer()
+      listItems()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
@@ -165,6 +157,6 @@ const handleDelete = async (payload) => {
 }
 
 onMounted(() => {
-  listTranformer()
+  listItems()
 })
 </script>
