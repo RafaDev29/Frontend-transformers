@@ -16,32 +16,28 @@
     </div>
 
     <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
-      @save="handleCreate" />
+      @save="handleCreate"   :alerts="dataAlert" />
 
     <FormUpdateComponent 
+     :alerts="dataAlert"
       v-if="showUpdateModal"
       :show="showUpdateModal" 
-      :clientData="selectedCustomer"
+      :ruleData="selectedCustomer"
       @close="closeUpdateModal"
       @update="handleUpdate"  />
   </div>
 </template>
 
 <script setup>
-import TableMaintenance from '@/features/customer/components/TableMaintenance.vue'
+import TableMaintenance from '@/features/rule/components/TableMaintenance.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allCustomer, deleteCustomer, createCustomerRoot , updateCustomerRoot , listCustomer } from '../services/ruleService'
+import {  allRule , deleteRule , createRule, updateRule } from '../services/ruleService'
+import{allAlerts} from '@/features/alert/services/alertService'
 
-import { useAuthStore } from '@/features/auth/stores/authStore'
-
-const auth = useAuthStore()
-
-const role = auth.user?.role
-console.log('El rol del usuario es:', role)
 
 const dataItem = ref()
 const isLoading = ref(false)
@@ -50,26 +46,34 @@ const selectedCustomer = ref({})
 const showCreateModal = ref(false)
 const showUpdateModal = ref(false)
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
+const dataAlert = ref()
 
-const listTranformer = async () => {
+
+
+const listAlert = async () => {
+  errorMsg.value = ''
+  try {
+    const  response = await allAlerts();
+
+    if (response) {
+      dataAlert.value = response.data
+    }
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'Error al cargar alertas'
+    bus?.emit?.('error', errorMsg.value)
+  }
+}
+const listItems = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    let response
-
-    if (role === 'ROOT') {
-      response = await allCustomer()
-    } else if (role === 'FACTORY') {
-      response = await listCustomer()
-    } else {
-      throw new Error('Rol no autorizado')
-    }
+    const  response = await allRule();
 
     if (response) {
       dataItem.value = response.data
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al cargar clientes'
+    errorMsg.value = e?.response?.data?.message || 'Error al cargar alertas'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -90,15 +94,15 @@ const handleCreate = async (formData) => {
   errorMsg.value = ''
 
   try {
-    const response = await createCustomerRoot(formData)
+    const response = await createRule(formData)
 
     if (response) {
-      bus?.emit?.('success', 'Transformador creado correctamente')
+      bus?.emit?.('success', 'Regla creada correctamente')
       closeCreateModal()
-      listTranformer()
+      listItems()
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
+    errorMsg.value = e?.response?.data?.message || 'Error al crear regla'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -106,8 +110,8 @@ const handleCreate = async (formData) => {
 }
 
 
-const openUpdateModal = (clientData) => {
-  selectedCustomer.value = { ...clientData }
+const openUpdateModal = (ruleData) => {
+  selectedCustomer.value = { ...ruleData }
   showUpdateModal.value = true
 }
 
@@ -125,15 +129,15 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateCustomerRoot(updateData.data , updateData.uid)
+    const response = await updateRule(updateData.data , updateData.uid)
 
     if (response) {
-      bus?.emit?.('success', 'Transformador actualizado correctamente')
+      bus?.emit?.('success', 'Regla actualizado correctamente')
       closeUpdateModal()
-      listTranformer() 
+      listItems() 
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'Error al actualizar transformador'
+    errorMsg.value = e?.response?.data?.message || 'Error al actualizar Regla'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -141,8 +145,8 @@ const handleUpdate = async (updateData) => {
 }
 
 
-const handleEdit = (transformer) => {
-  openUpdateModal(transformer)
+const handleEdit = (rule) => {
+  openUpdateModal(rule)
 }
 
 
@@ -150,14 +154,14 @@ const handleDelete = async (payload) => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await deleteCustomer(payload.uid)
+    const response = await deleteRule(payload.uid)
 
     if (response) {
       bus?.emit?.('success', 'Se eliminó correctamente')
-      listTranformer()
+      listItems()
     }
   } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
+    errorMsg.value = e?.response?.data?.message || 'error al eliminar regla'
     bus?.emit?.('error', errorMsg.value)
   } finally {
     isLoading.value = false
@@ -165,6 +169,7 @@ const handleDelete = async (payload) => {
 }
 
 onMounted(() => {
-  listTranformer()
+  listItems()
+  listAlert()
 })
 </script>
