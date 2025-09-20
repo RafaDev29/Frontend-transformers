@@ -49,5 +49,5 @@ import GraphicThreeComponent from '../components/GraphicThreeComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
-import rawData from '@/features/strain/data/data.json'
+import rawData from '@/features/power/data/data.json'
 </script>

@@ -13,25 +13,27 @@
         <!-- Header -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-danger to-red-500 flex items-center justify-center shadow-lg">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
             </div>
             <h2
               class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-              Rango de Voltajes por Fase
+              Análisis de Potencias Eléctricas
             </h2>
           </div>
           <p class="text-slate-600 dark:text-slate-400 font-medium">
-            Valores mínimos y máximos registrados en cada fase
+            Comparación de potencia activa, reactiva y aparente
           </p>
         </div>
 
         <!-- Gráfico -->
         <div class="p-6">
-          <ApexChart type="bar" height="400" :options="chartOptions" :series="series" />
+          <ApexChart type="bar" height="450" :options="chartOptions" :series="series" />
         </div>
+
+       
       </div>
     </div>
   </div>
@@ -48,33 +50,33 @@ const props = defineProps({
   }
 })
 
-// Calcular min y max por fase
+// Calcular min y max por tipo de potencia
 const ranges = computed(() => {
-  if (!props.chartData.length) return { ch1: { min: 0, max: 0 }, ch2: { min: 0, max: 0 }, ch3: { min: 0, max: 0 } }
+  if (!props.chartData.length) return { kW: { min: 0, max: 0 }, kvar: { min: 0, max: 0 }, kVA: { min: 0, max: 0 } }
 
-  const values = { ch1: [], ch2: [], ch3: [] }
+  const values = { kW: [], kvar: [], kVA: [] }
   props.chartData.forEach(d => {
-    values.ch1.push(Number(d.ch1) || 0)
-    values.ch2.push(Number(d.ch2) || 0)
-    values.ch3.push(Number(d.ch3) || 0)
+    values.kW.push(Number(d.kW) || 0)
+    values.kvar.push(Number(d.kvar) || 0)
+    values.kVA.push(Number(d.kVA) || 0)
   })
 
   return {
-    ch1: { min: Math.min(...values.ch1), max: Math.max(...values.ch1) },
-    ch2: { min: Math.min(...values.ch2), max: Math.max(...values.ch2) },
-    ch3: { min: Math.min(...values.ch3), max: Math.max(...values.ch3) }
+    kW: { min: Math.min(...values.kW), max: Math.max(...values.kW) },
+    kvar: { min: Math.min(...values.kvar), max: Math.max(...values.kvar) },
+    kVA: { min: Math.min(...values.kVA), max: Math.max(...values.kVA) }
   }
 })
 
-// Series con dos barras (min y max) por fase
+// Series con valores mínimos y máximos para cada tipo de potencia
 const series = computed(() => [
   {
-    name: "Mínimo",
-    data: [ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min]
+    name: "Valor Mínimo",
+    data: [ranges.value.kW.min, ranges.value.kvar.min, ranges.value.kVA.min]
   },
   {
-    name: "Máximo",
-    data: [ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max]
+    name: "Valor Máximo",
+    data: [ranges.value.kW.max, ranges.value.kvar.max, ranges.value.kVA.max]
   }
 ])
 
@@ -83,52 +85,97 @@ const chartOptions = computed(() => ({
     type: "bar",
     background: "transparent",
     toolbar: { show: false },
-    animations: { enabled: true, easing: "easeinout", speed: 800 }
+    animations: { 
+      enabled: true, 
+      easing: "easeinout", 
+      speed: 800,
+      animateGradually: { enabled: true, delay: 150 }
+    }
   },
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: "45%",
-      borderRadius: 8
+      columnWidth: "55%",
+      borderRadius: 8,
+      dataLabels: { position: "top" }
     }
   },
-  colors: ["#ef4444", "#10b981"], // rojo min, verde max
+  colors: ["#3b82f6", "#10b981"], // azul para mínimo, verde para máximo
   dataLabels: {
     enabled: true,
-    formatter: (val) => `${val}V`,
-    style: { colors: ["#fff"], fontWeight: "600" }
+    formatter: (val, opts) => {
+      const categories = ["kW", "kvar", "kVA"];
+      const unit = categories[opts.dataPointIndex];
+      return `${val} ${unit}`;
+    },
+    style: { 
+      colors: ["#ffffff"], 
+      fontWeight: "600",
+      fontSize: "11px"
+    },
+    background: {
+      enabled: true,
+      foreColor: "#000",
+      borderRadius: 4,
+      padding: 4,
+      opacity: 0.8
+    }
   },
   xaxis: {
-    categories: ["Fase 1", "Fase 2", "Fase 3"],
-    labels: { style: { colors: "#64748b", fontSize: "13px", fontWeight: "500" } },
+    categories: ["Potencia Activa", "Potencia Reactiva", "Potencia Aparente"],
+    labels: { 
+      style: { 
+        colors: "#64748b", 
+        fontSize: "13px", 
+        fontWeight: "500" 
+      },
+      rotate: -15
+    },
     title: {
-      text: "Fases",
+      text: "Tipos de Potencia",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     }
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Potencia",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
     labels: {
       style: { colors: "#64748b", fontSize: "12px" },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}`
     }
   },
   grid: {
     borderColor: "#e2e8f0",
-    strokeDashArray: 3
+    strokeDashArray: 3,
+    xaxis: { lines: { show: false } },
+    yaxis: { lines: { show: true } }
   },
   legend: {
     position: "top",
     horizontalAlign: "right",
     fontSize: "13px",
-    labels: { colors: "#475569" }
+    labels: { colors: "#475569" },
+    markers: { radius: 6 }
   },
   tooltip: {
     theme: "light",
-    y: { formatter: (val) => `${val}V` }
-  }
+    y: {
+      formatter: (val, opts) => {
+        const categories = ["kW", "kvar", "kVA"];
+        const unit = categories[opts.dataPointIndex];
+        return `${val} ${unit}`;
+      }
+    },
+    style: { fontSize: "12px" }
+  },
+  responsive: [{
+    breakpoint: 768,
+    options: {
+      plotOptions: { bar: { columnWidth: "70%" } },
+      xaxis: { labels: { rotate: -45 } }
+    }
+  }]
 }))
 </script>

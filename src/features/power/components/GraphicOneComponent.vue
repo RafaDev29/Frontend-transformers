@@ -8,6 +8,7 @@
       <div
         class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
 
+        <!-- Encabezado -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             <div>
@@ -18,32 +19,30 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes
+                  Monitoreo de Potencias
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real de las 3 fases del sistema eléctrico
+                Potencias en tiempo real: activa (kW), reactiva (kvar) y aparente (kVA)
               </p>
             </div>
 
-            <!-- Leyenda mejorada -->
+            <!-- Leyenda -->
             <div class="flex flex-wrap items-center justify-end gap-6">
               <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-primary to-color2 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 1</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">kW (Activa)</span>
               </div>
               <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-danger to-red-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 2</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">kvar (Reactiva)</span>
               </div>
               <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-secondary to-cyan-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 3</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">kVA (Aparente)</span>
               </div>
             </div>
           </div>
-
-         
         </div>
 
         <!-- Área del gráfico -->
@@ -68,23 +67,21 @@ const props = defineProps({
 
 const series = computed(() => [
   { 
-    name: "Fase 1", 
-    data: props.chartData.map(d => d.ch1),
+    name: "kW (Activa)", 
+    data: props.chartData.map(d => d.kW),
     color: '#059669'
   },
   { 
-    name: "Fase 2", 
-    data: props.chartData.map(d => d.ch2),
+    name: "kvar (Reactiva)", 
+    data: props.chartData.map(d => d.kvar),
     color: '#dc2626'
   },
   { 
-    name: "Fase 3", 
-    data: props.chartData.map(d => d.ch3),
+    name: "kVA (Aparente)", 
+    data: props.chartData.map(d => d.kVA),
     color: '#0891b2'
   }
 ])
-
-
 
 const chartOptions = computed(() => ({
   chart: {
@@ -133,14 +130,14 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Potencia (kW / kvar / kVA)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 210,
-    max: 250,
+    min: -200,
+    max: 400,
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val} u`
     }
   },
   stroke: {
@@ -153,7 +150,15 @@ const chartOptions = computed(() => ({
   tooltip: {
     theme: 'light',
     style: { fontSize: '12px' },
-    marker: { show: true }
+    marker: { show: true },
+    y: {
+      formatter: (val, { seriesIndex }) => {
+        if (seriesIndex === 0) return `${val} kW`
+        if (seriesIndex === 1) return `${val} kvar`
+        if (seriesIndex === 2) return `${val} kVA`
+        return val
+      }
+    }
   },
   markers: {
     size: 0,
