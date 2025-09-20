@@ -61,10 +61,11 @@
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Temperatura</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                  Define los niveles de temperatura que activarán las alertas en grados Celsius.
-                  Las alertas se activarán automáticamente cuando se excedan estos valores establecidos por normativa.
-                </p>
+                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> Define los niveles de temperatura que activarán las alertas en grados Celsius.</p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos valores establecidos por normativa.</p>
+                </div>
+                
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -102,11 +103,14 @@
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Potencia</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                 +-% de la potencia nominal
-                  Define los niveles de potencia que activarán las alertas en %.
-                  Las alertas se activarán automáticamente cuando se excedan estos valores establecidos por normativa.
-                </p>
+                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> +-% de la potencia nominal</p>
+                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> Define los niveles de potencia que
+                    activarán las alertas en %.</p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
+                    valores establecidos por normativa.</p>
+                </div>
+
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -222,15 +226,17 @@
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                   <p><strong class="text-blue-600 dark:text-blue-300"></strong> ±5% de la corriente nominal (desbalance
                     por diferencia de fases)</p>
+
+                  <p><strong class="text-blue-600 dark:text-blue-300"></strong>Si la corriente de una fase supera la
+                    corriente nominal, se activará la ALERTA</p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.
-                    Si la corriente de una fase supera la corriente nominal, se activará la ALERTA</p>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-         
         </div>
 
 
