@@ -2,17 +2,18 @@
   <div
     class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-petroleum px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
-    <div class="w-full max-w-5xl flex items-center justify-center lg:justify-between relative z-10">
+    <div class="w-full  flex items-center justify-center lg:justify-between relative z-10">
 
       <div class="hidden lg:flex lg:w-1/2 justify-center items-center pr-8">
-        <div class="relative">
+        <div class="relative w-full h-full">
           <div
             class="absolute inset-0 bg-gradient-to-r from-color2/20 via-color3/30 to-color1/20 rounded-3xl transform rotate-3 blur-2xl scale-110">
           </div>
-          <img src="@/assets/auth/login3.png" alt="SIMTRA - Hombre con casco verde"
-            class="relative w-100 h-100 pr-10 mr-100 pb-15 object-contain drop-shadow-1xl transform hover:scale-105 transition-transform duration-700 ease-out" />
+          <img src="@/assets/auth/login5.jpeg" alt="SIMTRA - Hombre con casco verde"
+            class="relative w-full h-full object-cover rounded-3xl drop-shadow-1xl transform hover:scale-105 transition-transform duration-700 ease-out" />
         </div>
       </div>
+
 
       <div class="w-full lg:w-1/2 max-w-md relative">
         <div class="text-center mb-8">
@@ -94,7 +95,6 @@ import { useAuthStore } from '@/features/auth/stores/authStore'
 const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
-
 const isLoading = ref(false)
 const errorMsg = ref('')
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus

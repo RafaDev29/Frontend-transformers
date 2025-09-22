@@ -11,7 +11,7 @@
             <span class="text-color1 dark:text-color3">S</span>
             <span class="text-accent-success dark:text-color4">I</span>
             <span class="text-color2 dark:text-color5">M</span>
-            <span class="text-color3 dark:text-color2">T</span>
+            <span class="text-color3 dark:text-color2">T</span> 
             <span class="text-color4 dark:text-color1">R</span>
             <span class="text-accent-primary dark:text-accent-success">A</span>
           </div>

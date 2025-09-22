@@ -1,21 +1,26 @@
-
 <template>
   <v-dialog v-model="dialog" max-width="500" @click:outside="resetForm">
     <v-card color="white">
-      <v-card-title class="text-center text-white bg-[#4465A6]">
-        <div class="z-10 text-center">
-          <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
-            <span class="text-[#66A3F2]">S</span>
-            <span class="text-[#66A3F2]">A</span>
-            <span class="text-[#C4D8F2]">E</span>
-            <span class="text-[#F2F2F2]">E</span>
-          </h1>
-        </div>
-        <div class="text-subtitle-2">SISTEMA DE ADMINISTRACIÓN EFICIENTE DE ENERGÍA</div>
-      </v-card-title>
+      <v-card-title class="text-center text-white bg-petroleum p-1">
+  <div class="z-10 text-center">
+    <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
+      <span class="text-color1 dark:text-colorDark1">S</span>
+      <span class="text-color2 dark:text-colorDark2">I</span>
+      <span class="text-color3 dark:text-colorDark3">M</span>
+      <span class="text-color4 dark:text-colorDark4">T</span>
+      <span class="text-color5 dark:text-color1">R</span>
+      <span class="text-accent-primary dark:text-accent-success">A</span>
+    </h1>
+  </div>
+<div class="text-center m-2 text-sm md:text-base whitespace-normal break-words leading-snug">
+  SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES EN TIEMPO REAL
+</div>
+
+</v-card-title>
+
 
       <v-card-text class="pt-2">
-        <h2 class="text-h5 text-center text-indigo-darken-1 mb-2">¿Necesitas Cotizar?</h2>
+        <h2 class="text-h5 text-center text-petroleum mb-2">¿Necesitas Cotizar?</h2>
         <p class="text-center text-xs mb-1">
           Si estás interesado en conocer la potencialidad de nuestra aplicación
           y saber más de nuestros planes, por favor déjanos tus datos
@@ -23,55 +28,31 @@
         </p>
 
         <v-form @submit.prevent="submitForm">
-          <v-text-field 
-            v-model="formData.nombre" 
-            label="Nombre*" 
-            variant="outlined" 
-            density="compact">
+          <v-text-field v-model="formData.nombre" label="Nombre*" variant="outlined" density="compact">
           </v-text-field>
 
           <div class="d-flex gap-1">
-            <v-text-field 
-              v-model="formData.email" 
-              label="Email*" 
-              variant="outlined" 
-              density="compact" 
-              style="flex: 1"
-              class="mb-1" 
-              @blur="touched.email = true" 
-              :error="touched.email && !emailRegex.test(formData.email)"
+            <v-text-field v-model="formData.email" label="Email*" variant="outlined" density="compact" style="flex: 1"
+              class="mb-1" @blur="touched.email = true" :error="touched.email && !emailRegex.test(formData.email)"
               :error-messages="touched.email && !emailRegex.test(formData.email) ? 'Correo inválido' : ''" />
 
-            <v-text-field 
-              v-model="formData.telefono" 
-              label="Teléfono de contacto*" 
-              variant="outlined"
-              density="compact" 
-              style="flex: 1" 
-              @blur="touched.telefono = true"
+            <v-text-field v-model="formData.telefono" label="Teléfono de contacto*" variant="outlined" density="compact"
+              style="flex: 1" @blur="touched.telefono = true"
               :error="touched.telefono && !phoneRegex.test(formData.telefono)"
               :error-messages="touched.telefono && !phoneRegex.test(formData.telefono) ? 'Debe tener 9 dígitos' : ''" />
           </div>
 
-          <v-textarea 
-            v-model="formData.mensaje" 
-            label="Mensaje*" 
-            variant="outlined" 
-            density="compact" 
-            rows="4"
+          <v-textarea v-model="formData.mensaje" label="Mensaje*" variant="outlined" density="compact" rows="4"
             class="">
           </v-textarea>
 
           <div class="text-center">
-            <button 
-              type="submit" 
-              :disabled="!isFormValid" 
-              :class="[
-                'px-5 py-2 text-sm md:text-base font-bold rounded-lg shadow-lg transform transition-all duration-500',
-                isFormValid
-                  ? 'bg-[#4465A6] text-white hover:bg-[#66A3F2]'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              ]">
+            <button type="submit" :disabled="!isFormValid" :class="[
+              'px-5 py-2 text-sm md:text-base font-bold rounded-lg shadow-lg transform transition-all duration-500',
+              isFormValid
+                ? 'bg-color2 text-white hover:bg-petroleum'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            ]">
               ENVIAR
             </button>
           </div>
