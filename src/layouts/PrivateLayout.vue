@@ -135,7 +135,7 @@ function onSettings() {
 
 @media (min-width: 960px) {
   .content-shell {
-    padding: 24px;
+    padding: 10px;
     @apply dark:bg-slate-900/100;
   }
 }

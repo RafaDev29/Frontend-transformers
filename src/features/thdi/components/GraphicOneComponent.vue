@@ -131,7 +131,7 @@ const chartOptions = computed(() => ({
       text: "THD-F (%)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 0,
+
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
       formatter: (val) => `${val}%`
