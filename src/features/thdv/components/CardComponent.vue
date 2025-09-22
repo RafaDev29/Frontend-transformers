@@ -14,16 +14,14 @@
       >
         <!-- Izquierda -->
         <div class="flex items-center gap-2">
-          <!-- <div class="w-2.5 h-2.5 rounded-full animate-pulse" :class="phase.dot"></div> -->
-          <!-- <h3 class="text-sm font-semibold" :class="phase.title">{{ phase.label }}</h3> -->
         </div>
 
         <!-- Derecha -->
         <div class="text-right">
           <p class=" font-bold leading-tight" :class="phase.value">
-            {{ currentVoltages[phase.key] }}V
+            {{ currentVoltages[phase.key] }}%
           </p>
-          <p class="text-xs" :class="phase.sub">Voltaje actual de {{ phase.label }} </p>
+          <p class="text-xs" :class="phase.sub">Distorsión armónica de {{ phase.label }} </p>
         </div>
       </div>
     </div>

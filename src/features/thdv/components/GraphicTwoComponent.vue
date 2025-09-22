@@ -1,11 +1,10 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <!-- Gradiente de fondo animado -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
-      
+
       <div
         class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
 
@@ -13,41 +12,44 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             <div>
               <div class="flex items-center gap-3 mb-2">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
+                <div
+                  class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
                   <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes con Límites
+                <h2
+                  class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
+                  Monitoreo de Distorsión Armónica (THD-F)
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real con valores máximos y mínimos alcanzados
+                Distorsión Armónica Total – Fundamental (%) en las 3 fases, valores mínimos y máximos alcanzados
               </p>
             </div>
 
-            <!-- Leyenda mejorada -->
+            <!-- Leyenda -->
             <div class="flex flex-wrap items-center justify-end gap-6">
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+              <div
+                class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-primary to-color2 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 1</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">CH1</span>
               </div>
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+              <div
+                class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-danger to-red-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 2</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">CH2</span>
               </div>
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+              <div
+                class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-secondary to-cyan-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 3</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">CH3</span>
               </div>
             </div>
           </div>
-
-    
         </div>
 
-        <!-- Área del gráfico -->
         <div class="p-6">
           <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
         </div>
@@ -68,18 +70,18 @@ const props = defineProps({
 })
 
 const series = computed(() => [
-  { 
-    name: "Fase 1", 
+  {
+    name: "CH1",
     data: props.chartData.map(d => d.ch1),
     color: '#1e7f14'
   },
-  { 
-    name: "Fase 2", 
+  {
+    name: "CH2",
     data: props.chartData.map(d => d.ch2),
     color: '#dc2626'
   },
-  { 
-    name: "Fase 3", 
+  {
+    name: "CH3",
     data: props.chartData.map(d => d.ch3),
     color: '#0891b2'
   }
@@ -101,7 +103,7 @@ const chartOptions = computed(() => ({
   chart: {
     type: "line",
     zoom: { enabled: true },
-    toolbar: { 
+    toolbar: {
       show: true,
       tools: {
         download: true,
@@ -128,7 +130,7 @@ const chartOptions = computed(() => ({
     yaxis: { lines: { show: true } }
   },
   xaxis: {
-    type: "category", 
+    type: "category",
     tickAmount: 24,
     categories: props.chartData.map(d => d.datetime),
     labels: {
@@ -144,14 +146,14 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "THD-F (%)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: Math.max(200, globalMin.value - 5), // Ajuste dinámico del mínimo
-    max: Math.min(260, globalMax.value + 5), // Ajuste dinámico del máximo
+    min: Math.max(0, globalMin.value - 1),
+    max: Math.min(100, globalMax.value + 1),
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}%`
     }
   },
   stroke: {
@@ -166,15 +168,14 @@ const chartOptions = computed(() => ({
     style: { fontSize: '12px' },
     marker: { show: true },
     y: {
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}%`
     }
   },
   markers: {
     size: 0,
     hover: { size: 8, sizeOffset: 3 }
   },
-  
-  // Anotaciones para líneas de min/max
+
   annotations: {
     yaxis: [
       {
@@ -184,21 +185,9 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Mínimo: ${globalMin.value}V`,
+          text: `Mínimo: ${globalMin.value}%`,
           position: 'right',
-          offsetX: 0,
-          style: {
-            color: '#fff',
-            background: '#ef4444',
-            fontSize: '11px',
-            fontWeight: '600',
-            padding: {
-              left: 8,
-              right: 8,
-              top: 4,
-              bottom: 4
-            }
-          }
+          style: { color: '#fff', background: '#ef4444', fontSize: '11px', fontWeight: '600' }
         }
       },
       {
@@ -208,21 +197,9 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Máximo: ${globalMax.value}V`,
+          text: `Máximo: ${globalMax.value}%`,
           position: 'right',
-          offsetX: 0,
-          style: {
-            color: '#fff',
-            background: '#10b981',
-            fontSize: '11px',
-            fontWeight: '600',
-            padding: {
-              left: 8,
-              right: 8,
-              top: 4,
-              bottom: 4
-            }
-          }
+          style: { color: '#fff', background: '#10b981', fontSize: '11px', fontWeight: '600' }
         }
       }
     ]

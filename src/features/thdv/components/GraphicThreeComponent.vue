@@ -1,30 +1,28 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <!-- Fondo con gradiente -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
-      <!-- Contenedor -->
       <div
         class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
 
-        <!-- Header -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-danger to-red-500 flex items-center justify-center shadow-lg">
+            <div
+              class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
             <h2
               class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-              Rango de Voltajes por Fase
+              Rango de Distorsión Armónica por Fase
             </h2>
           </div>
           <p class="text-slate-600 dark:text-slate-400 font-medium">
-            Valores mínimos y máximos registrados en cada fase
+            Valores mínimos y máximos de THD-F registrados en cada fase
           </p>
         </div>
 
@@ -92,10 +90,10 @@ const chartOptions = computed(() => ({
       borderRadius: 8
     }
   },
-  colors: ["#ef4444", "#10b981"], // rojo min, verde max
+  colors: ["#ef4444", "#10b981"], 
   dataLabels: {
     enabled: true,
-    formatter: (val) => `${val}V`,
+    formatter: (val) => `${val}%`,
     style: { colors: ["#fff"], fontWeight: "600" }
   },
   xaxis: {
@@ -108,12 +106,12 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Distorsión (%)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
     labels: {
       style: { colors: "#64748b", fontSize: "12px" },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}%`
     }
   },
   grid: {
@@ -128,7 +126,7 @@ const chartOptions = computed(() => ({
   },
   tooltip: {
     theme: "light",
-    y: { formatter: (val) => `${val}V` }
+    y: { formatter: (val) => `${val}%` }
   }
 }))
 </script>

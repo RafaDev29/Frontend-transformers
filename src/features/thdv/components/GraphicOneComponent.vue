@@ -18,15 +18,14 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes
+                  Monitoreo de Distorsión Armónica (THD-F)
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real de las 3 fases del sistema eléctrico
+                Porcentaje de distorsión armónica total en cada fase.
               </p>
             </div>
 
-            <!-- Leyenda mejorada -->
             <div class="flex flex-wrap items-center justify-end gap-6">
               <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-primary to-color2 shadow-md"></div>
@@ -42,8 +41,6 @@
               </div>
             </div>
           </div>
-
-         
         </div>
 
         <!-- Área del gráfico -->
@@ -68,23 +65,21 @@ const props = defineProps({
 
 const series = computed(() => [
   { 
-    name: "Fase 1", 
+    name: "CH1 – Fase 1", 
     data: props.chartData.map(d => d.ch1),
     color: '#059669'
   },
   { 
-    name: "Fase 2", 
+    name: "CH2 – Fase 2", 
     data: props.chartData.map(d => d.ch2),
     color: '#dc2626'
   },
   { 
-    name: "Fase 3", 
+    name: "CH3 – Fase 3", 
     data: props.chartData.map(d => d.ch3),
     color: '#0891b2'
   }
 ])
-
-
 
 const chartOptions = computed(() => ({
   chart: {
@@ -133,14 +128,13 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "THD-F (%)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 210,
-    max: 250,
+    min: 0,
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}%`
     }
   },
   stroke: {

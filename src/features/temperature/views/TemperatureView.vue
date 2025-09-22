@@ -15,8 +15,6 @@
 
     </div>
 
-
-    <!-- Carrusel -->
     <div class="flex-1">
       <Swiper :modules="[Navigation, Pagination]" navigation pagination :spaceBetween="20" :slides-per-view="1"
         class="h-full">
@@ -49,5 +47,5 @@ import GraphicThreeComponent from '../components/GraphicThreeComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
-import rawData from '@/features/strain/data/data.json'
+import rawData from '@/features/temperature/data/data.json'
 </script>

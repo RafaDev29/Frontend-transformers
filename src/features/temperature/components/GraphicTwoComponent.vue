@@ -1,7 +1,6 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <!-- Gradiente de fondo animado -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
@@ -15,41 +14,25 @@
               <div class="flex items-center gap-3 mb-2">
                 <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
                   <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes con Límites
+                  Monitoreo de Temperatura
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real con valores máximos y mínimos alcanzados
+               Temperatura en tiempo real 
               </p>
             </div>
 
-            <!-- Leyenda mejorada -->
-            <div class="flex flex-wrap items-center justify-end gap-6">
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
-                <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-primary to-color2 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 1</span>
-              </div>
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
-                <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-danger to-red-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 2</span>
-              </div>
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
-                <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-secondary to-cyan-500 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Fase 3</span>
-              </div>
-            </div>
-          </div>
 
-    
+          </div>
         </div>
 
-        <!-- Área del gráfico -->
+
         <div class="p-6">
-          <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
+          <ApexChart type="line" height="350" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -69,32 +52,24 @@ const props = defineProps({
 
 const series = computed(() => [
   { 
-    name: "Fase 1", 
+    name: "Temperatura", 
     data: props.chartData.map(d => d.ch1),
     color: '#1e7f14'
-  },
-  { 
-    name: "Fase 2", 
-    data: props.chartData.map(d => d.ch2),
-    color: '#dc2626'
-  },
-  { 
-    name: "Fase 3", 
-    data: props.chartData.map(d => d.ch3),
-    color: '#0891b2'
   }
 ])
 
+
+
 const globalMin = computed(() => {
   if (!props.chartData.length) return 0
-  const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
-  return Math.min(...allValues.filter(val => val != null && !isNaN(val)))
+  const allValues = props.chartData.map(d => d.ch1).filter(val => val != null && !isNaN(val))
+  return allValues.length ? Math.min(...allValues).toFixed(2) : 0
 })
 
 const globalMax = computed(() => {
   if (!props.chartData.length) return 0
-  const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
-  return Math.max(...allValues.filter(val => val != null && !isNaN(val)))
+  const allValues = props.chartData.map(d => d.ch1).filter(val => val != null && !isNaN(val))
+  return allValues.length ? Math.max(...allValues).toFixed(2) : 0
 })
 
 const chartOptions = computed(() => ({
@@ -144,47 +119,84 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Voltaje (V)",
+      text: "Temperatura (°C)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: Math.max(200, globalMin.value - 5), // Ajuste dinámico del mínimo
-    max: Math.min(260, globalMax.value + 5), // Ajuste dinámico del máximo
+    min: Math.max(45, parseFloat(globalMin.value) - 2), 
+    max: Math.min(65, parseFloat(globalMax.value) + 2), 
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}°C`
     }
   },
   stroke: {
     curve: "smooth",
-    width: 2.5,
+    width: 3,
     lineCap: 'round'
   },
-  colors: ["#1e7f14", "#dc2626", "#0891b2"],
+  colors: ["#1e7f14"],
   legend: { show: false },
   tooltip: {
     theme: 'light',
     style: { fontSize: '12px' },
     marker: { show: true },
     y: {
-      formatter: (val) => `${val}V`
+      formatter: (val) => `${val}°C`
     }
   },
   markers: {
     size: 0,
     hover: { size: 8, sizeOffset: 3 }
   },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      shade: 'light',
+      type: 'vertical',
+      shadeIntensity: 0.1,
+      gradientToColors: ['#10b981'],
+      inverseColors: false,
+      opacityFrom: 0.8,
+      opacityTo: 0.1,
+      stops: [0, 100]
+    }
+  },
   
-  // Anotaciones para líneas de min/max
+
   annotations: {
     yaxis: [
       {
-        y: globalMin.value,
+        y: 50,
+        borderColor: '#3b82f6',
+        borderWidth: 2,
+        strokeDashArray: 4,
+        opacity: 0.6,
+        label: {
+          text: 'Nominal: 50°C',
+          position: 'left',
+          offsetX: 0,
+          style: {
+            color: '#fff',
+            background: '#3b82f6',
+            fontSize: '11px',
+            fontWeight: '600',
+            padding: {
+              left: 8,
+              right: 8,
+              top: 4,
+              bottom: 4
+            }
+          }
+        }
+      },
+      {
+        y: parseFloat(globalMin.value),
         borderColor: '#ef4444',
         borderWidth: 2,
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Mínimo: ${globalMin.value}V`,
+          text: `Mínimo: ${globalMin.value}°C`,
           position: 'right',
           offsetX: 0,
           style: {
@@ -202,13 +214,13 @@ const chartOptions = computed(() => ({
         }
       },
       {
-        y: globalMax.value,
+        y: parseFloat(globalMax.value),
         borderColor: '#10b981',
         borderWidth: 2,
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Máximo: ${globalMax.value}V`,
+          text: `Máximo: ${globalMax.value}°C`,
           position: 'right',
           offsetX: 0,
           style: {
@@ -228,4 +240,4 @@ const chartOptions = computed(() => ({
     ]
   }
 }))
-</script>
+</script>\
