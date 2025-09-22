@@ -108,6 +108,7 @@ const chartOptions = computed(() => ({
   },
   xaxis: {
     type: "category", 
+    tickAmount: 24,
     categories: props.chartData.map(d => d.datetime),
     labels: {
       rotate: -45,
