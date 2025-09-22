@@ -39,7 +39,7 @@
         </div>
 
         <div class="p-6">
-          <ApexChart type="line" height="350" :options="chartOptions" :series="series" />
+          <ApexChart type="area" height="350" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ const series = computed(() => [
 
 const chartOptions = computed(() => ({
   chart: {
-    type: "line",
+    type: "area",
     zoom: { enabled: true },
     toolbar: { 
       show: true,
@@ -88,26 +88,38 @@ const chartOptions = computed(() => ({
     animations: {
       enabled: true,
       easing: 'easeinout',
-      speed: 800
+      speed: 1000
     }
+  },
+  dataLabels: {
+    enabled: false
   },
   grid: {
     borderColor: '#e2e8f0',
-    strokeDashArray: 3,
+    strokeDashArray: 4,
     xaxis: { lines: { show: false } },
-    yaxis: { lines: { show: true } }
+    yaxis: { lines: { show: true } },
+    padding: {
+      top: 0,
+      right: 30,
+      bottom: 0,
+      left: 20
+    }
   },
   xaxis: {
     type: "category", 
-    tickAmount: 24,
     categories: props.chartData.map(d => d.datetime),
     labels: {
       rotate: -45,
-      style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' }
+      style: { 
+        colors: '#64748b', 
+        fontSize: '11px', 
+        fontWeight: '500' 
+      }
     },
     title: {
-      text: "Hora/minuto",
-      style: { color: "#475569", fontSize: "12px", fontWeight: "600" }
+      text: "Tiempo",
+      style: { color: "#475569", fontSize: "13px", fontWeight: "600" }
     },
     axisBorder: { color: '#e2e8f0' },
     axisTicks: { color: '#e2e8f0' }
@@ -117,28 +129,85 @@ const chartOptions = computed(() => ({
       text: "Temperatura (°C)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 0,
-    max: 100,
     labels: {
-      style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
+      style: { 
+        colors: '#64748b', 
+        fontSize: '12px', 
+        fontWeight: '500' 
+      },
       formatter: (val) => `${val}°C`
     }
   },
   stroke: {
     curve: "smooth",
-    width: 2.5,
-    lineCap: 'round'
+    width: 3
   },
-  colors: ["#dc2626"],
-  legend: { show: false },
+  fill: {
+    type: "gradient",
+    gradient: {
+      shade: 'light',
+      type: "vertical",
+      shadeIntensity: 0.5,
+      gradientToColors: ['#fbbf24'],
+      inverseColors: false,
+      opacityFrom: 0.8,
+      opacityTo: 0.1,
+      stops: [0, 100]
+    }
+  },
+  colors: ["#f59e0b"],
+  legend: { 
+    show: false 
+  },
   tooltip: {
     theme: 'light',
     style: { fontSize: '12px' },
-    marker: { show: true }
+    marker: { show: true },
+    x: {
+      format: 'dd/MM HH:mm'
+    },
+    y: {
+      formatter: (val) => `${val}°C`
+    }
   },
   markers: {
     size: 0,
-    hover: { size: 8, sizeOffset: 3 }
+    hover: { 
+      size: 8, 
+      sizeOffset: 3 
+    }
+  },
+  annotations: {
+    yaxis: [
+      {
+        y: 80,
+        borderColor: '#f97316',
+        borderWidth: 2,
+        strokeDashArray: 5,
+        label: {
+          text: 'Límite de Advertencia (80°C)',
+          style: {
+            color: '#fff',
+            background: '#f97316'
+          }
+        }
+      },
+      {
+        y: 100,
+        borderColor: '#dc2626',
+        borderWidth: 2,
+        strokeDashArray: 5,
+        label: {
+          text: 'Límite Crítico (100°C)',
+          style: {
+            color: '#fff',
+            background: '#dc2626'
+          }
+        }
+      }
+    ]
   }
 }))
+
+
 </script>

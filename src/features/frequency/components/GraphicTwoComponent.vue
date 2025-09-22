@@ -122,8 +122,7 @@ const chartOptions = computed(() => ({
       text: "Frecuencia (Hz)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: Math.max(45, parseFloat(globalMin.value) - 2), // Rango típico para frecuencia eléctrica
-    max: Math.min(65, parseFloat(globalMax.value) + 2), // Rango típico para frecuencia eléctrica
+
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
       formatter: (val) => `${val}Hz`

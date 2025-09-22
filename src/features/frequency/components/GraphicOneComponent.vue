@@ -117,8 +117,7 @@ const chartOptions = computed(() => ({
       text: "Frecuencia (Hz)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    min: 50,
-    max: 70,
+
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
       formatter: (val) => `${val}Hz`

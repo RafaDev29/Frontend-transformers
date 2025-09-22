@@ -1,63 +1,119 @@
 <template>
-  <div class="p-4 space-y-2">
-    <div class="relative group">
-      <!-- Fondo con gradiente -->
-      <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+  <div class="w-full max-w-2xl mx-auto">
+    <!-- Header Simple -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold bg-gradient-to-r from-color1 to-color2 bg-clip-text text-transparent mb-2">
+        Temperatura Actual del Sistema
+      </h1>
+      <p class="text-slate-600 dark:text-slate-400">
+        Medidor en tiempo real
+      </p>
+    </div>
+
+    <!-- Gauge Container -->
+    <div class="relative flex items-center justify-center">
+      <!-- SVG Gauge -->
+      <div class="relative">
+        <svg width="300" height="200" viewBox="0 0 300 200" class="drop-shadow-lg">
+          <!-- Background Arc -->
+          <path
+            d="M 50 150 A 100 100 0 0 1 250 150"
+            fill="none"
+            :stroke="darkMode ? '#334155' : '#e2e8f0'"
+            stroke-width="20"
+            stroke-linecap="round"
+          />
+          
+          <!-- Progress Arc -->
+          <path
+            :d="progressPath"
+            fill="none"
+            :stroke="gaugeColor"
+            stroke-width="20"
+            stroke-linecap="round"
+            class="transition-all duration-1000 ease-out"
+            :stroke-dasharray="circumference"
+            :stroke-dashoffset="offset"
+          />
+          
+          <!-- Center Circle -->
+          <circle
+            cx="150"
+            cy="150"
+            r="15"
+            :fill="gaugeColor"
+            class="drop-shadow-md"
+          />
+          
+          <!-- Temperature Markers -->
+          <g v-for="(marker, index) in markers" :key="index">
+            <line
+              :x1="marker.x1"
+              :y1="marker.y1"
+              :x2="marker.x2"
+              :y2="marker.y2"
+              :stroke="darkMode ? '#64748b' : '#94a3b8'"
+              stroke-width="2"
+            />
+            <text
+              :x="marker.textX"
+              :y="marker.textY"
+              text-anchor="middle"
+              :fill="darkMode ? '#cbd5e1' : '#64748b'"
+              font-size="12"
+              font-weight="600"
+            >
+              {{ marker.value }}°
+            </text>
+          </g>
+        </svg>
+
+        <!-- Center Temperature Display -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center" style="top: 45px;">
+          <div class="text-center">
+            <div class="text-5xl font-bold mb-1" :class="temperatureTextColor">
+              {{ currentTemp }}
+            </div>
+            <div class="text-lg font-medium text-slate-600 dark:text-slate-400">
+              °Celsius
+            </div>
+            <div class="px-3 py-1 rounded-full text-xs font-bold text-white mt-2" :class="statusBadgeColor">
+              {{ statusText }}
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Contenedor -->
-      <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+    <!-- Status Indicators -->
+    <div class="flex justify-center gap-6 mt-8">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-color1"></div>
+        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Normal (0-60°C)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-accent-warning"></div>
+        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Precaución (60-80°C)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-accent-danger"></div>
+        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Crítico (+80°C)</span>
+      </div>
+    </div>
 
-        <!-- Header -->
-        <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-blue-500 flex items-center justify-center shadow-lg">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-              </svg>
-            </div>
-            <h2
-              class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-              Análisis de Estabilidad de Frecuencia
-            </h2>
-          </div>
-          <p class="text-slate-600 dark:text-slate-400 font-medium">
-            Distribución de frecuencia por rangos de operación y desviaciones
-          </p>
-        </div>
-
-        <!-- Estadísticas superiores -->
-        <div class="p-3 pb-2">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-1">
-            <div class="text-center p-1 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200/60 dark:border-green-700/60">
-              <div class="text-xs font-semibold text-green-600 dark:text-green-400 mb-1">ESTABLE</div>
-              <div class="text-xs font-bold text-green-700 dark:text-green-300">{{ stablePercentage }}%</div>
-              <div class="text-xs text-green-600 dark:text-green-400">49.5-50.5Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200/60 dark:border-yellow-700/60">
-              <div class="text-xs font-semibold text-yellow-600 dark:text-yellow-400 mb-1">DESVIACIÓN</div>
-              <div class="text-xs font-bold text-yellow-700 dark:text-yellow-300">{{ deviationPercentage }}%</div>
-              <div class="text-xs text-yellow-600 dark:text-yellow-400">±0.5-1.0Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-orange-50 dark:bg-orange-900/20 border border-orange-200/60 dark:border-orange-700/60">
-              <div class="text-xs font-semibold text-orange-600 dark:text-orange-400 mb-1">ALERTA</div>
-              <div class="text-xs font-bold text-orange-700 dark:text-orange-300">{{ alertPercentage }}%</div>
-              <div class="text-xs text-orange-600 dark:text-orange-400">±1.0-2.0Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60">
-              <div class="text-xs font-semibold text-red-600 dark:text-red-400 mb-1">CRÍTICO</div>
-              <div class="text-xs font-bold text-red-700 dark:text-red-300">{{ criticalPercentage }}%</div>
-              <div class="text-xs text-red-600 dark:text-red-400">>±2.0Hz</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Gráfico -->
-        <div class="px-6 pb-6">
-          <ApexChart type="bar" height="350" :options="chartOptions" :series="series" />
-        </div>
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-3 gap-4 mt-8">
+      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+        <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ minTemp }}°C</div>
+        <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Mínima Hoy</div>
+      </div>
+      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+        <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ avgTemp }}°C</div>
+        <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Promedio</div>
+      </div>
+      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+        <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ maxTemp }}°C</div>
+        <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Máxima Hoy</div>
       </div>
     </div>
   </div>
@@ -71,193 +127,106 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => []
+  },
+  darkMode: {
+    type: Boolean,
+    default: false
   }
 })
 
-// Análisis de distribución de frecuencia
-const frequencyAnalysis = computed(() => {
-  if (!props.chartData.length) return {
-    stable: 0, deviation: 0, alert: 0, critical: 0,
-    min: 50, max: 50, avg: 50, stdDev: 0
+// Temperature calculations
+const currentTemp = computed(() => {
+  if (props.chartData.length > 0) {
+    return props.chartData[props.chartData.length - 1].ch1?.toFixed(1) || '0.0'
   }
+  return '25.0' // Default value for demo
+})
 
-  const frequencies = props.chartData.map(d => Number(d.ch1) || 50).filter(f => f > 0)
-  const total = frequencies.length
-
-  if (total === 0) return {
-    stable: 0, deviation: 0, alert: 0, critical: 0,
-    min: 50, max: 50, avg: 50, stdDev: 0
+const minTemp = computed(() => {
+  if (props.chartData.length > 0) {
+    return Math.min(...props.chartData.map(d => d.ch1)).toFixed(1)
   }
+  return '20.0'
+})
 
-  // Clasificar frecuencias por rangos
-  let stable = 0, deviation = 0, alert = 0, critical = 0
+const maxTemp = computed(() => {
+  if (props.chartData.length > 0) {
+    return Math.max(...props.chartData.map(d => d.ch1)).toFixed(1)
+  }
+  return '35.0'
+})
 
-  frequencies.forEach(freq => {
-    const deviation_from_50 = Math.abs(freq - 50)
+const avgTemp = computed(() => {
+  if (props.chartData.length > 0) {
+    const sum = props.chartData.reduce((acc, d) => acc + d.ch1, 0)
+    return (sum / props.chartData.length).toFixed(1)
+  }
+  return '27.5'
+})
+
+// Gauge calculations
+const maxGaugeTemp = 120 // Maximum temperature for gauge
+const circumference = Math.PI * 100 // Half circle circumference
+
+const temperaturePercentage = computed(() => {
+  const temp = parseFloat(currentTemp.value)
+  return Math.min(temp / maxGaugeTemp, 1)
+})
+
+const offset = computed(() => {
+  return circumference * (1 - temperaturePercentage.value)
+})
+
+const progressPath = "M 50 150 A 100 100 0 0 1 250 150"
+
+// Color logic based on temperature
+const gaugeColor = computed(() => {
+  const temp = parseFloat(currentTemp.value)
+  if (temp < 60) return '#1e7f14' // color1
+  if (temp < 80) return '#d97706' // accent-warning
+  return '#dc2626' // accent-danger
+})
+
+const temperatureTextColor = computed(() => {
+  const temp = parseFloat(currentTemp.value)
+  if (temp < 60) return 'text-color1 dark:text-color3'
+  if (temp < 80) return 'text-accent-warning'
+  return 'text-accent-danger'
+})
+
+const statusBadgeColor = computed(() => {
+  const temp = parseFloat(currentTemp.value)
+  if (temp < 60) return 'bg-color1'
+  if (temp < 80) return 'bg-accent-warning'
+  return 'bg-accent-danger'
+})
+
+const statusText = computed(() => {
+  const temp = parseFloat(currentTemp.value)
+  if (temp < 60) return 'NORMAL'
+  if (temp < 80) return 'PRECAUCIÓN'
+  return 'CRÍTICO'
+})
+
+// Temperature markers for the gauge
+const markers = computed(() => {
+  const temps = [0, 20, 40, 60, 80, 100, 120]
+  return temps.map(temp => {
+    const angle = (temp / maxGaugeTemp) * Math.PI // 0 to π (180 degrees)
+    const innerRadius = 80
+    const outerRadius = 95
+    const textRadius = 110
     
-    if (deviation_from_50 <= 0.5) stable++
-    else if (deviation_from_50 <= 1.0) deviation++
-    else if (deviation_from_50 <= 2.0) alert++
-    else critical++
+    const x1 = 150 - innerRadius * Math.cos(angle)
+    const y1 = 150 - innerRadius * Math.sin(angle)
+    const x2 = 150 - outerRadius * Math.cos(angle)
+    const y2 = 150 - outerRadius * Math.sin(angle)
+    const textX = 150 - textRadius * Math.cos(angle)
+    const textY = 150 - textRadius * Math.sin(angle) + 4
+    
+    return {
+      x1, y1, x2, y2, textX, textY, value: temp
+    }
   })
-
-  // Estadísticas básicas
-  const min = Math.min(...frequencies)
-  const max = Math.max(...frequencies)
-  const avg = frequencies.reduce((a, b) => a + b, 0) / total
-  
-  // Desviación estándar
-  const variance = frequencies.reduce((acc, freq) => acc + Math.pow(freq - avg, 2), 0) / total
-  const stdDev = Math.sqrt(variance)
-
-  return {
-    stable, deviation, alert, critical,
-    min, max, avg, stdDev
-  }
 })
-
-// Porcentajes para las tarjetas superiores
-const stablePercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.stable / total) * 100) : 0
-})
-
-const deviationPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.deviation / total) * 100) : 0
-})
-
-const alertPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.alert / total) * 100) : 0
-})
-
-const criticalPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.critical / total) * 100) : 0
-})
-
-// Series para el gráfico de barras
-const series = computed(() => [
-  {
-    name: "Cantidad de Mediciones",
-    data: [
-      frequencyAnalysis.value.stable,
-      frequencyAnalysis.value.deviation,
-      frequencyAnalysis.value.alert,
-      frequencyAnalysis.value.critical
-    ]
-  },
-  {
-    name: "Estadísticas",
-    data: [
-      frequencyAnalysis.value.min.toFixed(2),
-      frequencyAnalysis.value.max.toFixed(2),
-      frequencyAnalysis.value.avg.toFixed(2),
-      frequencyAnalysis.value.stdDev.toFixed(3)
-    ]
-  }
-])
-
-const chartOptions = computed(() => ({
-  chart: {
-    type: "bar",
-    background: "transparent",
-    toolbar: { show: true },
-    animations: { enabled: true, easing: "easeinout", speed: 800 }
-  },
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: "60%",
-      borderRadius: 8,
-      dataLabels: { position: 'top' }
-    }
-  },
-  colors: ["#10b981", "#f59e0b", "#f97316", "#ef4444"],
-  dataLabels: {
-    enabled: true,
-    formatter: function(val, opts) {
-      // Primera serie muestra cantidad, segunda serie muestra valores con Hz
-      if (opts.seriesIndex === 0) {
-        return val > 0 ? val : ''
-      } else {
-        // const labels = ['Min', 'Max', 'Prom', 'σ']
-        return val + (opts.dataPointIndex < 3 ? 'Hz' : '')
-      }
-    },
-    style: { 
-      colors: ["#fff"], 
-      fontWeight: "600",
-      fontSize: '11px'
-    },
-    offsetY: -5
-  },
-  xaxis: {
-    categories: ["Estable\n(49.5-50.5Hz)", "Desviación\n(±0.5-1.0Hz)", "Alerta\n(±1.0-2.0Hz)", "Crítico\n(>±2.0Hz)"],
-    labels: { 
-      style: { 
-        colors: "#64748b", 
-        fontSize: "12px", 
-        fontWeight: "500" 
-      },
-      rotate: 0
-    },
-    title: {
-      text: "Rangos de Operación",
-      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-    },
-    axisBorder: { color: '#e2e8f0' }
-  },
-  yaxis: [
-    {
-      title: {
-        text: "Número de Mediciones",
-        style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-      },
-      labels: {
-        style: { colors: "#64748b", fontSize: "12px" }
-      }
-    }
-  ],
-  grid: {
-    borderColor: "#e2e8f0",
-    strokeDashArray: 3,
-    xaxis: { lines: { show: false } }
-  },
-  legend: {
-    show: false
-  },
-  tooltip: {
-    theme: "light",
-    y: {
-      formatter: function(val, opts) {
-        if (opts.seriesIndex === 0) {
-          return val + " mediciones"
-        } else {
-          const labels = ['Mínimo: ', 'Máximo: ', 'Promedio: ', 'Desv. Std: ']
-          return labels[opts.dataPointIndex] + val + (opts.dataPointIndex < 3 ? 'Hz' : '')
-        }
-      }
-    }
-  },
-  annotations: {
-    yaxis: [{
-      y: frequencyAnalysis.value.avg,
-      borderColor: '#3b82f6',
-      borderWidth: 2,
-      strokeDashArray: 4,
-      opacity: 0.7,
-      label: {
-        text: `Promedio: ${frequencyAnalysis.value.avg.toFixed(2)}Hz`,
-        position: 'right',
-        style: {
-          color: '#fff',
-          background: '#3b82f6',
-          fontSize: '10px'
-        }
-      }
-    }]
-  }
-}))
 </script>
