@@ -1,6 +1,14 @@
 <template>
+  <!-- Overlay transparente cuando está abierto -->
+  <div v-if="open" class="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 transition-all duration-300"
+    @click="closeMenu">
+  </div>
+
   <div
-    class="bg-gradient-to-br from-color5/15 via-color4/8 to-transparent dark:from-color3/20 dark:via-color2/15 dark:to-transparent border border-color4/20 dark:border-color3/30 rounded-2xl p-3 backdrop-blur-sm transition-all duration-300 hover:border-color3/30 dark:hover:border-color4/40 hover:shadow-lg hover:shadow-color1/8 dark:hover:shadow-color3/10">
+    class="bg-gradient-to-br from-color5/15 via-color4/8 to-transparent dark:from-color3/20 dark:via-color2/15 dark:to-transparent border border-color4/20 dark:border-color3/30 rounded-2xl p-3 backdrop-blur-sm transition-all duration-300 hover:border-color3/30 dark:hover:border-color4/40 hover:shadow-lg hover:shadow-color1/8 dark:hover:shadow-color3/10 relative z-50"
+    :class="{
+      'glass-effect-spotlight': open
+    }">
     <!-- Header compacto -->
     <div class="flex items-center gap-2.5">
       <div
@@ -24,7 +32,7 @@
       </div>
 
       <!-- Botón toggle elegante -->
-      <button @click="open = !open"
+      <button @click="toggleMenu"
         class="w-7 h-7 bg-gradient-to-br from-color1/10 via-color2/8 to-transparent dark:from-color3/15 dark:via-color4/12 dark:to-transparent border border-color1/15 dark:border-color3/20 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gradient-to-br hover:from-color1/15 hover:via-color2/12 hover:to-transparent dark:hover:from-color3/20 dark:hover:via-color4/15 dark:hover:to-transparent hover:border-color1/25 dark:hover:border-color3/30 hover:scale-105 flex-shrink-0">
         <svg viewBox="0 0 24 24" class="w-4 h-4 text-color1 dark:text-color3 transition-transform duration-300 ease-out"
           :class="{ 'rotate-180': open }">
@@ -33,13 +41,11 @@
       </button>
     </div>
 
-    <!-- Panel de acciones expandible -->
     <v-expand-transition>
       <div v-show="open" class="mt-3 pt-2 space-y-1 animate-fade-in">
-        <!-- Perfil -->
+
         <button @click="$emit('profile')"
           class="w-full flex items-center gap-2.5 p-2.5 border border-color1/10 dark:border-color3/20 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-color1/8 via-color2/5 to-transparent dark:from-color3/12 dark:via-color4/8 dark:to-transparent text-color1 dark:text-color3 hover:from-color1/12 hover:via-color2/8 hover:to-transparent dark:hover:from-color3/15 dark:hover:via-color4/12 dark:hover:to-transparent hover:border-color1/20 dark:hover:border-color3/30 hover:translate-x-1 group">
-          <!-- Efecto shimmer -->
           <div
             class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out">
           </div>
@@ -55,10 +61,28 @@
           <span class="text-sm font-semibold flex-1 text-left relative z-10">Mi Perfil</span>
         </button>
 
+        <button @click="$emit('soporte')"
+          class="w-full flex items-center gap-2.5 p-2.5 border border-color1/10 dark:border-color3/20 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-color1/8 via-color2/5 to-transparent dark:from-color3/12 dark:via-color4/8 dark:to-transparent text-color1 dark:text-color3 hover:from-color1/12 hover:via-color2/8 hover:to-transparent dark:hover:from-color3/15 dark:hover:via-color4/12 dark:hover:to-transparent hover:border-color1/20 dark:hover:border-color3/30 hover:translate-x-1 group">
+
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out">
+          </div>
+
+          <div
+            class="w-8 h-8 bg-gradient-to-br from-color1 to-colorDark1 dark:from-color2 dark:to-color3 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md shadow-color1/25 dark:shadow-color3/25 relative z-10">
+            <!-- Ícono headset para soporte -->
+            <svg viewBox="0 0 24 24" class="w-4 h-4 text-white">
+              <path fill="currentColor"
+                d="M12 1a9 9 0 0 0-9 9v6a3 3 0 0 0 3 3h1v-7H6V10a6 6 0 0 1 12 0v2h-1v7h1a3 3 0 0 0 3-3v-6a9 9 0 0 0-9-9Zm-3 12h6v5H9v-5Z" />
+            </svg>
+          </div>
+
+          <span class="text-sm font-semibold flex-1 text-left relative z-10">Soporte</span>
+        </button>
+
 
         <button @click="toggleTheme"
           class="w-full flex items-center gap-2.5 p-2.5 border border-color3/15 dark:border-color4/25 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-color3/8 via-color4/5 to-transparent dark:from-color4/12 dark:via-color5/8 dark:to-transparent text-color2 dark:text-color4 hover:from-color3/12 hover:via-color4/8 hover:to-transparent dark:hover:from-color4/15 dark:hover:via-color5/12 dark:hover:to-transparent hover:border-color3/25 dark:hover:border-color4/35 hover:translate-x-1 group">
-
           <div
             class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out">
           </div>
@@ -89,7 +113,6 @@
           </div>
         </button>
 
-        <!-- Divisor elegante -->
         <div class="flex items-center justify-center py-2">
           <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-gray-600 to-transparent">
           </div>
@@ -119,21 +142,32 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps, onMounted } from 'vue'
+import { ref, defineEmits, defineProps, onMounted, watch } from 'vue'
 
 defineProps({
   user: { type: Object, default: null },
 })
 
-defineEmits(['profile', 'logout', 'theme-toggle'])
+const emit = defineEmits(['profile', 'logout', 'theme-toggle', 'soporte', 'menu-toggle'])
 
 const open = ref(false)
 const isDarkMode = ref(false)
 
-
 onMounted(() => {
   isDarkMode.value = document.documentElement.classList.contains('dark')
 })
+
+watch(open, (newValue) => {
+  emit('menu-toggle', newValue)
+})
+
+function toggleMenu() {
+  open.value = !open.value
+}
+
+function closeMenu() {
+  open.value = false
+}
 
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value
@@ -147,7 +181,6 @@ function toggleTheme() {
 </script>
 
 <style scoped>
-/* Utilidad para line-clamp */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -155,7 +188,30 @@ function toggleTheme() {
   overflow: hidden;
 }
 
-/* Animación para el panel de acciones */
+.glass-effect-spotlight {
+  position: relative;
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(255, 255, 255, 0.2) !important;
+  z-index: 60 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dark .glass-effect-spotlight {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border: 2px solid rgba(148, 163, 184, 0.2) !important;
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.1),
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(148, 163, 184, 0.15) !important;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -172,19 +228,16 @@ function toggleTheme() {
   animation: fade-in 0.3s ease-out;
 }
 
-/* Mejoras de rendimiento */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   backface-visibility: hidden;
 }
 
-/* Rotación suave para el ícono */
 .rotate-180 {
   transform: rotate(180deg);
 }
 
-/* Scroll suave */
 html {
   scroll-behavior: smooth;
 }

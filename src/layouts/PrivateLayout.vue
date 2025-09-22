@@ -5,7 +5,7 @@
     <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
       @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
 
-    <v-main class="min-h-screen overflow-hidden">
+    <v-main class="min-h-screen overflow-hidden ">
       <div :class="[$route.meta.fullScreen ? 'content-bleed' : 'content-shell']">
         <router-view />
       </div>

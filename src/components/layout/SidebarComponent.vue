@@ -50,7 +50,7 @@
               :class="[
                 rail ? 'p-2 justify-center mx-2' : 'p-2 gap-1',
                 isItemDisabled(item)
-                  ? 'opacity-40 cursor-not-allowed bg-slate-100/50 dark:bg-gray-800/30 border-slate-200/30 dark:border-gray-700/20'
+                  ?  'opacity-900 cursor-not-allowed bg-slate-100/30 dark:bg-gray-800/20 border-slate-200/20 dark:border-gray-700/10 backdrop-blur-[2px]'
                   : $route.path === item.to
                     ? 'bg-gradient-to-r from-color1/10 via-color2/8 to-color1/5 dark:from-color3/15 dark:via-color4/12 dark:to-color3/8 border-color1/15 dark:border-color3/20 shadow-lg'
                     : 'bg-gradient-to-r from-slate-50/70 to-slate-100/50 dark:from-gray-800/50 dark:to-gray-700/30 border-color1/5 dark:border-gray-600/30 hover:from-color1/8 hover:to-color2/5 dark:hover:from-color3/10 dark:hover:to-color4/8 hover:border-color2/20 dark:hover:border-color3/30 hover:translate-x-1 hover:shadow-lg cursor-pointer'
@@ -84,14 +84,13 @@
                   {{ item.title }}
                 </span>
 
-                <div v-if="isItemDisabled(item)" class="text-xs text-slate-400 dark:text-gray-500 mt-0.5">
+                <div v-if="isItemDisabled(item)" class="text-[8px] text-slate-400 dark:text-gray-500 ">
                   Sin datos de transformador
                 </div>
               </div>
 
               <!-- Overlay para items deshabilitados -->
-              <div v-if="isItemDisabled(item)"
-                class="absolute inset-0 bg-slate-200/20 dark:bg-gray-800/30 rounded-xl pointer-events-none" />
+            
             </component>
           </template>
         </v-tooltip>
@@ -266,12 +265,20 @@ function handleItemClick(item, event) {
 }
 
 
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+
 function isItemDisabled(item) {
   if (item.category === 'monitoring' || !item.category) {
-    return !transformerStore.hasTransformer
+    const allowedRoutes = ["/app/factoryTransformerDetail", "/app/strain", "/app/current" , "/app/frequency" , "/app/power" , "/app/thdv" , "/app/thdi" , "/app/temperature"]
+    const isInAllowedRoute = allowedRoutes.includes(route.path)
+
+    return !(transformerStore.hasTransformer && isInAllowedRoute)
   }
   return false
 }
+
 
 function toggleMaintenance() {
   if (!props.rail) {
