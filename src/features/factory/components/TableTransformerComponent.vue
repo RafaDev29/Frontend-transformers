@@ -93,7 +93,6 @@ const router = useRouter()
 const factoryStore = useFactoryStore()
 const transformerStore = useTransformerStore()
 
-// Filtrar transformadores que pertenezcan a la fábrica seleccionada
 const filteredTransformers = computed(() => {
   if (!factoryStore.factoryUid) {
     return []

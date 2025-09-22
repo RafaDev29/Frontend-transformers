@@ -12,12 +12,13 @@
 
         <!-- Imagen que ocupa todo el resto -->
         <div class="flex-1 transformer-layer" :style="bgStyle">
-            <div class="relative z-10 h-full w-full p-1">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-15 pt-8 ml-8 pl-8">
-                    <CardDetailComponent />
-                </div>
-            </div>
-        </div>
+  <div class="relative z-10 h-full w-full p-1 flex items-center justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-1 mt-5">
+      <CardDetailComponent />
+    </div>
+  </div>
+</div>
+
 
     </div>
 </template>
@@ -32,7 +33,7 @@ import transformerOil from '@/assets/transformer/transformerOil.jpeg'
 
 const transformerStore = useTransformerStore()
 
-// Seleccionar imagen según el tipo de transformador
+
 const bgStyle = computed(() => {
   if (!transformerStore.selectedTransformer) {
     return { backgroundImage: `url(${transformerDry})` }
