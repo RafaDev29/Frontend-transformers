@@ -19,11 +19,11 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes con Límites
+                  Monitoreo de Tensiones con Límites
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real con valores máximos y mínimos alcanzados
+                Tensiones en tiempo real con valores máximos y mínimos alcanzados
               </p>
             </div>
 

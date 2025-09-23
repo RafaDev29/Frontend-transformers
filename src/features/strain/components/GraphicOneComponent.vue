@@ -18,11 +18,11 @@
                   </svg>
                 </div>
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Voltajes
+                  Monitoreo de Tensiones
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Voltajes en tiempo real de las 3 fases del sistema eléctrico
+                Tensiones en tiempo real de las 3 fases del sistema eléctrico
               </p>
             </div>
 
@@ -46,7 +46,7 @@
          
         </div>
 
-        <!-- Área del gráfico -->
+
         <div class="p-6">
           <ApexChart type="line" height="360" :options="chartOptions" :series="series" />
         </div>

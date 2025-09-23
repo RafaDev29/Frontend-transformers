@@ -3,7 +3,7 @@
     <div class="px-2 py-1 flex items-center justify-between">
       <div class="flex-grow">
         <NavigationComponent :breadcrumbs="[
-          { label: 'Mantenimiento de Cliente', path: '/app/mCustomer' },
+          { label: 'Mantenimiento de Clientes', path: '/app/mCustomer' },
         ]" />
       </div>
       <div class="w-[5%] flex justify-end">

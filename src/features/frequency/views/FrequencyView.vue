@@ -6,7 +6,7 @@
         { label: 'Panel de Fábrica', path: '/app/factory' },
         { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
         { label: 'Panel  detalle transformador', path: '/app/factoryTransformerDetail' },
-        { label: 'Panel de Tensión ', path: '/app/strain' },
+        { label: 'Panel de Frecuencia ', path: '/app/frequency' },
       ]" />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">

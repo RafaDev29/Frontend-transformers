@@ -126,10 +126,9 @@
             <p v-if="errors.primaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.primaryRangeUid }}</p>
           </div>
 
-          <!-- Voltaje Primario -->
           <div>
             <label for="primaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Primario (V) *
+              Tensión Primaria (V) *
             </label>
             <select id="primaryVoltage" v-model.number="form.primaryVoltage" @change="calculateRegulatedVoltages"
               :disabled="!form.primaryRangeUid" :class="[
@@ -138,7 +137,7 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
                 !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
               ]" required>
-              <option value="">Seleccionar voltaje</option>
+              <option value="">Seleccionar tensión</option>
               <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage * 1000">
                 {{ voltage * 1000 }} V
               </option>
@@ -164,10 +163,9 @@
             </select>
           </div>
 
-          <!-- Voltaje Regulado -->
           <div>
             <label for="regulatedVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Regulado (V) *
+              Tensión de Operación (V) *
             </label>
             <select id="regulatedVoltage" v-model.number="form.regulatedVoltage"
               :disabled="regulatedVoltageOptions.length === 0" :class="[
@@ -176,7 +174,7 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
                 regulatedVoltageOptions.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
               ]" required>
-              <option value="">Seleccionar voltaje regulado</option>
+              <option value="">Seleccionar tensión de operación</option>
               <option v-for="voltage in regulatedVoltageOptions" :key="voltage" :value="voltage">
                 {{ voltage }} V
               </option>
@@ -202,10 +200,9 @@
             <p v-if="errors.secondaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.secondaryRangeUid }}</p>
           </div>
 
-          <!-- Voltaje Secundario -->
           <div>
             <label for="secondaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Secundario (V) *
+              Tensión Secundaria (V) *
             </label>
             <select id="secondaryVoltage" v-model.number="form.secondaryVoltage" :disabled="!form.secondaryRangeUid"
               :class="[
@@ -214,7 +211,7 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
                 !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
               ]" required>
-              <option value="">Seleccionar voltaje</option>
+              <option value="">Seleccionar tensión</option>
               <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage * 1000">
                 {{ voltage * 1000 }} V
               </option>
@@ -222,10 +219,9 @@
             <p v-if="errors.secondaryVoltage" class="mt-1 text-sm text-red-600">{{ errors.secondaryVoltage }}</p>
           </div>
 
-          <!-- Voltaje Nominal -->
           <div>
             <label for="nominalVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Voltaje Nominal (V) *
+              Tensión Nominal (V) *
             </label>
             <input id="nominalVoltage" v-model.number="form.nominalVoltage" type="number" min="0" step="1" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
@@ -624,13 +620,13 @@ const fillForm = (data) => {
   form.primaryCurrent = data.primaryCurrent ? parseFloat(data.primaryCurrent) : null
   form.secondaryCurrent = data.secondaryCurrent ? parseFloat(data.secondaryCurrent) : null
 
-  // Manejar voltajes (vienen en V desde el backend)
+
   const primaryVoltage = parseFloat(data.primaryVoltage)
   const secondaryVoltage = parseFloat(data.secondaryVoltage)
   const regulatedVoltage = parseFloat(data.regulatedVoltage)
 
   if (dataRange.value.length > 0) {
-    // Buscar rangos por voltaje
+
     const primaryRangeUid = findRangeByVoltage(primaryVoltage)
     const secondaryRangeUid = findRangeByVoltage(secondaryVoltage)
 
@@ -646,27 +642,18 @@ const fillForm = (data) => {
     form.primaryRangeUid = primaryRangeUid
     form.secondaryRangeUid = secondaryRangeUid
 
-    // Determinar porcentaje de regulación
     const detectedPercentage = findRegulationPercentage(primaryVoltage, regulatedVoltage)
     regulationPercentage.value = detectedPercentage
 
-    // Asignar voltajes después de un pequeño delay para asegurar que los selects estén actualizados
     setTimeout(() => {
       form.primaryVoltage = primaryVoltage
       form.secondaryVoltage = secondaryVoltage
       form.regulatedVoltage = regulatedVoltage
 
-      // Calcular opciones de voltaje regulado
       if (form.primaryVoltage && regulationPercentage.value) {
         calculateRegulatedVoltages()
       }
 
-      console.log('Voltajes asignados:', {
-        primaryVoltage: form.primaryVoltage,
-        secondaryVoltage: form.secondaryVoltage,
-        regulatedVoltage: form.regulatedVoltage,
-        regulationPercentage: regulationPercentage.value
-      })
     }, 100)
   }
 }
@@ -721,7 +708,7 @@ const validateForm = () => {
   }
 
   if (!form.primaryVoltage) {
-    errors.value.primaryVoltage = 'El voltaje primario es requerido'
+    errors.value.primaryVoltage = 'La tensión primaria es requerida'
   }
 
   if (!form.secondaryRangeUid) {
@@ -729,11 +716,11 @@ const validateForm = () => {
   }
 
   if (!form.secondaryVoltage) {
-    errors.value.secondaryVoltage = 'El voltaje secundario es requerido'
+    errors.value.secondaryVoltage = 'La tensión secundaria es requerida'
   }
 
   if (!form.regulatedVoltage) {
-    errors.value.regulatedVoltage = 'El voltaje regulado es requerido'
+    errors.value.regulatedVoltage = 'El tensión de operación es requerida'
   }
 
   if (!form.serialNumber) {
@@ -749,7 +736,7 @@ const validateForm = () => {
   }
 
   if (!form.nominalVoltage || form.nominalVoltage <= 0) {
-    errors.value.nominalVoltage = 'El voltaje nominal debe ser mayor a 0'
+    errors.value.nominalVoltage = 'La tensión nominal debe ser mayor a 0'
   }
 
   if (form.altitude === null || form.altitude < 0) {

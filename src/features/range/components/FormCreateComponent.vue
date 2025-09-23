@@ -37,10 +37,10 @@
                     <p v-if="errors.type" class="mt-1 text-sm text-red-600">{{ errors.type }}</p>
                 </div>
 
-                <!-- Voltajes -->
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Voltajes *
+                        Tensiones *
                     </label>
                     <div v-for="(voltage, index) in form.voltageValue" :key="index" class="flex items-center gap-2 mb-2">
                         <input v-model="form.voltageValue[index]" type="text" 
@@ -52,7 +52,7 @@
                     </div>
                     <button type="button" @click="addVoltage"
                         class="px-3 py-1 text-sm text-color1 hover:text-color2 dark:text-color3 dark:hover:text-color4 border border-dashed border-color1/50 rounded-md">
-                        + Agregar voltaje
+                        + Agregar Tensiones
                     </button>
                     <p v-if="errors.voltageValue" class="mt-1 text-sm text-red-600">{{ errors.voltageValue }}</p>
                 </div>
@@ -113,7 +113,7 @@ const validateForm = () => {
     if (!form.code) errors.value.code = 'El código es requerido'
     if (!form.type) errors.value.type = 'El tipo es requerido'
     if (!form.voltageValue.length || form.voltageValue.some(v => !v)) {
-        errors.value.voltageValue = 'Debe agregar al menos un voltaje válido'
+        errors.value.voltageValue = 'Debe agregar al menos una tensión válida'
     }
     return Object.keys(errors.value).length === 0
 }

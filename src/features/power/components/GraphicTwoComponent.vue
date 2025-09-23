@@ -35,7 +35,7 @@
               <div
                 class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-accent-primary to-color2 shadow-md"></div>
-                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Activa (kW)</span>
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 pl-2 ml-10">Activa (kW)</span>
               </div>
               <div
                 class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">

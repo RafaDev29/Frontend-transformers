@@ -20,8 +20,8 @@
           <p class="font-bold leading-tight" :class="phase.value">
             {{ currentPowers[phase.key] }}
           </p>
-          <p class="text-xs" :class="phase.sub">
-            Potencia {{ phase.label }}
+          <p class="text-xs ml-1" :class="phase.sub">
+            Potencia  {{ phase.label }}
           </p>
         </div>
       </div>

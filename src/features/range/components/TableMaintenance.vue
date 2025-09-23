@@ -23,7 +23,7 @@
 
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Voltajes
+                                Tensiones
                             </th>
 
 

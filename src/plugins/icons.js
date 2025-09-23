@@ -33,7 +33,8 @@ import {
   mdiFlashTriangle, //tension
   mdiSineWave, //frecuencia
   mdiCurrentAc, //corriente
-  mdiWaveform , //THDV
+  mdiWaveform , //THDI
+  mdiPlusMinusVariant, //THDV
   mdiThermometerLines , //temperatura
 
 } from '@mdi/js'
@@ -71,6 +72,7 @@ export default {
   strain: mdiFlashTriangle,
   frecuencia: mdiSineWave , 
   corriente : mdiCurrentAc ,
-  mdiWaveform : mdiWaveform,
+  thdi : mdiWaveform,
+  thdv : mdiPlusMinusVariant , 
   thermometer : mdiThermometerLines , 
 }

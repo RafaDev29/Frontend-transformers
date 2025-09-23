@@ -37,10 +37,9 @@
             class="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-white border-gray-300 dark:border-slate-600 focus:ring-color1 focus:outline-none" />
         </div>
 
-        <!-- Voltajes -->
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Voltajes *
+            Tensiones *
           </label>
           <div v-for="(voltage, index) in form.voltageValue" :key="index" class="flex items-center gap-2 mb-2">
             <input v-model="form.voltageValue[index]" type="text"
@@ -52,7 +51,7 @@
           </div>
           <button type="button" @click="addVoltage"
             class="px-3 py-1 text-sm text-color1 hover:text-color2 dark:text-color3 dark:hover:text-color4 border border-dashed border-color1/50 rounded-md">
-            + Agregar voltaje
+            + Agregar tensión
           </button>
         </div>
 

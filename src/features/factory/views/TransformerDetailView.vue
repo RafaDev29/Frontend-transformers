@@ -14,13 +14,13 @@
     <!-- Contenedor en 2 mitades -->
     <div class="flex-1 grid grid-cols-2 gap-0">
       <!-- Card 50% a la izquierda -->
-      <div class="flex items-center justify-center p-4">
+      <div class="flex items-center justify-center  pl-2 pr-2 rounded-3xl ">
         <CardDetailComponent />
       </div>
 
       <!-- Imagen 50% a la derecha -->
       <div class="h-full w-full ">
-        <div class="transformer-layer h-full w-full rounded-3xl" :style="bgStyle"></div>
+        <div class="transformer-layer h-[600px] w-full rounded-3xl " :style="bgStyle"></div>
       </div>
     </div>
   </div>

@@ -35,8 +35,8 @@ const monitoringItems = computed(() => {
     { title: 'Corriente', icon: 'corriente', to: '/app/current', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Frecuencia', icon: 'frecuencia', to: '/app/frequency', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Potencia', icon: 'flash', to: '/app/power', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'THDV', icon: 'mdiWaveform', to: '/app/thdv', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
-    { title: 'THDI', icon: 'mdiWaveform', to: '/app/thdi', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'THDV', icon: 'thdv', to: '/app/thdv', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
+    { title: 'THDI', icon: 'thdi', to: '/app/thdi', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
     { title: 'Temperatura', icon: 'thermometer', to: '/app/temperature', roles: ['CUSTOMER', 'FACTORY', 'ROOT'], category: 'monitoring' },
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
