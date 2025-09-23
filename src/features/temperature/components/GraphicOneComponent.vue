@@ -122,8 +122,16 @@ const chartOptions = computed(() => ({
       text: "Tiempo",
       style: { color: "#475569", fontSize: "13px", fontWeight: "600" }
     },
-    axisBorder: { color: '#e2e8f0' },
-    axisTicks: { color: '#e2e8f0' }
+   axisBorder: {
+      show: true,
+      color: '#475569',
+      height: 2
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569',
+      height: 6
+    },
   },
   yaxis: {
     title: {
@@ -137,7 +145,15 @@ const chartOptions = computed(() => ({
         fontWeight: '500' 
       },
       formatter: (val) => `${val}°C`
-    }
+    },
+      axisBorder: {
+      show: true,
+      color: '#475569'
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569'
+    },
   },
   stroke: {
     curve: "smooth",

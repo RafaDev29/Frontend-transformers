@@ -107,28 +107,41 @@ const chartOptions = computed(() => ({
       speed: 800
     }
   },
-  grid: {
-    borderColor: '#e2e8f0',
-    strokeDashArray: 3,
-    xaxis: { lines: { show: false } },
-    yaxis: { lines: { show: true } }
+ grid: {
+    show: false 
   },
   xaxis: {
-    type: "category", 
+    type: "category",
     tickAmount: 24,
     categories: props.chartData.map(d => d.datetime),
+    axisBorder: {
+      show: true,
+      color: '#475569',
+      height: 2
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569',
+      height: 6
+    },
     labels: {
       rotate: -45,
-      style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' }
+      style: { colors: '#475569', fontSize: '12px', fontWeight: '500' }
     },
     title: {
       text: "Hora/minuto",
-      style: { color: "#475569", fontSize: "12px", fontWeight: "600" }
-    },
-    axisBorder: { color: '#e2e8f0' },
-    axisTicks: { color: '#e2e8f0' }
+      style: { color: "#334155", fontSize: "12px", fontWeight: "600" }
+    }
   },
   yaxis: {
+     axisBorder: {
+      show: true,
+      color: '#475569'
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569'
+    },
     title: {
       text: "Potencia (kW / kvar / kVA)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }

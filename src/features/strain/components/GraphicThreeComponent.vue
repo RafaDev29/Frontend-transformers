@@ -101,7 +101,17 @@ const chartOptions = computed(() => ({
     title: {
       text: "Fases",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-    }
+    },
+     axisBorder: {
+      show: true,
+      color: '#475569',
+      height: 2
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569',
+      height: 6
+    },
   },
   yaxis: {
     title: {
@@ -111,7 +121,15 @@ const chartOptions = computed(() => ({
     labels: {
       style: { colors: "#64748b", fontSize: "12px" },
       formatter: (val) => `${val}V`
-    }
+    },
+      axisBorder: {
+      show: true,
+      color: '#475569'
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569'
+    },
   },
   grid: {
     borderColor: "#e2e8f0",

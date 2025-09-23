@@ -178,11 +178,9 @@ const chartOptions = computed(() => ({
   dataLabels: {
     enabled: true,
     formatter: function(val, opts) {
-      // Primera serie muestra cantidad, segunda serie muestra valores con Hz
       if (opts.seriesIndex === 0) {
         return val > 0 ? val : ''
       } else {
-        // const labels = ['Min', 'Max', 'Prom', 'σ']
         return val + (opts.dataPointIndex < 3 ? 'Hz' : '')
       }
     },
@@ -207,7 +205,16 @@ const chartOptions = computed(() => ({
       text: "Rangos de Operación",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-    axisBorder: { color: '#e2e8f0' }
+    axisBorder: {
+      show: true,
+      color: '#475569',
+      height: 2
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569',
+      height: 6
+    },
   },
   yaxis: [
     {
@@ -217,7 +224,15 @@ const chartOptions = computed(() => ({
       },
       labels: {
         style: { colors: "#64748b", fontSize: "12px" }
-      }
+      },
+        axisBorder: {
+      show: true,
+      color: '#475569'
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569'
+    },
     }
   ],
   grid: {
