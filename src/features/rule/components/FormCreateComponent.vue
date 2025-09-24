@@ -54,7 +54,7 @@
 
         <div v-if="form.ruleType" class="mb-8">
           <div v-if="form.ruleType === 'TEMPERATURA'"
-            class="p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">🌡️</div>
@@ -62,17 +62,19 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Temperatura</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> Define los niveles de temperatura que activarán las alertas en grados Celsius.</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos valores establecidos por normativa.</p>
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Define los niveles de
+                    temperatura que activarán las alertas en grados Celsius.</p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
+                    valores establecidos por normativa.</p>
                 </div>
-                
+
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div
                 class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  🟢 Normal (°C) *
+                  Normal (°C) *
                 </label>
                 <input v-model.number="form.config.warning" type="number" :class="inputClasses('configWarning')"
                   placeholder="80" required />
@@ -80,14 +82,14 @@
               <div
                 class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  🟡 Precaución (°C) *
+                  Precaución (°C) *
                 </label>
                 <input v-model.number="form.config.urgent" type="number" :class="inputClasses('configUrgent')"
                   placeholder="85" required />
               </div>
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
-                  🔴 Crítico (°C) *
+                  Crítico (°C) *
                 </label>
                 <input v-model.number="form.config.critical" type="number" :class="inputClasses('configCritical')"
                   placeholder="90" required />
@@ -96,7 +98,7 @@
           </div>
 
           <div v-else-if="form.ruleType === 'POTENCIA'"
-            class="p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg">
+            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">💪</div>
@@ -104,8 +106,10 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Potencia</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> +-% de la potencia nominal</p>
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> Define los niveles de potencia que
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> +-% de la potencia nominal
+                  </p>
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Define los niveles de
+                    potencia que
                     activarán las alertas en %.</p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
@@ -117,7 +121,7 @@
               <div
                 class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  🟢 Normal (%) *
+                  Normal (%) *
                 </label>
                 <input v-model.number="form.config.warning" type="number" :class="inputClasses('configWarning')"
                   placeholder="75" min="0" max="100" required />
@@ -125,14 +129,14 @@
               <div
                 class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  🟡 Precaución (%) *
+                  Precaución (%) *
                 </label>
                 <input v-model.number="form.config.urgent" type="number" :class="inputClasses('configUrgent')"
                   placeholder="85" min="0" max="100" required />
               </div>
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
-                  🔴 Crítico (%) *
+                  Crítico (%) *
                 </label>
                 <input v-model.number="form.config.critical" type="number" :class="inputClasses('configCritical')"
                   placeholder="95" min="0" max="100" required />
@@ -142,92 +146,59 @@
 
           <div v-else-if="form.ruleType === 'TENSION'"
             class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <div class="flex items-start space-x-3">
+            <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">⚡</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Tensión</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300">URBANO:</strong> ±5% de la tensión nominal/de
+                  <p><strong class="text-accent-primary dark:text-accent-primary">URBANO:</strong> ±5% de la tensión
+                    nominal/de
                     operación</p>
-                  <p><strong class="text-blue-600 dark:text-blue-300">RURAL:</strong> ±7.5% de la tensión nominal/de
+                  <p><strong class="text-accent-primary dark:text-accent-primary">RURAL:</strong> ±7.5% de la tensión
+                    nominal/de
                     operación</p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
                 </div>
               </div>
             </div>
-          </div>
-
-
-          <div v-else-if="form.ruleType === 'FRECUENCIA'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <div class="flex items-start space-x-3">
-              <div class="flex-shrink-0">
-                <div class="text-2xl">📊</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div
+                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  🏢 Urbano (%) *
+                </label>
+                <input v-model.number="form.config.urbano" type="number" :class="inputClasses('configUrbano')"
+                  placeholder="5" min="0" max="100" required />
               </div>
-              <div>
-                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Frecuencia</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> ±0,001% de la frecuencia nominal</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div v-else-if="form.ruleType === 'THDV'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <div class="flex items-start space-x-3">
-              <div class="flex-shrink-0">
-                <div class="text-2xl">📈</div>
-              </div>
-              <div>
-                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDV</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> ±5% de la tensión nominal</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
+              <div
+                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                  🌾 Rural (%) *
+                </label>
+                <input v-model.number="form.config.rural" type="number" :class="inputClasses('configRural')"
+                  placeholder="7.5" min="0" max="10" step="0.1" required />
               </div>
             </div>
           </div>
-
-
-          <div v-else-if="form.ruleType === 'THDI'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <div class="flex items-start space-x-3">
-              <div class="flex-shrink-0">
-                <div class="text-2xl">📉</div>
-              </div>
-              <div>
-                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDI</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> ±15% de la corriente nominal</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
 
           <div v-else-if="form.ruleType === 'CORRIENTE'"
             class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <div class="flex items-start space-x-3">
+            <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">🔌</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Corriente</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong> ±5% de la corriente nominal (desbalance
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la corriente nominal
+                    (desbalance
                     por diferencia de fases)</p>
 
-                  <p><strong class="text-blue-600 dark:text-blue-300"></strong>Si la corriente de una fase supera la
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong>Si la corriente de una fase
+                    supera la
                     corriente nominal, se activará la ALERTA</p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.
@@ -235,8 +206,116 @@
                 </div>
               </div>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div
+                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  Normal (%) *
+                </label>
+                <input v-model.number="form.config.faseR" type="number" :class="inputClasses('configFaseR')"
+                  placeholder="5" min="0" max="100" required />
+              </div>
+              <div
+                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                  Precaución (%) *
+                </label>
+                <input v-model.number="form.config.faseS" type="number" :class="inputClasses('configFaseS')"
+                  placeholder="5" min="0" max="100" required />
+              </div>
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico (%) *
+                </label>
+                <input v-model.number="form.config.faseT" type="number" :class="inputClasses('configFaseT')"
+                  placeholder="5" min="0" max="100" required />
+              </div>
+            </div>
           </div>
 
+          <div v-else-if="form.ruleType === 'FRECUENCIA'"
+            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-start space-x-3 mb-4">
+              <div class="flex-shrink-0">
+                <div class="text-2xl">📊</div>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Frecuencia</h4>
+                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±0,001% de la frecuencia
+                    nominal</p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
+                    valores establecidos por normativa.</p>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div
+                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  📊 Porcentaje de Frecuencia (%) *
+                </label>
+                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
+                  placeholder="0.001" step="0.001" min="0" required />
+              </div>
+            </div>
+          </div>
+
+          <div v-else-if="form.ruleType === 'THDV'"
+            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-start space-x-3 mb-4">
+              <div class="flex-shrink-0">
+                <div class="text-2xl">📈</div>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDV</h4>
+                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tensión nominal
+                  </p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
+                    valores establecidos por normativa.</p>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div
+                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  📈 Porcentaje THDV (%) *
+                </label>
+                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
+                  placeholder="5" min="0" max="100" required />
+              </div>
+            </div>
+          </div>
+
+          <div v-else-if="form.ruleType === 'THDI'"
+            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-start space-x-3 mb-4">
+              <div class="flex-shrink-0">
+                <div class="text-2xl">📉</div>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDI</h4>
+                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la corriente nominal
+                  </p>
+                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
+                    valores establecidos por normativa.</p>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div
+                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  📉 Porcentaje THDI (%) *
+                </label>
+                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
+                  placeholder="18" min="0" max="100" required />
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -352,9 +431,19 @@ const form = reactive({
   ruleName: '',
   ruleCode: '',
   config: {
+    // Para TEMPERATURA y POTENCIA
     warning: null,
     urgent: null,
-    critical: null
+    critical: null,
+    // Para TENSION
+    urbano: null,
+    rural: null,
+    // Para CORRIENTE
+    faseR: null,
+    faseS: null,
+    faseT: null,
+    // Para FRECUENCIA, THDV, THDI
+    porcentaje: null
   },
   selectedAlerts: [],
   isActive: true
@@ -376,9 +465,19 @@ const resetForm = () => {
   form.ruleName = ''
   form.ruleCode = ''
   form.config = {
+    // Para TEMPERATURA y POTENCIA
     warning: null,
     urgent: null,
-    critical: null
+    critical: null,
+    // Para TENSION
+    urbano: null,
+    rural: null,
+    // Para CORRIENTE
+    faseR: null,
+    faseS: null,
+    faseT: null,
+    // Para FRECUENCIA, THDV, THDI
+    porcentaje: null
   }
   form.selectedAlerts = []
   form.isActive = true
@@ -400,7 +499,7 @@ const validateForm = () => {
     errors.value.ruleCode = 'El código de regla es requerido'
   }
 
-  // Validar configuración de temperatura y potencia
+  // Validar configuración según el tipo de regla
   if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA') {
     if (!form.config.warning) {
       errors.value.configWarning = 'El nivel de advertencia es requerido'
@@ -434,6 +533,36 @@ const validateForm = () => {
     }
   }
 
+  // Validar configuración para TENSION
+  if (form.ruleType === 'TENSION') {
+    if (!form.config.urbano) {
+      errors.value.configUrbano = 'El porcentaje urbano es requerido'
+    }
+    if (!form.config.rural) {
+      errors.value.configRural = 'El porcentaje rural es requerido'
+    }
+  }
+
+  // Validar configuración para CORRIENTE
+  if (form.ruleType === 'CORRIENTE') {
+    if (!form.config.faseR) {
+      errors.value.configFaseR = 'El porcentaje  es requerido'
+    }
+    if (!form.config.faseS) {
+      errors.value.configFaseS = 'El porcentaje  es requerido'
+    }
+    if (!form.config.faseT) {
+      errors.value.configFaseT = 'El porcentaje  es requerido'
+    }
+  }
+
+  // Validar configuración para FRECUENCIA, THDV, THDI
+  if (form.ruleType === 'FRECUENCIA' || form.ruleType === 'THDV' || form.ruleType === 'THDI') {
+    if (!form.config.porcentaje) {
+      errors.value.configPorcentaje = 'El porcentaje es requerido'
+    }
+  }
+
   if (form.selectedAlerts.length === 0) {
     errors.value.selectedAlerts = 'Debe seleccionar al menos una alerta'
   }
@@ -456,8 +585,22 @@ const handleSubmit = () => {
           critical: form.config.critical
         }
       }
+    } else if (form.ruleType === 'TENSION') {
+      config = {
+        urbano: form.config.urbano,
+        rural: form.config.rural
+      }
+    } else if (form.ruleType === 'CORRIENTE') {
+      config = {
+        faseR: form.config.faseR,
+        faseS: form.config.faseS,
+        faseT: form.config.faseT
+      }
+    } else if (form.ruleType === 'FRECUENCIA' || form.ruleType === 'THDV' || form.ruleType === 'THDI') {
+      config = {
+        porcentaje: form.config.porcentaje
+      }
     }
-    // Para otros tipos como TENSION, config permanece vacío
 
     const dataToSend = {
       type: form.ruleType,
@@ -490,9 +633,16 @@ watch(() => [...props.alerts], (newAlerts) => {
 
 watch(() => form.ruleType, () => {
   form.config = {
+    // Para TEMPERATURA y POTENCIA
     warning: null,
     urgent: null,
-    critical: null
+    critical: null,
+    urbano: null,
+    rural: null,
+    faseR: null,
+    faseS: null,
+    faseT: null,
+    porcentaje: null
   }
 })
 </script>
