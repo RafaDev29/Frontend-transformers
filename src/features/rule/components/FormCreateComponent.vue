@@ -106,7 +106,7 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Potencia</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> +-% de la potencia nominal
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> % de la potencia nominal
                   </p>
                   <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Define los niveles de
                     potencia que
@@ -153,7 +153,7 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Tensión</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary">URBANO:</strong> ±5% de la tensión
+                  <p><strong class="text-accent-primary dark:text-accent-primary">URBANO:</strong> 5% de la tensión
                     nominal/de
                     operación</p>
                   <p><strong class="text-accent-primary dark:text-accent-primary">RURAL:</strong> ±7.5% de la tensión
@@ -193,9 +193,7 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Corriente</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la corriente nominal
-                    (desbalance
-                    por diferencia de fases)</p>
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Porcentaje de la diferencia de corriente entre fases que produce desbalance.</p>
 
                   <p><strong class="text-accent-primary dark:text-accent-primary"></strong>Si la corriente de una fase
                     supera la
