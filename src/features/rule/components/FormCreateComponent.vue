@@ -16,7 +16,7 @@
       <form @submit.prevent="handleSubmit" class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <label for="ruleCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label for="ruleCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Código de Regla *
             </label>
             <input id="ruleCode" v-model="form.ruleCode" type="text" :class="inputClasses('ruleCode')"
@@ -25,7 +25,7 @@
           </div>
 
           <div>
-            <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre de la Regla *
             </label>
             <input id="ruleName" v-model="form.ruleName" type="text" :class="inputClasses('ruleName')"
@@ -34,15 +34,15 @@
           </div>
         </div>
 
-        <div class="mb-8">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Tipo de Regla</h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="mb-2">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Tipo de Regla</h3>
+          <div class="grid grid-cols-2 md:grid-cols-7 gap-2">
             <div v-for="ruleType in ruleTypes" :key="ruleType.value" class="relative">
               <input :id="ruleType.value" v-model="form.ruleType" :value="ruleType.value" type="radio" name="ruleType"
                 class="sr-only peer" required />
               <label :for="ruleType.value"
                 class="flex flex-col items-center justify-center p-4 text-sm font-medium text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-color1 peer-checked:border-color1 peer-checked:text-color1 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                <div class="text-2xl mb-2">{{ ruleType.icon }}</div>
+                <div class="text-xl mb-2">{{ ruleType.icon }}</div>
                 {{ ruleType.label }}
                 <div class="text-xs text-gray-400 mt-1">{{ ruleType.unit }}</div>
               </label>
@@ -426,25 +426,23 @@ const ruleTypes = ref([
   { value: 'TEMPERATURA', label: 'Temperatura', icon: '🌡️', unit: 'Celsius (°C)' }
 ])
 
+
+const defaultConfigs = {
+  TEMPERATURA: { warning: 70, urgent: 80, critical: 90 },
+  POTENCIA: { warning: 70, urgent: 80, critical: 90 },
+  TENSION: { urbano: 5, rural: 7.5 },
+  CORRIENTE: { faseR: 10, faseS: 20, faseT: 50 },
+  FRECUENCIA: { porcentaje: 0.001 },
+  THDV: { porcentaje: 5 },
+  THDI: { porcentaje: 18 }
+}
+
+
 const form = reactive({
   ruleType: '',
   ruleName: '',
   ruleCode: '',
-  config: {
-    // Para TEMPERATURA y POTENCIA
-    warning: null,
-    urgent: null,
-    critical: null,
-    // Para TENSION
-    urbano: null,
-    rural: null,
-    // Para CORRIENTE
-    faseR: null,
-    faseS: null,
-    faseT: null,
-    // Para FRECUENCIA, THDV, THDI
-    porcentaje: null
-  },
+  config: {},
   selectedAlerts: [],
   isActive: true
 })
@@ -645,4 +643,13 @@ watch(() => form.ruleType, () => {
     porcentaje: null
   }
 })
+
+
+watch(() => form.ruleType, (newType) => {
+  if (newType && defaultConfigs[newType]) {
+
+    form.config = { ...defaultConfigs[newType] }
+  }
+})
+
 </script>
