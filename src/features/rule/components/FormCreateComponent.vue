@@ -270,7 +270,7 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDV</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tensión nominal
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tasa de distorsión armónica en cada fase.
                   </p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
@@ -298,7 +298,7 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDI</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la corriente nominal
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la tasa de distorsión armónica en cada fase.
                   </p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
