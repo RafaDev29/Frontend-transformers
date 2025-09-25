@@ -271,7 +271,7 @@ const route = useRoute()
 
 function isItemDisabled(item) {
   if (item.category === 'monitoring' || !item.category) {
-    const allowedRoutes = ["/app/factoryTransformerDetail", "/app/strain", "/app/current" , "/app/frequency" , "/app/power" , "/app/thdv" , "/app/thdi" , "/app/temperature"]
+    const allowedRoutes = ["/app/factoryTransformerDetail", "/app/strain", "/app/current" , "/app/frequency" , "/app/power" , "/app/thdv" , "/app/thdi" , "/app/temperature" , "/app/transformerDetail" ]
     const isInAllowedRoute = allowedRoutes.includes(route.path)
 
     return !(transformerStore.hasTransformer && isInAllowedRoute)

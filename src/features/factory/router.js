@@ -31,7 +31,7 @@ export default [
     path: 'factoryTransformerDetail',              
     name: 'factoryTransformerDetail',
     component: factoryTransformerDetail,
-    meta: { requiresAuth: true, roles: [ 'ROOT'] }
+    meta: { requiresAuth: true, roles: [ 'ROOT' , 'FACTORY'] }
   },
 
 

@@ -78,6 +78,13 @@ const maintenanceItems = computed(() => {
       category: 'maintenance'
     },
     {
+      title: 'Alertas',
+      icon: 'Bell',
+      to: '/app/malert',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
+    {
       title: 'Reglas',
       icon: 'rule',
       to: '/app/mrule',
@@ -85,13 +92,7 @@ const maintenanceItems = computed(() => {
       category: 'maintenance'
     },
     
-    {
-      title: 'Alertas',
-      icon: 'Bell',
-      to: '/app/malert',
-      roles: ['ROOT'],
-      category: 'maintenance'
-    },
+    
 
    
 

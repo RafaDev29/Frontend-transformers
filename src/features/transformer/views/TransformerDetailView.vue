@@ -1,39 +1,59 @@
 <template>
   <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1 flex flex-col">
-
     <!-- Navigation arriba (NO se mueve) -->
     <div class="py-1">
-      <NavigationComponent :breadcrumbs="[
-        { label: 'Panel de Transformadores', path: '/app/transformer' },
-        { label: 'Panel detalle transformador', path: '/app/transformerDetail' },
-      ]" />
+      <NavigationComponent
+        :breadcrumbs="[
+          { label: 'Panel de transformadores', path: '/app/Transformer' },
+          { label: 'Panel detalle transformador', path: '/app/TransformerDetail' },
+        ]"
+      />
     </div>
 
-    <!-- Imagen que ocupa todo el resto -->
-    <div class="flex-1 transformer-layer" :style="bgStyle">
-      <div class="relative z-10 h-full w-full p-1">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-15 pt-8 ml-8 pl-8">
-          <CardDetailComponent />
-        </div>
+    <!-- Contenedor en 2 mitades -->
+    <div class="flex-1 grid grid-cols-2 gap-0">
+      <!-- Card 50% a la izquierda -->
+      <div class="flex items-center justify-center  pl-2 pr-2 rounded-3xl ">
+        <CardDetailComponent />
+      </div>
+
+      <!-- Imagen 50% a la derecha -->
+      <div class="h-full w-full ">
+        <div class="transformer-layer h-[600px] w-full rounded-3xl " :style="bgStyle"></div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import CardDetailComponent from '../components/CardDetailComponent.vue';
+import { computed } from 'vue'
+import CardDetailComponent from '@/features/transformer/components/CardDetailComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
-import bg from '@/assets/transformer/transformerDry.jpeg'
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
+import transformerDry from '@/assets/transformer/transformerDry.jpeg'
+import transformerOil from '@/assets/transformer/transformerOil.jpeg'
 
-const bgStyle = { backgroundImage: `url(${bg})` }
+const transformerStore = useTransformerStore()
+
+const bgStyle = computed(() => {
+  if (!transformerStore.selectedTransformer) {
+    return { backgroundImage: `url(${transformerDry})` }
+  }
+
+  const transformerType = transformerStore.selectedTransformer.type?.toLowerCase()
+  const backgroundImage =
+    transformerType === 'aceite'
+      ? `url(${transformerOil})`
+      : `url(${transformerDry})`
+
+  return { backgroundImage }
+})
 </script>
 
 <style scoped>
 .transformer-layer {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
-  overflow: hidden;
+  background-size: cover; /* fuerza la imagen a ocupar todo el espacio */
 }
 </style>
