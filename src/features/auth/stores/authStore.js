@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
       localStorage.setItem(LOGIN_KEY, JSON.stringify(false)) 
     },
     loadSession() {
-      // ya hidrata desde localStorage con el state inicial
+
     },
   },
 })

@@ -1,5 +1,4 @@
 <template>
-  <!-- Overlay transparente cuando está abierto -->
   <div v-if="open" class="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 transition-all duration-300"
     @click="closeMenu">
   </div>
@@ -10,9 +9,8 @@
       'glass-effect-spotlight': open
     }">
     
-    <!-- Header del usuario con diseño distintivo -->
     <div class="relative bg-gradient-to-r from-slate-50/80 via-white/60 to-slate-50/80 dark:from-slate-800/60 dark:via-slate-700/40 dark:to-slate-800/60 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-600/40 p-3 rounded-t-2xl">
-      <!-- Decoración superior sutil -->
+
       <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-color1/20 dark:via-color3/30 to-transparent"></div>
       
       <div class="flex items-center gap-3">
@@ -36,7 +34,6 @@
           </div>
         </div>
 
-        <!-- Botón toggle con diseño más elegante -->
         <button @click="toggleMenu"
           class="w-8 h-8 bg-gradient-to-br from-slate-200/80 via-white/90 to-slate-100/80 dark:from-slate-600/60 dark:via-slate-500/40 dark:to-slate-600/60 border border-slate-300/70 dark:border-slate-500/50 rounded-xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gradient-to-br hover:from-slate-300/80 hover:via-slate-100/90 hover:to-slate-200/80 dark:hover:from-slate-500/60 dark:hover:via-slate-400/40 dark:hover:to-slate-500/60 hover:border-slate-400/80 dark:hover:border-slate-400/60 hover:scale-110 hover:shadow-lg shadow-slate-400/20 dark:shadow-slate-600/30 flex-shrink-0">
           <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-600 dark:text-slate-300 transition-transform duration-300 ease-out"
@@ -47,7 +44,6 @@
       </div>
     </div>
 
-    <!-- Separador decorativo -->
     <div v-if="open" class="px-3 py-1">
       <div class="relative flex items-center">
         <div class="flex-grow h-px bg-gradient-to-r from-transparent via-slate-300/60 dark:via-slate-600/60 to-transparent"></div>
@@ -58,7 +54,6 @@
       </div>
     </div>
 
-    <!-- Menú de opciones -->
     <v-expand-transition>
       <div v-show="open" class="px-3 pb-3 space-y-1 animate-fade-in">
 
@@ -79,7 +74,7 @@
           <span class="text-sm font-semibold flex-1 text-left relative z-10">Mi Perfil</span>
         </button>
 
-        <button @click="$emit('soporte')"
+        <button @click="$emit('support')"
           class="w-full flex items-center gap-2.5 p-2.5 border border-color1/10 dark:border-color3/20 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden bg-gradient-to-r from-color1/8 via-color2/5 to-transparent dark:from-color3/12 dark:via-color4/8 dark:to-transparent text-color1 dark:text-color3 hover:from-color1/12 hover:via-color2/8 hover:to-transparent dark:hover:from-color3/15 dark:hover:via-color4/12 dark:hover:to-transparent hover:border-color1/20 dark:hover:border-color3/30 hover:translate-x-1 group">
 
           <div
@@ -129,7 +124,7 @@
           </div>
         </button>
 
-        <!-- Separador antes del logout -->
+
         <div class="flex items-center justify-center py-2">
           <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-gray-600 to-transparent">
           </div>
@@ -164,7 +159,7 @@ defineProps({
   user: { type: Object, default: null },
 })
 
-const emit = defineEmits(['profile', 'logout', 'theme-toggle', 'soporte', 'menu-toggle'])
+const emit = defineEmits(['profile', 'logout', 'theme-toggle', 'support', 'menu-toggle'])
 
 const open = ref(false)
 const isDarkMode = ref(false)

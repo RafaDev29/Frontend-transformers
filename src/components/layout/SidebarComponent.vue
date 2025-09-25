@@ -195,12 +195,12 @@
       </div>
     </div>
 
-    <!-- Footer -->
+
     <template #append>
       <div
         class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
         <div v-if="!rail" class="p-2.5">
-          <UserActionsCard :user="user" @profile="goToProfile" @settings="$emit('settings')"
+          <UserActionsCard :user="user" @profile="goToProfile" @support="goToSupport"
             @logout="$emit('logout')" />
         </div>
 
@@ -229,7 +229,7 @@ import { computed, defineEmits, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 import UserActionsCard from './UserMenuComponent.vue'
-
+import { useAuthStore } from '@/features/auth/stores/authStore'
 const router = useRouter()
 const transformerStore = useTransformerStore()
 
@@ -287,7 +287,25 @@ function toggleMaintenance() {
 }
 
 function goToProfile() {
-  router.push({ name: 'profile' })
+  const authStore = useAuthStore()
+  const role = authStore.user?.role  
+
+  switch (role) {
+    case 'ROOT':
+      router.push({ name: 'profileR' })
+      break
+    case 'FACTORY':
+      router.push({ name: 'profileF' })
+      break
+    case 'CUSTOMER':
+      router.push({ name: 'profileC' })
+      break
+    default:
+      router.push({ name: 'profileR' }) 
+  }
+}
+function goToSupport () {
+   router.push({ name : 'support'})
 }
 </script>
 

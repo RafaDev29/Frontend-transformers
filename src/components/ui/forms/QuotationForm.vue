@@ -2,21 +2,21 @@
   <v-dialog v-model="dialog" max-width="500" @click:outside="resetForm">
     <v-card color="white">
       <v-card-title class="text-center text-white bg-petroleum p-1">
-  <div class="z-10 text-center">
-    <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
-      <span class="text-color1 dark:text-colorDark1">S</span>
-      <span class="text-color2 dark:text-colorDark2">I</span>
-      <span class="text-color3 dark:text-colorDark3">M</span>
-      <span class="text-color4 dark:text-colorDark4">T</span>
-      <span class="text-color5 dark:text-color1">R</span>
-      <span class="text-accent-primary dark:text-accent-success">A</span>
-    </h1>
-  </div>
-<div class="text-center m-2 text-sm md:text-base whitespace-normal break-words leading-snug">
-  SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES EN TIEMPO REAL
-</div>
+        <div class="z-10 text-center">
+          <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
+            <span class="text-color1 dark:text-colorDark1">S</span>
+            <span class="text-color2 dark:text-colorDark2">I</span>
+            <span class="text-color3 dark:text-colorDark3">M</span>
+            <span class="text-color4 dark:text-colorDark4">T</span>
+            <span class="text-color5 dark:text-color1">R</span>
+            <span class="text-accent-primary dark:text-accent-success">A</span>
+          </h1>
+        </div>
+        <div class="text-center m-2 text-sm md:text-base whitespace-normal break-words leading-snug">
+          SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES EN TIEMPO REAL
+        </div>
 
-</v-card-title>
+      </v-card-title>
 
 
       <v-card-text class="pt-2">

@@ -19,6 +19,7 @@ import temperatureRoute from '@/features/temperature/router'
 import currentRoute from '@/features/current/router'
 import ruleRoute from '@/features/rule/router'
 import alertRoute from '@/features/alert/router'
+import profileRoute from '@/features/profile/router'
 import { authGuard } from './guards/auth'
 
 
@@ -57,6 +58,7 @@ const routes = [
       ...currentRoute,
       ...ruleRoute,
       ...alertRoute,
+      ...profileRoute , 
 
       { path: '', redirect: '/app/welcome' },
     ],
