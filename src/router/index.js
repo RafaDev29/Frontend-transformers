@@ -20,6 +20,7 @@ import currentRoute from '@/features/current/router'
 import ruleRoute from '@/features/rule/router'
 import alertRoute from '@/features/alert/router'
 import profileRoute from '@/features/profile/router'
+import supportRoute from '@/features/support/router'
 import { authGuard } from './guards/auth'
 
 
@@ -43,7 +44,7 @@ const routes = [
     component: PrivateLayout,
     meta: { requiresAuth: true },
     children: [
-     
+
       ...welcomeRoutes,
       ...transformerRoutes,
       ...factoryRoutes,
@@ -51,14 +52,15 @@ const routes = [
       ...rangeRoutes,
       ...strainRoute,
       ...frequencyRoute,
-      ...thdvRoute ,
+      ...thdvRoute,
       ...thdiRoute,
       ...powerRoute,
       ...temperatureRoute,
       ...currentRoute,
       ...ruleRoute,
       ...alertRoute,
-      ...profileRoute , 
+      ...profileRoute,
+      ...supportRoute,
 
       { path: '', redirect: '/app/welcome' },
     ],

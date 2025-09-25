@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-color5 py-8 px-4">
-    <div class="max-w-3xl mx-auto">
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-color5 py-1 px-1">
+    <div class="p-3 mx-auto">
       
       <!-- Header Section -->
-      <div class="text-center mb-8">
+      <div class="text-center mb-1">
         <!-- SIMTRA Logo -->
         <div class="z-10 text-center">
           <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
@@ -20,17 +20,16 @@
         </div>
       </div>
 
-      <!-- Support Info Card -->
-      <div class="bg-gradient-to-r from-color1 to-color2 text-white rounded-2xl p-6 mb-8 shadow-lg">
-        <h2 class="text-2xl font-bold mb-3">¿Necesitas Soporte?</h2>
-        <p class="text-color5 leading-relaxed">
+      <div class="bg-gradient-to-r from-color1 to-color2 text-white rounded-2xl p-2 mb-2 shadow-lg">
+        <h2 class="text-xl font-bold mb-3">¿Necesitas Soporte?</h2>
+        <p class="text-color5 text-sm leading-relaxed">
           Si tienes un problema con la aplicación o necesitas ayuda, por favor contáctanos a través de este formulario y te responderemos lo antes posible.
         </p>
       </div>
 
       <!-- Form Card -->
       <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-        <form @submit.prevent="handleSubmit" class="p-8 space-y-6">
+        <form @submit.prevent="handleSubmit" class="p-4 space-y-2">
           
           <!-- Name Field -->
           <div class="space-y-2">
@@ -89,7 +88,7 @@
                   v-model="form.telefono"
                   type="tel"
                   class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
-                  placeholder="+34 696 576 114"
+                  placeholder="+51 696 576 114"
                   required
                 >
               </div>
@@ -267,7 +266,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/auth' // Ajusta la ruta según tu estructura
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const authStore = useAuthStore()
 

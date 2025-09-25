@@ -9,12 +9,12 @@
     </div>
     <headRoot />
     <div class=" pb-1">
-      <ProfileFormRoot  />
+      <FormSupport  />
     </div>
   </div>
 </template>
 
 <script setup>
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
-import ProfileFormRoot from '../components/ProfileFormRoot.vue';
+import FormSupport from '../components/FormSupport.vue';
 </script>
