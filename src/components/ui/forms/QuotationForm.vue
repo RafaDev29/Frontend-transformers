@@ -133,31 +133,32 @@ const submitForm = async () => {
 
   const form = new FormData()
 
+
   const htmlCotizacion = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solicitud de Cotización - SAEE</title>
+  <title>Solicitud de Cotización - SIMTRA</title>
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       line-height: 1.6;
-      color: #333;
+      color: #0f3d3e; /* petroleum */
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #F2F2F2;
+      background-color: #f8fafc; /* slate.50 */
     }
     .email-container {
-      border: 1px solid #C4D8F2;
+      border: 1px solid #acdf96; /* color4 */
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 3px 12px rgba(38, 49, 115, 0.1);
+      box-shadow: 0 3px 12px rgba(15, 61, 62, 0.1); /* petroleum */
     }
     .header {
-      background-color: #263173;
+      background-color: #0f3d3e; /* petroleum */
       color: white;
       padding: 18px 20px;
       text-align: center;
@@ -167,16 +168,16 @@ const submitForm = async () => {
       background-color: #fff;
     }
     .footer {
-      background-color: #C4D8F2;
+      background-color: #dcffc2; /* color5 */
       padding: 15px 20px;
       text-align: center;
       font-size: 14px;
-      color: #263173;
-      border-top: 1px solid #66A3F2;
+      color: #145214; /* colorDark1 */
+      border-top: 1px solid #7dbf6b; /* color3 */
     }
     .field-label {
       font-weight: bold;
-      color: #4465A6;
+      color: #1e7f14; /* color1 */
       display: block;
       margin-bottom: 3px;
     }
@@ -185,10 +186,10 @@ const submitForm = async () => {
       padding: 8px;
       background-color: #f9f9f9;
       border-radius: 4px;
-      border-left: 3px solid #66A3F2;
+      border-left: 3px solid #4d9f3f; /* color2 */
     }
     .logo {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       letter-spacing: 2px;
       margin-bottom: 10px;
@@ -199,15 +200,17 @@ const submitForm = async () => {
   <div class="email-container">
     <div class="header">
       <div class="logo">
-        <span style="color:#66A3F2;">S</span>
-        <span style="color:#66A3F2;">A</span>
-        <span style="color:#C4D8F2;">E</span>
-        <span style="color:#F2F2F2;">E</span>
+        <span style="color:#1e7f14;">S</span>
+        <span style="color:#4d9f3f;">I</span>
+        <span style="color:#7dbf6b;">M</span>
+        <span style="color:#acdf96;">T</span>
+        <span style="color:#dcffc2;">R</span>
+        <span style="color:#16a34a;">A</span>
       </div>
-      <div>SISTEMA DE ADMINISTRACIÓN EFICIENTE DE ENERGÍA</div>
+      <div>SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES</div>
     </div>
     <div class="content">
-      <h2 style="color: #263173; text-align: center;">Nueva Solicitud de Cotización</h2>
+      <h2 style="color: #0f3d3e; text-align: center;">Nueva Solicitud de Cotización</h2>
 
       <div class="field-label">Nombre:</div>
       <div class="field-value">{{nombre}}</div>
@@ -222,12 +225,13 @@ const submitForm = async () => {
       <div class="field-value">{{mensaje}}</div>
     </div>
     <div class="footer">
-      &copy; 2025 SAEE D&amp;A - Todos los derechos reservados
+      &copy; 2025 SIMTRA D&amp;A - Todos los derechos reservados
     </div>
   </div>
 </body>
 </html>
 `
+
     .replace('{{nombre}}', formData.value.nombre)
     .replace('{{email}}', formData.value.email)
     .replace('{{telefono}}', formData.value.telefono)

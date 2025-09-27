@@ -1,6 +1,6 @@
 <template>
-  <div class=" bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1">
-    <div class=" mx-auto">
+  <div class="bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1">
+    <div class="mx-auto">
       
       <!-- Header Section -->
       <div class="text-center mb-2">
@@ -14,7 +14,7 @@
             <span class="text-color5 dark:text-color1">R</span>
             <span class="text-accent-primary dark:text-accent-success">A</span>
           </h1>
-        </div>
+        </div> 
         <div class="text-center m-2 text-sm md:text-base whitespace-normal break-words leading-snug text-neutral-medium">
           SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES EN TIEMPO REAL
         </div>
@@ -74,8 +74,13 @@
                       class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
                       placeholder="+34 696 576 114"
                       required
+                      @blur="touched.telefono = true"
+                      :class="{ 'border-red-300': touched.telefono && !phoneRegex.test(form.telefono) }"
                     >
                   </div>
+                  <p v-if="touched.telefono && !phoneRegex.test(form.telefono)" class="text-xs text-red-500">
+                    Debe tener 9 dígitos
+                  </p>
                 </div>
               </div>
 
@@ -96,8 +101,13 @@
                     class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
                     placeholder="tu@email.com"
                     required
+                    @blur="touched.email = true"
+                    :class="{ 'border-red-300': touched.email && !emailRegex.test(form.email) }"
                   >
                 </div>
+                <p v-if="touched.email && !emailRegex.test(form.email)" class="text-xs text-red-500">
+                  Correo inválido
+                </p>
               </div>
 
               <!-- Message Field -->
@@ -207,9 +217,9 @@
 
               <!-- Submit Button -->
               <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                 <button type="button" @click="$emit('close')"
-                  class="flex-1  bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
-                  Cancelar
+                <button type="button" @click="$emit('close')"
+                  class="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
+                  Cerrar
                 </button>
                 <button
                   type="submit"
@@ -280,9 +290,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useAuthStore } from '@/features/auth/stores/authStore'
-
-const authStore = useAuthStore()
+import eventBus from '@/plugins/eventBus'
 
 // Reactive data
 const form = ref({
@@ -292,17 +300,26 @@ const form = ref({
   mensaje: ''
 })
 
+const touched = ref({
+  email: false,
+  telefono: false
+})
+
 const selectedFile = ref(null)
 const loading = ref(false)
 const error = ref('')
 const successMessage = ref('')
 const fileInput = ref(null)
 
+// Validation regexes
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const phoneRegex = /^[0-9]{9}$/
+
 // Computed
 const isFormValid = computed(() => {
   return form.value.name.trim() &&
-         form.value.email.trim() &&
-         form.value.telefono.trim() &&
+         emailRegex.test(form.value.email.trim()) &&
+         phoneRegex.test(form.value.telefono.trim()) &&
          form.value.mensaje.trim().length >= 10
 })
 
@@ -357,25 +374,6 @@ const formatFileSize = (bytes) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
-// Send support request
-const sendSupportRequest = async (formData) => {
-  // Aquí implementa la llamada a tu API para enviar la solicitud de soporte
-  // Ejemplo:
-  const response = await fetch('/api/support/request', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: formData
-  })
-  
-  if (!response.ok) {
-    throw new Error('Error al enviar la solicitud de soporte')
-  }
-  
-  return response.json()
-}
-
 // Reset form
 const resetForm = () => {
   form.value = {
@@ -383,6 +381,10 @@ const resetForm = () => {
     email: '',
     telefono: '',
     mensaje: ''
+  }
+  touched.value = {
+    email: false,
+    telefono: false
   }
   selectedFile.value = null
   error.value = ''
@@ -412,10 +414,129 @@ const handleSubmit = async () => {
   try {
     // Prepare FormData
     const formData = new FormData()
-    formData.append('name', form.value.name)
-    formData.append('email', form.value.email)
-    formData.append('telefono', form.value.telefono)
-    formData.append('mensaje', form.value.mensaje)
+
+    // Create HTML template for support request
+    const htmlSoporte = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitud de Soporte - SIMTRA</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+      color: #0f3d3e; /* petroleum */
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f8fafc; /* slate.50 */
+    }
+    .email-container {
+      border: 1px solid #acdf96; /* color4 */
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(15, 61, 62, 0.1); /* petroleum */
+    }
+    .header {
+      background-color: #0f3d3e; /* petroleum */
+      color: white;
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 30px 25px;
+      background-color: #fff;
+    }
+    .footer {
+      background-color: #dcffc2; /* color5 */
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #145214; /* colorDark1 */
+      border-top: 1px solid #7dbf6b; /* color3 */
+    }
+    .field-label {
+      font-weight: bold;
+      color: #1e7f14; /* color1 */
+      display: block;
+      margin-bottom: 3px;
+    }
+    .field-value {
+      margin-bottom: 15px;
+      padding: 8px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      border-left: 3px solid #4d9f3f; /* color2 */
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .file-info {
+      background-color: #e6f7ff;
+      border: 1px solid #91d5ff;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="header">
+      <div class="logo">
+        <span style="color:#1e7f14;">S</span>
+        <span style="color:#4d9f3f;">I</span>
+        <span style="color:#7dbf6b;">M</span>
+        <span style="color:#acdf96;">T</span>
+        <span style="color:#dcffc2;">R</span>
+        <span style="color:#16a34a;">A</span>
+      </div>
+      <div>SISTEMA INTELIGENTE DE MONITOREO DE TRANSFORMADORES</div>
+    </div>
+    <div class="content">
+      <h2 style="color: #0f3d3e; text-align: center;">Nueva Solicitud de Soporte</h2>
+
+      <div class="field-label">Nombre:</div>
+      <div class="field-value">{{nombre}}</div>
+
+      <div class="field-label">Correo Electrónico:</div>
+      <div class="field-value">{{email}}</div>
+
+      <div class="field-label">Teléfono:</div>
+      <div class="field-value">{{telefono}}</div>
+
+      <div class="field-label">Mensaje:</div>
+      <div class="field-value">{{mensaje}}</div>
+
+      {{archivo_info}}
+    </div>
+    <div class="footer">
+      &copy; 2025 SIMTRA D&amp;A - Todos los derechos reservados
+    </div>
+  </div>
+</body>
+</html>
+`
+      .replace('{{nombre}}', form.value.name)
+      .replace('{{email}}', form.value.email)
+      .replace('{{telefono}}', form.value.telefono)
+      .replace('{{mensaje}}', form.value.mensaje.replace(/\n/g, '<br>'))
+      .replace('{{archivo_info}}', selectedFile.value ? 
+        `<div class="file-info">
+          <div class="field-label">Archivo Adjunto:</div>
+          <div>📎 ${selectedFile.value.name} (${formatFileSize(selectedFile.value.size)})</div>
+        </div>` : '')
+
+    // Append form data
+    formData.append('correo', 'soporte.saee@email.dyasolutions.es')
+    formData.append('texto', htmlSoporte)
+    formData.append('asunto', 'Nueva Solicitud de Soporte')
+    formData.append('formatoHtml', 'true')
     
     // Add file if selected
     if (selectedFile.value) {
@@ -423,9 +544,24 @@ const handleSubmit = async () => {
     }
     
     // Send support request
-    await sendSupportRequest(formData)
-    
-    successMessage.value = '¡Solicitud enviada correctamente! Te responderemos lo antes posible.'
+    const response = await fetch('https://api.saee.dyasolutions.es/api/v1/emails/upload', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNCIsInVzZXJJZCI6MTQsInJvbGUiOiJCVVNJTkVTUyIsInJvbGVJZCI6NSwiaWF0IjoxNzQ0ODUyMDU4LCJleHAiOjE3NDQ5Mzg0NTh9.1yBYoXuaok2JopSDfIPob1lZdZbds5o78DhUgmhriL0'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al enviar la solicitud de soporte')
+    }
+
+    // Show success message using eventBus if available, otherwise local state
+    if (typeof eventBus !== 'undefined') {
+      eventBus.emit('success', 'Solicitud de soporte enviada correctamente. Te responderemos lo antes posible.')
+    } else {
+      successMessage.value = '¡Solicitud enviada correctamente! Te responderemos lo antes posible.'
+    }
     
     // Reset form after successful submission
     setTimeout(() => {
@@ -434,7 +570,13 @@ const handleSubmit = async () => {
     
   } catch (err) {
     console.error('Error sending support request:', err)
-    error.value = err.message || 'Error al enviar la solicitud de soporte'
+    
+    // Show error message using eventBus if available, otherwise local state
+    if (typeof eventBus !== 'undefined') {
+      eventBus.emit('error', 'Hubo un problema al enviar la solicitud de soporte.')
+    } else {
+      error.value = err.message || 'Error al enviar la solicitud de soporte'
+    }
   } finally {
     loading.value = false
   }
