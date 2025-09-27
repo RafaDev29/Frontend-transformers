@@ -65,6 +65,7 @@ export const ALERT = {
 
 export const USER = {
   UPLOAD: '/users',
+  UPDATE: '/users'
 }
 
 

@@ -7,6 +7,13 @@ export async function uploadLogo(payload, id) {
     return data
 }
 
+export async function updateUser(payload, id) {
+
+    const { data } = await client.patch(`${USER.UPDATE}/${id}`, payload)
+    return data
+}
+
+
 
 
 

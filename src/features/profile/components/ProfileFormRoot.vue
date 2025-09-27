@@ -106,7 +106,7 @@
           <div class="flex gap-3 pt-2">
             <button type="button" @click="$emit('close')"
               class="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
-              Cancelar
+              Cerrar
             </button>
 
             <button type="submit" :disabled="loading"
@@ -131,8 +131,7 @@
 <script setup>
 import { ref, onMounted, defineEmits } from 'vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
-import { uploadLogo } from '../services/profileService'
-
+import { uploadLogo, updateUser } from '../services/profileService'
 
 const emit = defineEmits(['close', 'success'])
 
@@ -151,11 +150,12 @@ const error = ref('')
 const successMessage = ref('')
 const fileInput = ref(null)
 
-// Initialize form with user data
 onMounted(() => {
   if (authStore.user) {
     form.value.usuario = authStore.user.usuario || authStore.user.username || ''
-    // No cargar la contraseña por seguridad
+    if (authStore.user.images && authStore.user.images.length > 0) {
+      photoPreview.value = authStore.user.images[0].url
+    }
   }
 })
 
@@ -188,69 +188,73 @@ const handleFileSelect = (event) => {
   }
 }
 
-// Update user profile
 const updateUserProfile = async (userData) => {
-  // Aquí implementa la llamada a tu API para actualizar usuario y contraseña
-  // Ejemplo:
-  const response = await fetch('/api/user/profile', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: JSON.stringify(userData)
-  })
-
-  if (!response.ok) {
-    throw new Error('Error al actualizar el perfil')
+  try {
+    const response = await updateUser(userData, authStore.user.uid)
+    if (response) {
+      console.log("usuario actualizado")
+    }
+  } catch (error) {
+    console.error("error al actualizar", error)
+    throw error
   }
-
-  return response.json()
 }
 
-// Upload user photo
 const uploadUserPhoto = async (formData) => {
-
   try {
     const response = await uploadLogo(formData, authStore.user.uid)
     if (response) {
       console.log("se cargo correctamente")
+      return response 
     }
-
-  } catch {
-    console.error("error al cargar el logo")
+  } catch (error) {
+    console.error("error al cargar el logo", error)
+    throw error 
   }
 }
 
-// Handle form submission
 const handleSubmit = async () => {
   loading.value = true
   error.value = ''
   successMessage.value = ''
 
   try {
-    // Update user data (usuario y contraseña)
-    await updateUserProfile({
-      usuario: form.value.usuario,
-      password: form.value.password
-    })
+    if (form.value.password.trim()) {
+      await updateUserProfile({
+        usuario: form.value.usuario,
+        password: form.value.password
+      })
+    }
 
     if (selectedFile.value && authStore.user?.uid) {
       const formData = new FormData()
       formData.append('file', selectedFile.value)
 
-      await uploadUserPhoto(formData)
+      const response = await uploadUserPhoto(formData)
+      
+      if (response) {
+        const newImageUrl = response.data.url
+        
+        const newImage = {
+          uid: response.data.uid,
+          url: newImageUrl,
+          key: response.data.key
+        }
+        
+        const updatedUser = {
+          ...authStore.user,
+          images: [newImage] 
+        }
+        
+        authStore.updateUser(updatedUser)
+        
+        photoPreview.value = newImageUrl
+      }
     }
 
     successMessage.value = 'Perfil actualizado correctamente'
-
-    // Clear password field for security
     form.value.password = ''
-
-    // Emit success event with message
     emit('success', 'Perfil actualizado correctamente')
-
-
 
   } catch (err) {
     console.error('Error updating profile:', err)

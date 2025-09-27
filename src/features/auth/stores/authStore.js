@@ -1,4 +1,3 @@
-
 import { defineStore } from 'pinia'
 
 const TOKEN_KEY = 'app:token'
@@ -35,6 +34,11 @@ export const useAuthStore = defineStore('auth', {
     },
     loadSession() {
 
+    },
+
+    updateUser(userData) {
+      this.user = userData
+      localStorage.setItem(USER_KEY, JSON.stringify(userData))
     },
   },
 })

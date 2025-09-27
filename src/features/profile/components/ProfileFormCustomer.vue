@@ -103,7 +103,7 @@
               <!-- Password -->
               <div class="space-y-2">
                 <label class="block text-sm font-semibold text-colorDark1">
-                  Contraseña *
+                  Contraseña
                 </label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -114,20 +114,20 @@
                   </div>
                   <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
                     class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
-                    placeholder="antamina4$" required minlength="6">
+                    placeholder="Dejar en blanco para no cambiar">
                   <button type="button" @click="showPassword = !showPassword"
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-medium hover:text-colorDark1 transition-colors">
                     <svg v-if="showPassword" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path
                         d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
-                    </svg>
-                    <svg v-else class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path
-                        d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.09L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.76,7.13 11.37,7 12,7Z" />
-                    </svg>
-                  </button>
+                      </svg>
+                      <svg v-else class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.09L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.76,7.13 11.37,7 12,7Z" />
+                      </svg>
+                    </button>
                 </div>
-                <p class="text-xs text-neutral-medium">Mínimo 6 caracteres</p>
+                <p class="text-xs text-neutral-medium">Deja en blanco si no deseas cambiar la contraseña</p>
               </div>
 
               <!-- Address Section -->
@@ -200,7 +200,7 @@
               <div class="flex flex-col sm:flex-row gap-4 pt-4">
                 <button type="button" @click="$emit('close')"
                   class="flex-1 pr-2 mr-2 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
-                  Cancelar
+                  Cerrar
                 </button>
                 <button type="submit" :disabled="loading"
                   class="flex-1 bg-gradient-to-r from-color1 to-color2 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
@@ -210,7 +210,7 @@
                       <path class="opacity-75" fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Registrando...
+                    Actualizando...
                   </div>
                   <span v-else>Actualizar</span>
                 </button>
@@ -225,9 +225,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
-
+import { updateCustomer } from '@/features/customer/services/customerService'
+import { uploadLogo } from '../services/profileService'
 const authStore = useAuthStore()
 
 // Reactive data
@@ -248,17 +249,35 @@ const error = ref('')
 const successMessage = ref('')
 const fileInput = ref(null)
 
-// Handle file selection
+onMounted(() => {
+  if (authStore.user) {
+    // Precargar datos del usuario
+    form.value.username = authStore.user.username || ''
+    
+    // Precargar datos del cliente desde el store
+    if (authStore.user.customer) {
+      form.value.businessname = authStore.user.customer.businessname || ''
+      form.value.ruc = authStore.user.customer.ruc || ''
+      form.value.address = authStore.user.customer.address || ''
+      form.value.distric = authStore.user.customer.distric || ''
+    }
+    
+    // Precargar foto si existe
+    if (authStore.user.images && authStore.user.images.length > 0) {
+      photoPreview.value = authStore.user.images[0].url
+    }
+  }
+})
+
 const handleFileSelect = (event) => {
   const file = event.target.files[0]
   if (file) {
-    // Validate file type
+
     if (!file.type.startsWith('image/')) {
       error.value = 'Por favor selecciona un archivo de imagen válido'
       return
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       error.value = 'La imagen debe ser menor a 5MB'
       return
@@ -266,7 +285,6 @@ const handleFileSelect = (event) => {
 
     selectedFile.value = file
 
-    // Create preview
     const reader = new FileReader()
     reader.onload = (e) => {
       photoPreview.value = e.target.result
@@ -277,104 +295,103 @@ const handleFileSelect = (event) => {
   }
 }
 
-// Register client
-const registerClient = async (clientData) => {
-  // Aquí implementa la llamada a tu API para registrar el cliente
-  // Ejemplo:
-  const response = await fetch('/api/clients/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: JSON.stringify(clientData)
-  })
-
-  if (!response.ok) {
-    throw new Error('Error al registrar el cliente')
+const updateClientProfile = async (clientData, clientUid) => {
+  try {
+    const response = await updateCustomer(clientData, clientUid)
+    
+    if (response && response.status) {
+      return response.data // Ya es un objeto JavaScript, no necesita .json()
+    } else {
+      throw new Error(response?.message || 'Error al actualizar el perfil del cliente')
+    }
+  } catch (error) {
+    console.error("Error al actualizar el cliente:", error)
+    throw error
   }
-
-  return response.json()
 }
 
-// Upload client logo
 const uploadClientLogo = async (formData) => {
-  // Aquí implementa la llamada a tu API para subir el logo del cliente
-  // Ejemplo:
-  const response = await fetch('/api/clients/logo', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: formData
-  })
-
-  if (!response.ok) {
-    throw new Error('Error al subir el logo del cliente')
-  }
-
-  return response.json()
-}
-
-// Reset form
-const resetForm = () => {
-  form.value = {
-    businessname: '',
-    ruc: '',
-    address: '',
-    distric: '',
-    username: '',
-    password: ''
-  }
-  selectedFile.value = null
-  photoPreview.value = ''
-  error.value = ''
-  successMessage.value = ''
-
-  if (fileInput.value) {
-    fileInput.value.value = ''
+  try {
+    const response = await uploadLogo(formData, authStore.user.uid)
+    if (response) {
+      console.log("se cargo correctamente")
+      return response
+    }
+  } catch (error) {
+    console.error("error al cargar el logo", error)
+    throw error
   }
 }
 
-// Handle form submission
 const handleSubmit = async () => {
   loading.value = true
   error.value = ''
   successMessage.value = ''
 
   try {
-    // Prepare client data exactly as specified
+    // Preparar payload - solo incluir contraseña si no está vacía
     const clientData = {
+      username: form.value.username,
       businessname: form.value.businessname,
       ruc: form.value.ruc,
       address: form.value.address,
-      distric: form.value.distric,
-      username: form.value.username,
-      password: form.value.password
+      distric: form.value.distric
     }
 
-    // Register client
-    const result = await registerClient(clientData)
+    // Solo agregar contraseña si no está vacía
+    if (form.value.password && form.value.password.trim()) {
+      clientData.password = form.value.password
+    }
 
-    // Upload logo if selected
-    if (selectedFile.value && result?.clientId) {
+    const clientUid = authStore.user?.customer?.uid
+    const uid = authStore.user?.uid
+
+    if (!uid) {
+      throw new Error('No se encontró el UID del usuario')
+    }
+
+    // Actualizar perfil del cliente
+    const updatedClientData = await updateClientProfile(clientData, clientUid)
+    
+    // Actualizar el store con los nuevos datos usando la respuesta del servidor
+    if (updatedClientData && updatedClientData.user) {
+      // Usar los datos completos del usuario que vienen del servidor
+      authStore.updateUser(updatedClientData.user)
+    }
+
+    // Subir logo si se seleccionó uno nuevo
+    if (selectedFile.value) {
       const formData = new FormData()
-      formData.append('logo', selectedFile.value)
-      formData.append('clientId', result.clientId) // o el ID que devuelva tu API
+      formData.append('file', selectedFile.value)
 
-      await uploadClientLogo(formData)
+      const logoResponse = await uploadClientLogo(formData)
+      
+      // Actualizar el store con la nueva imagen
+      if (logoResponse && logoResponse.data) {
+        const newImageUrl = logoResponse.data.url
+        
+        const newImage = {
+          uid: logoResponse.data.uid,
+          url: newImageUrl,
+          key: logoResponse.data.key
+        }
+        
+        const updatedUser = {
+          ...authStore.user,
+          images: [newImage] // Reemplazar con la nueva imagen
+        }
+        
+        authStore.updateUser(updatedUser)
+        photoPreview.value = newImageUrl
+      }
     }
 
-    successMessage.value = 'Cliente registrado correctamente'
-
-    // Reset form after successful registration
-    setTimeout(() => {
-      resetForm()
-    }, 2000)
+    successMessage.value = 'Perfil de cliente actualizado correctamente'
+    form.value.password = '' // Limpiar contraseña después del éxito
 
   } catch (err) {
-    console.error('Error registering client:', err)
-    error.value = err.message || 'Error al registrar el cliente'
+    console.error('Error updating client profile:', err)
+    error.value = err.message || 'Error al actualizar el perfil del cliente'
   } finally {
     loading.value = false
   }

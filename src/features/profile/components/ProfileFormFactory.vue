@@ -12,7 +12,7 @@
             <!-- Left Column - Photo Upload -->
             <div class="lg:col-span-1">
               <div class="sticky top-8">
-                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Logo de la Empresa</h3>
+                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Logo de la fabrica</h3>
 
                 <div class="text-center">
                   <div class="relative inline-block">
@@ -65,7 +65,7 @@
 
                 <div class="space-y-2">
                   <label class="block text-sm font-semibold text-colorDark1">
-                    Contraseña *
+                    Contraseña
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -76,7 +76,7 @@
                     </div>
                     <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
                       class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
-                      placeholder="Ingresa tu contraseña" required>
+                      placeholder="Dejar en blanco para no cambiar">
                     <button type="button" @click="showPassword = !showPassword"
                       class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-medium hover:text-colorDark1 transition-colors">
                       <svg v-if="showPassword" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -89,12 +89,13 @@
                       </svg>
                     </button>
                   </div>
+                  <p class="text-xs text-neutral-medium">Deja en blanco si no deseas cambiar la contraseña</p>
                 </div>
               </div>
 
               <!-- Company Info Section -->
               <div class="border-t border-slate-200 pt-6">
-                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Información de la Empresa</h3>
+                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Información de la fabrica</h3>
 
                 <!-- RUC and Business Name -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -128,7 +129,7 @@
                       </div>
                       <input v-model="form.businessName" type="text"
                         class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
-                        placeholder="Mi Empresa SAC">
+                        placeholder="Mi fabrica SAC">
                     </div>
                   </div>
                 </div>
@@ -199,7 +200,7 @@
               <div class="flex justify-end pt-4">
                 <button type="button" @click="$emit('close')"
                   class="flex-1 pr-2 mr-2 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
-                  Cancelar
+                  Cerrar
                 </button>
                 <button type="submit" :disabled="loading"
                   class="bg-gradient-to-r from-color1 to-color2 text-white py-3 px-8 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[160px]">
@@ -226,10 +227,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
-
+import { updateFactory } from '@/features/factory/services/factoryService'
+import { uploadLogo } from '../services/profileService'
 const authStore = useAuthStore()
 
-// Reactive data
 const form = ref({
   username: '',
   password: '',
@@ -247,25 +248,34 @@ const error = ref('')
 const successMessage = ref('')
 const fileInput = ref(null)
 
-// Initialize form with user data
 onMounted(() => {
   if (authStore.user) {
+    // Precargar datos del usuario
     form.value.username = authStore.user.username || authStore.user.usuario || ''
-    // No cargar otros datos ya que mencionas que no los tienes registrados
+
+    // Precargar datos de la fábrica desde el store
+    if (authStore.user.factory) {
+      form.value.ruc = authStore.user.factory.ruc || ''
+      form.value.businessName = authStore.user.factory.businessName || ''
+      form.value.address = authStore.user.factory.address || ''
+      form.value.distric = authStore.user.factory.distric || ''
+    }
+
+    // Precargar foto si existe
+    if (authStore.user.images && authStore.user.images.length > 0) {
+      photoPreview.value = authStore.user.images[0].url
+    }
   }
 })
 
-// Handle file selection
 const handleFileSelect = (event) => {
   const file = event.target.files[0]
   if (file) {
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       error.value = 'Por favor selecciona un archivo de imagen válido'
       return
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       error.value = 'La imagen debe ser menor a 5MB'
       return
@@ -273,7 +283,6 @@ const handleFileSelect = (event) => {
 
     selectedFile.value = file
 
-    // Create preview
     const reader = new FileReader()
     reader.onload = (e) => {
       photoPreview.value = e.target.result
@@ -284,89 +293,103 @@ const handleFileSelect = (event) => {
   }
 }
 
-// Update company profile
 const updateCompanyProfile = async (payload, uid) => {
-  // Aquí implementa la llamada a tu API para actualizar los datos de la empresa
-  // Ejemplo:
-  const response = await fetch('/api/company/profile', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: JSON.stringify({ payload, uid })
-  })
+  try {
+    const response = await updateFactory(payload, uid)
 
-  if (!response.ok) {
-    throw new Error('Error al actualizar el perfil de la empresa')
+    if (response && response.status) {
+      return response.data
+    } else {
+      throw new Error(response?.message || 'Error al actualizar el perfil de la fabrica')
+    }
+  } catch (error) {
+    console.error("Error al actualizar la fábrica:", error)
+    throw error
   }
-
-  return response.json()
 }
 
-// Upload company logo
 const uploadCompanyLogo = async (formData) => {
-  // Aquí implementa la llamada a tu API para subir el logo
-  // Ejemplo:
-  const response = await fetch('/api/company/logo', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${authStore.token}`
-    },
-    body: formData
-  })
-
-  if (!response.ok) {
-    throw new Error('Error al subir el logo')
+  try {
+    const response = await uploadLogo(formData, authStore.user.uid)
+    if (response) {
+      console.log("se cargo correctamente")
+      return response
+    }
+  } catch (error) {
+    console.error("error al cargar el logo", error)
+    throw error
   }
-
-  return response.json()
 }
 
-// Handle form submission
 const handleSubmit = async () => {
   loading.value = true
   error.value = ''
   successMessage.value = ''
 
   try {
-    // Prepare payload
+    // Preparar payload - solo incluir contraseña si no está vacía
     const payload = {
       username: form.value.username,
-      password: form.value.password,
       ruc: form.value.ruc,
       businessName: form.value.businessName,
       address: form.value.address,
       distric: form.value.distric
     }
 
-    // Get uid from store
+    // Solo agregar contraseña si no está vacía
+    if (form.value.password && form.value.password.trim()) {
+      payload.password = form.value.password
+    }
+
+    const uidFactory = authStore.user?.factory?.uid
     const uid = authStore.user?.uid
 
     if (!uid) {
       throw new Error('No se encontró el UID del usuario')
     }
 
-    // Update company profile
-    await updateCompanyProfile(payload, uid)
+    // Actualizar perfil de la fábrica
+    const updatedFactoryData = await updateCompanyProfile(payload, uidFactory)
 
-    // Upload logo if selected
-    if (selectedFile.value) {
-      const formData = new FormData()
-      formData.append('logo', selectedFile.value)
-      formData.append('uid', uid)
-
-      await uploadCompanyLogo(formData)
+    // Actualizar el store con los nuevos datos usando la respuesta del servidor
+    if (updatedFactoryData && updatedFactoryData.user) {
+      // Usar los datos completos del usuario que vienen del servidor
+      authStore.updateUser(updatedFactoryData.user)
     }
 
-    successMessage.value = 'Perfil de empresa actualizado correctamente'
+    // Subir logo si se seleccionó uno nuevo
+    if (selectedFile.value) {
+      const formData = new FormData()
+      formData.append('file', selectedFile.value)
 
-    // Clear password field for security
-    form.value.password = ''
+      const logoResponse = await uploadCompanyLogo(formData, uid)
+
+      // Actualizar el store con la nueva imagen
+      if (logoResponse && logoResponse.data) {
+        const newImageUrl = logoResponse.data.url
+
+        const newImage = {
+          uid: logoResponse.data.uid,
+          url: newImageUrl,
+          key: logoResponse.data.key
+        }
+
+        const updatedUser = {
+          ...authStore.user,
+          images: [newImage] // Reemplazar con la nueva imagen
+        }
+
+        authStore.updateUser(updatedUser)
+        photoPreview.value = newImageUrl
+      }
+    }
+
+    successMessage.value = 'Perfil de fabrica actualizado correctamente'
+    form.value.password = '' // Limpiar contraseña después del éxito
 
   } catch (err) {
     console.error('Error updating company profile:', err)
-    error.value = err.message || 'Error al actualizar el perfil de la empresa'
+    error.value = err.message || 'Error al actualizar el perfil de la fabrica'
   } finally {
     loading.value = false
   }
