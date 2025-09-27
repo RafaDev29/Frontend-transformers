@@ -221,6 +221,23 @@
         </div>
       </div>
     </template>
+
+
+    <v-dialog v-model="showRootProfile" max-width="700px" persistent>
+      <ProfileFormRoot @close="closeProfileModal" @success="handleProfileSuccess" />
+    </v-dialog>
+
+    <v-dialog v-model="showFactoryProfile" max-width="700px"  persistent>
+      <ProfileFormFactory @close="closeProfileModal" @success="handleProfileSuccess" />
+    </v-dialog>
+
+    <v-dialog v-model="showCustomerProfile" max-width="700px" class="mb-10" persistent>
+      <ProfileFormCustomer @close="closeProfileModal" @success="handleProfileSuccess" />
+    </v-dialog>
+
+     <v-dialog v-model="showSupport" max-width="900px" class="" persistent>
+      <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
+    </v-dialog>
   </v-navigation-drawer>
 </template>
 
@@ -229,7 +246,12 @@ import { computed, defineEmits, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 import UserActionsCard from './UserMenuComponent.vue'
+import ProfileFormFactory from '@/features/profile/components/ProfileFormFactory.vue'
+import ProfileFormRoot from '@/features/profile/components/ProfileFormRoot.vue'
+import ProfileFormCustomer from '@/features/profile/components/ProfileFormCustomer.vue'
+import FormSupport from '@/features/support/components/FormSupport.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
+
 const router = useRouter()
 const transformerStore = useTransformerStore()
 
@@ -243,6 +265,12 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'toggle', 'logout', 'settings'])
 
 const isMaintenanceExpanded = ref(false)
+
+// Profile modal states
+const showRootProfile = ref(false)
+const showFactoryProfile = ref(false)
+const showCustomerProfile = ref(false)
+const showSupport = ref(false)
 
 const model = computed({
   get: () => props.modelValue,
@@ -264,7 +292,6 @@ function handleItemClick(item, event) {
   }
 }
 
-
 import { useRoute } from "vue-router"
 
 const route = useRoute()
@@ -279,7 +306,6 @@ function isItemDisabled(item) {
   return false
 }
 
-
 function toggleMaintenance() {
   if (!props.rail) {
     isMaintenanceExpanded.value = !isMaintenanceExpanded.value
@@ -290,23 +316,51 @@ function goToProfile() {
   const authStore = useAuthStore()
   const role = authStore.user?.role  
 
+  closeAllProfileModals()
+
   switch (role) {
     case 'ROOT':
-      router.push({ name: 'profileR' })
+      showRootProfile.value = true
       break
     case 'FACTORY':
-      router.push({ name: 'profileF' })
+      showFactoryProfile.value = true
       break
     case 'CUSTOMER':
-      router.push({ name: 'profileC' })
+      showCustomerProfile.value = true
       break
     default:
-      router.push({ name: 'profileR' }) 
+      showRootProfile.value = true
   }
 }
-function goToSupport () {
-   router.push({ name : 'support'})
+
+function closeAllProfileModals() {
+  showRootProfile.value = false
+  showFactoryProfile.value = false
+  showCustomerProfile.value = false
 }
+
+function closeProfileModal() {
+  closeAllProfileModals()
+}
+
+function handleProfileSuccess(message) {
+  closeAllProfileModals()
+  // Aquí puedes mostrar una notificación de éxito si lo deseas
+  console.log('Profile updated successfully:', message)
+}
+
+function goToSupport() {
+   showSupport.value = true
+}
+
+function closeAllSupportModals() {
+ showSupport.value = false
+}
+
+function closeSupportModal() {
+  closeAllSupportModals()
+}
+
 </script>
 
 <style scoped>

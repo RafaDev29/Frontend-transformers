@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-color5  px-2">
-    <div class="max-w-6xl mx-auto">
+  <div class=" bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1">
+    <div class=" mx-auto">
       
       <!-- Header Section -->
       <div class="text-center mb-2">
@@ -206,14 +206,18 @@
               </div>
 
               <!-- Submit Button -->
-              <div class="pt-2">
+              <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                 <button type="button" @click="$emit('close')"
+                  class="flex-1  bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
+                  Cancelar
+                </button>
                 <button
                   type="submit"
                   :disabled="loading || !isFormValid"
-                  class="w-full bg-gradient-to-r from-color1 to-color2 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  class="w-full bg-gradient-to-r from-color1 to-color2 text-white py-3 px-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <div v-if="loading" class="flex items-center justify-center">
-                    <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin -ml-1 mr-3 h-4 w-2 text-white" fill="none" viewBox="0 0 24 24">
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                     </svg>
@@ -223,7 +227,7 @@
                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
                     </svg>
-                    Enviar Solicitud de Soporte
+                    Enviar 
                   </div>
                 </button>
               </div>

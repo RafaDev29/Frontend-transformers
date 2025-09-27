@@ -62,3 +62,9 @@ export const ALERT = {
 
 
 
+
+export const USER = {
+  UPLOAD: '/users',
+}
+
+
