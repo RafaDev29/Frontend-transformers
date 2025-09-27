@@ -1,19 +1,31 @@
 <template>
-  <v-dialog v-model="visible" max-width="400px" persistent transition="dialog-bottom-transition" class="z-[9000]">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto text-center relative z-[9000]">
-
+  <v-dialog
+    v-model="visible"
+    max-width="400px"
+    persistent
+    transition="dialog-bottom-transition"
+    class="z-[9000]"
+  >
+    <div
+      class="bg-white border border-red-200 rounded-2xl shadow-2xl 
+             p-6 max-w-md mx-auto text-center relative z-[9000]"
+    >
+      <!-- Header -->
       <div class="flex items-center justify-center mb-4">
-        <v-icon color="red" class="mr-2 text-3xl">mdi-alert-circle</v-icon>
-        <span class="text-2xl font-bold text-red-600">¡Error!</span>
+        <v-icon class="mr-2 text-4xl text-accent-danger">mdi-alert-circle</v-icon>
+        <span class="text-2xl font-bold text-accent-danger">¡Error!</span>
       </div>
 
-
-      <div class="text-gray-700 mb-4">
+      <!-- Mensaje -->
+      <div class="text-slate-700 mb-6">
         <span>{{ message }}</span>
       </div>
 
-
-      <div class="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded-b-lg" :class="{'animate-fadeout': visible}"></div>
+      <!-- Barra inferior con animación -->
+      <div
+        class="absolute bottom-0 left-0 w-full h-1 bg-accent-danger rounded-b-2xl"
+        :class="{ 'animate-fadeout': visible }"
+      ></div>
     </div>
   </v-dialog>
 </template>
@@ -28,11 +40,12 @@ export default {
     const visible = ref(false);
     const message = ref('');
 
-
     eventBus.on('error', (msg) => {
       message.value = msg;
       visible.value = true;
-      setTimeout(() => (visible.value = false), 3000); 
+
+      // Ocultar después de 3 segundos
+      setTimeout(() => (visible.value = false), 3000);
     });
 
     return {
@@ -44,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-/* Efecto de transición personalizada */
+/* Animación del diálogo */
 .dialog-bottom-transition-enter-active,
 .dialog-bottom-transition-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -53,19 +66,19 @@ export default {
 .dialog-bottom-transition-enter-from,
 .dialog-bottom-transition-leave-to {
   opacity: 0;
-  transform: translateY(20px); /* Efecto de aparición desde abajo */
+  transform: translateY(20px);
 }
 
-/* Barra de cierre automático */
+/* Barra de progreso inferior */
 .animate-fadeout {
-  animation: fadeout 3s linear forwards; /* Duración debe coincidir con el timeout */
+  animation: fadeout 3s linear forwards;
 }
 
 @keyframes fadeout {
-  0% {
+  from {
     width: 100%;
   }
-  100% {
+  to {
     width: 0;
   }
 }
