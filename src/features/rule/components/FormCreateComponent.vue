@@ -193,7 +193,8 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Corriente</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Porcentaje de la diferencia de corriente entre fases que produce desbalance.</p>
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Porcentaje de la diferencia
+                    de corriente entre fases que produce desbalance.</p>
 
                   <p><strong class="text-accent-primary dark:text-accent-primary"></strong>Si la corriente de una fase
                     supera la
@@ -268,7 +269,8 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDV</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tasa de distorsión armónica en cada fase.
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tasa de distorsión
+                    armónica en cada fase.
                   </p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
@@ -296,7 +298,8 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDI</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la tasa de distorsión armónica en cada fase.
+                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la tasa de
+                    distorsión armónica en cada fase.
                   </p>
                   <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
                     valores establecidos por normativa.</p>
@@ -316,15 +319,111 @@
           </div>
         </div>
 
+        <!-- Selección de Fábricas -->
+        <div class="mb-8">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Fábricas</h3>
+          <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
+            <div class="flex flex-wrap gap-2 mb-4">
+              <button type="button" @click="selectAllFactories"
+                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+                Seleccionar Todos
+              </button>
+              <button type="button" @click="clearAllFactories"
+                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+                Limpiar Selección
+              </button>
+            </div>
 
+            <div v-if="dataFactory.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
+              <div v-for="factory in dataFactory" :key="factory.uid"
+                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                <input :id="`factory-${factory.uid}`" v-model="form.selectedFactories" :value="factory.uid"
+                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+                <label :for="`factory-${factory.uid}`" class="flex-1 cursor-pointer">
+                  <div class="flex items-center gap-2">
+                    <span class="font-medium text-gray-900 dark:text-white text-sm">{{ factory.name }}</span>
+                    <span
+                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                      {{ factory.code || 'Sin código' }} - {{ factory.businessName || 'Razón social' }}
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
+              <p class="text-sm">No hay fábricas disponibles</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selección de Clientes -->
+        <div class="mb-8">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Clientes</h3>
+          <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
+            <div class="flex flex-wrap gap-2 mb-4">
+              <button type="button" @click="selectAllCustomers"
+                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+                Seleccionar Todos
+              </button>
+              <button type="button" @click="clearAllCustomers"
+                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+                Limpiar Selección
+              </button>
+            </div>
+
+            <div v-if="dataCustomer.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
+              <div v-for="customer in dataCustomer" :key="customer.uid"
+                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                <input :id="`customer-${customer.uid}`" v-model="form.selectedCustomers" :value="customer.uid"
+                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+                <label :for="`customer-${customer.uid}`" class="flex-1 cursor-pointer">
+                  <div class="flex items-center gap-2">
+                    <span class="font-medium text-gray-900 dark:text-white text-sm">{{ customer.name }}</span>
+                    <span
+                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                      {{ customer.code || 'Sin código' }} - {{ customer.businessname || 'Razón social' }}
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
+              <p class="text-sm">No hay clientes disponibles</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alertas con Buscador -->
         <div v-if="form.ruleType" class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Alertas Asociadas</h3>
           <div v-if="availableAlerts.length > 0" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
               Selecciona las alertas que se activarán cuando esta regla se cumpla.
             </p>
+
+            <!-- Buscador de Alertas -->
+            <div class="mb-4">
+              <div class="relative">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input v-model="alertSearchTerm" type="text"
+                  placeholder="Buscar alertas por nombre, código o descripción..."
+                  class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white" />
+                <button v-if="alertSearchTerm" @click="alertSearchTerm = ''" type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
             <div class="space-y-3 max-h-60 overflow-y-auto">
-              <div v-for="alert in availableAlerts" :key="alert.uid"
+              <div v-for="alert in filteredAlerts" :key="alert.uid"
                 class="flex items-start space-x-3 p-3 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
                 <input :id="`alert-${alert.uid}`" v-model="form.selectedAlerts" :value="alert.uid" type="checkbox"
                   class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded mt-1" />
@@ -346,6 +445,16 @@
                   </div>
                   <p class="text-sm text-gray-600 dark:text-gray-400">{{ alert.description }}</p>
                 </label>
+              </div>
+
+              <!-- Mensaje cuando no hay resultados de búsqueda -->
+              <div v-if="filteredAlerts.length === 0 && alertSearchTerm"
+                class="text-center py-4 text-gray-500 dark:text-gray-400">
+                <svg class="mx-auto h-8 w-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <p class="text-sm">No se encontraron alertas que coincidan con "{{ alertSearchTerm }}"</p>
               </div>
             </div>
             <p v-if="errors.selectedAlerts" class="mt-2 text-sm text-red-600">{{ errors.selectedAlerts }}</p>
@@ -396,7 +505,13 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, defineProps, defineEmits } from 'vue'
+import { ref, reactive, watch, defineProps, defineEmits, onMounted, computed } from 'vue'
+import { allCustomer } from '@/features/customer/services/customerService'
+import { listFactory } from '@/features/factory/services/factoryService'
+
+const dataCustomer = ref([])
+const dataFactory = ref([])
+const alertSearchTerm = ref('')
 
 const props = defineProps({
   show: {
@@ -424,7 +539,6 @@ const ruleTypes = ref([
   { value: 'TEMPERATURA', label: 'Temperatura', icon: '🌡️', unit: 'Celsius (°C)' }
 ])
 
-
 const defaultConfigs = {
   TEMPERATURA: { warning: 70, urgent: 80, critical: 90 },
   POTENCIA: { warning: 70, urgent: 80, critical: 90 },
@@ -435,17 +549,74 @@ const defaultConfigs = {
   THDI: { porcentaje: 18 }
 }
 
-
 const form = reactive({
   ruleType: '',
   ruleName: '',
   ruleCode: '',
   config: {},
   selectedAlerts: [],
+  selectedFactories: [],
+  selectedCustomers: [],
   isActive: true
 })
 
 const availableAlerts = ref([])
+
+// Computed para filtrar alertas según el término de búsqueda
+const filteredAlerts = computed(() => {
+  if (!alertSearchTerm.value) {
+    return availableAlerts.value
+  }
+
+  const searchTerm = alertSearchTerm.value.toLowerCase()
+  return availableAlerts.value.filter(alert =>
+    alert.name.toLowerCase().includes(searchTerm) ||
+    alert.code.toLowerCase().includes(searchTerm) ||
+    (alert.description && alert.description.toLowerCase().includes(searchTerm))
+  )
+})
+
+// Métodos para seleccionar/limpiar fábricas
+const selectAllFactories = () => {
+  form.selectedFactories = dataFactory.value.map(factory => factory.uid)
+}
+
+const clearAllFactories = () => {
+  form.selectedFactories = []
+}
+
+// Métodos para seleccionar/limpiar clientes
+const selectAllCustomers = () => {
+  form.selectedCustomers = dataCustomer.value.map(customer => customer.uid)
+}
+
+const clearAllCustomers = () => {
+  form.selectedCustomers = []
+}
+
+const listCustomer = async () => {
+  try {
+    const response = await allCustomer()
+    if (response) {
+      console.log("lista de clientes")
+      dataCustomer.value = response.data
+    }
+  } catch (error) {
+    console.error("error al listar clientes", error)
+  }
+}
+
+const listFactorys = async () => {
+  try {
+    const response = await listFactory()
+    if (response) {
+      console.log("lista de fábricas")
+      dataFactory.value = response.data
+    }
+  } catch (error) {
+    console.error("error al listar fábricas", error)
+  }
+}
 
 const inputClasses = (fieldName) => {
   const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
@@ -454,7 +625,6 @@ const inputClasses = (fieldName) => {
 
   return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
 }
-
 
 const resetForm = () => {
   form.ruleType = ''
@@ -476,8 +646,11 @@ const resetForm = () => {
     porcentaje: null
   }
   form.selectedAlerts = []
+  form.selectedFactories = []
+  form.selectedCustomers = []
   form.isActive = true
   errors.value = {}
+  alertSearchTerm.value = ''
 }
 
 const validateForm = () => {
@@ -542,13 +715,13 @@ const validateForm = () => {
   // Validar configuración para CORRIENTE
   if (form.ruleType === 'CORRIENTE') {
     if (!form.config.faseR) {
-      errors.value.configFaseR = 'El porcentaje  es requerido'
+      errors.value.configFaseR = 'El porcentaje es requerido'
     }
     if (!form.config.faseS) {
-      errors.value.configFaseS = 'El porcentaje  es requerido'
+      errors.value.configFaseS = 'El porcentaje es requerido'
     }
     if (!form.config.faseT) {
-      errors.value.configFaseT = 'El porcentaje  es requerido'
+      errors.value.configFaseT = 'El porcentaje es requerido'
     }
   }
 
@@ -571,8 +744,6 @@ const handleSubmit = () => {
     isLoading.value = true
 
     let config = {}
-
-    // Configurar según el tipo de regla
     if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA') {
       config = {
         levels: {
@@ -583,6 +754,11 @@ const handleSubmit = () => {
       }
     } else if (form.ruleType === 'TENSION') {
       config = {
+        minValue: 220,
+        maxValue: 240,
+        threshold: 5,
+        unit: "V",
+        checkInterval: 30,
         urbano: form.config.urbano,
         rural: form.config.rural
       }
@@ -604,8 +780,12 @@ const handleSubmit = () => {
       code: form.ruleCode,
       config: config,
       alerts: form.selectedAlerts,
+      factoryIds: form.selectedFactories,
+      customerIds: form.selectedCustomers,
       isActive: form.isActive
     }
+
+    console.log('Datos a enviar:', dataToSend)
 
     setTimeout(() => {
       emit('save', dataToSend)
@@ -642,12 +822,14 @@ watch(() => form.ruleType, () => {
   }
 })
 
-
 watch(() => form.ruleType, (newType) => {
   if (newType && defaultConfigs[newType]) {
-
     form.config = { ...defaultConfigs[newType] }
   }
 })
 
+onMounted(() => {
+  listCustomer()
+  listFactorys()
+})
 </script>

@@ -23,6 +23,11 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Tipo
                             </th>
+                            
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Creado por
+                            </th>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Descripción
@@ -81,6 +86,37 @@
                                 </span>
                             </td>
 
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-2">
+                                    <div class="flex-shrink-0 w-6 h-6">
+                                        <img v-if="row.createdByUser?.images?.[0]?.url" 
+                                             :src="row.createdByUser.images[0].url" 
+                                             :alt="row.createdByUser.username"
+                                             class="w-6 h-6 rounded-full object-cover border border-slate-200 dark:border-slate-600">
+                                        <div v-else class="w-6 h-6 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center">
+                                            <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200">
+                                            {{ row.createdByUser?.username || 'N/A' }}
+                                        </span>
+                                        <span :class="[
+                                            'text-xs px-1.5 py-0.5 rounded font-medium',
+                                            row.userRoleLabel === 'Fábrica' 
+                                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                                : row.userRoleLabel === 'Cliente' 
+                                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                                                : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                                        ]">
+                                            {{ row.userRoleLabel }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+
                             <td class="px-4 py-4 text-slate-600 dark:text-slate-300 max-w-64">
                                 <div class="truncate" :title="row.description">
                                     {{ row.description }}
@@ -89,24 +125,7 @@
 
                             <td class="px-4 py-4 whitespace-nowrap text-center">
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex justify-center gap-1">
-                                        <span v-if="row.isCustomer" 
-                                              class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium
-                                                     bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                                            <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                            </svg>
-                                            Clientes
-                                        </span>
-                                        <span v-if="row.isFactory" 
-                                              class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium
-                                                     bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                            <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                            </svg>
-                                            Fábricas
-                                        </span>
-                                    </div>
+                                  
                                     <span v-if="row.contactsCount > 0" 
                                           class="text-xs text-slate-500 dark:text-slate-400">
                                         +{{ row.contactsCount }} contactos
@@ -195,16 +214,29 @@ const rows = computed(() => {
         name: item.name,
         type: item.type,
         description: item.description,
-        isCustomer: item.isCustomer,
-        isFactory: item.isFactory,
         isActive: item.isActive ? 'Activo' : 'Inactivo',
         attempts: item.attempts,
         contactsCount: item.contacts ? item.contacts.length : 0,
         contacts: item.contacts || [],
+        createdByUser: item.createdByUser,
+        userRoleLabel: getUserRoleLabel(item.createdByUser?.role),
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
     }))
 })
+
+function getUserRoleLabel(role) {
+    switch(role) {
+        case 'FACTORY':
+            return 'Fábrica'
+        case 'CUSTOMER':
+            return 'Cliente'
+        case 'ROOT':
+            return 'ROOT'
+        default:
+            return 'N/A'
+    }
+}
 
 function editRow(row) {
     emit('edit', row)

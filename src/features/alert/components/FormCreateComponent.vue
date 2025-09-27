@@ -14,7 +14,7 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="p-6">
-        <!-- Información General -->
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
             <label for="alertCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -55,10 +55,9 @@
           <p v-if="errors.alertType" class="mt-2 text-sm text-red-600">{{ errors.alertType }}</p>
         </div>
 
-        <!-- Descripción -->
         <div class="mb-8">
           <label for="alertDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Descripción de la Alerta *
+            Mensaje de la Alerta *
           </label>
           <textarea id="alertDescription" v-model="form.alertDescription" rows="3"
             :class="inputClasses('alertDescription')" :placeholder="getDescriptionPlaceholder()" required></textarea>
@@ -69,39 +68,15 @@
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Destinatarios</h3>
 
-          <!-- Selección de destinatarios principales -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Enviar a: *
-            </label>
-            <div class="space-y-2">
-              <div class="flex items-center">
-                <input id="sendToFactory" v-model="form.sendToFactory" type="checkbox"
-                  class="h-4 w-4 text-accent-primary focus:ring-accent-primary border-gray-300 rounded" />
-                <label for="sendToFactory" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                  Fábrica ({{ form.alertType === 'whatsapp' ? 'números registrados' : 'emails registrados' }} de la
-                  entidad fábrica)
-                </label>
-              </div>
-              <div class="flex items-center">
-                <input id="sendToClient" v-model="form.sendToClient" type="checkbox"
-                  class="h-4 w-4 text-accent-primary focus:ring-accent-primary border-gray-300 rounded" />
-                <label for="sendToClient" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                  Cliente ({{ form.alertType === 'whatsapp' ? 'números registrados' : 'emails registrados' }} de la
-                  entidad cliente)
-                </label>
-              </div>
-            </div>
-            <p v-if="errors.recipients" class="mt-2 text-sm text-red-600">{{ errors.recipients }}</p>
-          </div>
+          
 
           <div v-if="form.alertType" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <h4 class="font-medium text-gray-900 dark:text-white mb-4">
-              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }} Adicionales
+              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }} 
             </h4>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }} adicionales
-              que no estén en las entidades principales.
+              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }} 
+             
             </p>
 
             <div class="space-y-3">
@@ -138,7 +113,7 @@
               <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }} adicional
+              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }} 
             </button>
           </div>
         </div>
@@ -183,10 +158,8 @@
             Vista Previa de Destinatarios
           </h3>
           <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-            <p v-if="form.sendToFactory">✅ Se enviará a la <strong>Fábrica</strong></p>
-            <p v-if="form.sendToClient">✅ Se enviará al <strong>Cliente</strong></p>
             <p v-if="hasAdditionalContacts">✅ {{form.additionalContacts.filter(c => c.value).length}} contacto(s)
-              adicional(es)</p>
+             </p>
           </div>
         </div>
 
@@ -254,8 +227,6 @@ const form = reactive({
   alertName: '',
   alertType: '',
   alertDescription: '',
-  sendToFactory: false,
-  sendToClient: false,
   additionalContacts: [{ value: '', name: '' }],
   retryAttempts: 0,
   isActive: true
@@ -281,7 +252,7 @@ const getDescriptionPlaceholder = () => {
   } else if (form.alertType === 'email') {
     return 'Ej: Notificación : se ha detectado una anomalía en el sistema'
   }
-  return 'Descripción de la alerta...'
+  return 'Mensaje de la alerta...'
 }
 
 const addAdditionalContact = () => {
@@ -299,8 +270,6 @@ const resetForm = () => {
   form.alertName = ''
   form.alertType = ''
   form.alertDescription = ''
-  form.sendToFactory = false
-  form.sendToClient = false
   form.additionalContacts = [{ value: '', name: '' }]
   form.retryAttempts = 0
   form.isActive = true
@@ -326,9 +295,6 @@ const validateForm = () => {
     errors.value.alertDescription = 'La descripción es requerida'
   }
 
-  if (!form.sendToFactory && !form.sendToClient && !hasAdditionalContacts.value) {
-    errors.value.recipients = 'Debe seleccionar al menos un destinatario'
-  }
 
   form.additionalContacts.forEach((contact, index) => {
     if (contact.value) {
@@ -358,8 +324,6 @@ const handleSubmit = () => {
       name: form.alertName,
       type: form.alertType.toUpperCase(),
       description: form.alertDescription,
-      isCustomer: form.sendToClient,
-      isFactory: form.sendToFactory,
       isActive: form.isActive,
       attempts: form.retryAttempts,
       contacts: form.additionalContacts
