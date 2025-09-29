@@ -136,17 +136,30 @@ const props = defineProps({
 
 const rows = computed(() => {
     return props.items.map(item => ({
-        voltagePrimary: item.voltagePrimary,
-        voltageSecondary: item.voltageSecondary,
-        apparentPowerKVA : item.apparentPowerKVA,
+        primaryVoltage: item.primaryVoltage,
+        secondaryVoltage: item.secondaryVoltage,
+        regulatedVoltage: item.regulatedVoltage,
+        oilTemperature: item.oilTemperature,
+        copperTemperature: item.copperTemperature,
+        ambientTemperature: item.ambientTemperature,
+        primaryCurrent: item.primaryCurrent,
+        secondaryCurrent: item.secondaryCurrent,
+        phases: item.phases,
+        nominalVoltage: item.nominalVoltage,
+        altitude: item.altitude,
+        frequency: item.frequency,
+        saleDate : item.saleDate,
+        apparentPowerKVA: item.apparentPowerKVA,
         uid: item.uid,
         serialNumber: item.serialNumber,
         factoryName: item.factory.businessName,
-        uidFactory : item.factory.uid,
+        uidFactory: item.factory.uid,
+        brand: item.brand,
         type: item.type,
-        zone : item.zone,
+        zone: item.zone,
+        customer : item.customer ,
         yearManufacture: item.yearManufacture,
-        factory : item.factory,
+        factory: item.factory,
         isActive: item.isActive ? 'Activo' : 'Inactivo'
     }))
 })

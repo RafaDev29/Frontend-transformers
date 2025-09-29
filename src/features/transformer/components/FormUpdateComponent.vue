@@ -585,12 +585,12 @@ const findRegulationPercentage = (primaryVoltage, regulatedVoltage) => {
   return ''
 }
 
-// Llenar formulario con datos del transformador
-const fillForm = (data) => {
+// Reemplazar la función fillForm existente con esta versión corregida:
+
+const fillForm = async (data) => {
   if (!data || Object.keys(data).length === 0) return
 
-  console.log('Llenando formulario con:', data)
-
+  // Llenar campos básicos primero
   form.type = data.type || ''
   form.zone = String(data.zone) || ''
   form.apparentPowerKVA = parseFloat(data.apparentPowerKVA) || null
@@ -605,58 +605,68 @@ const fillForm = (data) => {
   form.factoryUid = data.factory?.uid || ''
   form.customerUid = data.customer?.uid || ''
 
-  // Manejar fecha de venta
   if (data.saleDate) {
-    // Convertir la fecha ISO a formato YYYY-MM-DD para input date
     form.saleDate = data.saleDate.split('T')[0]
   } else {
     form.saleDate = ''
   }
 
-  // Campos opcionales de temperatura y corriente
   form.oilTemperature = data.oilTemperature ? parseFloat(data.oilTemperature) : null
   form.copperTemperature = data.copperTemperature ? parseFloat(data.copperTemperature) : null
   form.ambientTemperature = data.ambientTemperature ? parseFloat(data.ambientTemperature) : null
   form.primaryCurrent = data.primaryCurrent ? parseFloat(data.primaryCurrent) : null
   form.secondaryCurrent = data.secondaryCurrent ? parseFloat(data.secondaryCurrent) : null
 
-
+  // Procesar voltajes si existen rangos
   const primaryVoltage = parseFloat(data.primaryVoltage)
   const secondaryVoltage = parseFloat(data.secondaryVoltage)
   const regulatedVoltage = parseFloat(data.regulatedVoltage)
 
   if (dataRange.value.length > 0) {
-
+    // Encontrar rangos
     const primaryRangeUid = findRangeByVoltage(primaryVoltage)
     const secondaryRangeUid = findRangeByVoltage(secondaryVoltage)
-
-    console.log('Rangos encontrados:', {
-      primaryRangeUid,
-      secondaryRangeUid,
-      primaryVoltage,
-      secondaryVoltage,
-      regulatedVoltage
-    })
-
-    // Asignar rangos primero
+    
     form.primaryRangeUid = primaryRangeUid
     form.secondaryRangeUid = secondaryRangeUid
-
+    
+    // Detectar porcentaje de regulación
     const detectedPercentage = findRegulationPercentage(primaryVoltage, regulatedVoltage)
     regulationPercentage.value = detectedPercentage
 
-    setTimeout(() => {
-      form.primaryVoltage = primaryVoltage
-      form.secondaryVoltage = secondaryVoltage
+    // Usar nextTick para asegurar que los valores se actualicen
+    await new Promise(resolve => setTimeout(resolve, 50))
+    
+    // Establecer voltajes
+    form.primaryVoltage = primaryVoltage
+    form.secondaryVoltage = secondaryVoltage
+    
+    // Calcular opciones reguladas ANTES de establecer el valor
+    if (form.primaryVoltage && regulationPercentage.value) {
+      calculateRegulatedVoltages()
+      
+      // Esperar un poco más para que las opciones se calculen
+      await new Promise(resolve => setTimeout(resolve, 50))
+      
+      // Ahora establecer el valor regulado
       form.regulatedVoltage = regulatedVoltage
-
-      if (form.primaryVoltage && regulationPercentage.value) {
-        calculateRegulatedVoltages()
-      }
-
-    }, 100)
+    }
   }
 }
+
+
+// Modificar también los watchers para usar la función async:
+watch(() => props.transformerData, async (newData) => {
+  if (newData && Object.keys(newData).length > 0 && dataLoaded.value && props.show) {
+    await fillForm(newData)
+  }
+}, { deep: true })
+
+watch(dataLoaded, async (loaded) => {
+  if (loaded && props.show && Object.keys(props.transformerData).length > 0) {
+    await fillForm(props.transformerData)
+  }
+})
 
 const resetForm = () => {
   form.type = ''
