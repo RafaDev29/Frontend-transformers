@@ -74,20 +74,7 @@
         </div>
 
         <!-- Mensaje General -->
-        <div v-if="form.ruleType" class="mb-6">
-          <label for="general1Message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Mensaje General *
-          </label>
-          <input 
-            id="general1Message" 
-            v-model="form.config.general1Value.message" 
-            type="text" 
-            class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-            placeholder="Mensaje general para la regla"
-            required 
-          />
-          <p v-if="errors.general1Message" class="mt-1 text-sm text-red-600">{{ errors.general1Message }}</p>
-        </div>
+      
 
         <!-- Configuración TEMPERATURA -->
         <div v-if="form.ruleType === 'TEMPERATURA'" class="mb-8">
@@ -438,7 +425,7 @@
                   v-model.number="form.config.urbanValue.value" 
                   type="number" 
                   class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                  placeholder="240"
+                  placeholder="5"
                   required 
                 />
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
@@ -460,7 +447,7 @@
                   v-model.number="form.config.ruralValue.value" 
                   type="number" 
                   class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                  placeholder="220"
+                  placeholder="7.5"
                   required 
                 />
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
@@ -486,7 +473,7 @@
                     v-model.number="form.config.urbanValueNegative.value" 
                     type="number" 
                     class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                    placeholder="-234"
+                    placeholder="-5"
                     required 
                   />
                   <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
@@ -508,7 +495,7 @@
                     v-model.number="form.config.ruralValueNegative.value" 
                     type="number" 
                     class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                    placeholder="-220"
+                    placeholder="-7.5"
                     required 
                   />
                   <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
@@ -544,7 +531,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  Normal (A) *
+                  Normal (%) *
                 </label>
                 <input 
                   v-model.number="form.config.normalValue.value" 
@@ -566,7 +553,7 @@
 
               <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  Precaución (A) *
+                  Precaución (%) *
                 </label>
                 <input 
                   v-model.number="form.config.warningValue.value" 
@@ -588,7 +575,7 @@
 
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
-                  Crítico (A) *
+                  Crítico (%) *
                 </label>
                 <input 
                   v-model.number="form.config.criticalValue.value" 
@@ -614,7 +601,7 @@
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                   <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                    Normal Negativo (A) *
+                    Normal Negativo (%) *
                   </label>
                   <input 
                     v-model.number="form.config.normalValueNegative.value" 
@@ -636,7 +623,7 @@
 
                 <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                   <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                    Precaución Negativo (A) *
+                    Precaución Negativo (%) *
                   </label>
                   <input 
                     v-model.number="form.config.warningValueNegative.value" 
@@ -658,7 +645,7 @@
 
                 <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                   <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
-                    Crítico Negativo (A) *
+                    Crítico Negativo (%) *
                   </label>
                   <input 
                     v-model.number="form.config.criticalValueNegative.value" 
@@ -879,6 +866,22 @@
               </div>
             </div>
           </div>
+        </div>
+
+
+          <div v-if="form.ruleType" class="mb-6">
+          <label for="general1Message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Mensaje Extra *
+          </label>
+          <input 
+            id="general1Message" 
+            v-model="form.config.general1Value.message" 
+            type="text" 
+            class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+            placeholder="Mensaje general para la regla"
+            required 
+          />
+          <p v-if="errors.general1Message" class="mt-1 text-sm text-red-600">{{ errors.general1Message }}</p>
         </div>
 
         <!-- Selección de Fábricas -->
@@ -1151,47 +1154,47 @@ const defaultConfigs = {
     normalValueNegative: { value: -70, message: 'La temperatura negativa está en nivel normal' },
     warningValueNegative: { value: -80, message: 'La temperatura negativa está en nivel de precaución' },
     criticalValueNegative: { value: -90, message: 'La temperatura negativa está en nivel crítico' },
-    general1Value: { value: 0, message: 'Monitoreo general de temperatura activado' }
+    general1Value: { value: 0, message: '-' }
   },
   POTENCIA: {
-    normalValue: { value: 70, message: 'La potencia está en nivel normal' },
-    warningValue: { value: 80, message: 'La potencia está en nivel de precaución' },
-    criticalValue: { value: 90, message: 'La potencia está en nivel crítico' },
-    normalValueNegative: { value: -70, message: 'La potencia negativa está en nivel normal' },
-    warningValueNegative: { value: -80, message: 'La potencia negativa está en nivel de precaución' },
-    criticalValueNegative: { value: -90, message: 'La potencia negativa está en nivel crítico' },
-    general1Value: { value: 0, message: 'Monitoreo general de potencia activado' }
+    normalValue: { value: 70, message: 'LA POTENCIA APARENTE SE ENCUENTRA EN SUS RANGOS NORMALES' },
+    warningValue: { value: 80, message: 'LA POTENCIA APARENTE ESTÁ SUPERANDO el 80% DEL VALOR NOMINAL DE POTENCIA DEL TRANSFORMADOR' },
+    criticalValue: { value: 90, message: 'LA POTENCIA APARENTE HA SUPERADO EL VALOR NOMINAL DE POTENCIA DEL TRANSFORMADOR' },
+    normalValueNegative: { value: -70, message: '-' },
+    warningValueNegative: { value: -80, message: '-' },
+    criticalValueNegative: { value: -90, message: '-' },
+    general1Value: { value: 0, message: '-' }
   },
   TENSION: {
-    urbanValue: { value: 240, message: 'La tensión urbana supera el límite permitido' },
-    ruralValue: { value: 220, message: 'La tensión rural supera el límite permitido' },
-    urbanValueNegative: { value: -234, message: 'La tensión urbana negativa supera el límite permitido' },
-    ruralValueNegative: { value: -220, message: 'La tensión rural negativa supera el límite permitido' },
-    general1Value: { value: 0, message: 'Monitoreo general de tensión activado' }
+    urbanValue: { value: 5, message: 'LA TENSION DE FASE HA SUPERADO EL VALOR MAXIMO PERMITIDO' },
+    ruralValue: { value: 7.5 , message: 'LA TENSION DE FASE HA SUPERADO EL VALOR MAXIMO PERMITIDO' },
+    urbanValueNegative: { value: -5, message: 'LA TENSION DE FASE HA CAIDO A UN VALOR POR DEBAJO DEL  MINIMO PERMITIDO' },
+    ruralValueNegative: { value: -7.5, message: 'LA TENSION DE FASE HA CAIDO A UN VALOR POR DEBAJO DEL  MINIMO PERMITIDO' },
+    general1Value: { value: 0, message: '-' }
   },
   CORRIENTE: {
-    normalValue: { value: 220, message: 'La corriente está en nivel normal' },
-    warningValue: { value: 240, message: 'La corriente está en nivel de precaución' },
-    criticalValue: { value: 260, message: 'La corriente está en nivel crítico' },
-    normalValueNegative: { value: -220, message: 'La corriente negativa está en nivel normal' },
-    warningValueNegative: { value: -240, message: 'La corriente negativa está en nivel de precaución' },
-    criticalValueNegative: { value: -260, message: 'La corriente negativa está en nivel crítico' },
-    general1Value: { value: 0, message: 'Monitoreo general de corriente activado' }
+    normalValue: { value: 10, message: 'LAS FASES PRESENTAN DESBALANCE DE CORRIENTE POR ENCIMA DEL 10%' },
+    warningValue: { value: 20, message: 'LAS FASES PRESENTAN DESBALANCE DE CORRIENTE POR ENCIMA DEL 20%' },
+    criticalValue: { value: 50, message: 'LAS FASES PRESENTAN DESBALANCE DE CORRIENTE POR ENCIMA DEL 50%' },
+    normalValueNegative: { value: -10, message: '-' },
+    warningValueNegative: { value: -20, message: '-' },
+    criticalValueNegative: { value: -50, message: '-' },
+    general1Value: { value: 0, message: 'LA FASE HA SUPERADO LA CAPACIDAD MAXIMA DE CORRIENTE NOMINAL' }
   },
   FRECUENCIA: {
-    criticalValue: { value: 0.001, message: 'La frecuencia excede el porcentaje permitido' },
-    criticalValueNegative: { value: -0.001, message: 'La frecuencia negativa excede el porcentaje permitido' },
-    general1Value: { value: 0, message: 'Monitoreo general de frecuencia activado' }
+    criticalValue: { value: 0.001, message: 'LA FRECUENCIA HA SUPERADO EL VALOR LIMITE MAXIMO' },
+    criticalValueNegative: { value: -0.001, message: 'LA FRECUENCIA HA CAIDO POR DEBAJO DEL VALOR LIMITE MINIMO' },
+    general1Value: { value: 0, message: '-' }
   },
   THDV: {
-    criticalValue: { value: 5, message: 'El THDV excede el porcentaje permitido' },
-    criticalValueNegative: { value: -5, message: 'El THDV negativo excede el porcentaje permitido' },
-    general1Value: { value: 0, message: 'Monitoreo general de THDV activado' }
+    criticalValue: { value: 5, message: 'LA TASA DE DISTORCION ARMONICA DE TENSION PRESENTAN VALORES POR ENCIMA DE LOS  MAXIMOS PERMITIDOS' },
+    criticalValueNegative: { value: -5, message: '-' },
+    general1Value: { value: 0, message: '-' }
   },
   THDI: {
-    criticalValue: { value: 18, message: 'El THDI excede el porcentaje permitido' },
-    criticalValueNegative: { value: -18, message: 'El THDI negativo excede el porcentaje permitido' },
-    general1Value: { value: 0, message: 'Monitoreo general de THDI activado' }
+    criticalValue: { value: 18, message: 'LA TASA DE DISTORCION ARMONICA DE CORRIENTE PRESENTAN VALORES POR ENCIMA DE LOS  MAXIMOS PERMITIDOS' },
+    criticalValueNegative: { value: -18, message: '-' },
+    general1Value: { value: 0, message: '-' }
   }
 }
 
