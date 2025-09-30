@@ -350,7 +350,7 @@
                       {{ factory.code || 'Sin código' }}
                     </span>
                   </div>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">{{ factory.description || 'Sin descripción' }}</p>
+                  <!-- <p class="text-sm text-gray-600 dark:text-gray-400">{{ factory.description || 'Sin descripción' }}</p> -->
                 </label>
               </div>
             </div>
@@ -459,7 +459,6 @@
                       {{ alert.type }}
                     </span>
                   </div>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">{{ alert.description }}</p>
                 </label>
               </div>
               
@@ -596,8 +595,7 @@ const filteredAlerts = computed(() => {
   const searchTerm = alertSearchTerm.value.toLowerCase()
   return availableAlerts.value.filter(alert => 
     alert.name.toLowerCase().includes(searchTerm) ||
-    alert.code.toLowerCase().includes(searchTerm) ||
-    (alert.description && alert.description.toLowerCase().includes(searchTerm))
+    alert.code.toLowerCase().includes(searchTerm) 
   )
 })
 

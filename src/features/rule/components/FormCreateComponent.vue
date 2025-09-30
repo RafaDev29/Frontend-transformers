@@ -1,7 +1,6 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]">
-    <div
-      class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-6xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-6xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Crear Nueva Regla de Monitoreo
@@ -14,13 +13,20 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="p-6">
+        <!-- Código y Nombre -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
             <label for="ruleCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Código de Regla *
             </label>
-            <input id="ruleCode" v-model="form.ruleCode" type="text" :class="inputClasses('ruleCode')"
-              placeholder="TEMP_HIGH" required />
+            <input 
+              id="ruleCode" 
+              v-model="form.ruleCode" 
+              type="text" 
+              class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              placeholder="TEMP_HIGH" 
+              required 
+            />
             <p v-if="errors.ruleCode" class="mt-1 text-sm text-red-600">{{ errors.ruleCode }}</p>
           </div>
 
@@ -28,20 +34,36 @@
             <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre de la Regla *
             </label>
-            <input id="ruleName" v-model="form.ruleName" type="text" :class="inputClasses('ruleName')"
-              placeholder="Ej: Alerta por alta temperatura" required />
+            <input 
+              id="ruleName" 
+              v-model="form.ruleName" 
+              type="text" 
+              class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              placeholder="Ej: Alerta por alta temperatura" 
+              required 
+            />
             <p v-if="errors.ruleName" class="mt-1 text-sm text-red-600">{{ errors.ruleName }}</p>
           </div>
         </div>
 
-        <div class="mb-2">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Tipo de Regla</h3>
+        <!-- Tipo de Regla -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Tipo de Regla</h3>
           <div class="grid grid-cols-2 md:grid-cols-7 gap-2">
             <div v-for="ruleType in ruleTypes" :key="ruleType.value" class="relative">
-              <input :id="ruleType.value" v-model="form.ruleType" :value="ruleType.value" type="radio" name="ruleType"
-                class="sr-only peer" required />
-              <label :for="ruleType.value"
-                class="flex flex-col items-center justify-center p-4 text-sm font-medium text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-color1 peer-checked:border-color1 peer-checked:text-color1 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+              <input 
+                :id="ruleType.value" 
+                v-model="form.ruleType" 
+                :value="ruleType.value" 
+                type="radio" 
+                name="ruleType"
+                class="sr-only peer" 
+                required 
+              />
+              <label 
+                :for="ruleType.value"
+                class="flex flex-col items-center justify-center p-4 text-sm font-medium text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-color1 peer-checked:border-color1 peer-checked:text-color1 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all"
+              >
                 <div class="text-xl mb-2">{{ ruleType.icon }}</div>
                 {{ ruleType.label }}
                 <div class="text-xs text-gray-400 mt-1">{{ ruleType.unit }}</div>
@@ -51,101 +73,349 @@
           <p v-if="errors.ruleType" class="mt-2 text-sm text-red-600">{{ errors.ruleType }}</p>
         </div>
 
+        <!-- Mensaje General -->
+        <div v-if="form.ruleType" class="mb-6">
+          <label for="general1Message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Mensaje General *
+          </label>
+          <input 
+            id="general1Message" 
+            v-model="form.config.general1Value.message" 
+            type="text" 
+            class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+            placeholder="Mensaje general para la regla"
+            required 
+          />
+          <p v-if="errors.general1Message" class="mt-1 text-sm text-red-600">{{ errors.general1Message }}</p>
+        </div>
 
-        <div v-if="form.ruleType" class="mb-8">
-          <div v-if="form.ruleType === 'TEMPERATURA'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración TEMPERATURA -->
+        <div v-if="form.ruleType === 'TEMPERATURA'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">🌡️</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Temperatura</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Define los niveles de
-                    temperatura que activarán las alertas en grados Celsius.</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
-
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  Define los niveles de temperatura que activarán las alertas en grados Celsius.
+                </p>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
                   Normal (°C) *
                 </label>
-                <input v-model.number="form.config.warning" type="number" :class="inputClasses('configWarning')"
-                  placeholder="80" required />
+                <input 
+                  v-model.number="form.config.normalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="70"
+                  required 
+                />
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                  Mensaje Normal *
+                </label>
+                <input 
+                  v-model="form.config.normalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
-              <div
-                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+
+              <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
                   Precaución (°C) *
                 </label>
-                <input v-model.number="form.config.urgent" type="number" :class="inputClasses('configUrgent')"
-                  placeholder="85" required />
+                <input 
+                  v-model.number="form.config.warningValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="80"
+                  required 
+                />
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                  Mensaje Precaución *
+                </label>
+                <input 
+                  v-model="form.config.warningValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
+
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Crítico (°C) *
                 </label>
-                <input v-model.number="form.config.critical" type="number" :class="inputClasses('configCritical')"
-                  placeholder="90" required />
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="90"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 dark:border-slate-600 pt-4 mt-4">
+              <h5 class="text-sm font-medium text-gray-900 dark:text-white mb-3">Valores Negativos</h5>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                    Normal Negativo (°C) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.normalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-70"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                    Mensaje Normal Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.normalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                    Precaución Negativo (°C) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.warningValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-80"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                    Mensaje Precaución Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.warningValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                    Crítico Negativo (°C) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.criticalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-90"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                    Mensaje Crítico Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.criticalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'POTENCIA'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración POTENCIA -->
+        <div v-else-if="form.ruleType === 'POTENCIA'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">💪</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Potencia</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> % de la potencia nominal
-                  </p>
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Define los niveles de
-                    potencia que
-                    activarán las alertas en %.</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
-
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  Define los niveles de potencia que activarán las alertas en porcentaje.
+                </p>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
                   Normal (%) *
                 </label>
-                <input v-model.number="form.config.warning" type="number" :class="inputClasses('configWarning')"
-                  placeholder="75" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.normalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="70"
+                  min="0"
+                  max="100"
+                  required 
+                />
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                  Mensaje Normal *
+                </label>
+                <input 
+                  v-model="form.config.normalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
-              <div
-                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+
+              <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
                   Precaución (%) *
                 </label>
-                <input v-model.number="form.config.urgent" type="number" :class="inputClasses('configUrgent')"
-                  placeholder="85" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.warningValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="80"
+                  min="0"
+                  max="100"
+                  required 
+                />
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                  Mensaje Precaución *
+                </label>
+                <input 
+                  v-model="form.config.warningValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
+
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Crítico (%) *
                 </label>
-                <input v-model.number="form.config.critical" type="number" :class="inputClasses('configCritical')"
-                  placeholder="95" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="90"
+                  min="0"
+                  max="100"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 dark:border-slate-600 pt-4 mt-4">
+              <h5 class="text-sm font-medium text-gray-900 dark:text-white mb-3">Valores Negativos</h5>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                    Normal Negativo (%) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.normalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-70"
+                    min="-100"
+                    max="0"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                    Mensaje Normal Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.normalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                    Precaución Negativo (%) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.warningValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-80"
+                    min="-100"
+                    max="0"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                    Mensaje Precaución Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.warningValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                    Crítico Negativo (%) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.criticalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-90"
+                    min="-100"
+                    max="0"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                    Mensaje Crítico Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.criticalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'TENSION'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración TENSION -->
+        <div v-else-if="form.ruleType === 'TENSION'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">⚡</div>
@@ -153,167 +423,459 @@
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Tensión</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary">URBANO:</strong> 5% de la tensión
-                    nominal/de
-                    operación</p>
-                  <p><strong class="text-accent-primary dark:text-accent-primary">RURAL:</strong> ±7.5% de la tensión
-                    nominal/de
-                    operación</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
+                  <p><strong class="text-color1 dark:text-color3">URBANO:</strong> ±5% de la tensión nominal/de operación</p>
+                  <p><strong class="text-color1 dark:text-color3">RURAL:</strong> ±7.5% de la tensión nominal/de operación</p>
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  🏢 Urbano (%) *
+                  🏢 Urbano (V) *
                 </label>
-                <input v-model.number="form.config.urbano" type="number" :class="inputClasses('configUrbano')"
-                  placeholder="5" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.urbanValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="240"
+                  required 
+                />
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                  Mensaje Urbano *
+                </label>
+                <input 
+                  v-model="form.config.urbanValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
-              <div
-                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+
+              <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  🌾 Rural (%) *
+                  🌾 Rural (V) *
                 </label>
-                <input v-model.number="form.config.rural" type="number" :class="inputClasses('configRural')"
-                  placeholder="7.5" min="0" max="10" step="0.1" required />
+                <input 
+                  v-model.number="form.config.ruralValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="220"
+                  required 
+                />
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                  Mensaje Rural *
+                </label>
+                <input 
+                  v-model="form.config.ruralValue.message" 
+                  type="text" 
+          class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 dark:border-slate-600 pt-4 mt-4">
+              <h5 class="text-sm font-medium text-gray-900 dark:text-white mb-3">Valores Negativos</h5>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                    🏢 Urbano Negativo (V) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.urbanValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-234"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                    Mensaje Urbano Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.urbanValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                    🌾 Rural Negativo (V) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.ruralValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-220"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                    Mensaje Rural Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.ruralValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'CORRIENTE'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración CORRIENTE -->
+        <div v-else-if="form.ruleType === 'CORRIENTE'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">🔌</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Corriente</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> Porcentaje de la diferencia
-                    de corriente entre fases que produce desbalance.</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  Porcentaje de la diferencia de corriente entre fases que produce desbalance.
+                </p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                  Normal (A) *
+                </label>
+                <input 
+                  v-model.number="form.config.normalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="220"
+                  required 
+                />
+                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                  Mensaje Normal *
+                </label>
+                <input 
+                  v-model="form.config.normalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
 
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong>Si la corriente de una fase
-                    supera la
-                    corriente nominal, se activará la ALERTA</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.
-                  </p>
+              <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                  Precaución (A) *
+                </label>
+                <input 
+                  v-model.number="form.config.warningValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="240"
+                  required 
+                />
+                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                  Mensaje Precaución *
+                </label>
+                <input 
+                  v-model="form.config.warningValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico (A) *
+                </label>
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="260"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 dark:border-slate-600 pt-4 mt-4">
+              <h5 class="text-sm font-medium text-gray-900 dark:text-white mb-3">Valores Negativos</h5>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
+                    Normal Negativo (A) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.normalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-220"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
+                    Mensaje Normal Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.normalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
+                    Precaución Negativo (A) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.warningValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-240"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
+                    Mensaje Precaución Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.warningValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
+                </div>
+
+                <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                    Crítico Negativo (A) *
+                  </label>
+                  <input 
+                    v-model.number="form.config.criticalValueNegative.value" 
+                    type="number" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    placeholder="-260"
+                    required 
+                  />
+                  <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                    Mensaje Crítico Negativo *
+                  </label>
+                  <input 
+                    v-model="form.config.criticalValueNegative.message" 
+                    type="text" 
+                    class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    required 
+                  />
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
-                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  Normal (%) *
-                </label>
-                <input v-model.number="form.config.faseR" type="number" :class="inputClasses('configFaseR')"
-                  placeholder="5" min="0" max="100" required />
-              </div>
-              <div
-                class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
-                <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  Precaución (%) *
-                </label>
-                <input v-model.number="form.config.faseS" type="number" :class="inputClasses('configFaseS')"
-                  placeholder="5" min="0" max="100" required />
-              </div>
-              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
-                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
-                  Crítico (%) *
-                </label>
-                <input v-model.number="form.config.faseT" type="number" :class="inputClasses('configFaseT')"
-                  placeholder="5" min="0" max="100" required />
-              </div>
-            </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'FRECUENCIA'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración FRECUENCIA -->
+        <div v-else-if="form.ruleType === 'FRECUENCIA'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">📊</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de Frecuencia</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±0,001% de la frecuencia
-                    nominal</p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  ±0.001% de la frecuencia nominal
+                </p>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
-                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  📊 Porcentaje de Frecuencia (%) *
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico (Hz) *
                 </label>
-                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
-                  placeholder="0.001" step="0.001" min="0" required />
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  step="0.001"
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="0.001"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico Negativo (Hz) *
+                </label>
+                <input 
+                  v-model.number="form.config.criticalValueNegative.value" 
+                  type="number" 
+                  step="0.001"
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="-0.001"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico Negativo *
+                </label>
+                <input 
+                  v-model="form.config.criticalValueNegative.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
             </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'THDV'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración THDV -->
+        <div v-else-if="form.ruleType === 'THDV'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">📈</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDV</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±5% de la tasa de distorsión
-                    armónica en cada fase.
-                  </p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  ±5% de la tasa de distorsión armónica en cada fase
+                </p>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
-                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  📈 Porcentaje THDV (%) *
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico (%) *
                 </label>
-                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
-                  placeholder="5" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="5"
+                  min="0"
+                  max="100"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico Negativo (%) *
+                </label>
+                <input 
+                  v-model.number="form.config.criticalValueNegative.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="-5"
+                  min="-100"
+                  max="0"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico Negativo *
+                </label>
+                <input 
+                  v-model="form.config.criticalValueNegative.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
             </div>
           </div>
+        </div>
 
-          <div v-else-if="form.ruleType === 'THDI'"
-            class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <!-- Configuración THDI -->
+        <div v-else-if="form.ruleType === 'THDI'" class="mb-8">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
                 <div class="text-2xl">📉</div>
               </div>
               <div>
                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Monitoreo de THDI</h4>
-                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                  <p><strong class="text-accent-primary dark:text-accent-primary"></strong> ±18% de la tasa de
-                    distorsión armónica en cada fase.
-                  </p>
-                  <p class="mt-2 text-xs text-gray-500">Las alertas se activarán automáticamente cuando se excedan estos
-                    valores establecidos por normativa.</p>
-                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  ±18% de la tasa de distorsión armónica en cada fase
+                </p>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
-                <label class="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-                  📉 Porcentaje THDI (%) *
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico (%) *
                 </label>
-                <input v-model.number="form.config.porcentaje" type="number" :class="inputClasses('configPorcentaje')"
-                  placeholder="18" min="0" max="100" required />
+                <input 
+                  v-model.number="form.config.criticalValue.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="18"
+                  min="0"
+                  max="100"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico *
+                </label>
+                <input 
+                  v-model="form.config.criticalValue.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
+              </div>
+
+              <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
+                  Crítico Negativo (%) *
+                </label>
+                <input 
+                  v-model.number="form.config.criticalValueNegative.value" 
+                  type="number" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  placeholder="-18"
+                  min="-100"
+                  max="0"
+                  required 
+                />
+                <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
+                  Mensaje Crítico Negativo *
+                </label>
+                <input 
+                  v-model="form.config.criticalValueNegative.message" 
+                  type="text" 
+                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  required 
+                />
               </div>
             </div>
           </div>
@@ -324,26 +886,39 @@
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Fábricas</h3>
           <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <div class="flex flex-wrap gap-2 mb-4">
-              <button type="button" @click="selectAllFactories"
-                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+              <button 
+                type="button" 
+                @click="selectAllFactories"
+                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors"
+              >
                 Seleccionar Todos
               </button>
-              <button type="button" @click="clearAllFactories"
-                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+              <button 
+                type="button" 
+                @click="clearAllFactories"
+                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors"
+              >
                 Limpiar Selección
               </button>
             </div>
 
             <div v-if="dataFactory.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
-              <div v-for="factory in dataFactory" :key="factory.uid"
-                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                <input :id="`factory-${factory.uid}`" v-model="form.selectedFactories" :value="factory.uid"
-                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+              <div 
+                v-for="factory in dataFactory" 
+                :key="factory.uid"
+                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              >
+                <input 
+                  :id="`factory-${factory.uid}`" 
+                  v-model="form.selectedFactories" 
+                  :value="factory.uid"
+                  type="checkbox" 
+                  class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" 
+                />
                 <label :for="`factory-${factory.uid}`" class="flex-1 cursor-pointer">
                   <div class="flex items-center gap-2">
                     <span class="font-medium text-gray-900 dark:text-white text-sm">{{ factory.name }}</span>
-                    <span
-                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
                       {{ factory.code || 'Sin código' }} - {{ factory.businessName || 'Razón social' }}
                     </span>
                   </div>
@@ -361,26 +936,39 @@
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Clientes</h3>
           <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <div class="flex flex-wrap gap-2 mb-4">
-              <button type="button" @click="selectAllCustomers"
-                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+              <button 
+                type="button" 
+                @click="selectAllCustomers"
+                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors"
+              >
                 Seleccionar Todos
               </button>
-              <button type="button" @click="clearAllCustomers"
-                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+              <button 
+                type="button" 
+                @click="clearAllCustomers"
+                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors"
+              >
                 Limpiar Selección
               </button>
             </div>
 
             <div v-if="dataCustomer.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
-              <div v-for="customer in dataCustomer" :key="customer.uid"
-                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                <input :id="`customer-${customer.uid}`" v-model="form.selectedCustomers" :value="customer.uid"
-                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+              <div 
+                v-for="customer in dataCustomer" 
+                :key="customer.uid"
+                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              >
+                <input 
+                  :id="`customer-${customer.uid}`" 
+                  v-model="form.selectedCustomers" 
+                  :value="customer.uid"
+                  type="checkbox" 
+                  class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" 
+                />
                 <label :for="`customer-${customer.uid}`" class="flex-1 cursor-pointer">
                   <div class="flex items-center gap-2">
                     <span class="font-medium text-gray-900 dark:text-white text-sm">{{ customer.name }}</span>
-                    <span
-                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
                       {{ customer.code || 'Sin código' }} - {{ customer.businessname || 'Razón social' }}
                     </span>
                   </div>
@@ -404,34 +992,45 @@
             <!-- Buscador de Alertas -->
             <div class="mb-4">
               <div class="relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none"
-                  stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                <input v-model="alertSearchTerm" type="text"
+                <input 
+                  v-model="alertSearchTerm" 
+                  type="text"
                   placeholder="Buscar alertas por nombre, código o descripción..."
-                  class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white" />
-                <button v-if="alertSearchTerm" @click="alertSearchTerm = ''" type="button"
-                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white" 
+                />
+                <button 
+                  v-if="alertSearchTerm" 
+                  @click="alertSearchTerm = ''" 
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
                   <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
                 </button>
               </div>
             </div>
 
             <div class="space-y-3 max-h-60 overflow-y-auto">
-              <div v-for="alert in filteredAlerts" :key="alert.uid"
-                class="flex items-start space-x-3 p-3 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                <input :id="`alert-${alert.uid}`" v-model="form.selectedAlerts" :value="alert.uid" type="checkbox"
-                  class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded mt-1" />
+              <div 
+                v-for="alert in filteredAlerts" 
+                :key="alert.uid"
+                class="flex items-start space-x-3 p-3 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              >
+                <input 
+                  :id="`alert-${alert.uid}`" 
+                  v-model="form.selectedAlerts" 
+                  :value="alert.uid" 
+                  type="checkbox"
+                  class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded mt-1" 
+                />
                 <label :for="`alert-${alert.uid}`" class="flex-1 cursor-pointer">
                   <div class="flex items-center gap-2 mb-1">
                     <span class="font-medium text-gray-900 dark:text-white text-sm">{{ alert.name }}</span>
-                    <span
-                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
                       {{ alert.code }}
                     </span>
                     <span :class="[
@@ -443,23 +1042,20 @@
                       {{ alert.type }}
                     </span>
                   </div>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">{{ alert.description }}</p>
                 </label>
               </div>
 
               <!-- Mensaje cuando no hay resultados de búsqueda -->
-              <div v-if="filteredAlerts.length === 0 && alertSearchTerm"
-                class="text-center py-4 text-gray-500 dark:text-gray-400">
+              <div v-if="filteredAlerts.length === 0 && alertSearchTerm" class="text-center py-4 text-gray-500 dark:text-gray-400">
                 <svg class="mx-auto h-8 w-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
                 <p class="text-sm">No se encontraron alertas que coincidan con "{{ alertSearchTerm }}"</p>
               </div>
             </div>
             <p v-if="errors.selectedAlerts" class="mt-2 text-sm text-red-600">{{ errors.selectedAlerts }}</p>
           </div>
-          <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-slate-600 rounded-lg">
             <svg class="mx-auto h-12 w-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 17h5l-5 5-5-5h5v-12h5v12z" />
             </svg>
@@ -469,8 +1065,12 @@
 
         <!-- Estado Activo -->
         <div class="flex items-center mb-6">
-          <input id="isActive" v-model="form.isActive" type="checkbox"
-            class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+          <input 
+            id="isActive" 
+            v-model="form.isActive" 
+            type="checkbox"
+            class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" 
+          />
           <label for="isActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
             Regla activa
           </label>
@@ -478,22 +1078,25 @@
 
         <!-- Botones -->
         <div class="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-slate-600">
-          <button type="button" @click="$emit('close')"
-            class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500">
+          <button 
+            type="button" 
+            @click="$emit('close')"
+            class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500"
+          >
             Cancelar
           </button>
-          <button type="submit" :disabled="isLoading"
-            class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
+          <button 
+            type="submit" 
+            :disabled="isLoading"
+            class="px-6 py-2 text-sm font-medium text-white bg-color1 hover:bg-colorDark1 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-color1 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+          >
             <span class="flex items-center">
               <svg v-if="!isLoading" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              <svg v-if="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg v-if="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                </path>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               {{ isLoading ? 'Creando...' : 'Crear Regla' }}
             </span>
@@ -503,6 +1106,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, reactive, watch, defineProps, defineEmits, onMounted, computed } from 'vue'
@@ -540,20 +1144,64 @@ const ruleTypes = ref([
 ])
 
 const defaultConfigs = {
-  TEMPERATURA: { warning: 70, urgent: 80, critical: 90 },
-  POTENCIA: { warning: 70, urgent: 80, critical: 90 },
-  TENSION: { urbano: 5, rural: 7.5 },
-  CORRIENTE: { faseR: 10, faseS: 20, faseT: 50 },
-  FRECUENCIA: { porcentaje: 0.001 },
-  THDV: { porcentaje: 5 },
-  THDI: { porcentaje: 18 }
+  TEMPERATURA: {
+    normalValue: { value: 70, message: 'La temperatura está en nivel normal' },
+    warningValue: { value: 80, message: 'La temperatura está en nivel de precaución' },
+    criticalValue: { value: 90, message: 'La temperatura está en nivel crítico' },
+    normalValueNegative: { value: -70, message: 'La temperatura negativa está en nivel normal' },
+    warningValueNegative: { value: -80, message: 'La temperatura negativa está en nivel de precaución' },
+    criticalValueNegative: { value: -90, message: 'La temperatura negativa está en nivel crítico' },
+    general1Value: { value: 0, message: 'Monitoreo general de temperatura activado' }
+  },
+  POTENCIA: {
+    normalValue: { value: 70, message: 'La potencia está en nivel normal' },
+    warningValue: { value: 80, message: 'La potencia está en nivel de precaución' },
+    criticalValue: { value: 90, message: 'La potencia está en nivel crítico' },
+    normalValueNegative: { value: -70, message: 'La potencia negativa está en nivel normal' },
+    warningValueNegative: { value: -80, message: 'La potencia negativa está en nivel de precaución' },
+    criticalValueNegative: { value: -90, message: 'La potencia negativa está en nivel crítico' },
+    general1Value: { value: 0, message: 'Monitoreo general de potencia activado' }
+  },
+  TENSION: {
+    urbanValue: { value: 240, message: 'La tensión urbana supera el límite permitido' },
+    ruralValue: { value: 220, message: 'La tensión rural supera el límite permitido' },
+    urbanValueNegative: { value: -234, message: 'La tensión urbana negativa supera el límite permitido' },
+    ruralValueNegative: { value: -220, message: 'La tensión rural negativa supera el límite permitido' },
+    general1Value: { value: 0, message: 'Monitoreo general de tensión activado' }
+  },
+  CORRIENTE: {
+    normalValue: { value: 220, message: 'La corriente está en nivel normal' },
+    warningValue: { value: 240, message: 'La corriente está en nivel de precaución' },
+    criticalValue: { value: 260, message: 'La corriente está en nivel crítico' },
+    normalValueNegative: { value: -220, message: 'La corriente negativa está en nivel normal' },
+    warningValueNegative: { value: -240, message: 'La corriente negativa está en nivel de precaución' },
+    criticalValueNegative: { value: -260, message: 'La corriente negativa está en nivel crítico' },
+    general1Value: { value: 0, message: 'Monitoreo general de corriente activado' }
+  },
+  FRECUENCIA: {
+    criticalValue: { value: 0.001, message: 'La frecuencia excede el porcentaje permitido' },
+    criticalValueNegative: { value: -0.001, message: 'La frecuencia negativa excede el porcentaje permitido' },
+    general1Value: { value: 0, message: 'Monitoreo general de frecuencia activado' }
+  },
+  THDV: {
+    criticalValue: { value: 5, message: 'El THDV excede el porcentaje permitido' },
+    criticalValueNegative: { value: -5, message: 'El THDV negativo excede el porcentaje permitido' },
+    general1Value: { value: 0, message: 'Monitoreo general de THDV activado' }
+  },
+  THDI: {
+    criticalValue: { value: 18, message: 'El THDI excede el porcentaje permitido' },
+    criticalValueNegative: { value: -18, message: 'El THDI negativo excede el porcentaje permitido' },
+    general1Value: { value: 0, message: 'Monitoreo general de THDI activado' }
+  }
 }
 
 const form = reactive({
   ruleType: '',
   ruleName: '',
   ruleCode: '',
-  config: {},
+  config: {
+    general1Value: { value: 0, message: '' }
+  },
   selectedAlerts: [],
   selectedFactories: [],
   selectedCustomers: [],
@@ -562,7 +1210,6 @@ const form = reactive({
 
 const availableAlerts = ref([])
 
-// Computed para filtrar alertas según el término de búsqueda
 const filteredAlerts = computed(() => {
   if (!alertSearchTerm.value) {
     return availableAlerts.value
@@ -571,12 +1218,10 @@ const filteredAlerts = computed(() => {
   const searchTerm = alertSearchTerm.value.toLowerCase()
   return availableAlerts.value.filter(alert =>
     alert.name.toLowerCase().includes(searchTerm) ||
-    alert.code.toLowerCase().includes(searchTerm) ||
-    (alert.description && alert.description.toLowerCase().includes(searchTerm))
+    alert.code.toLowerCase().includes(searchTerm)
   )
 })
 
-// Métodos para seleccionar/limpiar fábricas
 const selectAllFactories = () => {
   form.selectedFactories = dataFactory.value.map(factory => factory.uid)
 }
@@ -585,7 +1230,6 @@ const clearAllFactories = () => {
   form.selectedFactories = []
 }
 
-// Métodos para seleccionar/limpiar clientes
 const selectAllCustomers = () => {
   form.selectedCustomers = dataCustomer.value.map(customer => customer.uid)
 }
@@ -598,11 +1242,10 @@ const listCustomer = async () => {
   try {
     const response = await allCustomer()
     if (response) {
-      console.log("lista de clientes")
       dataCustomer.value = response.data
     }
   } catch (error) {
-    console.error("error al listar clientes", error)
+    console.error("Error al listar clientes", error)
   }
 }
 
@@ -610,20 +1253,11 @@ const listFactorys = async () => {
   try {
     const response = await listFactory()
     if (response) {
-      console.log("lista de fábricas")
       dataFactory.value = response.data
     }
   } catch (error) {
-    console.error("error al listar fábricas", error)
+    console.error("Error al listar fábricas", error)
   }
-}
-
-const inputClasses = (fieldName) => {
-  const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-  const errorClasses = 'border-red-500 focus:ring-red-500'
-  const normalClasses = 'border-gray-300 dark:border-slate-600 focus:ring-accent-primary'
-
-  return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
 }
 
 const resetForm = () => {
@@ -631,19 +1265,7 @@ const resetForm = () => {
   form.ruleName = ''
   form.ruleCode = ''
   form.config = {
-    // Para TEMPERATURA y POTENCIA
-    warning: null,
-    urgent: null,
-    critical: null,
-    // Para TENSION
-    urbano: null,
-    rural: null,
-    // Para CORRIENTE
-    faseR: null,
-    faseS: null,
-    faseT: null,
-    // Para FRECUENCIA, THDV, THDI
-    porcentaje: null
+    general1Value: { value: 0, message: '' }
   }
   form.selectedAlerts = []
   form.selectedFactories = []
@@ -668,67 +1290,89 @@ const validateForm = () => {
     errors.value.ruleCode = 'El código de regla es requerido'
   }
 
-  // Validar configuración según el tipo de regla
-  if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA') {
-    if (!form.config.warning) {
-      errors.value.configWarning = 'El nivel de advertencia es requerido'
-    }
-    if (!form.config.urgent) {
-      errors.value.configUrgent = 'El nivel urgente es requerido'
-    }
-    if (!form.config.critical) {
-      errors.value.configCritical = 'El nivel crítico es requerido'
-    }
+  if (!form.config.general1Value.message) {
+    errors.value.general1Message = 'El mensaje general es requerido'
+  }
 
-    // Validar que los valores estén en orden lógico
-    if (form.config.warning && form.config.urgent && form.config.critical) {
-      if (form.config.warning >= form.config.urgent ||
-        form.config.urgent >= form.config.critical) {
-        errors.value.configCritical = 'Los valores deben ser: Advertencia < Urgente < Crítico'
-      }
+  // Validar según tipo de regla
+  if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA' || form.ruleType === 'CORRIENTE') {
+    if (!form.config.normalValue?.value && form.config.normalValue?.value !== 0) {
+      errors.value.normalValue = 'El valor normal es requerido'
     }
-
-    // Validar rangos para potencia (0-100%)
-    if (form.ruleType === 'POTENCIA') {
-      if (form.config.warning < 0 || form.config.warning > 100) {
-        errors.value.configWarning = 'El valor debe estar entre 0 y 100%'
-      }
-      if (form.config.urgent < 0 || form.config.urgent > 100) {
-        errors.value.configUrgent = 'El valor debe estar entre 0 y 100%'
-      }
-      if (form.config.critical < 0 || form.config.critical > 100) {
-        errors.value.configCritical = 'El valor debe estar entre 0 y 100%'
-      }
+    if (!form.config.normalValue?.message) {
+      errors.value.normalValueMessage = 'El mensaje normal es requerido'
+    }
+    if (!form.config.warningValue?.value && form.config.warningValue?.value !== 0) {
+      errors.value.warningValue = 'El valor de precaución es requerido'
+    }
+    if (!form.config.warningValue?.message) {
+      errors.value.warningValueMessage = 'El mensaje de precaución es requerido'
+    }
+    if (!form.config.criticalValue?.value && form.config.criticalValue?.value !== 0) {
+      errors.value.criticalValue = 'El valor crítico es requerido'
+    }
+    if (!form.config.criticalValue?.message) {
+      errors.value.criticalValueMessage = 'El mensaje crítico es requerido'
+    }
+    if (!form.config.normalValueNegative?.value && form.config.normalValueNegative?.value !== 0) {
+      errors.value.normalValueNegative = 'El valor normal negativo es requerido'
+    }
+    if (!form.config.normalValueNegative?.message) {
+      errors.value.normalValueNegativeMessage = 'El mensaje normal negativo es requerido'
+    }
+    if (!form.config.warningValueNegative?.value && form.config.warningValueNegative?.value !== 0) {
+      errors.value.warningValueNegative = 'El valor de precaución negativo es requerido'
+    }
+    if (!form.config.warningValueNegative?.message) {
+      errors.value.warningValueNegativeMessage = 'El mensaje de precaución negativo es requerido'
+    }
+    if (!form.config.criticalValueNegative?.value && form.config.criticalValueNegative?.value !== 0) {
+      errors.value.criticalValueNegative = 'El valor crítico negativo es requerido'
+    }
+    if (!form.config.criticalValueNegative?.message) {
+      errors.value.criticalValueNegativeMessage = 'El mensaje crítico negativo es requerido'
     }
   }
 
-  // Validar configuración para TENSION
   if (form.ruleType === 'TENSION') {
-    if (!form.config.urbano) {
-      errors.value.configUrbano = 'El porcentaje urbano es requerido'
+    if (!form.config.urbanValue?.value && form.config.urbanValue?.value !== 0) {
+      errors.value.urbanValue = 'El valor urbano es requerido'
     }
-    if (!form.config.rural) {
-      errors.value.configRural = 'El porcentaje rural es requerido'
+    if (!form.config.urbanValue?.message) {
+      errors.value.urbanValueMessage = 'El mensaje urbano es requerido'
+    }
+    if (!form.config.ruralValue?.value && form.config.ruralValue?.value !== 0) {
+      errors.value.ruralValue = 'El valor rural es requerido'
+    }
+    if (!form.config.ruralValue?.message) {
+      errors.value.ruralValueMessage = 'El mensaje rural es requerido'
+    }
+    if (!form.config.urbanValueNegative?.value && form.config.urbanValueNegative?.value !== 0) {
+      errors.value.urbanValueNegative = 'El valor urbano negativo es requerido'
+    }
+    if (!form.config.urbanValueNegative?.message) {
+      errors.value.urbanValueNegativeMessage = 'El mensaje urbano negativo es requerido'
+    }
+    if (!form.config.ruralValueNegative?.value && form.config.ruralValueNegative?.value !== 0) {
+      errors.value.ruralValueNegative = 'El valor rural negativo es requerido'
+    }
+    if (!form.config.ruralValueNegative?.message) {
+      errors.value.ruralValueNegativeMessage = 'El mensaje rural negativo es requerido'
     }
   }
 
-  // Validar configuración para CORRIENTE
-  if (form.ruleType === 'CORRIENTE') {
-    if (!form.config.faseR) {
-      errors.value.configFaseR = 'El porcentaje es requerido'
-    }
-    if (!form.config.faseS) {
-      errors.value.configFaseS = 'El porcentaje es requerido'
-    }
-    if (!form.config.faseT) {
-      errors.value.configFaseT = 'El porcentaje es requerido'
-    }
-  }
-
-  // Validar configuración para FRECUENCIA, THDV, THDI
   if (form.ruleType === 'FRECUENCIA' || form.ruleType === 'THDV' || form.ruleType === 'THDI') {
-    if (!form.config.porcentaje) {
-      errors.value.configPorcentaje = 'El porcentaje es requerido'
+    if (!form.config.criticalValue?.value && form.config.criticalValue?.value !== 0) {
+      errors.value.criticalValue = 'El valor crítico es requerido'
+    }
+    if (!form.config.criticalValue?.message) {
+      errors.value.criticalValueMessage = 'El mensaje crítico es requerido'
+    }
+    if (!form.config.criticalValueNegative?.value && form.config.criticalValueNegative?.value !== 0) {
+      errors.value.criticalValueNegative = 'El valor crítico negativo es requerido'
+    }
+    if (!form.config.criticalValueNegative?.message) {
+      errors.value.criticalValueNegativeMessage = 'El mensaje crítico negativo es requerido'
     }
   }
 
@@ -743,42 +1387,11 @@ const handleSubmit = () => {
   if (validateForm()) {
     isLoading.value = true
 
-    let config = {}
-    if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA') {
-      config = {
-        levels: {
-          warning: form.config.warning,
-          urgent: form.config.urgent,
-          critical: form.config.critical
-        }
-      }
-    } else if (form.ruleType === 'TENSION') {
-      config = {
-        minValue: 220,
-        maxValue: 240,
-        threshold: 5,
-        unit: "V",
-        checkInterval: 30,
-        urbano: form.config.urbano,
-        rural: form.config.rural
-      }
-    } else if (form.ruleType === 'CORRIENTE') {
-      config = {
-        faseR: form.config.faseR,
-        faseS: form.config.faseS,
-        faseT: form.config.faseT
-      }
-    } else if (form.ruleType === 'FRECUENCIA' || form.ruleType === 'THDV' || form.ruleType === 'THDI') {
-      config = {
-        porcentaje: form.config.porcentaje
-      }
-    }
-
     const dataToSend = {
       type: form.ruleType,
       name: form.ruleName,
       code: form.ruleCode,
-      config: config,
+      config: form.config,
       alerts: form.selectedAlerts,
       factoryIds: form.selectedFactories,
       customerIds: form.selectedCustomers,
@@ -807,24 +1420,13 @@ watch(() => [...props.alerts], (newAlerts) => {
   availableAlerts.value = newAlerts || []
 }, { immediate: true })
 
-watch(() => form.ruleType, () => {
-  form.config = {
-    // Para TEMPERATURA y POTENCIA
-    warning: null,
-    urgent: null,
-    critical: null,
-    urbano: null,
-    rural: null,
-    faseR: null,
-    faseS: null,
-    faseT: null,
-    porcentaje: null
-  }
-})
-
 watch(() => form.ruleType, (newType) => {
   if (newType && defaultConfigs[newType]) {
-    form.config = { ...defaultConfigs[newType] }
+    form.config = JSON.parse(JSON.stringify(defaultConfigs[newType]))
+  } else {
+    form.config = {
+      general1Value: { value: 0, message: '' }
+    }
   }
 })
 
