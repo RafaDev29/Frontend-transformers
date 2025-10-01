@@ -3,7 +3,7 @@
     <div v-for="(phase, i) in phases" :key="i" class="group relative">
       <!-- Fondo gradiente -->
       <div
-        class="absolute -inset-0 rounded-xl blur-sm opacity-10"
+        class="absolute inset-3 rounded-xl blur opacity-10"
         :class="phase.bg"
       ></div>
 

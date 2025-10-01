@@ -1,11 +1,11 @@
 <template>
   <div
-    class="p-2 rounded-2xl shadow-md flex items-center gap-6 w-full overflow-x-auto
+    class="p-2 rounded-xl shadow-md flex items-center gap-6 w-full overflow-x-auto
            dark:text-slate-200 dark:hover:bg-slate-600 text-slate-800 
            transition-colors border"
   >
     <!-- Botones rápidos -->
-    <div class="flex gap-2 mt-2 pt-3">
+    <div class="flex gap-1 mt-2 pt-3">
       <button
         v-for="btn in quickRanges"
         :key="btn.label"
