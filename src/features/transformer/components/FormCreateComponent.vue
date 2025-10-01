@@ -156,7 +156,7 @@
                     !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
-                  <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage * 1000">
+                  <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage ">
                     {{ voltage  }} V
                   </option>
                 </select>
@@ -211,7 +211,7 @@
                     !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
-                  <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage * 1000">
+                  <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage ">
                     {{ voltage  }} V
                   </option>
                 </select>
@@ -564,14 +564,14 @@ const calculateRegulatedVoltages = () => {
   const percentage = parseFloat(regulationPercentage.value)
 
   const increment1 = Math.round(baseVoltage * (percentage / 100))
-  const increment2 = Math.round(baseVoltage * (percentage / 50)) // 2 * percentage / 100
+  const increment2 = Math.round(baseVoltage * (percentage / 50)) 
 
   regulatedVoltageOptions.value = [
-    baseVoltage + increment2, // +2 * percentage
-    baseVoltage + increment1, // +percentage
-    baseVoltage - increment1, // -percentage
-    baseVoltage - increment2  // -2 * percentage
-  ].sort((a, b) => b - a) // Ordenar de mayor a menor
+    baseVoltage + increment2, 
+    baseVoltage + increment1, 
+    baseVoltage - increment1,
+    baseVoltage - increment2  
+  ].sort((a, b) => b - a) 
 
   if (form.regulatedVoltage && !regulatedVoltageOptions.value.includes(form.regulatedVoltage)) {
     form.regulatedVoltage = null
@@ -751,6 +751,16 @@ watch(() => form.type, (newType) => {
     form.copperTemperature = 0
   }
 })
+
+
+watch(
+  () => form.secondaryVoltage,
+  (newVal) => {
+    if (newVal) {
+      form.nominalVoltage = newVal
+    }
+  }
+)
 
 
 watch(() => props.show, (newVal) => {
