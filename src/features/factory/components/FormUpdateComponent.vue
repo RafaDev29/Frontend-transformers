@@ -34,14 +34,7 @@
           </div>
 
 
-          <!-- Código -->
-          <div>
-            <label for="code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Código *
-            </label>
-            <input id="code" v-model="form.code" type="text" class="w-full px-3 py-2 border rounded-md" />
-          </div>
-          
+
           <!-- RUC -->
           <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -75,6 +68,14 @@
             <input id="distric" v-model="form.distric" type="text" class="w-full px-3 py-2 border rounded-md" />
           </div>
 
+          <div class="flex items-center mb-6">
+            <input id="isActive" v-model="form.isActive" type="checkbox"
+              class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+            <label for="isActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+              Activo
+            </label>
+          </div>
+
         </div>
 
         <!-- Buttons -->
@@ -105,24 +106,24 @@ const emit = defineEmits(['close', 'save'])
 
 const isLoading = ref(false)
 const form = reactive({
-  code: '',
   username: '',
   password: '',
   ruc: '',
   businessName: '',
   address: '',
-  distric: ''
+  distric: '',
+  isActive: true
 })
 
 watch(() => props.factory, (newVal) => {
   if (newVal) {
-    form.code = newVal.code || ''
     form.username = newVal.username || ''
     form.password = '' // vacío por defecto
     form.ruc = newVal.ruc || ''
     form.businessName = newVal.businessName || ''
     form.address = newVal.address || ''
     form.distric = newVal.distric || ''
+    form.isActive = newVal.isActive === 'Activo' || newVal.isActive === true
   }
 }, { immediate: true })
 
@@ -131,12 +132,12 @@ const handleSubmit = () => {
 
   const payload = {
     uid: props.factory?.uid,
-    code: form.code,
     username: form.username,
     ruc: form.ruc,
     businessName: form.businessName,
     address: form.address,
-    distric: form.distric
+    distric: form.distric,
+    isActive: form.isActive
   }
 
 

@@ -14,15 +14,8 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div>
-            <label for="ruleCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Código de Regla *
-            </label>
-            <input id="ruleCode" v-model="form.ruleCode" type="text" :class="inputClasses('ruleCode')"
-              placeholder="TEMP_HIGH" required />
-            <p v-if="errors.ruleCode" class="mt-1 text-sm text-red-600">{{ errors.ruleCode }}</p>
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
+         
 
           <div>
             <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -563,7 +556,6 @@ const ruleTypes = ref([
 const form = reactive({
   ruleType: '',
   ruleName: '',
-  ruleCode: '',
   config: {
     // Para TEMPERATURA y POTENCIA
     warning: null,
@@ -656,7 +648,6 @@ const fillForm = (data) => {
   
   form.ruleType = data.type || ''
   form.ruleName = data.name || ''
-  form.ruleCode = data.code || ''
 
   // Llenar configuración según el tipo de regla
   if (data.config) {
@@ -724,7 +715,6 @@ const fillForm = (data) => {
 const resetForm = () => {
   form.ruleType = ''
   form.ruleName = ''
-  form.ruleCode = ''
   form.config = {
     warning: null,
     urgent: null,
@@ -755,11 +745,6 @@ const validateForm = () => {
     errors.value.ruleName = 'El nombre de la regla es requerido'
   }
 
-  if (!form.ruleCode) {
-    errors.value.ruleCode = 'El código de regla es requerido'
-  }
-
-  // Validar configuración según el tipo de regla
   if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA') {
     if (!form.config.warning) {
       errors.value.configWarning = 'El nivel de advertencia es requerido'
@@ -870,7 +855,6 @@ const handleSubmit = () => {
       data: {
         type: form.ruleType,
         name: form.ruleName,
-        code: form.ruleCode,
         config: config,
         alerts: form.selectedAlerts,
         factoryIds: form.selectedFactories,

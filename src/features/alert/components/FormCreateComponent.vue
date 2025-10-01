@@ -15,15 +15,8 @@
 
       <form @submit.prevent="handleSubmit" class="p-6">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div>
-            <label for="alertCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Código de Alerta *
-            </label>
-            <input id="alertCode" v-model="form.alertCode" type="text" :class="inputClasses('alertCode')"
-              placeholder="ALERT-001" required />
-            <p v-if="errors.alertCode" class="mt-1 text-sm text-red-600">{{ errors.alertCode }}</p>
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
+        
 
           <div>
             <label for="alertName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -223,7 +216,6 @@ const alertTypes = ref([
 ])
 
 const form = reactive({
-  alertCode: '',
   alertName: '',
   alertType: '',
   alertDescription: '',
@@ -266,7 +258,6 @@ const removeAdditionalContact = (index) => {
 }
 
 const resetForm = () => {
-  form.alertCode = ''
   form.alertName = ''
   form.alertType = ''
   form.alertDescription = ''
@@ -279,9 +270,6 @@ const resetForm = () => {
 const validateForm = () => {
   errors.value = {}
 
-  if (!form.alertCode) {
-    errors.value.alertCode = 'El código de alerta es requerido'
-  }
 
   if (!form.alertName) {
     errors.value.alertName = 'El nombre de la alerta es requerido'
@@ -320,7 +308,6 @@ const handleSubmit = () => {
     isLoading.value = true
 
     const dataToSend = {
-      code: form.alertCode,
       name: form.alertName,
       type: form.alertType.toUpperCase(),
       description: form.alertDescription,

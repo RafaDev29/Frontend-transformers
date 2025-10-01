@@ -13,18 +13,8 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="p-6">
-        <!-- Código y Nombre -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div>
-            <label for="ruleCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Código de Regla *
-            </label>
-            <input id="ruleCode" v-model="form.ruleCode" type="text"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-              placeholder="TEMP_HIGH" required />
-            <p v-if="errors.ruleCode" class="mt-1 text-sm text-red-600">{{ errors.ruleCode }}</p>
-          </div>
-
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
+        
           <div>
             <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre de la Regla *
@@ -476,7 +466,8 @@
 
         </div>
 
-        <!-- Selección de Fábricas -->
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Selección de Fábricas -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Fábricas</h3>
           <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
@@ -512,7 +503,7 @@
             </div>
           </div>
         </div>
-
+        
         <!-- Selección de Clientes -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Clientes</h3>
@@ -549,6 +540,8 @@
             </div>
           </div>
         </div>
+         </div>
+      
 
         <!-- Alertas con Buscador -->
         <div v-if="form.ruleType" class="mb-8">
@@ -752,7 +745,6 @@ const defaultConfigs = {
 const form = reactive({
   ruleType: '',
   ruleName: '',
-  ruleCode: '',
   config: {
     general1Value: { value: 0, message: '' }
   },
@@ -828,7 +820,6 @@ const listFactorys = async () => {
 const resetForm = () => {
   form.ruleType = ''
   form.ruleName = ''
-  form.ruleCode = ''
   form.config = {
     general1Value: { value: 0, message: '' }
   }
@@ -851,9 +842,6 @@ const validateForm = () => {
     errors.value.ruleName = 'El nombre de la regla es requerido'
   }
 
-  if (!form.ruleCode) {
-    errors.value.ruleCode = 'El código de regla es requerido'
-  }
 
   if (!form.config.general1Value.message) {
     errors.value.general1Message = 'El mensaje general es requerido'
@@ -955,7 +943,6 @@ const handleSubmit = () => {
     const dataToSend = {
       type: form.ruleType,
       name: form.ruleName,
-      code: form.ruleCode,
       config: form.config,
       alerts: form.selectedAlerts,
       factoryIds: form.selectedFactories,

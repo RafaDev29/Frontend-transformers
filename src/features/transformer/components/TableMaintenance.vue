@@ -15,6 +15,11 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Código
                             </th>
+
+                            <th
+                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                                Número de Serie
+                            </th>
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Fábrica
@@ -42,6 +47,11 @@
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300">
                         <tr v-for="row in rows" :key="row.serialNumber"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
+
+                             <td
+                                class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                                {{ row.code }}
+                            </td>
 
                             <td
                                 class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
@@ -148,7 +158,7 @@ const rows = computed(() => {
         nominalVoltage: item.nominalVoltage,
         altitude: item.altitude,
         frequency: item.frequency,
-        saleDate : item.saleDate,
+        saleDate: item.saleDate,
         apparentPowerKVA: item.apparentPowerKVA,
         uid: item.uid,
         serialNumber: item.serialNumber,
@@ -157,8 +167,9 @@ const rows = computed(() => {
         brand: item.brand,
         type: item.type,
         zone: item.zone,
-        customer : item.customer ,
+        customer: item.customer,
         yearManufacture: item.yearManufacture,
+        code : item.code ,
         factory: item.factory,
         isActive: item.isActive ? 'Activo' : 'Inactivo'
     }))

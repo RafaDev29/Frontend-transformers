@@ -14,19 +14,8 @@
 
       <form @submit.prevent="handleSubmit" class="p-6">
         <!-- Información General -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div>
-            <label for="alertCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Código de Alerta *
-            </label>
-            <input id="alertCode" 
-                   v-model="form.alertCode" 
-                   type="text" 
-                   :class="inputClasses('alertCode')"
-                   placeholder="ALERT-001" 
-                   required />
-            <p v-if="errors.alertCode" class="mt-1 text-sm text-red-600">{{ errors.alertCode }}</p>
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
+          
 
           <div>
             <label for="alertName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -68,20 +57,7 @@
           <p v-if="errors.alertType" class="mt-2 text-sm text-red-600">{{ errors.alertType }}</p>
         </div>
 
-        <!-- Descripción -->
-        <div class="mb-8">
-          <label for="alertDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Descripción de la Alerta *
-          </label>
-          <textarea id="alertDescription" 
-                    v-model="form.alertDescription" 
-                    rows="3"
-                    :class="inputClasses('alertDescription')"
-                    :placeholder="getDescriptionPlaceholder()" 
-                    required></textarea>
-          <p v-if="errors.alertDescription" class="mt-1 text-sm text-red-600">{{ errors.alertDescription }}</p>
-        </div>
-
+      
         <!-- Destinatarios -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Destinatarios</h3>
@@ -247,10 +223,8 @@ const alertTypes = ref([
 ])
 
 const form = reactive({
-  alertCode: '',
   alertName: '',
   alertType: '',
-  alertDescription: '',
   additionalContacts: [{ value: '', name: '' }],
   retryAttempts: 0,
   isActive: true
@@ -275,24 +249,14 @@ const removeAdditionalContact = (index) => {
     form.additionalContacts.splice(index, 1)
   }
 }
-  form.alertCode = ''
   form.alertName = ''
   form.alertType = ''
-  form.alertDescription = ''
   form.additionalContacts = [{ value: '', name: '' }]
   form.retryAttempts = 0
   form.isActive = true
   errors.value = {}
 
 
-const getDescriptionPlaceholder = () => {
-  if (form.alertType === 'whatsapp') {
-    return 'Ej: Notificación : la temperatura excede los 90°C'
-  } else if (form.alertType === 'email') {
-    return 'Ej: Notificación : se ha detectado una anomalía en el sistema'
-  }
-  return 'Descripción de la alerta...'
-}
 
 const addAdditionalContact = () => {
   form.additionalContacts.push({ value: '', name: '' })
@@ -303,10 +267,8 @@ const fillForm = (data) => {
 
   console.log('Llenando formulario con datos:', data)
 
-  form.alertCode = data.code || ''
   form.alertName = data.name || ''
   form.alertType = data.type ? data.type.toLowerCase() : ''
-  form.alertDescription = data.description || ''
   form.retryAttempts = data.attempts || 0
   form.isActive = Boolean(data.isActive)
 
@@ -331,9 +293,6 @@ const fillForm = (data) => {
 const validateForm = () => {
   errors.value = {}
 
-  if (!form.alertCode) {
-    errors.value.alertCode = 'El código de alerta es requerido'
-  }
 
   if (!form.alertName) {
     errors.value.alertName = 'El nombre de la alerta es requerido'
@@ -342,11 +301,6 @@ const validateForm = () => {
   if (!form.alertType) {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
-
-  if (!form.alertDescription) {
-    errors.value.alertDescription = 'La descripción es requerida'
-  }
-
 
 
   form.additionalContacts.forEach((contact, index) => {
@@ -373,10 +327,8 @@ const handleSubmit = () => {
     isLoading.value = true
 
     const dataToSend = {
-      code: form.alertCode,
       name: form.alertName,
       type: form.alertType.toUpperCase(),
-      description: form.alertDescription,
       isActive: form.isActive,
       attempts: form.retryAttempts,
       contacts: form.additionalContacts
