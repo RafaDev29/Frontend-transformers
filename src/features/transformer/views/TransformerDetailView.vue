@@ -4,8 +4,8 @@
     <div class="py-1">
       <NavigationComponent
         :breadcrumbs="[
-          { label: 'Panel de transformadores', path: '/app/Transformer' },
-          { label: 'Panel detalle transformador', path: '/app/TransformerDetail' },
+          { label: 'Panel de Transformadores', path: '/app/Transformer' },
+          { label: 'Panel Detalle Transformador', path: '/app/TransformerDetail' },
         ]"
       />
     </div>

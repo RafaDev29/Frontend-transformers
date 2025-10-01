@@ -5,13 +5,13 @@
       <NavigationComponent :breadcrumbs="[
         { label: 'Panel de Fábrica', path: '/app/factory' },
         { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
-        { label: 'Panel  detalle transformador', path: '/app/factoryTransformerDetail' },
-        { label: 'Panel de Potencias', path: '/app/power' },
+        { label: 'Panel  Detalle Transformador', path: '/app/factoryTransformerDetail' },
+        { label: 'Panel de Potencia', path: '/app/power' },
       ]" />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
-      <DateComponent class="md:col-span-6" />
-      <CardComponent :chart-data="rawData" class="md:col-span-4" />
+      <DateComponent class="md:col-span-5" />
+      <CardComponent :chart-data="rawData" class="md:col-span-5" />
 
     </div>
 

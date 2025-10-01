@@ -22,7 +22,7 @@
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                  Frecuencia en tiempo real del sistema eléctrico
+                  Frecuencia en tiempo real 
               </p>
             </div>
 

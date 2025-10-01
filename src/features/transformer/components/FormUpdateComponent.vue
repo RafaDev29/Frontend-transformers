@@ -562,13 +562,13 @@ const getSecondaryVoltageValues = () => {
 }
 
 const calculateRegulatedVoltages = () => {
-  if (!form.primaryVoltage || !regulationPercentage.value) {
+  if (!form.secondaryVoltage || !regulationPercentage.value) {
     regulatedVoltageOptions.value = []
     form.regulatedVoltage = null
     return
   }
 
-  const baseVoltage = form.primaryVoltage
+  const baseVoltage = form.secondaryVoltage
   const percentage = parseFloat(regulationPercentage.value)
 
   const increment1 = Math.round(baseVoltage * (percentage / 100))
@@ -615,14 +615,14 @@ const findRegulationPercentage = (primaryVoltage, regulatedVoltage) => {
   const diff = Math.abs(base - regulated)
   const percentage = (diff / base) * 100
 
-  // Determinar si es ±1.5% o ±2.5% basado en la diferencia
+
   if (Math.abs(percentage - 1.5) < Math.abs(percentage - 2.5)) {
     return '1.5'
   } else if (Math.abs(percentage - 2.5) < Math.abs(percentage - 1.5)) {
     return '2.5'
-  } else if (Math.abs(percentage - 3.0) < 0.5) { // Para 2 * 1.5%
+  } else if (Math.abs(percentage - 3.0) < 0.5) { 
     return '1.5'
-  } else if (Math.abs(percentage - 5.0) < 0.5) { // Para 2 * 2.5%
+  } else if (Math.abs(percentage - 5.0) < 0.5) { 
     return '2.5'
   }
 
@@ -689,7 +689,6 @@ const fillForm = async (data) => {
 }
 
 
-// Modificar también los watchers para usar la función async:
 watch(() => props.transformerData, async (newData) => {
   if (newData && Object.keys(newData).length > 0 && dataLoaded.value && props.show) {
     await fillForm(newData)

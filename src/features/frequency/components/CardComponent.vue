@@ -3,7 +3,7 @@
     <div v-for="(phase, i) in phases" :key="i" class="group relative">
       <!-- Fondo gradiente -->
       <div
-        class="absolute -inset-1 rounded-xl blur-sm opacity-20 transition group-hover:opacity-40"
+        class="absolute -inset-0 rounded-xl blur-sm opacity-10"
         :class="phase.bg"
       ></div>
       <div
@@ -49,7 +49,7 @@ const currentVoltages = computed(() => {
 const phases = [
   {
     key: "ch1",
-    label: "Fase 1",
+    label: "F. 1",
     bg: "bg-gradient-to-r from-green-400 via-green-500 to-green-600",
     dot: "bg-green-500",
     title: "text-green-800 dark:text-green-200",

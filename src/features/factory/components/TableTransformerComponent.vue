@@ -14,6 +14,7 @@
         >
           <tr>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Código</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Número de Serie</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Potencia (KVA)</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Tipo</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Año Fabricación</th>
@@ -36,14 +37,17 @@
                    dark:odd:bg-slate-800/70 dark:even:bg-slate-800/60
                    transition-all duration-300"
           >
-            <td colspan="4" class="relative p-0">
+            <td colspan="5" class="relative p-0">
               <div
                 class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300
                        bg-gradient-to-r from-color1/6 via-color2/8 to-transparent
                        dark:from-color3/10 dark:via-color4/10 dark:to-transparent"
               ></div>
 
-              <div class="grid grid-cols-4">
+              <div class="grid grid-cols-5">
+                   <div class="px-6 py-4 whitespace-nowrap font-mono font-semibold text-slate-700 dark:text-slate-200">
+                  {{ transformer.code }}
+                </div>
                 <div class="px-6 py-4 whitespace-nowrap font-mono font-semibold text-slate-700 dark:text-slate-200">
                   {{ transformer.serialNumber }}
                 </div>

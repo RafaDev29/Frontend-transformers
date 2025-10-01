@@ -22,7 +22,7 @@
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Tensiones en tiempo real de las 3 fases del sistema eléctrico
+                Tensiones en tiempo real en cada fase
               </p>
             </div>
 

@@ -5,8 +5,8 @@
       <NavigationComponent
         :breadcrumbs="[
           { label: 'Panel de Fábrica', path: '/app/factory' },
-          { label: 'Panel de transformadores', path: '/app/factoryTransformer' },
-          { label: 'Panel detalle transformador', path: '/app/factoryTransformerDetail' },
+          { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
+          { label: 'Panel Detalle Transformador', path: '/app/factoryTransformerDetail' },
         ]"
       />
     </div>
