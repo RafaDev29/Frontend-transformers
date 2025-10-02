@@ -2,11 +2,10 @@
   <div class="p-4 space-y-2">
     <div class="relative group">
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
       
-      <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+      <div class="">
 
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
@@ -22,14 +21,11 @@
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-               Temperatura en tiempo real 
+               Temperatura en tiempo real, valores min. y max.
               </p>
             </div>
-
-
           </div>
         </div>
-
 
         <div class="p-6">
           <ApexChart type="line" height="350" :options="chartOptions" :series="series" />
@@ -54,11 +50,9 @@ const series = computed(() => [
   { 
     name: "Temperatura", 
     data: props.chartData.map(d => d.ch1),
-    color: '#1e7f14'
+    color: '#dc2626' // 🔴 rojo
   }
 ])
-
-
 
 const globalMin = computed(() => {
   if (!props.chartData.length) return 0
@@ -74,7 +68,7 @@ const globalMax = computed(() => {
 
 const chartOptions = computed(() => ({
   chart: {
-    type: "line",
+    type: "area",
     zoom: { enabled: true },
     toolbar: { 
       show: true,
@@ -111,10 +105,10 @@ const chartOptions = computed(() => ({
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' }
     },
     title: {
-      text: "Hora/minuto",
+      text: "Tiempo",
       style: { color: "#475569", fontSize: "12px", fontWeight: "600" }
     },
-  axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569',
       height: 2
@@ -130,12 +124,11 @@ const chartOptions = computed(() => ({
       text: "Temperatura (°C)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-
     labels: {
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
       formatter: (val) => `${val}°C`
     },
-      axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569'
     },
@@ -149,7 +142,7 @@ const chartOptions = computed(() => ({
     width: 3,
     lineCap: 'round'
   },
-  colors: ["#1e7f14"],
+  colors: ["#dc2626"], // 🔴 rojo principal
   legend: { show: false },
   tooltip: {
     theme: 'light',
@@ -164,20 +157,18 @@ const chartOptions = computed(() => ({
     hover: { size: 8, sizeOffset: 3 }
   },
   fill: {
-    type: 'gradient',
+     type: "gradient",
     gradient: {
       shade: 'light',
       type: 'vertical',
-      shadeIntensity: 0.1,
-      gradientToColors: ['#10b981'],
+      shadeIntensity: 0.5,
+      gradientToColors: ['#fbbf24'], // 🔴 degradado rojo → naranja
       inverseColors: false,
       opacityFrom: 0.8,
       opacityTo: 0.1,
       stops: [0, 100]
     }
   },
-  
-
   annotations: {
     yaxis: [
       {
@@ -195,12 +186,7 @@ const chartOptions = computed(() => ({
             background: '#3b82f6',
             fontSize: '11px',
             fontWeight: '600',
-            padding: {
-              left: 8,
-              right: 8,
-              top: 4,
-              bottom: 4
-            }
+            padding: { left: 8, right: 8, top: 4, bottom: 4 }
           }
         }
       },
@@ -219,12 +205,7 @@ const chartOptions = computed(() => ({
             background: '#ef4444',
             fontSize: '11px',
             fontWeight: '600',
-            padding: {
-              left: 8,
-              right: 8,
-              top: 4,
-              bottom: 4
-            }
+            padding: { left: 8, right: 8, top: 4, bottom: 4 }
           }
         }
       },
@@ -243,16 +224,11 @@ const chartOptions = computed(() => ({
             background: '#10b981',
             fontSize: '11px',
             fontWeight: '600',
-            padding: {
-              left: 8,
-              right: 8,
-              top: 4,
-              bottom: 4
-            }
+            padding: { left: 8, right: 8, top: 4, bottom: 4 }
           }
         }
       }
     ]
   }
 }))
-</script>\
+</script>

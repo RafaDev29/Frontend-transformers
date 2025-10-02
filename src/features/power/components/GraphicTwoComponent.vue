@@ -3,11 +3,11 @@
     <div class="relative group">
       <!-- Gradiente de fondo animado -->
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
       <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+        class="">
 
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
@@ -53,7 +53,7 @@
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
+          <ApexChart type="line" height="365" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -140,7 +140,7 @@ const chartOptions = computed(() => ({
       style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' }
     },
     title: {
-      text: "Hora/minuto",
+      text: "Tiempo",
       style: { color: "#475569", fontSize: "12px", fontWeight: "600" }
     },
      axisBorder: {

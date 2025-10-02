@@ -1,15 +1,12 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <!-- Fondo con gradiente -->
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
-      <!-- Contenedor -->
       <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
-
+        class="">
         <!-- Header -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
@@ -29,8 +26,8 @@
         </div>
 
         <!-- Gráfico -->
-        <div class="p-6">
-          <ApexChart type="bar" height="450" :options="chartOptions" :series="series" />
+        <div class="pl-6 pr-6">
+          <ApexChart type="bar" height="410" :options="chartOptions" :series="series" />
         </div>
 
        
@@ -50,7 +47,6 @@ const props = defineProps({
   }
 })
 
-// Calcular min y max por tipo de potencia
 const ranges = computed(() => {
   if (!props.chartData.length) return { kW: { min: 0, max: 0 }, kvar: { min: 0, max: 0 }, kVA: { min: 0, max: 0 } }
 
@@ -68,7 +64,7 @@ const ranges = computed(() => {
   }
 })
 
-// Series con valores mínimos y máximos para cada tipo de potencia
+
 const series = computed(() => [
   {
     name: "Valor Mínimo",
@@ -146,24 +142,28 @@ const chartOptions = computed(() => ({
       height: 6
     },
   },
-  yaxis: {
-    title: {
-      text: "Potencia",
-      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-    },
-    labels: {
-      style: { colors: "#64748b", fontSize: "12px" },
-      formatter: (val) => `${val}`
-    },
-    axisBorder: {
-      show: true,
-      color: '#475569'
-    },
-    axisTicks: {
-      show: true,
-      color: '#475569'
-    },
+ yaxis: {
+  min: ranges.value.kW.min < ranges.value.kvar.min && ranges.value.kW.min < ranges.value.kVA.min 
+    ? ranges.value.kW.min 
+    : Math.min(ranges.value.kW.min, ranges.value.kvar.min, ranges.value.kVA.min),
+  max: Math.max(ranges.value.kW.max, ranges.value.kvar.max, ranges.value.kVA.max),
+  title: {
+    text: "Potencia",
+    style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
   },
+  labels: {
+    style: { colors: "#64748b", fontSize: "12px" },
+    formatter: (val) => `${val}`
+  },
+  axisBorder: {
+    show: true,
+    color: '#475569'
+  },
+  axisTicks: {
+    show: true,
+    color: '#475569'
+  },
+},
   grid: {
     borderColor: "#e2e8f0",
     strokeDashArray: 3,

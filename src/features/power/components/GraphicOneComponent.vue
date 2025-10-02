@@ -2,11 +2,11 @@
   <div class="p-4 space-y-2">
     <div class="relative group">
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
       
       <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+        class="">
 
         <!-- Encabezado -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
@@ -47,7 +47,7 @@
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <ApexChart type="line" height="400" :options="chartOptions" :series="series" />
+          <ApexChart type="line" height="365" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -82,6 +82,22 @@ const series = computed(() => [
     color: '#0891b2'
   }
 ])
+
+const yRange = computed(() => {
+  if (!props.chartData.length) return { min: 0, max: 0 }
+
+  const allValues = [
+    ...props.chartData.map(d => Number(d.kW) || 0),
+    ...props.chartData.map(d => Number(d.kvar) || 0),
+    ...props.chartData.map(d => Number(d.kVA) || 0)
+  ]
+
+  return {
+    min: Math.min(...allValues),
+    max: Math.max(...allValues)
+  }
+})
+
 
 const chartOptions = computed(() => ({
   chart: {
@@ -129,29 +145,30 @@ const chartOptions = computed(() => ({
       style: { colors: '#475569', fontSize: '12px', fontWeight: '500' }
     },
     title: {
-      text: "Hora/minuto",
+      text: "Tiempo",
       style: { color: "#334155", fontSize: "12px", fontWeight: "600" }
     }
   },
-  yaxis: {
-     axisBorder: {
-      show: true,
-      color: '#475569'
-    },
-    axisTicks: {
-      show: true,
-      color: '#475569'
-    },
-    title: {
-      text: "Potencia (kW / kvar / kVA)",
-      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-    },
-
-    labels: {
-      style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-      formatter: (val) => `${val} u`
-    }
+ yaxis: {
+  min: yRange.value.min,
+  max: yRange.value.max,
+  axisBorder: {
+    show: true,
+    color: '#475569'
   },
+  axisTicks: {
+    show: true,
+    color: '#475569'
+  },
+  title: {
+    text: "Potencia (kW / kvar / kVA)",
+    style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
+  },
+  labels: {
+    style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
+    formatter: (val) => `${val} u`
+  }
+},
   stroke: {
     curve: "smooth",
     width: 2.5,

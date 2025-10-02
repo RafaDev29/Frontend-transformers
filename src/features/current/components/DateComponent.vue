@@ -1,16 +1,16 @@
 <template>
   <div
-    class="p-2 rounded-xl shadow-md flex items-center gap-6 w-full overflow-x-auto
+    class="p-2 rounded-xl shadow-md flex items-center gap-4 w-full
            dark:text-slate-200 dark:hover:bg-slate-600 text-slate-800 
            transition-colors border"
   >
     <!-- Botones rápidos -->
-    <div class="flex gap-1 mt-2 pt-3">
+    <div class="flex gap-2">
       <button
         v-for="btn in quickRanges"
-        :key="btn.label"
+        :key="btn.value"
         @click="setQuickRange(btn.value)"
-        class="px-2 py-2 text-sm font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap"
+        class="px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap"
         :class="[
           isActive(btn.value)
             ? 'bg-accent-primary text-white'
@@ -21,41 +21,25 @@
       </button>
     </div>
 
-    <!-- Rango de Fechas -->
-    <div class="flex items-center gap-2">
-      <div class="flex flex-col">
-        <label class="text-xs text-slate-500 dark:text-slate-400 mb-1">Desde</label>
-        <input 
-          type="date" 
-          v-model="from" 
-          class="w-36 rounded-lg border p-2 text-sm focus:ring-2 focus:ring-accent-primary 
-                 bg-neutral-light border-slate-300 text-slate-700
-                 dark:bg-slate-900 dark:border-slate-600 dark:text-slate-200"
-        />
-      </div>
-
-      <span class="text-slate-500 dark:text-slate-400 text-sm mt-6">—</span>
-
-      <div class="flex flex-col">
-        <label class="text-xs text-slate-500 dark:text-slate-400 mb-1">Hasta</label>
-        <input 
-          type="date" 
-          v-model="to" 
-          class="w-36 rounded-lg border p-2 text-sm focus:ring-2 focus:ring-accent-primary 
-                 bg-neutral-light border-slate-300 text-slate-700
-                 dark:bg-slate-900 dark:border-slate-600 dark:text-slate-200"
-        />
-      </div>
-    </div>
+    <!-- Date Range en un solo input -->
+    <VueDatePicker
+      v-model="range"
+      range
+      format="yyyy-MM-dd"
+      :enable-time-picker="false"
+      placeholder="Seleccionar rango"
+      class="w-64 text-sm"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue"
 import dayjs from "dayjs"
+import VueDatePicker from "@vuepic/vue-datepicker"
+import "@vuepic/vue-datepicker/dist/main.css"
 
-const from = ref(dayjs().format("YYYY-MM-DD"))
-const to = ref(dayjs().format("YYYY-MM-DD"))
+const range = ref([dayjs().format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")])
 const active = ref("hoy")
 
 const quickRanges = [
@@ -71,20 +55,25 @@ function setQuickRange(type) {
 
   switch (type) {
     case "hoy":
-      from.value = today.format("YYYY-MM-DD")
-      to.value = today.format("YYYY-MM-DD")
+      range.value = [today.format("YYYY-MM-DD"), today.format("YYYY-MM-DD")]
       break
     case "semana":
-      from.value = today.startOf("week").format("YYYY-MM-DD")
-      to.value = today.endOf("week").format("YYYY-MM-DD")
+      range.value = [
+        today.startOf("week").format("YYYY-MM-DD"),
+        today.endOf("week").format("YYYY-MM-DD"),
+      ]
       break
     case "mes":
-      from.value = today.startOf("month").format("YYYY-MM-DD")
-      to.value = today.endOf("month").format("YYYY-MM-DD")
+      range.value = [
+        today.startOf("month").format("YYYY-MM-DD"),
+        today.endOf("month").format("YYYY-MM-DD"),
+      ]
       break
     case "año":
-      from.value = today.startOf("year").format("YYYY-MM-DD")
-      to.value = today.endOf("year").format("YYYY-MM-DD")
+      range.value = [
+        today.startOf("year").format("YYYY-MM-DD"),
+        today.endOf("year").format("YYYY-MM-DD"),
+      ]
       break
   }
 }

@@ -38,11 +38,10 @@
       </div>
     </div>
 
-    <!-- Content Grid -->
     <div class="p-3 bg-white/90 dark:bg-slate-800/70 transition-colors duration-300">
       <div class="grid grid-cols-1 gap-3">
 
-        <!-- Primera Fila: Producto y Fabricante -->
+
         <div class="grid grid-cols-2 gap-3">
           <!-- Producto -->
           <div class="bg-gradient-to-br from-slate-50/80 to-slate-100/50 
@@ -61,42 +60,42 @@
             <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">N° de Serie:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class=" font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.serialNumber || '—' }}
                 </span>
               </div>
 
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">Tipo:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class="font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.type || '—' }}
                 </span>
               </div>
 
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">Marca:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class="font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.brand || '—' }}
                 </span>
               </div>
 
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">Año Fab.:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class="font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.yearManufacture || '—' }}
                 </span>
               </div>
 
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">Zona:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class="font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.zone || '—' }}
                 </span>
               </div>
 
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">Altitud:</span>
-                <span class="text-slate-800 dark:text-slate-100">
+                <span class=" font-semibold text-slate-800 dark:text-slate-100">
                   {{ transformer?.altitude || '—' }} m s.n.m
                 </span>
               </div>
@@ -193,7 +192,7 @@
 
               <div class="flex justify-between items-center py-1 border-b border-color3/20 dark:border-colorDark3/30">
                 <span class="text-slate-600 dark:text-slate-300">Frecuencia</span>
-                <span class="font-bold text-slate-800 dark:text-slate-100">
+                <span class="font-bold text-green-600 dark:text-green-400">
                   {{ transformer?.frequency || '—' }} Hz
                 </span>
               </div>

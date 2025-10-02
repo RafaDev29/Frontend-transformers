@@ -3,15 +3,15 @@
     <div class="relative group">
       <!-- Fondo con gradiente -->
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
       <!-- Contenedor -->
       <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+        class="">
 
         <!-- Header -->
-        <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
+        <div class="p-6 pb-10 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
             <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-blue-500 flex items-center justify-center shadow-lg">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,31 +28,7 @@
           </p>
         </div>
 
-        <!-- Estadísticas superiores -->
-        <div class="p-3 pb-2">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-1">
-            <div class="text-center p-1 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200/60 dark:border-green-700/60">
-              <div class="text-xs font-semibold text-green-600 dark:text-green-400 mb-1">ESTABLE</div>
-              <div class="text-xs font-bold text-green-700 dark:text-green-300">{{ stablePercentage }}%</div>
-              <div class="text-xs text-green-600 dark:text-green-400">49.5-50.5Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200/60 dark:border-yellow-700/60">
-              <div class="text-xs font-semibold text-yellow-600 dark:text-yellow-400 mb-1">DESVIACIÓN</div>
-              <div class="text-xs font-bold text-yellow-700 dark:text-yellow-300">{{ deviationPercentage }}%</div>
-              <div class="text-xs text-yellow-600 dark:text-yellow-400">±0.5-1.0Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-orange-50 dark:bg-orange-900/20 border border-orange-200/60 dark:border-orange-700/60">
-              <div class="text-xs font-semibold text-orange-600 dark:text-orange-400 mb-1">ALERTA</div>
-              <div class="text-xs font-bold text-orange-700 dark:text-orange-300">{{ alertPercentage }}%</div>
-              <div class="text-xs text-orange-600 dark:text-orange-400">±1.0-2.0Hz</div>
-            </div>
-            <div class="text-center p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60">
-              <div class="text-xs font-semibold text-red-600 dark:text-red-400 mb-1">CRÍTICO</div>
-              <div class="text-xs font-bold text-red-700 dark:text-red-300">{{ criticalPercentage }}%</div>
-              <div class="text-xs text-red-600 dark:text-red-400">>±2.0Hz</div>
-            </div>
-          </div>
-        </div>
+      
 
         <!-- Gráfico -->
         <div class="px-6 pb-6">
@@ -116,26 +92,9 @@ const frequencyAnalysis = computed(() => {
   }
 })
 
-// Porcentajes para las tarjetas superiores
-const stablePercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.stable / total) * 100) : 0
-})
 
-const deviationPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.deviation / total) * 100) : 0
-})
 
-const alertPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.alert / total) * 100) : 0
-})
 
-const criticalPercentage = computed(() => {
-  const total = props.chartData.length
-  return total > 0 ? Math.round((frequencyAnalysis.value.critical / total) * 100) : 0
-})
 
 // Series para el gráfico de barras
 const series = computed(() => [

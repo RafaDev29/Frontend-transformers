@@ -2,11 +2,11 @@
   <div class="p-4 space-y-2">
     <div class="relative group">
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
       <div
-        class="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/40 overflow-hidden">
+        class="">
 
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
@@ -22,13 +22,13 @@
             </h2>
           </div>
           <p class="text-slate-600 dark:text-slate-400 font-medium">
-            Valores mínimos y máximos de THD-F registrados en cada fase
+            Valores mínimos y máximos de THDV registrados en cada fase
           </p>
         </div>
 
         <!-- Gráfico -->
         <div class="p-6">
-          <ApexChart type="bar" height="400" :options="chartOptions" :series="series" />
+          <ApexChart type="bar" height="350" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>

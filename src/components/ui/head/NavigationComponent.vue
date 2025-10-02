@@ -1,6 +1,6 @@
 <template>
   <nav 
-    class="bg-gradient-to-r from-white via-slate-50 to-white dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border-b border-slate-200/60 dark:border-slate-700/60 px-4 py-3 mb-1 shadow-sm backdrop-blur-sm transition-all duration-300"
+    class="bg-gradient-to-r from-white via-slate-50 to-white dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border-b border-slate-200/60 dark:border-slate-700/60 px-4 py-1.5 mb-1 shadow-sm backdrop-blur-sm transition-all duration-300"
     aria-label="Breadcrumb"
   >
     <ol class="flex items-center space-x-2 text-sm font-medium">
