@@ -35,15 +35,25 @@
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Contraseña *
             </label>
-            <input id="password" v-model="form.password" type="text" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" placeholder="" required />
+            <div class="relative">
+              <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'"  :class="[
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              ]" placeholder="" />
+
+              <button type="button" @click="showPassword = !showPassword"
+                class="absolute inset-y-0 right-0 pr-4 flex items-center  hover:text-color3 transition-colors">
+                <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path v-if="showPassword" :d="$icons.hidden" />
+                  <path v-else :d="$icons.eye" />
+                </svg>
+              </button>
+            </div>
             <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
           </div>
 
-           <div>
+          <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Ruc *
             </label>
@@ -54,7 +64,7 @@
             ]" placeholder="" required />
             <p v-if="errors.ruc" class="mt-1 text-sm text-red-600">{{ errors.ruc }}</p>
           </div>
-          
+
           <div>
             <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Razón Social *
@@ -68,7 +78,7 @@
           </div>
 
 
-         
+
 
 
           <div>
@@ -158,7 +168,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'save'])
-
+const showPassword = ref(false)
 const dataFactory = ref([])
 const isLoading = ref(false)
 const errors = ref({})

@@ -327,7 +327,6 @@ const handleSubmit = async () => {
   successMessage.value = ''
 
   try {
-    // Preparar payload - solo incluir contraseña si no está vacía
     const payload = {
       username: form.value.username,
       ruc: form.value.ruc,
@@ -336,7 +335,6 @@ const handleSubmit = async () => {
       distric: form.value.distric
     }
 
-    // Solo agregar contraseña si no está vacía
     if (form.value.password && form.value.password.trim()) {
       payload.password = form.value.password
     }
@@ -385,7 +383,7 @@ const handleSubmit = async () => {
     }
 
     successMessage.value = 'Perfil de fabrica actualizado correctamente'
-    form.value.password = '' // Limpiar contraseña después del éxito
+    form.value.password = '' 
 
   } catch (err) {
     console.error('Error updating company profile:', err)

@@ -338,7 +338,6 @@ const handleSubmit = async () => {
       distric: form.value.distric
     }
 
-    // Solo agregar contraseña si no está vacía
     if (form.value.password && form.value.password.trim()) {
       clientData.password = form.value.password
     }
@@ -387,7 +386,7 @@ const handleSubmit = async () => {
     }
 
     successMessage.value = 'Perfil de cliente actualizado correctamente'
-    form.value.password = '' // Limpiar contraseña después del éxito
+    form.value.password = '' 
 
   } catch (err) {
     console.error('Error updating client profile:', err)

@@ -33,13 +33,19 @@ import {
   mdiFlashTriangle, //tension
   mdiSineWave, //frecuencia
   mdiCurrentAc, //corriente
-  mdiWaveform , //THDI
+  mdiWaveform, //THDI
   mdiPlusMinusVariant, //THDV
-  mdiThermometerLines , //temperatura
+  mdiThermometerLines, //temperatura
+  mdiEyeCircleOutline, //ojos 
+  mdiLock,// candado
+  mdiAccountCircleOutline, //account
 
 } from '@mdi/js'
 
 export default {
+  account: mdiAccountCircleOutline,
+  lock: mdiLock,
+  eye: mdiEyeCircleOutline,
   alert: mdiAlertCircleOutline,
   timer: mdiTimerSand,
   hidden: mdiEyeOffOutline,
@@ -70,9 +76,9 @@ export default {
   range: mdiChartBellCurveCumulative,
   rule: mdiRuler,
   strain: mdiFlashTriangle,
-  frecuencia: mdiSineWave , 
-  corriente : mdiCurrentAc ,
-  thdi : mdiWaveform,
-  thdv : mdiPlusMinusVariant , 
-  thermometer : mdiThermometerLines , 
+  frecuencia: mdiSineWave,
+  corriente: mdiCurrentAc,
+  thdi: mdiWaveform,
+  thdv: mdiPlusMinusVariant,
+  thermometer: mdiThermometerLines,
 }
