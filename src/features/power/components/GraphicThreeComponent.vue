@@ -148,7 +148,7 @@ const chartOptions = computed(() => ({
     : Math.min(ranges.value.kW.min, ranges.value.kvar.min, ranges.value.kVA.min),
   max: Math.max(ranges.value.kW.max, ranges.value.kvar.max, ranges.value.kVA.max),
   title: {
-    text: "Potencia",
+    text: "Potencia (kW / kvar / kVA)",
     style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
   },
   labels: {

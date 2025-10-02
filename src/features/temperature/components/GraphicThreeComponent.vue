@@ -1,7 +1,13 @@
-<template>
-  <div class="w-full max-w-2xl mx-auto">
+<template >
+ <div class="p-4 space-y-2"> 
+    <div class="relative group"> 
+  <div
+    class="absolute -inset-2 bg-gradient-to-r from-accent-primary  via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+  </div>
+
+  <div class="p-6 pb-10 border-b border-slate-200/60 dark:border-slate-700/60">
     <!-- Header Simple -->
-    <div class="text-center mb-8">
+    <div class="text-center mb-8 ">
       <h1 class="text-3xl font-bold bg-gradient-to-r from-color1 to-color2 bg-clip-text text-transparent mb-2">
         Temperatura Actual del Sistema
       </h1>
@@ -16,53 +22,23 @@
       <div class="relative">
         <svg width="300" height="200" viewBox="0 0 300 200" class="drop-shadow-lg">
           <!-- Background Arc -->
-          <path
-            d="M 50 150 A 100 100 0 0 1 250 150"
-            fill="none"
-            :stroke="darkMode ? '#334155' : '#e2e8f0'"
-            stroke-width="20"
-            stroke-linecap="round"
-          />
-          
+          <path d="M 50 150 A 100 100 0 0 1 250 150" fill="none" :stroke="darkMode ? '#334155' : '#e2e8f0'"
+            stroke-width="20" stroke-linecap="round" />
+
           <!-- Progress Arc -->
-          <path
-            :d="progressPath"
-            fill="none"
-            :stroke="gaugeColor"
-            stroke-width="20"
-            stroke-linecap="round"
-            class="transition-all duration-1000 ease-out"
-            :stroke-dasharray="circumference"
-            :stroke-dashoffset="offset"
-          />
-          
+          <path :d="progressPath" fill="none" :stroke="gaugeColor" stroke-width="20" stroke-linecap="round"
+            class="transition-all duration-1000 ease-out" :stroke-dasharray="circumference"
+            :stroke-dashoffset="offset" />
+
           <!-- Center Circle -->
-          <circle
-            cx="150"
-            cy="150"
-            r="15"
-            :fill="gaugeColor"
-            class="drop-shadow-md"
-          />
-          
+          <circle cx="150" cy="150" r="15" :fill="gaugeColor" class="drop-shadow-md" />
+
           <!-- Temperature Markers -->
           <g v-for="(marker, index) in markers" :key="index">
-            <line
-              :x1="marker.x1"
-              :y1="marker.y1"
-              :x2="marker.x2"
-              :y2="marker.y2"
-              :stroke="darkMode ? '#64748b' : '#94a3b8'"
-              stroke-width="2"
-            />
-            <text
-              :x="marker.textX"
-              :y="marker.textY"
-              text-anchor="middle"
-              :fill="darkMode ? '#cbd5e1' : '#64748b'"
-              font-size="12"
-              font-weight="600"
-            >
+            <line :x1="marker.x1" :y1="marker.y1" :x2="marker.x2" :y2="marker.y2"
+              :stroke="darkMode ? '#64748b' : '#94a3b8'" stroke-width="2" />
+            <text :x="marker.textX" :y="marker.textY" text-anchor="middle" :fill="darkMode ? '#cbd5e1' : '#64748b'"
+              font-size="12" font-weight="600">
               {{ marker.value }}°
             </text>
           </g>
@@ -103,20 +79,25 @@
 
     <!-- Quick Stats -->
     <div class="grid grid-cols-3 gap-4 mt-8">
-      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+      <div
+        class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
         <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ minTemp }}°C</div>
         <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Mínima Hoy</div>
       </div>
-      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+      <div
+        class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
         <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ avgTemp }}°C</div>
         <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Promedio</div>
       </div>
-      <div class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
+      <div
+        class="text-center p-4 bg-gradient-to-br from-color5 to-color4 dark:from-colorDark3 dark:to-colorDark2 rounded-xl border border-color3 dark:border-colorDark3">
         <div class="text-2xl font-bold text-color1 dark:text-color3 mb-1">{{ maxTemp }}°C</div>
         <div class="text-xs font-medium text-color1/80 dark:text-color3/80">Máxima Hoy</div>
       </div>
     </div>
   </div>
+  </div>
+ </div>
 </template>
 
 <script setup>
@@ -216,14 +197,14 @@ const markers = computed(() => {
     const innerRadius = 80
     const outerRadius = 95
     const textRadius = 110
-    
+
     const x1 = 150 - innerRadius * Math.cos(angle)
     const y1 = 150 - innerRadius * Math.sin(angle)
     const x2 = 150 - outerRadius * Math.cos(angle)
     const y2 = 150 - outerRadius * Math.sin(angle)
     const textX = 150 - textRadius * Math.cos(angle)
     const textY = 150 - textRadius * Math.sin(angle) + 4
-    
+
     return {
       x1, y1, x2, y2, textX, textY, value: temp
     }

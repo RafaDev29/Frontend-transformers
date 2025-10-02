@@ -214,14 +214,14 @@
                   class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                   required />
               </div>
-
+ 
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   🌾 Rural (V) *
                 </label>
                 <input v-model.number="form.config.ruralValue.value" type="number"
                   class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                  placeholder="7.5" required />
+                  placeholder="7.5" required  step="any" />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Mensaje Rural (SOBRETENSIÓN) *
                 </label>
@@ -255,7 +255,7 @@
                   </label>
                   <input v-model.number="form.config.ruralValueNegative.value" type="number"
                     class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                    placeholder="-7.5" required />
+                    placeholder="-7.5" required  step="any" />
                   <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                     Mensaje Rural (SUBTENSIÓN) *
                   </label>
@@ -355,7 +355,7 @@
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Crítico (Hz) *
                 </label>
-                <input v-model.number="form.config.criticalValue.value" type="number" step="0.001"
+                <input v-model.number="form.config.criticalValue.value" type="number" step="any"
                   class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                   placeholder="0.001" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
@@ -370,7 +370,7 @@
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Crítico (Hz) *
                 </label>
-                <input v-model.number="form.config.criticalValueNegative.value" type="number" step="0.001"
+                <input v-model.number="form.config.criticalValueNegative.value" type="number" step="any"
                   class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                   placeholder="-0.001" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">

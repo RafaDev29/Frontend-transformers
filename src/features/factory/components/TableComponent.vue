@@ -13,8 +13,9 @@
                  text-white"
         >
           <tr>
+             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">RUC</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Razón Social</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">RUC</th>
+           
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Código</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Distrito</th>
           </tr>

@@ -11,7 +11,7 @@
             <span class="text-color1 dark:text-color3">S</span>
             <span class="text-accent-success dark:text-color4">I</span>
             <span class="text-color2 dark:text-color5">M</span>
-            <span class="text-color3 dark:text-color2">T</span> 
+            <span class="text-color3 dark:text-color2">T</span>
             <span class="text-color4 dark:text-color1">R</span>
             <span class="text-accent-primary dark:text-accent-success">A</span>
           </div>
@@ -50,7 +50,7 @@
               :class="[
                 rail ? 'p-2 justify-center mx-2' : 'p-2 gap-1',
                 isItemDisabled(item)
-                  ?  'opacity-900 cursor-not-allowed bg-slate-100/30 dark:bg-gray-800/20 border-slate-200/20 dark:border-gray-700/10 backdrop-blur-[2px]'
+                  ? 'opacity-900 cursor-not-allowed bg-slate-100/30 dark:bg-gray-800/20 border-slate-200/20 dark:border-gray-700/10 backdrop-blur-[2px]'
                   : $route.path === item.to
                     ? 'bg-gradient-to-r from-color1/10 via-color2/8 to-color1/5 dark:from-color3/15 dark:via-color4/12 dark:to-color3/8 border-color1/15 dark:border-color3/20 shadow-lg'
                     : 'bg-gradient-to-r from-slate-50/70 to-slate-100/50 dark:from-gray-800/50 dark:to-gray-700/30 border-color1/5 dark:border-gray-600/30 hover:from-color1/8 hover:to-color2/5 dark:hover:from-color3/10 dark:hover:to-color4/8 hover:border-color2/20 dark:hover:border-color3/30 hover:translate-x-1 hover:shadow-lg cursor-pointer'
@@ -89,8 +89,6 @@
                 </div>
               </div>
 
-              <!-- Overlay para items deshabilitados -->
-            
             </component>
           </template>
         </v-tooltip>
@@ -100,9 +98,9 @@
         <div class="absolute bottom-full left-0 right-0 mb-1 transition-all duration-500 overflow-hidden z-20"
           :class="isMaintenanceExpanded ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-4'">
 
-          <div
-            class="bg-gradient-to-br from-slate-50/95 to-slate-100/80 dark:from-slate-800/90 dark:to-slate-700/80 
-                border border-slate-200/60 dark:border-slate-600/50 rounded-lg shadow-xl backdrop-blur-sm p-3 space-y-2">
+          <div class="bg-gradient-to-br from-slate-50/95 to-slate-100/80 dark:from-slate-800/90 dark:to-slate-700/80 
+          border border-slate-200/60 dark:border-slate-600/50 rounded-lg shadow-xl backdrop-blur-sm p-3 space-y-2"
+            :class="rail ? 'mx-2' : ''">
 
             <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
               class="transform transition-all duration-300">
@@ -149,50 +147,55 @@
           </div>
         </div>
 
-        <div @click="toggleMaintenance" class="bg-gradient-to-br from-slate-50/80 to-slate-100/60 dark:from-slate-800/80 dark:to-slate-700/60 
-           border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
-           backdrop-blur-sm transition-all duration-300 hover:shadow-md cursor-pointer group
-           hover:border-color3/30 dark:hover:border-colorDark4/50">
+        <!-- TOOLTIP AGREGADO AQUÍ -->
+        <v-tooltip :disabled="!rail" text="Mantenimientos" location="end">
+          <template #activator="{ props: tooltipProps }">
+            <div v-bind="rail ? tooltipProps : {}" @click="toggleMaintenance" class="bg-gradient-to-br from-slate-50/80 to-slate-100/60 dark:from-slate-800/80 dark:to-slate-700/60 
+        border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
+        backdrop-blur-sm transition-all duration-300 hover:shadow-md cursor-pointer group
+        hover:border-color3/30 dark:hover:border-colorDark4/50">
 
-          <div class="px-3 py-2 bg-gradient-to-r from-white/60 to-slate-50/40 dark:from-slate-700/60 dark:to-slate-600/40 
-                transition-all duration-300 hover:from-slate-100/70 hover:to-color5/20 
-                dark:hover:from-slate-600/70 dark:hover:to-colorDark3/20 rounded-lg">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-gradient-to-br from-color2/85 to-color1/75 dark:from-colorDark4/80 dark:to-color2/70 
-                     rounded-lg flex items-center justify-center shadow-sm 
-                     transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
-                  <svg viewBox="0 0 24 24" class="h-4 w-4 text-white">
-                    <path
-                      d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
-                      fill="currentColor" />
-                  </svg>
+              <div class="px-3 py-2 bg-color2/20 dark:from-slate-700/60 dark:to-slate-600/40 
+              transition-all duration-300 hover:from-slate-100/70 hover:to-color5/20 
+              dark:hover:from-slate-600/70 dark:hover:to-colorDark3/20 rounded-lg ">
+                <div class="flex items-center justify-between pl-1 ">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-color2/85 to-color1/75 dark:from-colorDark4/80 dark:to-color2/70 
+                   rounded-lg flex items-center justify-center shadow-sm 
+                   transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ">
+                      <svg viewBox="0 0 24 24" class="h-4 w-4 text-white">
+                        <path
+                          d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
+                          fill="currentColor" />
+                      </svg>
+                    </div>
+
+                    <div v-if="!rail" class="min-w-0 flex-1">
+                      <h3 class="text-sm font-medium text-slate-800 dark:text-slate-200 tracking-tight mb-0.5 truncate">
+                        Mantenimientos
+                      </h3>
+                      <p class="text-xs text-slate-600 dark:text-slate-400 font-normal">
+                        {{ maintenanceItems.length }} herramienta{{ maintenanceItems.length !== 1 ? 's' : '' }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-">
+                    <div v-if="!rail" class="flex-shrink-0 transition-transform duration-300 "
+                      :class="{ 'rotate-180': !isMaintenanceExpanded }">
+                      <svg viewBox="0 0 24 24"
+                        class="h-4 w-4 text-slate-500 dark:text-slate-400 transition-colors duration-300">
+                        <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-
-                <div v-if="!rail" class="min-w-0 flex-1">
-                  <h3 class="text-sm font-medium text-slate-800 dark:text-slate-200 tracking-tight mb-0.5 truncate">
-                    Mantenimientos
-                  </h3>
-                  <p class="text-xs text-slate-600 dark:text-slate-400 font-normal">
-                    {{ maintenanceItems.length }} herramienta{{ maintenanceItems.length !== 1 ? 's' : '' }}
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-">
-                <div v-if="!rail" class="flex-shrink-0 transition-transform duration-300"
-                  :class="{ 'rotate-180': !isMaintenanceExpanded }">
-                  <svg viewBox="0 0 24 24"
-                    class="h-4 w-4 text-slate-500 dark:text-slate-400 transition-colors duration-300">
-                    <path d="M7 10l5 5 5-5z" fill="currentColor" />
-                  </svg>
-                </div>
-
               </div>
             </div>
-          </div>
-        </div>
+          </template>
+        </v-tooltip>
       </div>
+      <!-- Hasta aquí -->
     </div>
 
 
@@ -200,8 +203,7 @@
       <div
         class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
         <div v-if="!rail" class="p-2.5">
-          <UserActionsCard :user="user" @profile="goToProfile" @support="goToSupport"
-            @logout="$emit('logout')" />
+          <UserActionsCard :user="user" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
         </div>
 
         <div v-else class="flex justify-center py-3">
@@ -214,7 +216,7 @@
           </div>
         </div>
 
-        <div class="p-2.5 text-center">
+        <div class=" text-center">
           <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider">
             © 2025 SIMTRA
           </div>
@@ -227,7 +229,7 @@
       <ProfileFormRoot @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showFactoryProfile" max-width="700px"  persistent>
+    <v-dialog v-model="showFactoryProfile" max-width="700px" persistent>
       <ProfileFormFactory @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
@@ -235,7 +237,7 @@
       <ProfileFormCustomer @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-     <v-dialog v-model="showSupport" max-width="900px" class="" persistent>
+    <v-dialog v-model="showSupport" max-width="900px" class="" persistent>
       <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
     </v-dialog>
   </v-navigation-drawer>
@@ -298,7 +300,7 @@ const route = useRoute()
 
 function isItemDisabled(item) {
   if (item.category === 'monitoring' || !item.category) {
-    const allowedRoutes = ["/app/factoryTransformerDetail", "/app/strain", "/app/current" , "/app/frequency" , "/app/power" , "/app/thdv" , "/app/thdi" , "/app/temperature" , "/app/transformerDetail" ]
+    const allowedRoutes = ["/app/factoryTransformerDetail", "/app/strain", "/app/current", "/app/frequency", "/app/power", "/app/thdv", "/app/thdi", "/app/temperature", "/app/transformerDetail"]
     const isInAllowedRoute = allowedRoutes.includes(route.path)
 
     return !(transformerStore.hasTransformer && isInAllowedRoute)
@@ -307,14 +309,12 @@ function isItemDisabled(item) {
 }
 
 function toggleMaintenance() {
-  if (!props.rail) {
-    isMaintenanceExpanded.value = !isMaintenanceExpanded.value
-  }
+  isMaintenanceExpanded.value = !isMaintenanceExpanded.value
 }
 
 function goToProfile() {
   const authStore = useAuthStore()
-  const role = authStore.user?.role  
+  const role = authStore.user?.role
 
   closeAllProfileModals()
 
@@ -350,11 +350,11 @@ function handleProfileSuccess(message) {
 }
 
 function goToSupport() {
-   showSupport.value = true
+  showSupport.value = true
 }
 
 function closeAllSupportModals() {
- showSupport.value = false
+  showSupport.value = false
 }
 
 function closeSupportModal() {

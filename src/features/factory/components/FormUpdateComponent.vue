@@ -43,10 +43,10 @@
             <input id="ruc" v-model="form.ruc" type="text" class="w-full px-3 py-2 border rounded-md" />
           </div>
 
-          <!-- Razón social -->
+
           <div>
             <label for="businessName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Razón social *
+              Razón Social *
             </label>
             <input id="businessName" v-model="form.businessName" type="text"
               class="w-full px-3 py-2 border rounded-md" />

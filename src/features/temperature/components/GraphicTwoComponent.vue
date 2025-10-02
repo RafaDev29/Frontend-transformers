@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <div
+     <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
       

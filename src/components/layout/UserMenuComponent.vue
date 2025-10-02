@@ -13,7 +13,7 @@
 
       <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-color1/20 dark:via-color3/30 to-transparent"></div>
       
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1">
         <div
           class="relative w-11 h-11 bg-gradient-to-br from-color3 to-color1 dark:from-color4 dark:to-color2 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl shadow-color1/30 dark:shadow-color3/40 border-2 border-white/95 dark:border-slate-200/25 ring-2 ring-color1/20 dark:ring-color3/30">
           <span class="text-white font-bold text-lg drop-shadow-md">

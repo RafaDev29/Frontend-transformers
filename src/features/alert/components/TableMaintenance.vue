@@ -28,10 +28,7 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Creado por
                             </th>
-                            <th
-                                class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                                Descripción
-                            </th>
+                           
                             <th
                                 class="px-4 py-3 text-center text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Destinatarios
@@ -117,11 +114,7 @@
                                 </div>
                             </td>
 
-                            <td class="px-4 py-4 text-slate-600 dark:text-slate-300 max-w-64">
-                                <div class="truncate" :title="row.description">
-                                    {{ row.description }}
-                                </div>
-                            </td>
+                           
 
                             <td class="px-4 py-4 whitespace-nowrap text-center">
                                 <div class="flex flex-col gap-1">

@@ -42,20 +42,8 @@
             ]" placeholder="" required />
             <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
           </div>
-          <div>
-            <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Razón social *
-            </label>
-            <input id="businessname" v-model.number="form.businessname" type="text" min="1" step="0.01" :class="[
-              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.businessname ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-            ]" required />
-            <p v-if="errors.businessname" class="mt-1 text-sm text-red-600">{{ errors.businessname }}</p>
-          </div>
 
-
-          <div>
+           <div>
             <label for="ruc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Ruc *
             </label>
@@ -66,6 +54,21 @@
             ]" placeholder="" required />
             <p v-if="errors.ruc" class="mt-1 text-sm text-red-600">{{ errors.ruc }}</p>
           </div>
+          
+          <div>
+            <label for="businessname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Razón Social *
+            </label>
+            <input id="businessname" v-model.number="form.businessname" type="text" min="1" step="0.01" :class="[
+              'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+              errors.businessname ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
+              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+            ]" required />
+            <p v-if="errors.businessname" class="mt-1 text-sm text-red-600">{{ errors.businessname }}</p>
+          </div>
+
+
+         
 
 
           <div>

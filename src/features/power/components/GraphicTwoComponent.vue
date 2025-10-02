@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 space-y-2">
     <div class="relative group">
-      <!-- Gradiente de fondo animado -->
+
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
@@ -156,7 +156,7 @@ const chartOptions = computed(() => ({
   },
   yaxis: {
     title: {
-      text: "Potencia",
+      text: "Potencia (kW / kvar / kVA)",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
     labels: {

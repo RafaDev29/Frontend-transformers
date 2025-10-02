@@ -49,8 +49,9 @@
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
               ]" required>
                 <option value="">Seleccionar zona</option>
-                <option value="RURAL">Rural</option>
                 <option value="URBANO">Urbano</option>
+                <option value="RURAL">Rural</option>
+                
               </select>
               <p v-if="errors.zone" class="mt-1 text-sm text-red-600">{{ errors.zone }}</p>
             </div>
