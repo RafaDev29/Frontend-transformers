@@ -1,11 +1,19 @@
 <template>
-
-
   <v-app>
-    <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
-      @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="96" />
+    <SidebarComponent
+      v-model="drawer"
+      :rail="!sidebarOpen"
+      :items="allMenuItems"
+      :user="auth.user"
+      @toggle="toggleSidebar"
+      @logout="onLogout"
+      @settings="onSettings"
+      app
+      :width="280"
+      :rail-width="96"
+    />
 
-    <v-main class="min-h-screen overflow-hidden ">
+    <v-main class="main-layout">
       <div :class="[$route.meta.fullScreen ? 'content-bleed' : 'content-shell']">
         <router-view />
       </div>
@@ -124,29 +132,33 @@ function onSettings() {
 </script>
 
 <style scoped>
+
+.main-layout {
+  height: 100vh; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+
 .content-shell {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  padding: 16px;
+  flex: 1;
+  min-height: 0; 
+  overflow-y: auto; 
+  padding: 2px;
   margin: 2px;
-  overflow: auto;
 }
 
 @media (min-width: 960px) {
   .content-shell {
-    padding: 10px;
     @apply dark:bg-slate-900/100;
   }
 }
 
+
 .content-bleed {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  padding: 0;
-  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen  dark:bg-slate-900  flex flex-col">
+  <div class="min-h-screen overflow-auto-y dark:bg-slate-900  flex flex-col">
 
     <div class="py-1">
       <NavigationComponent :breadcrumbs="[
