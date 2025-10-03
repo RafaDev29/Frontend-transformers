@@ -27,7 +27,7 @@
     </div>
 
 
-    <QuoteForm v-model="showQuoteForm" />
+    <QuoteForm v-model="showQuoteForm" class="backdrop-blur-md" />
   </header>
 </template>
 

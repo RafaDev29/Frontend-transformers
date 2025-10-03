@@ -22,6 +22,7 @@ const showWarning = () => {
       } else {
         clearInterval(countdownInterval)
         show.value = false
+        eventBus.emit('force-logout') // logout automático
       }
     }, 1000)
   }
@@ -54,7 +55,7 @@ onUnmounted(() => {
       class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-md w-full p-6 animate-fade-in"
     >
       <!-- Header -->
-      <div class="flex items-center gap-2 text-accent-warning">
+      <div class="flex items-center gap-2 text-accent-primary">
         <svg viewBox="0 0 24 24" class="h-6 w-6">
           <path :d="$icons.alert" fill="currentColor" />
         </svg>
@@ -69,7 +70,8 @@ onUnmounted(() => {
         <svg viewBox="0 0 24 24" class="h-5 w-5 text-accent-primary">
           <path :d="$icons.timer" fill="currentColor" />
         </svg>
-        Cierre automático en <span class="text-accent-danger font-bold">{{ countdown }}</span> segundos.
+        Cierre automático en 
+        <span class="text-accent-success font-bold">{{ countdown }}</span> segundos.
       </p>
 
       <!-- Actions -->

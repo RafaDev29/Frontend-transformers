@@ -1,18 +1,13 @@
 <template>
   <v-app>
-    <!-- Navbar visible en todas las rutas excepto /login -->
     <Navbar v-if="shouldShowNavbar" />
 
-    <!-- Rutas -->
     <router-view />
 
-    <!-- Alertas globales -->
     <SuccessAlert />
     <ErrorAlert />
     <WarningAlert />
     <LoadingAlert />
-
-    <!-- Alerta de sesión expirada -->
     <SessionAlert />
   </v-app>
 </template>
@@ -35,17 +30,15 @@ const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
 
-// Mostrar navbar en todas menos /login
-const shouldShowNavbar = computed(() => route.path !== 'auth/login')
 
-// Constantes para tiempo de inactividad
-const IDLE_TIMEOUT = 1 * 60 * 1000 // 10 min
-const WARNING_DISPLAY_TIME = 10 * 1000 // 30 seg
+const shouldShowNavbar = computed(() => route.path !== '/auth/login')
+
+const IDLE_TIMEOUT = 10 * 60 * 1000 
+const WARNING_DISPLAY_TIME = 30 * 1000 
 
 let idleTimer = null
 let warningTimer = null
 
-// Resetear contadores de tiempo
 const resetTimer = () => {
   clearTimeout(idleTimer)
   clearTimeout(warningTimer)
@@ -65,16 +58,15 @@ const resetTimer = () => {
   }, IDLE_TIMEOUT - WARNING_DISPLAY_TIME)
 }
 
-// Cerrar sesión
+
 const logout = () => {
-  auth.clearSession() // 🔥 Método que deberías tener en tu Pinia store para limpiar token
+  auth.clearSession() 
   localStorage.clear()
-  router.push('/login').then(() => {
+  router.push('/auth/login').then(() => {
     location.reload()
   })
 }
 
-// Eventos que reinician el temporizador
 const startTracking = () => {
   const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'touchmove']
   events.forEach(event => window.addEventListener(event, resetTimer))
@@ -88,25 +80,22 @@ const stopTracking = () => {
   clearTimeout(warningTimer)
 }
 
-// Escuchar eventos externos
+
 eventBus.on('keep-alive', () => {
   if (auth.isAuthenticated) resetTimer()
 })
 
 eventBus.on('force-logout', logout)
 
-// Reactividad al login/logout
 watch(() => auth.isAuthenticated, (isAuth) => {
   if (isAuth) startTracking()
   else stopTracking()
 })
 
-// Al montar componente
 onMounted(() => {
   if (auth.isAuthenticated) startTracking()
 })
 
-// Limpiar al desmontar
 onUnmounted(stopTracking)
 </script>
 

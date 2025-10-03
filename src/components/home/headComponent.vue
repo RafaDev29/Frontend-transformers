@@ -21,13 +21,13 @@
   <button
     class="mt-4 bg-colorDark1 text-white px-5 py-2 font-bold rounded-lg shadow-lg hover:bg-color2 transform transition-all duration-500"
     @click="showQuoteForm = true">
-    Cotizar
+    Cotizar. 
   </button>
 </div>
 
 
 
-    <QuoteForm v-model="showQuoteForm" />
+    <QuoteForm v-model="showQuoteForm" class="backdrop-blur-md" />
   </header>
 </template>
 

@@ -51,7 +51,7 @@
             </a>
             <div class="text-slate-400 text-xs">
               ¿No tienes cuenta?
-              <a href="#" class="text-color3 hover:text-color2 font-medium transition-colors duration-200">
+              <a  class="text-color3 hover:text-color2 font-medium transition-colors duration-200 " @click="showQuoteForm = true">
                 Solicitar acceso
               </a>
             </div>
@@ -82,7 +82,10 @@
         </div>
       </div>
     </div>
+    
   </div>
+
+    <QuoteForm v-model="showQuoteForm" class="backdrop-blur-md"/>
 </template>
 
 <script setup>
@@ -91,14 +94,14 @@ import { useRouter, useRoute } from 'vue-router'
 import FormLogin from '../components/FormLogin.vue'
 import { login as apiLogin } from '../services/authService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
-
+import QuoteForm from '@/components/ui/forms/QuotationForm.vue'
 const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 const isLoading = ref(false)
 const errorMsg = ref('')
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
-
+const showQuoteForm = ref(false)
 const handleLogin = async (credentials) => {
   isLoading.value = true
   errorMsg.value = ''
