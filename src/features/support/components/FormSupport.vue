@@ -43,9 +43,8 @@
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                        <path :d="$icons.account" fill="currentColor" />
                       </svg>
                     </div>
                     <input v-model="form.name" type="text"
@@ -60,9 +59,8 @@
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                        <path :d="$icons.cellphone" fill="currentColor" />
                       </svg>
                     </div>
                     <input v-model="form.telefono" type="tel"
@@ -83,10 +81,9 @@
                 </label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
-                      <path
-                        d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
-                    </svg>
+                    <svg viewBox="0 0 24 24" class="h-5 w-5">
+                        <path :d="$icons.email" fill="currentColor" />
+                      </svg>
                   </div>
                   <input v-model="form.email" type="email"
                     class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
@@ -98,16 +95,16 @@
                 </p>
               </div>
 
-              <!-- Message Field -->
+
               <div class="space-y-2">
                 <label class="block text-sm font-semibold text-colorDark1">
                   Mensaje *
                 </label>
                 <div class="relative">
                   <div class="absolute top-3 left-3 pointer-events-none">
-                    <svg class="h-4 w-4 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
-                    </svg>
+                     <svg viewBox="0 0 24 24" class="h-5 w-5">
+                        <path :d="$icons.message" fill="currentColor" />
+                      </svg>
                   </div>
                   <textarea v-model="form.mensaje" rows="6"
                     class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white resize-none text-sm"
@@ -117,7 +114,6 @@
               </div>
             </div>
 
-            <!-- Right Column - File Upload and Actions -->
             <div class="space-y-5">
               <!-- File Upload Field -->
               <div class="space-y-2">
@@ -129,9 +125,8 @@
                   <div v-if="!selectedFile" class="space-y-2">
                     <div
                       class="mx-auto w-10 h-10 bg-gradient-to-r from-color1 to-color2 rounded-full flex items-center justify-center">
-                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                        <path :d="$icons.document" fill="currentColor" />
                       </svg>
                     </div>
                     <div>
@@ -240,8 +235,8 @@
           <div class="flex items-center space-x-2">
             <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
               <!-- Icono WhatsApp principal -->
-              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
+              <svg viewBox="0 0 24 24" class="h-5 w-5">
+                <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
             </div>
             <div>
@@ -254,16 +249,16 @@
           <div class="flex flex-col sm:flex-row gap-1">
             <a href="https://wa.me/34696576114" target="_blank"
               class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
-              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
+              <svg viewBox="0 0 24 24" class="h-5 w-5">
+                <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
               +34 696 576 114
             </a>
 
             <a href="https://wa.me/34687050685" target="_blank"
               class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
-              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
+              <svg viewBox="0 0 24 24" class="h-5 w-5">
+                <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
               +34 687 050 685
             </a>

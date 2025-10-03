@@ -15,7 +15,7 @@ import {
   mdiGauge,                // gauge (telemetría)
   mdiCellphone,            // cellphone (app móvil)
   mdiTransmissionTower,
-  mdiLightbulbOn,// foco de idea
+  mdiLightbulbOnOutline,// foco de idea
   mdiHomeAnalytics, // casa
   mdiLogin, //login
   mdiMenu, // menu 
@@ -39,10 +39,27 @@ import {
   mdiEyeCircleOutline, //ojos 
   mdiLock,// candado
   mdiAccountCircleOutline, //account
-
+  mdiWhatsapp, //whatsapp
+  mdiEmail, //email
+  mdiMessageArrowRight, //mensaje
+  mdiFaceAgent, //support
+  mdiWeatherNight, //
+  mdiWeatherSunny , // sun 
+  mdiLocationExit , // off
+  mdiArrowUpDropCircleOutline , //arrow
+  mdiArrowDownDropCircleOutline, //arrow down
 } from '@mdi/js'
 
 export default {
+  arrowtwo : mdiArrowDownDropCircleOutline,
+  arrow : mdiArrowUpDropCircleOutline,
+  off : mdiLocationExit,
+  sun : mdiWeatherSunny,
+  dark: mdiWeatherNight,
+  support: mdiFaceAgent,
+  message: mdiMessageArrowRight,
+  email: mdiEmail,
+  whatsapp: mdiWhatsapp,
   account: mdiAccountCircleOutline,
   lock: mdiLock,
   eye: mdiEyeCircleOutline,
@@ -61,7 +78,7 @@ export default {
   gauge: mdiGauge,
   cellphone: mdiCellphone,
   transmissionTower: mdiTransmissionTower,
-  light: mdiLightbulbOn,
+  light: mdiLightbulbOnOutline,
   home: mdiHomeAnalytics,
   login: mdiLogin,
   menu: mdiMenu,

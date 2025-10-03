@@ -185,7 +185,7 @@
                       :class="{ 'rotate-180': !isMaintenanceExpanded }">
                       <svg viewBox="0 0 24 24"
                         class="h-4 w-4 text-slate-500 dark:text-slate-400 transition-colors duration-300">
-                        <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                        <path :d="$icons.arrowtwo" fill="currentColor" />
                       </svg>
                     </div>
                   </div>
@@ -199,30 +199,27 @@
     </div>
 
 
-    <template #append>
-      <div
-        class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
-        <div v-if="!rail" class="p-2.5">
-          <UserActionsCard :user="user" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
-        </div>
+  <template #append>
+  <div
+    class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
+    
+    <!-- Modo normal: mostrar UserActionsCard completo -->
+    <div v-if="!rail" class="p-2.5">
+      <UserActionsCard :user="user" :rail="false" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
+    </div>
 
-        <div v-else class="flex justify-center py-3">
-          <div class="w-11 h-11 bg-gradient-to-br from-color1 to-color2 dark:from-color2 dark:to-color3 rounded-xl 
-                   flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 
-                   shadow-xl border-2 border-white/90 dark:border-gray-200/20" @click="$emit('toggle')">
-            <span class="text-white font-bold text-base">
-              {{ user?.username?.charAt(0).toUpperCase() }}
-            </span>
-          </div>
-        </div>
+    <!-- Modo rail: mostrar UserActionsCard minimizado -->
+    <div v-else class="flex justify-center py-3">
+      <UserActionsCard :user="user" :rail="true" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
+    </div>
 
-        <div class=" text-center">
-          <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider">
-            © 2025 SIMTRA
-          </div>
-        </div>
+    <div class="text-center">
+      <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider">
+        © 2025 SIMTRA
       </div>
-    </template>
+    </div>
+  </div>
+</template>
 
 
     <v-dialog v-model="showRootProfile" max-width="700px" persistent>
