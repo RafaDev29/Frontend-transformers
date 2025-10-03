@@ -100,7 +100,7 @@
 
           <div class="bg-gradient-to-br from-slate-50/95 to-slate-100/80 dark:from-slate-800/90 dark:to-slate-700/80 
           border border-slate-200/60 dark:border-slate-600/50 rounded-lg shadow-xl backdrop-blur-sm p-3 space-y-2"
-            :class="rail ? 'mx-2' : ''">
+            :class="rail ? '' : ''">
 
             <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
               class="transform transition-all duration-300">
@@ -146,23 +146,21 @@
             </div>
           </div>
         </div>
-
-        <!-- TOOLTIP AGREGADO AQUÍ -->
-        <v-tooltip :disabled="!rail" text="Mantenimientos" location="end">
+        <v-tooltip :disabled="!rail" location="end">
           <template #activator="{ props: tooltipProps }">
             <div v-bind="rail ? tooltipProps : {}" @click="toggleMaintenance" class="bg-gradient-to-br from-slate-50/80 to-slate-100/60 dark:from-slate-800/80 dark:to-slate-700/60 
-        border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
-        backdrop-blur-sm transition-all duration-300 hover:shadow-md cursor-pointer group
-        hover:border-color3/30 dark:hover:border-colorDark4/50">
+             border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
+             backdrop-blur-sm transition-all duration-300 hover:shadow-md cursor-pointer group
+             hover:border-color3/30 dark:hover:border-colorDark4/50">
 
               <div class="px-3 py-2 bg-color2/20 dark:from-slate-700/60 dark:to-slate-600/40 
-              transition-all duration-300 hover:from-slate-100/70 hover:to-color5/20 
-              dark:hover:from-slate-600/70 dark:hover:to-colorDark3/20 rounded-lg ">
+                  transition-all duration-300 hover:from-slate-100/70 hover:to-color5/20 
+                  dark:hover:from-slate-600/70 dark:hover:to-colorDark3/20 rounded-lg ">
                 <div class="flex items-center justify-between pl-1 ">
                   <div class="flex items-center gap-3">
                     <div class="w-9 h-9 bg-gradient-to-br from-color2/85 to-color1/75 dark:from-colorDark4/80 dark:to-color2/70 
-                   rounded-lg flex items-center justify-center shadow-sm 
-                   transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ">
+                        rounded-lg flex items-center justify-center shadow-sm 
+                        transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ">
                       <svg viewBox="0 0 24 24" class="h-4 w-4 text-white">
                         <path
                           d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
@@ -193,48 +191,58 @@
               </div>
             </div>
           </template>
+
+          <!-- SLOT PERSONALIZADO DEL TOOLTIP -->
+          <template #default>
+            <div class="bg-green-600 text-white px-3 py-1 rounded-md shadow-md text-sm font-medium">
+              Mantenimientos
+            </div>
+          </template>
         </v-tooltip>
+
       </div>
       <!-- Hasta aquí -->
     </div>
 
 
-  <template #append>
-  <div
-    class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
-    
-    <!-- Modo normal: mostrar UserActionsCard completo -->
-    <div v-if="!rail" class="p-2.5">
-      <UserActionsCard :user="user" :rail="false" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
-    </div>
+    <template #append>
+      <div
+        class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
 
-    <!-- Modo rail: mostrar UserActionsCard minimizado -->
-    <div v-else class="flex justify-center py-3">
-      <UserActionsCard :user="user" :rail="true" @profile="goToProfile" @support="goToSupport" @logout="$emit('logout')" />
-    </div>
+        <!-- Modo normal: mostrar UserActionsCard completo -->
+        <div v-if="!rail" class="p-2.5">
+          <UserActionsCard :user="user" :rail="false" @profile="goToProfile" @support="goToSupport"
+            @logout="$emit('logout')" />
+        </div>
 
-    <div class="text-center">
-      <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider">
-        © 2025 SIMTRA
+        <!-- Modo rail: mostrar UserActionsCard minimizado -->
+        <div v-else class="flex justify-center py-3">
+          <UserActionsCard :user="user" :rail="true" @profile="goToProfile" @support="goToSupport"
+            @logout="$emit('logout')" />
+        </div>
+
+        <div class="text-center">
+          <div class="text-xs text-slate-400 dark:text-gray-500 font-medium tracking-wider">
+            © 2025 SIMTRA
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</template>
+    </template>
 
 
-    <v-dialog v-model="showRootProfile" max-width="700px" persistent>
+    <v-dialog v-model="showRootProfile" max-width="700px" class="backdrop-blur-md" >
       <ProfileFormRoot @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showFactoryProfile" max-width="700px" persistent>
+    <v-dialog v-model="showFactoryProfile" max-width="700px" class="backdrop-blur-md" >
       <ProfileFormFactory @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showCustomerProfile" max-width="700px" class="mb-10" persistent>
+    <v-dialog v-model="showCustomerProfile" max-width="700px" class="backdrop-blur-md mb-10"  >
       <ProfileFormCustomer @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showSupport" max-width="900px" class="" persistent>
+    <v-dialog v-model="showSupport" max-width="900px" class="backdrop-blur-md"  >
       <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
     </v-dialog>
   </v-navigation-drawer>

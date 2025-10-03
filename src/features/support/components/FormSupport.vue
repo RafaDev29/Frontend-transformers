@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1">
+  <div class="bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1 "  @click="$emit('close')">
     <div class="mx-auto">
 
       <!-- Header Section -->
