@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full ">
         <div class="overflow-hidden border border-slate-200/70 dark:border-slate-700/60
              bg-gradient-to-br from-white via-slate-50 to-white
              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800
@@ -52,8 +52,16 @@
                             </td>
 
                             <td
-                                class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                                {{ row.ruc }}
+                            
+                                class="px-4 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold
+                           bg-gradient-to-r from-color1/10 via-color2/10 to-color1/5
+                           dark:from-colorDark3/20 dark:via-colorDark4/15 dark:to-colorDark3/10
+                           text-color1 dark:text-color3 border border-color1/20 dark:border-colorDark3/30
+                           transition-all duration-300 group-hover:shadow-sm">
+
+                                    {{ row.ruc }}
+                                </span>
                             </td>
 
                             <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">

@@ -1,26 +1,27 @@
 <template>
-  <div>
+  <div class="overflow-x-auto">
     <div
-      class="overflow-hidden border border-slate-200/70 dark:border-slate-700/60
+      class="inline-block min-w-full border border-slate-200/70 dark:border-slate-700/60
              bg-gradient-to-br from-white via-slate-50 to-white
              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800
              shadow-sm backdrop-blur-sm transition-all duration-300"
     >
-      <table class="min-w-full">
+      <table class="min-w-full table-auto">
+        <!-- Cabecera -->
         <thead
           class="bg-gradient-to-r from-color1/95 via-color2/85 to-color1/95
                  dark:from-color3/90 dark:via-color4/80 dark:to-color3/90
                  text-white"
         >
           <tr>
-             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">RUC</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Razón Social</th>
-           
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Código</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Distrito</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">RUC</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Razón Social</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Código</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Distrito</th>
           </tr>
         </thead>
 
+        <!-- Cuerpo -->
         <tbody
           class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300"
@@ -37,27 +38,17 @@
                    dark:odd:bg-slate-800/70 dark:even:bg-slate-800/60
                    transition-all duration-300"
           >
-            <td colspan="4" class="relative p-0">
-              <div
-                class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                       bg-gradient-to-r from-color1/6 via-color2/8 to-transparent
-                       dark:from-color3/10 dark:via-color4/10 dark:to-transparent"
-              ></div>
-
-              <div class="grid grid-cols-4">
-                <div class="px-6 py-4 whitespace-nowrap font-semibold text-slate-700 dark:text-slate-200">
-                  {{ factory.businessName }}
-                </div>
-                <div class="px-6 py-4 whitespace-nowrap font-mono text-slate-700 dark:text-slate-200">
-                  {{ factory.ruc }}
-                </div>
-                <div class="px-6 py-4 whitespace-nowrap font-medium text-slate-600 dark:text-slate-300">
-                  {{ factory.code }}
-                </div>
-                <div class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300 capitalize">
-                  {{ factory.distric }}
-                </div>
-              </div>
+            <td class="px-6 py-4 whitespace-nowrap font-mono text-slate-700 dark:text-slate-200">
+              {{ factory.ruc }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap font-semibold text-slate-700 dark:text-slate-200">
+              {{ factory.businessName }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-600 dark:text-slate-300">
+              {{ factory.code }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300 capitalize">
+              {{ factory.distric }}
             </td>
           </tr>
         </tbody>
@@ -82,10 +73,7 @@ const router = useRouter()
 const factoryStore = useFactoryStore()
 
 function goToFactory(factory) {
-  // guardamos en el store (y en localStorage) el factory seleccionado
   factoryStore.setFactory(factory)
-
-  // navegamos a la vista de transformadores (sin depender del query)
   router.push('/app/factoryTransformer')
 }
 </script>

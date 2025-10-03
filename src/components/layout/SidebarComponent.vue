@@ -1,7 +1,8 @@
 <template>
   <v-navigation-drawer v-model="model" app permanent :width="rail ? 80 : 320" :rail="rail" class="bg-gradient-to-b from-white to-slate-50 dark:from-gray-900 dark:to-gray-800 
-           border-r border-slate-200 dark:border-gray-700 transition-all duration-300" elevation="0">
-    <div class="sticky top-0 z-50 bg-gradient-to-r from-slate-50 to-slate-100 
+           border-r border-slate-200 dark:border-gray-700 transition-all duration-300
+           flex flex-col h-screen" elevation="0">
+    <div class="flex-shrink-0 sticky top-0 z-50 bg-gradient-to-r from-slate-50 to-slate-100 
                 dark:from-gray-800 dark:to-gray-900 border-b border-slate-200 
                 dark:border-gray-600 backdrop-blur-sm">
 
@@ -230,19 +231,19 @@
     </template>
 
 
-    <v-dialog v-model="showRootProfile" max-width="700px" class="backdrop-blur-md" >
+    <v-dialog v-model="showRootProfile" max-width="700px" class="backdrop-blur-md">
       <ProfileFormRoot @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showFactoryProfile" max-width="700px" class="backdrop-blur-md" >
+    <v-dialog v-model="showFactoryProfile" max-width="700px" class="backdrop-blur-md">
       <ProfileFormFactory @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showCustomerProfile" max-width="700px" class="backdrop-blur-md mb-10"  >
+    <v-dialog v-model="showCustomerProfile" max-width="700px" class="backdrop-blur-md mb-10">
       <ProfileFormCustomer @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showSupport" max-width="900px" class="backdrop-blur-md"  >
+    <v-dialog v-model="showSupport" max-width="900px" class="backdrop-blur-md">
       <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
     </v-dialog>
   </v-navigation-drawer>
@@ -369,20 +370,27 @@ function closeSupportModal() {
 </script>
 
 <style scoped>
-.overflow-y-auto::-webkit-scrollbar {
+/* Scrollbar personalizada */
+.custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
 
-.overflow-y-auto::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.overflow-y-auto::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb {
   @apply bg-color2/30 dark:bg-color3/30 rounded-sm;
 }
 
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
   @apply bg-color2/50 dark:bg-color3/50;
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--color2), 0.3) transparent;
 }
 
 * {
@@ -393,9 +401,19 @@ function closeSupportModal() {
 
 :deep(.v-navigation-drawer) {
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .max-h-0 {
   max-height: 0;
+}
+
+/* Asegurar que el drawer tenga altura completa */
+:deep(.v-navigation-drawer__content) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 </style>

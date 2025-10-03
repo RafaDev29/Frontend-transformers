@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[800px] flex flex-col
+  <div class="w-full max-w-[800px] flex flex-col
              rounded-lg overflow-hidden
              border border-slate-200/70 dark:border-slate-700/60
              bg-gradient-to-br from-white via-slate-50 to-white
@@ -42,7 +42,7 @@
       <div class="grid grid-cols-1 gap-3">
 
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <!-- Producto -->
           <div class="bg-gradient-to-br from-slate-50/80 to-slate-100/50 
                      dark:from-slate-900/50 dark:to-slate-800/30
@@ -57,7 +57,7 @@
               Transformador
             </h3>
 
-            <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs">
               <div class="flex flex-col gap-0.5">
                 <span class="text-slate-600 dark:text-slate-300">N° de Serie:</span>
                 <span class=" font-semibold text-slate-800 dark:text-slate-100">
@@ -141,8 +141,7 @@
           </div>
         </div>
 
-        <!-- Segunda Fila: Técnicas y Cliente -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <!-- Técnicas -->
           <div class="bg-gradient-to-br from-color5/30 to-color4/20 dark:from-colorDark2/30 dark:to-colorDark3/20 
                      rounded-lg p-3 border border-color3/20 dark:border-colorDark3/30">
@@ -293,7 +292,7 @@
                 </svg>
                 <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Disponible</p>
                 <p class="text-[10px] text-slate-400 dark:text-slate-500">Sin cliente asignado</p>
-              </div>
+              </div> 
             </div>
           </div>
         </div>

@@ -1,35 +1,24 @@
 <template>
-  <div
-    class="p-2 rounded-xl shadow-md flex items-center gap-4 w-full
+  <div class="p-2 rounded-xl shadow-md flex-1 grid grid-cols-1 md:grid-cols-2 items-center gap-4 w-full
            dark:text-slate-200 dark:hover:bg-slate-600 text-slate-800 
-           transition-colors border"
-  >
-    <!-- Botones rápidos -->
+           transition-colors border">
     <div class="flex gap-2">
-      <button
-        v-for="btn in quickRanges"
-        :key="btn.value"
-        @click="setQuickRange(btn.value)"
+      <button v-for="btn in quickRanges" :key="btn.value" @click="setQuickRange(btn.value)"
         class="px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap"
         :class="[
           isActive(btn.value)
             ? 'bg-accent-primary text-white'
             : 'bg-color3 text-slate-800 hover:bg-color2 hover:text-white dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600'
-        ]"
-      >
+        ]">
         {{ btn.label }}
       </button>
     </div>
 
-    <!-- Date Range en un solo input -->
-    <VueDatePicker
-      v-model="range"
-      range
-      format="yyyy-MM-dd"
-      :enable-time-picker="false"
-      placeholder="Seleccionar rango"
-      class="w-64 text-sm"
-    />
+    <div>
+      <VueDatePicker v-model="range" range format="yyyy-MM-dd" :enable-time-picker="false"
+        placeholder="Seleccionar rango" class="w-64 text-sm" />
+    </div>
+
   </div>
 </template>
 
