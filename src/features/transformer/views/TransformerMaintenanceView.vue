@@ -15,20 +15,11 @@
       <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <FormCreateComponent 
-      v-if="showCreateModal" 
-      :show="showCreateModal" 
-      @close="closeCreateModal"
-      @save="handleCreate" 
-    />
+    <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
+      @save="handleCreate" />
 
-    <FormUpdateComponent 
-      v-if="showUpdateModal"
-      :show="showUpdateModal" 
-      :transformerData="selectedTransformer"
-      @close="closeUpdateModal"
-      @update="handleUpdate" 
-    />
+    <FormUpdateComponent v-if="showUpdateModal" :show="showUpdateModal" :transformerData="selectedTransformer"
+      @close="closeUpdateModal" @update="handleUpdate" />
   </div>
 </template>
 
@@ -39,17 +30,21 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { 
-  listTransformerRoot, 
-  deleteTransformerRoot, 
+import { useAuthStore } from '@/features/auth/stores/authStore'
+import {
+  listTransformerRoot,
+  deleteTransformerRoot,
   createTransformerRoot,
-  updateTransformerRoot 
+  updateTransformerRoot,
+  listTransformer, createTransformer, deleteTransformer , updateTransformer
 } from '../services/transformerService'
 
+
+const auth = useAuthStore()
 const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
-
+const role = auth.user?.role
 
 const showCreateModal = ref(false)
 
@@ -59,11 +54,18 @@ const selectedTransformer = ref({})
 
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 
-const listTranformer = async () => {
+const listTranformers = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await listTransformerRoot()
+    let response
+    if (role === 'ROOT') {
+      response = await listTransformerRoot()
+    } else if (role === 'FACTORY') {
+      response = await listTransformer()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
 
     if (response) {
       dataItem.value = response.data
@@ -89,12 +91,19 @@ const handleCreate = async (formData) => {
   errorMsg.value = ''
 
   try {
-    const response = await createTransformerRoot(formData)
+    let response
+    if (role === 'ROOT') {
+      response = await createTransformerRoot(formData)
+    } else if (role === 'FACTORY') {
+      response = await createTransformer(formData)
+    } else {
+      throw new Error('Rol no autorizado')
+    }
 
     if (response) {
       bus?.emit?.('success', 'Transformador creado correctamente')
       closeCreateModal()
-      listTranformer() 
+      listTranformers()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
@@ -122,12 +131,20 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateTransformerRoot(updateData.data , updateData.uid)
+    let response
+    if (role === 'ROOT') {
+      response = await updateTransformerRoot(updateData.data, updateData.uid)
+    } else if (role === 'FACTORY') {
+      response = await updateTransformer(updateData.data, updateData.uid)
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
 
     if (response) {
       bus?.emit?.('success', 'Transformador actualizado correctamente')
       closeUpdateModal()
-      listTranformer() 
+      listTranformers()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al actualizar transformador'
@@ -147,11 +164,20 @@ const handleDelete = async (payload) => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const response = await deleteTransformerRoot(payload.uid)
+
+    let response
+    if (role === 'ROOT') {
+      response = await deleteTransformerRoot(payload.uid)
+    } else if (role === 'FACTORY') {
+      response = await deleteTransformer(payload.uid)
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
 
     if (response) {
       bus?.emit?.('success', 'Se eliminó correctamente')
-      listTranformer()
+      listTranformers()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
@@ -162,6 +188,6 @@ const handleDelete = async (payload) => {
 }
 
 onMounted(() => {
-  listTranformer()
+  listTranformers()
 })
 </script>

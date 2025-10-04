@@ -131,7 +131,7 @@ const handleUpdate = async (updateData) => {
   try {
 
     let response
-
+ 
     if (role === 'ROOT') {
       response = await updateCustomerRoot(updateData.data, updateData.uid)
     } else if (role === 'FACTORY') {

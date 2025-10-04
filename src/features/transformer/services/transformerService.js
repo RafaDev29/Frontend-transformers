@@ -27,8 +27,6 @@ export async function updateTransformerRoot(payload, id) {
 
 
 
-
-
 export async function listTransformer() {
   const { data } = await client.get(TRANSFORMER.LIST)
   return data
@@ -39,7 +37,7 @@ export async function listTransformerRoot() {
   return data
 }
 
-
+ 
 
 export async function deleteTransformer(id) {
   const { data } = await client.delete(`${TRANSFORMER.DELETE}/${id}`)

@@ -13,9 +13,7 @@
         </button>
       </div>
 
-      <!-- Form -->
       <form @submit.prevent="handleSubmit" class="p-6">
-        <!-- SECCIÓN: DATOS DEL TRANSFORMADOR -->
         <div class="mb-6 p-4 border-2 border-blue-300 dark:border-blue-600 rounded-lg bg-blue-50/30 dark:bg-blue-900/10">
           <h3 class="text-sm font-semibold text-blue-700 dark:text-blue-400 mb-4 uppercase tracking-wide">
             Datos del Transformador
@@ -56,7 +54,6 @@
               <p v-if="errors.zone" class="mt-1 text-sm text-red-600">{{ errors.zone }}</p>
             </div>
 
-            <!-- Fases -->
             <div>
               <label for="phases" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Fases *
@@ -376,7 +373,7 @@
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Fábrica -->
-            <div>
+            <div v-if="auth.user.role !== 'FACTORY'">
               <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Fábrica *
               </label>
@@ -461,7 +458,8 @@
 import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
 import { listFactory } from '@/features/factory/services/factoryService'
 import { listRange } from '@/features/range/services/rangeService'
-import { allCustomer } from '@/features/customer/services/customerService'
+import { allCustomer , listCustomer } from '@/features/customer/services/customerService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const props = defineProps({
   show: {
@@ -475,7 +473,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'update'])
-
+const auth = useAuthStore()
+const role = auth.user?.role
 const dataFactory = ref([])
 const dataCustomer = ref([])
 const dataRange = ref([])
@@ -527,7 +526,15 @@ const getFactory = async () => {
 
 const getCustomer = async () => {
   try {
-    const response = await allCustomer()
+
+    let response
+    if (role === 'ROOT') {
+      response = await allCustomer()
+    } else if (role === 'FACTORY') {
+      response = await listCustomer()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
     if (response) {
       console.log(response.data, "customer")
       dataCustomer.value = response.data
@@ -792,7 +799,7 @@ const validateForm = () => {
     errors.value.yearManufacture = 'Año de fabricación inválido'
   }
 
-  if (!form.factoryUid) {
+  if (auth.user.role !== 'FACTORY' && !form.factoryUid) {
     errors.value.factoryUid = 'La fábrica es requerida'
   }
 
@@ -817,7 +824,7 @@ const handleSubmit = () => {
       altitude: form.altitude,
       frequency: form.frequency,
       yearManufacture: form.yearManufacture,
-      factoryUid: form.factoryUid,
+       ...(auth.user.role !== 'FACTORY' && { factoryUid: form.factoryUid }),
       isActive: form.isActive
     }
 

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
+  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
+    @click.self="$emit('close')">
     <div
       class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
@@ -13,10 +14,9 @@
         </button>
       </div>
 
-      <!-- Form -->
       <form @submit.prevent="handleSubmit" class="p-6">
-        <!-- SECCIÓN: DATOS DEL TRANSFORMADOR -->
-        <div class="mb-6 p-4 border-2 border-blue-300 dark:border-blue-600 rounded-lg bg-blue-50/30 dark:bg-blue-900/10">
+        <div
+          class="mb-6 p-4 border-2 border-blue-300 dark:border-blue-600 rounded-lg bg-blue-50/30 dark:bg-blue-900/10">
           <h3 class="text-sm font-semibold text-blue-700 dark:text-blue-400 mb-4 uppercase tracking-wide">
             Datos del Transformador
           </h3>
@@ -51,12 +51,11 @@
                 <option value="">Seleccionar zona</option>
                 <option value="URBANO">Urbano</option>
                 <option value="RURAL">Rural</option>
-                
+
               </select>
               <p v-if="errors.zone" class="mt-1 text-sm text-red-600">{{ errors.zone }}</p>
             </div>
 
-            <!-- Fases -->
             <div>
               <label for="phases" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Fases *
@@ -100,7 +99,6 @@
               <p v-if="errors.brand" class="mt-1 text-sm text-red-600">{{ errors.brand }}</p>
             </div>
 
-            <!-- Año de Fabricación -->
             <div>
               <label for="yearManufacture" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Año de Fabricación *
@@ -117,15 +115,17 @@
         </div>
 
         <!-- SECCIÓN: ESPECIFICACIONES TÉCNICAS -->
-        <div class="mb-6 p-4 border-2 border-purple-300 dark:border-purple-600 rounded-lg bg-purple-50/30 dark:bg-purple-900/10">
+        <div
+          class="mb-6 p-4 border-2 border-purple-300 dark:border-purple-600 rounded-lg bg-purple-50/30 dark:bg-purple-900/10">
           <h3 class="text-sm font-semibold text-purple-700 dark:text-purple-400 mb-4 uppercase tracking-wide">
             Especificaciones Técnicas
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- SUBSECCIÓN: PRIMARIO -->
-            <div class="p-3 border border-green-300 dark:border-green-600 rounded-md bg-green-50/20 dark:bg-green-900/5">
+            <div
+              class="p-3 border border-green-300 dark:border-green-600 rounded-md bg-green-50/20 dark:bg-green-900/5">
               <h4 class="text-xs font-semibold text-green-700 dark:text-green-400 mb-3 uppercase">Primario</h4>
-              
+
               <!-- Rango Primario -->
               <div class="mb-4">
                 <label for="primaryRange" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -144,7 +144,6 @@
                 <p v-if="errors.primaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.primaryRangeUid }}</p>
               </div>
 
-              <!-- Tensión Primaria -->
               <div class="mb-4">
                 <label for="primaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Tensión del Primario (V) *
@@ -157,8 +156,8 @@
                     !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
-                  <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage ">
-                    {{ voltage  }} V
+                  <option v-for="voltage in getPrimaryVoltageValues()" :key="voltage" :value="voltage">
+                    {{ voltage }} V
                   </option>
                 </select>
                 <p v-if="errors.primaryVoltage" class="mt-1 text-sm text-red-600">{{ errors.primaryVoltage }}</p>
@@ -169,19 +168,19 @@
                 <label for="primaryCurrent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Corriente del Primario (A)
                 </label>
-                <input id="primaryCurrent" v-model.number="form.primaryCurrent" type="number" step="0.01" min="0" :class="[
-                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
-                ]" placeholder="43.3" />
+                <input id="primaryCurrent" v-model.number="form.primaryCurrent" type="number" step="0.01" min="0"
+                  :class="[
+                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                    'border-gray-300 dark:border-slate-600 focus:ring-color1',
+                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  ]" placeholder="43.3" />
               </div>
             </div>
 
-            <!-- SUBSECCIÓN: SECUNDARIO -->
-            <div class="p-3 border border-orange-300 dark:border-orange-600 rounded-md bg-orange-50/20 dark:bg-orange-900/5">
+            <div
+              class="p-3 border border-orange-300 dark:border-orange-600 rounded-md bg-orange-50/20 dark:bg-orange-900/5">
               <h4 class="text-xs font-semibold text-orange-700 dark:text-orange-400 mb-3 uppercase">Secundario</h4>
-              
-              <!-- Rango Secundario -->
+
               <div class="mb-4">
                 <label for="secondaryRange" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Rango del Secundario *
@@ -199,7 +198,6 @@
                 <p v-if="errors.secondaryRangeUid" class="mt-1 text-sm text-red-600">{{ errors.secondaryRangeUid }}</p>
               </div>
 
-              <!-- Tensión Secundaria -->
               <div class="mb-4">
                 <label for="secondaryVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Tensión del Secundario (V) *
@@ -212,14 +210,13 @@
                     !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
-                  <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage ">
-                    {{ voltage  }} V
+                  <option v-for="voltage in getSecondaryVoltageValues()" :key="voltage" :value="voltage">
+                    {{ voltage }} V
                   </option>
                 </select>
                 <p v-if="errors.secondaryVoltage" class="mt-1 text-sm text-red-600">{{ errors.secondaryVoltage }}</p>
               </div>
 
-              <!-- Corriente Secundaria -->
               <div>
                 <label for="secondaryCurrent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Corriente del Secundario (A)
@@ -236,10 +233,11 @@
             <!-- SUBSECCIÓN: REGULACIÓN Y TENSIONES -->
             <div class="p-3 border border-cyan-300 dark:border-cyan-600 rounded-md bg-cyan-50/20 dark:bg-cyan-900/5">
               <h4 class="text-xs font-semibold text-cyan-700 dark:text-cyan-400 mb-3 uppercase">Regulación</h4>
-              
+
               <!-- Porcentaje Regulación -->
               <div class="mb-4">
-                <label for="regulationPercentage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label for="regulationPercentage"
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Porcentaje de Regulación
                 </label>
                 <select id="regulationPercentage" v-model="regulationPercentage" @change="calculateRegulatedVoltages"
@@ -255,7 +253,6 @@
                 </select>
               </div>
 
-              <!-- Tensión de Operación -->
               <div class="mb-4">
                 <label for="regulatedVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Tensión de Operación (V) *
@@ -303,7 +300,6 @@
               <p v-if="errors.apparentPowerKVA" class="mt-1 text-sm text-red-600">{{ errors.apparentPowerKVA }}</p>
             </div>
 
-            <!-- Altitud -->
             <div>
               <label for="altitude" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Altitud (m s.n.m) *
@@ -316,7 +312,6 @@
               <p v-if="errors.altitude" class="mt-1 text-sm text-red-600">{{ errors.altitude }}</p>
             </div>
 
-            <!-- Frecuencia -->
             <div>
               <label for="frequency" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Frecuencia (Hz) *
@@ -329,7 +324,6 @@
               <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
             </div>
 
-            <!-- Temperatura Cobre -->
             <div>
               <label for="copperTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Temperatura Cobre (°C)
@@ -342,7 +336,6 @@
                 ]" placeholder="65" />
             </div>
 
-            <!-- Temperatura Aceite -->
             <div>
               <label for="oilTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Temperatura Aceite (°C)
@@ -355,7 +348,6 @@
                 ]" placeholder="75" />
             </div>
 
-            <!-- Temperatura Ambiente -->
             <div>
               <label for="ambientTemperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Temperatura Ambiente (°C)
@@ -369,14 +361,13 @@
           </div>
         </div>
 
-        <!-- SECCIÓN: INFORMACIÓN COMERCIAL -->
-        <div class="mb-6 p-4 border-2 border-amber-300 dark:border-amber-600 rounded-lg bg-amber-50/30 dark:bg-amber-900/10">
+        <div
+          class="mb-6 p-4 border-2 border-amber-300 dark:border-amber-600 rounded-lg bg-amber-50/30 dark:bg-amber-900/10">
           <h3 class="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-4 uppercase tracking-wide">
             Información Comercial
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Fábrica -->
-            <div>
+            <div v-if="auth.user.role !== 'FACTORY'">
               <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Fábrica *
               </label>
@@ -393,7 +384,6 @@
               <p v-if="errors.factoryUid" class="mt-1 text-sm text-red-600">{{ errors.factoryUid }}</p>
             </div>
 
-            <!-- Cliente -->
             <div>
               <label for="customerUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Cliente
@@ -426,7 +416,6 @@
           </div>
         </div>
 
-        <!-- Estado Activo -->
         <div class="flex items-center mb-6">
           <input id="isActive" v-model="form.isActive" type="checkbox"
             class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
@@ -435,7 +424,6 @@
           </label>
         </div>
 
-        <!-- Buttons -->
         <div class="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-slate-600">
           <button type="button" @click="$emit('close')"
             class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-600 dark:text-gray-300 dark:hover:bg-slate-500 rounded-md transition-colors border border-gray-300 dark:border-slate-500">
@@ -460,8 +448,8 @@
 import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
 import { listFactory } from '@/features/factory/services/factoryService'
 import { listRange } from '@/features/range/services/rangeService'
-import { allCustomer } from '@/features/customer/services/customerService'
-
+import { allCustomer, listCustomer } from '@/features/customer/services/customerService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 const props = defineProps({
   show: {
     type: Boolean,
@@ -476,9 +464,10 @@ const dataCustomer = ref([])
 const dataRange = ref([])
 const isLoading = ref(false)
 const errors = ref({})
-const regulationPercentage = ref('')
+const regulationPercentage = ref('') 
 const regulatedVoltageOptions = ref([])
-
+const auth = useAuthStore()
+const role = auth.user?.role
 const form = reactive({
   type: '',
   zone: '',
@@ -520,7 +509,15 @@ const getFactory = async () => {
 
 const getCustomer = async () => {
   try {
-    const response = await allCustomer()
+
+    let response
+    if (role === 'ROOT') {
+      response = await allCustomer()
+    } else if (role === 'FACTORY') {
+      response = await listCustomer()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
     if (response) {
       console.log(response.data, "customer")
       dataCustomer.value = response.data
@@ -565,14 +562,14 @@ const calculateRegulatedVoltages = () => {
   const percentage = parseFloat(regulationPercentage.value)
 
   const increment1 = Math.round(baseVoltage * (percentage / 100))
-  const increment2 = Math.round(baseVoltage * (percentage / 50)) 
+  const increment2 = Math.round(baseVoltage * (percentage / 50))
 
   regulatedVoltageOptions.value = [
-    baseVoltage + increment2, 
-    baseVoltage + increment1, 
+    baseVoltage + increment2,
+    baseVoltage + increment1,
     baseVoltage - increment1,
-    baseVoltage - increment2  
-  ].sort((a, b) => b - a) 
+    baseVoltage - increment2
+  ].sort((a, b) => b - a)
 
   if (form.regulatedVoltage && !regulatedVoltageOptions.value.includes(form.regulatedVoltage)) {
     form.regulatedVoltage = null
@@ -683,7 +680,8 @@ const validateForm = () => {
     errors.value.yearManufacture = 'Año de fabricación inválido'
   }
 
-  if (!form.factoryUid) {
+
+  if (auth.user.role !== 'FACTORY' && !form.factoryUid) {
     errors.value.factoryUid = 'La fábrica es requerida'
   }
 
@@ -708,7 +706,7 @@ const handleSubmit = () => {
       altitude: form.altitude,
       frequency: form.frequency,
       yearManufacture: form.yearManufacture,
-      factoryUid: form.factoryUid,
+      ...(auth.user.role !== 'FACTORY' && { factoryUid: form.factoryUid }),
       isActive: form.isActive
     }
 

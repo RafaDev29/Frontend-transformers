@@ -48,7 +48,7 @@
                         <tr v-for="row in rows" :key="row.serialNumber"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
 
-                             <td
+                            <td
                                 class="px-4 py-4 font-mono font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
                                 {{ row.code }}
                             </td>
@@ -169,7 +169,7 @@ const rows = computed(() => {
         zone: item.zone,
         customer: item.customer,
         yearManufacture: item.yearManufacture,
-        code : item.code ,
+        code: item.code,
         factory: item.factory,
         isActive: item.isActive ? 'Activo' : 'Inactivo'
     }))
