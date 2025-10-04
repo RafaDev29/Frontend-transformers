@@ -6,7 +6,7 @@
           { label: 'Mantenimiento de Clientes', path: '/app/mCustomer' },
         ]" />
       </div>
-      <div class="w-[5%] flex justify-end">
+      <div class="w-[5%] flex ml-4  justify-end">
         <createButton @click="openCreateModal" />
       </div>
     </div>

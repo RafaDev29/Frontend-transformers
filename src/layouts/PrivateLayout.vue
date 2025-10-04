@@ -1,17 +1,7 @@
 <template>
   <v-app>
-    <SidebarComponent
-      v-model="drawer"
-      :rail="!sidebarOpen"
-      :items="allMenuItems"
-      :user="auth.user"
-      @toggle="toggleSidebar"
-      @logout="onLogout"
-      @settings="onSettings"
-      app
-      :width="280"
-      :rail-width="96"
-    />
+    <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
+      @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="90" />
 
     <v-main class="main-layout">
       <div :class="[$route.meta.fullScreen ? 'content-bleed' : 'content-shell']">
@@ -62,7 +52,7 @@ const maintenanceItems = computed(() => {
       category: 'maintenance'
     },
 
-    { 
+    {
       title: 'Transformadores',
       icon: 'transformer',
       to: '/app/mtransformer',
@@ -78,7 +68,7 @@ const maintenanceItems = computed(() => {
       category: 'maintenance'
     },
 
-     {
+    {
       title: 'Rangos',
       icon: 'range',
       to: '/app/mrange',
@@ -99,12 +89,12 @@ const maintenanceItems = computed(() => {
       roles: ['ROOT'],
       category: 'maintenance'
     },
-    
-    
 
-   
 
-    
+
+
+
+
 
 
   ]
@@ -120,7 +110,7 @@ function toggleSidebar() {
 }
 
 function onLogout() {
-  auth.clearSession() 
+  auth.clearSession()
   factory.clearFactory()
   transformer.clearTransformer()
   router.push({ name: 'auth.login' })
@@ -132,9 +122,8 @@ function onSettings() {
 </script>
 
 <style scoped>
-
 .main-layout {
-  height: 100vh; 
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -143,8 +132,8 @@ function onSettings() {
 
 .content-shell {
   flex: 1;
-  min-height: 0; 
-  overflow-y: auto; 
+  min-height: 0;
+  overflow-y: auto;
   padding: 2px;
   margin: 2px;
 }
@@ -154,7 +143,6 @@ function onSettings() {
     @apply dark:bg-slate-900/100;
   }
 }
-
 
 .content-bleed {
   flex: 1;

@@ -6,7 +6,7 @@
                 dark:from-gray-800 dark:to-gray-900 border-b border-slate-200 
                 dark:border-gray-600 backdrop-blur-sm">
 
-      <div v-if="!rail" class="p-6 flex items-center justify-between">
+      <div v-if="!rail" class="p-4 flex items-center justify-between">
         <div class="flex-1">
           <div class="text-2xl font-extrabold tracking-wider mb-1">
             <span class="text-color1 dark:text-color3">S</span>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div v-else class="p-5 flex justify-center">
+      <div v-else class="p-3 flex justify-center">
         <div @click="$emit('toggle')" class="w-9 h-9 bg-gradient-to-br from-color1 to-color2 dark:from-color2 dark:to-color3 
                  rounded-xl flex items-center justify-center cursor-pointer transition-all duration-300 
                  hover:scale-105 shadow-xl border-2 border-white/90 dark:border-gray-200/20">
@@ -95,12 +95,12 @@
         </v-tooltip>
       </div>
 
-      <div v-if="maintenanceItems.length > 0" class="mt-2 relative">
+      <div v-if="maintenanceItems.length > 0" class=" relative">
         <div class="absolute bottom-full left-0 right-0 mb-1 transition-all duration-500 overflow-hidden z-20"
           :class="isMaintenanceExpanded ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-4'">
 
           <div class="bg-gradient-to-br from-slate-50/95 to-slate-100/80 dark:from-slate-800/90 dark:to-slate-700/80 
-          border border-slate-200/60 dark:border-slate-600/50 rounded-lg shadow-xl backdrop-blur-sm p-3 space-y-2"
+          border border-slate-200/60 dark:border-slate-600/50 rounded-lg shadow-xl backdrop-blur-sm p-1 space-y-2"
             :class="rail ? '' : ''">
 
             <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"

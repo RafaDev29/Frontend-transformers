@@ -6,7 +6,7 @@
           { label: 'Mantenimiento de Fábricas', path: '/app/mfactory' },
         ]" />
       </div>
-      <div class="w-[5%] flex justify-end">
+      <div class="w-[5%]  ml-4 flex justify-end">
         <createButton @click="openCreateModal" />
       </div>
     </div>

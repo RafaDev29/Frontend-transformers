@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
     <div v-for="(phase, i) in phases" :key="i" class="group relative">
       <!-- Fondo gradiente -->
       <div
@@ -9,25 +9,27 @@
 
       <!-- Card -->
       <div
-        class="relative flex items-center justify-between px-3 py-2 rounded-xl border border-white/20 
-               bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl shadow-md hover:shadow-lg transition-all"
+        class="relative flex flex-col justify-between px-3 py-2 rounded-xl border border-white/20 
+               bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl shadow-md hover:shadow-lg transition-all h-full"
       >
         <div class="flex items-center gap-2">
+          <!-- aquí podrías poner icono o algo -->
         </div>
 
         <!-- Derecha -->
-        <div class="text-right">
+        <div class="text-right mt-auto">
           <p class="font-bold leading-tight" :class="phase.value">
             {{ currentPowers[phase.key] }}
           </p>
           <p class="text-xs ml-1" :class="phase.sub">
-            Potencia  {{ phase.label }}
+            Potencia {{ phase.label }}
           </p>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { computed, defineProps } from "vue"
@@ -51,21 +53,21 @@ const currentPowers = computed(() => {
 const phases = [
   {
     key: "kW",
-    label: "Activa (kW)",
+    label: "Activa",
     bg: "bg-gradient-to-r from-green-400 via-green-500 to-green-600",
     value: "text-green-900 dark:text-green-100",
     sub: "text-green-600 dark:text-green-300",
   },
   {
     key: "kvar",
-    label: "Reactiva (kvar)",
+    label: "Reactiva",
     bg: "bg-gradient-to-r from-red-400 via-red-500 to-red-600",
     value: "text-red-900 dark:text-red-100",
     sub: "text-red-600 dark:text-red-300",
   },
   {
     key: "kVA",
-    label: "Aparente (kVA)",
+    label: "Aparente",
     bg: "bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600",
     value: "text-blue-900 dark:text-blue-100",
     sub: "text-blue-600 dark:text-blue-300",
