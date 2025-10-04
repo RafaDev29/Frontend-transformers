@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]">
+  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
     <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-6xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">

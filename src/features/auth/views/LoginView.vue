@@ -46,12 +46,16 @@
 
 
           <div class="mt-6 text-center space-y-2">
-            <a href="#" class="text-color4/80 hover:text-color3 text-sm transition-colors duration-200 font-medium">
+            <a class="text-color4/80 hover:text-color3 text-sm transition-colors duration-200 font-medium"
+              @click="showSupport = true">
               ¿Olvidaste tu contraseña?
             </a>
+
+
             <div class="text-slate-400 text-xs">
               ¿No tienes cuenta?
-              <a  class="text-color3 hover:text-color2 font-medium transition-colors duration-200 " @click="showQuoteForm = true">
+              <a class="text-color3 hover:text-color2 font-medium transition-colors duration-200 "
+                @click="showQuoteForm = true">
                 Solicitar acceso
               </a>
             </div>
@@ -60,7 +64,6 @@
 
 
         <div class="mt-8 text-center">
-
           <div
             class="flex items-center justify-center space-x-1 text-sm font-bold tracking-wider mb-2 opacity-60 cursor-pointer"
             @click="$router.push('/start')">
@@ -82,10 +85,14 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
-    <QuoteForm v-model="showQuoteForm" class="backdrop-blur-md"/>
+  <QuoteForm v-model="showQuoteForm" class="backdrop-blur-md" />
+
+  <v-dialog v-model="showSupport" max-width="1050px" class="backdrop-blur-md">
+    <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
+  </v-dialog>
 </template>
 
 <script setup>
@@ -95,6 +102,7 @@ import FormLogin from '../components/FormLogin.vue'
 import { login as apiLogin } from '../services/authService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import QuoteForm from '@/components/ui/forms/QuotationForm.vue'
+import FormSupport from '@/features/support/components/FormSupport.vue'
 const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
@@ -102,6 +110,7 @@ const isLoading = ref(false)
 const errorMsg = ref('')
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
 const showQuoteForm = ref(false)
+const showSupport = ref(false)
 const handleLogin = async (credentials) => {
   isLoading.value = true
   errorMsg.value = ''
@@ -118,5 +127,15 @@ const handleLogin = async (credentials) => {
   } finally {
     isLoading.value = false
   }
+}
+
+
+function closeSupportModal() {
+  showSupport.value = false
+}
+
+function handleProfileSuccess() {
+  showSupport.value = false
+  bus?.emit?.('success', 'Solicitud enviada correctamente')
 }
 </script>

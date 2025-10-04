@@ -243,7 +243,7 @@
       <ProfileFormCustomer @close="closeProfileModal" @success="handleProfileSuccess" />
     </v-dialog>
 
-    <v-dialog v-model="showSupport" max-width="900px" class="backdrop-blur-md">
+    <v-dialog v-model="showSupport" max-width="1050px" class="backdrop-blur-md">
       <FormSupport @close="closeSupportModal" @success="handleProfileSuccess" />
     </v-dialog>
   </v-navigation-drawer>

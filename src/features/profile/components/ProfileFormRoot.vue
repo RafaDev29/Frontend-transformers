@@ -1,6 +1,6 @@
 <template>
   <!-- Overlay -->
-  <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-[2000]">
+  <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
     <!-- Form Card -->
     <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-w-md w-full mx-4">
       <form @submit.prevent="handleSubmit" class="p-6 space-y-5">

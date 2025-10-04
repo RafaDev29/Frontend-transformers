@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-br from-slate-50 to-color5 overflow-y-auto h-full px-1 "  @click="$emit('close')">
+  <div class="bg-gradient-to-br from-petroleum to-color5 overflow-y-auto h-full px-1 " >
     <div class="mx-auto">
 
       <!-- Header Section -->
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Support Info Card -->
-      <div class="bg-gradient-to-r from-color1 to-color2 text-white rounded-2xl p-2 mb-2 shadow-lg">
+      <div class="bg-gradient-to-r from-petroleum to-color2 text-white rounded-2xl p-2 mb-2 shadow-lg">
         <h2 class="text-sm font-bold mb-1">¿Necesitas Soporte?</h2>
         <p class="text-color5 text-sm leading-relaxed">
           Si tienes un problema con la aplicación o necesitas ayuda, por favor contáctanos a través de este formulario y
