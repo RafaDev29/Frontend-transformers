@@ -43,7 +43,7 @@
     <div class="p-3 flex-1 overflow-y-auto">
 
       <div v-for="(item, i) in monitoringItems" :key="`monitoring-${i}`" class="mb-1">
-        <v-tooltip :disabled="!rail" :text="item.title" location="end">
+        <v-tooltip :disabled="!rail || isTouchDevice" :text="item.title" location="end">
           <template #activator="{ props: tooltipProps }">
             <component :is="isItemDisabled(item) ? 'div' : 'router-link'" v-bind="rail ? tooltipProps : {}"
               :to="!isItemDisabled(item) ? item.to : undefined"
@@ -105,7 +105,7 @@
 
             <div v-for="(item, i) in maintenanceItems" :key="`maintenance-${i}`"
               class="transform transition-all duration-300">
-              <v-tooltip :disabled="!rail" :text="item.title" location="end">
+              <v-tooltip :disabled="!rail || isTouchDevice" :text="item.title" location="end">
                 <template #activator="{ props: tooltipProps }">
                   <router-link v-bind="rail ? tooltipProps : {}" :to="item.to"
                     class="flex items-center rounded-lg transition-all duration-300 relative overflow-hidden border backdrop-blur-sm group"
@@ -147,7 +147,7 @@
             </div>
           </div>
         </div>
-        <v-tooltip :disabled="!rail" location="end">
+        <v-tooltip :disabled="!rail || isTouchDevice" location="end">
           <template #activator="{ props: tooltipProps }">
             <div v-bind="rail ? tooltipProps : {}" @click="toggleMaintenance" class="bg-gradient-to-br from-slate-50/80 to-slate-100/60 dark:from-slate-800/80 dark:to-slate-700/60 
              border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
@@ -262,6 +262,7 @@ import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const router = useRouter()
 const transformerStore = useTransformerStore()
+const isTouchDevice = computed(() => 'ontouchstart' in window || navigator.maxTouchPoints > 0)
 
 const props = defineProps({
   modelValue: { type: Boolean, default: true },
@@ -274,7 +275,6 @@ const emit = defineEmits(['update:modelValue', 'toggle', 'logout', 'settings'])
 
 const isMaintenanceExpanded = ref(false)
 
-// Profile modal states
 const showRootProfile = ref(false)
 const showFactoryProfile = ref(false)
 const showCustomerProfile = ref(false)

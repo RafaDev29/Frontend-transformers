@@ -1,27 +1,34 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-    <div v-for="(phase, i) in phases" :key="i" class="group relative">
-      <!-- Fondo gradiente -->
-      <div
-        class="absolute inset-3 rounded-xl blur opacity-10"
-        :class="phase.bg"
-      ></div>
+  <!-- Contenedor principal -->
+  <div class="overflow-x-auto md:overflow-x-visible">
+    <!-- Grid -->
+    <div class="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-3 min-w-[300px] md:min-w-0">
+      <div v-for="(phase, i) in phases" :key="i" class="group relative min-w-0">
+        <!-- Fondo gradiente -->
+        <div
+          class="absolute inset-1 rounded-xl blur opacity-10"
+          :class="phase.bg"
+        ></div>
 
-      <!-- Card -->
-      <div
-        class="relative flex items-center justify-between px-3 py-2 rounded-xl border border-white/20 
-               bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl shadow-md hover:shadow-lg transition-all"
-      >
-        <!-- Izquierda -->
-        <div class="flex items-center gap-2">
-        </div>
+        <!-- Card -->
+        <div
+          class="relative flex items-center justify-between px-2 py-1 md:px-3 md:py-2 rounded-xl border border-white/20 
+                 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl shadow-sm hover:shadow-md transition-all text-xs md:text-base"
+        >
+          <!-- Izquierda -->
+          <div class="flex items-center gap-1 md:gap-2">
+            <!-- contenido izquierdo si aplica -->
+          </div>
 
-        <!-- Derecha -->
-        <div class="text-right">
-          <p class=" font-bold leading-tight" :class="phase.value">
-            {{ currentVoltages[phase.key] }}%
-          </p>
-          <p class="text-xs" :class="phase.sub">Distorsión armónica de {{ phase.label }} </p>
+          <!-- Derecha -->
+          <div class="text-right">
+            <p class="font-bold leading-tight" :class="phase.value">
+              {{ currentVoltages[phase.key] }}%
+            </p>
+            <p class="text-[10px] md:text-xs" :class="phase.sub">
+              Distorsión armónica de {{ phase.label }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
