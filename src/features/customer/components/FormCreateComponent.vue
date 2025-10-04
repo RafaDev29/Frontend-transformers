@@ -1,5 +1,6 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
+  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
+    @click.self="$emit('close')">
     <div
       class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
@@ -36,7 +37,7 @@
               Contraseña *
             </label>
             <div class="relative">
-              <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'"  :class="[
+              <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
                 errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
                 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
@@ -107,7 +108,8 @@
 
 
 
-          <div>
+
+          <div v-if="auth.user.role !== 'FACTORY'">
             <label for="factoryUid" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Fábrica *
             </label>
@@ -123,6 +125,7 @@
             </select>
             <p v-if="errors.factoryUid" class="mt-1 text-sm text-red-600">{{ errors.factoryUid }}</p>
           </div>
+
 
 
           <div class="flex items-center md:col-span-2">
@@ -159,6 +162,7 @@
 <script setup>
 import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
 import { listFactory } from '@/features/factory/services/factoryService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const props = defineProps({
   show: {
@@ -172,6 +176,7 @@ const showPassword = ref(false)
 const dataFactory = ref([])
 const isLoading = ref(false)
 const errors = ref({})
+const auth = useAuthStore()
 
 const form = reactive({
   businessname: null,
@@ -222,7 +227,7 @@ const validateForm = () => {
   }
 
 
-  if (!form.factoryUid) {
+  if (auth.user.role !== 'FACTORY' && !form.factoryUid) {
     errors.value.factoryUid = 'La fábrica es requerida'
   }
 
@@ -242,7 +247,7 @@ const handleSubmit = () => {
       username: form.username,
       password: form.password,
       isActive: form.isActive,
-      factoryUid: form.factoryUid
+      ...(auth.user.role !== 'FACTORY' && { factoryUid: form.factoryUid })
     }
 
     emit('save', dataToSend)

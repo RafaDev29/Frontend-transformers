@@ -56,7 +56,7 @@ const maintenanceItems = computed(() => {
       title: 'Transformadores',
       icon: 'transformer',
       to: '/app/mtransformer',
-      roles: ['ROOT'],
+      roles: ['ROOT', 'CUSTOMER' , 'FACTORY'],
       category: 'maintenance'
     },
 
@@ -79,22 +79,16 @@ const maintenanceItems = computed(() => {
       title: 'Alertas',
       icon: 'Bell',
       to: '/app/malert',
-      roles: ['ROOT'],
+      roles: ['ROOT' , 'CUSTOMER' , 'FACTORY'],
       category: 'maintenance'
     },
     {
       title: 'Reglas',
       icon: 'rule',
       to: '/app/mrule',
-      roles: ['ROOT'],
+      roles: ['ROOT' , 'CUSTOMER' , 'FACTORY'],
       category: 'maintenance'
     },
-
-
-
-
-
-
 
 
   ]

@@ -14,7 +14,7 @@
       <!-- Información de empresa -->
       <div class="flex-1" v-if="factory">
         <h1 class="text-2xl lg:text-3xl font-bold mb-1 text-white drop-shadow-sm">
-          {{ factory.businessName }}
+          {{ factory.businessName || user.factory.businessName}} 
         </h1>
         <div class="space-y-0.5 text-slate-100">
           <p class="flex items-center text-xs lg:text-sm font-medium">
@@ -32,6 +32,30 @@
                 clip-rule="evenodd" />
             </svg>
             {{ factory.address }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex-1" v-if="user">
+        <h1 class="text-2xl lg:text-3xl font-bold mb-1 text-white drop-shadow-sm">
+          {{  user.factory.businessName}} 
+        </h1>
+        <div class="space-y-0.5 text-slate-100">
+          <p class="flex items-center text-xs lg:text-sm font-medium">
+            <svg class="w-3.5 h-3.5 mr-1.5 text-color4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            RUC: {{ user.factory.ruc }}
+          </p>
+          <p class="flex items-center text-xs lg:text-sm">
+            <svg class="w-3.5 h-3.5 mr-1.5 text-color4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd" />
+            </svg>
+            {{ user.factory.address }}
           </p>
         </div>
       </div>
@@ -69,10 +93,13 @@
 <script setup>
 import { computed } from 'vue'
 import { useFactoryStore } from '@/features/factory/store/factoryStore'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
+const userStore = useAuthStore()
 const factoryStore = useFactoryStore()
 
 const factory = computed(() => factoryStore.selectedFactory)
+const user = computed(()=>  userStore.user)
 
-const logoUrl = computed(() => factory.value?.user?.images?.[0]?.url || null)
+const logoUrl = computed(() => factory.value?.user?.images?.[0]?.url || user.value?.images?.[0]?.url)
 </script>

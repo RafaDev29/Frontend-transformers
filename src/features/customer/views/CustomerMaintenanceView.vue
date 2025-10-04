@@ -18,12 +18,8 @@
     <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
       @save="handleCreate" />
 
-    <FormUpdateComponent 
-      v-if="showUpdateModal"
-      :show="showUpdateModal" 
-      :clientData="selectedCustomer"
-      @close="closeUpdateModal"
-      @update="handleUpdate"  />
+    <FormUpdateComponent v-if="showUpdateModal" :show="showUpdateModal" :clientData="selectedCustomer"
+      @close="closeUpdateModal" @update="handleUpdate" />
   </div>
 </template>
 
@@ -34,15 +30,13 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allCustomer, deleteCustomer, createCustomerRoot , updateCustomerRoot , listCustomer } from '../services/customerService'
+import { allCustomer, deleteCustomer, createCustomerRoot, updateCustomerRoot, listCustomer, createCustomer, updateCustomer } from '../services/customerService'
 
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const auth = useAuthStore()
 
 const role = auth.user?.role
-console.log('El rol del usuario es:', role)
-
 const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
@@ -90,13 +84,24 @@ const handleCreate = async (formData) => {
   errorMsg.value = ''
 
   try {
-    const response = await createCustomerRoot(formData)
+
+
+    let response
+
+    if (role === 'ROOT') {
+      response = await createCustomerRoot(formData)
+    } else if (role === 'FACTORY') {
+      response = await createCustomer(formData)
+    } else {
+      throw new Error('Rol no autorizado')
+    }
 
     if (response) {
       bus?.emit?.('success', 'Transformador creado correctamente')
       closeCreateModal()
       listTranformer()
     }
+
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al crear transformador'
     bus?.emit?.('error', errorMsg.value)
@@ -125,12 +130,21 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateCustomerRoot(updateData.data , updateData.uid)
+    let response
+
+    if (role === 'ROOT') {
+      response = await updateCustomerRoot(updateData.data, updateData.uid)
+    } else if (role === 'FACTORY') {
+      response = await updateCustomer(updateData.data, updateData.uid)
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
 
     if (response) {
       bus?.emit?.('success', 'Transformador actualizado correctamente')
       closeUpdateModal()
-      listTranformer() 
+      listTranformer()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al actualizar transformador'
