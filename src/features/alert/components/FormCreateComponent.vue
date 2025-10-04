@@ -1,5 +1,6 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
+  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
+    @click.self="$emit('close')">
     <div
       class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
@@ -16,7 +17,7 @@
       <form @submit.prevent="handleSubmit" class="p-6">
 
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-        
+
 
           <div>
             <label for="alertName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -48,28 +49,21 @@
           <p v-if="errors.alertType" class="mt-2 text-sm text-red-600">{{ errors.alertType }}</p>
         </div>
 
-        <div class="mb-8">
-          <label for="alertDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Mensaje de la Alerta *
-          </label>
-          <textarea id="alertDescription" v-model="form.alertDescription" rows="3"
-            :class="inputClasses('alertDescription')" :placeholder="getDescriptionPlaceholder()" required></textarea>
-          <p v-if="errors.alertDescription" class="mt-1 text-sm text-red-600">{{ errors.alertDescription }}</p>
-        </div>
+
 
         <!-- Destinatarios -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Destinatarios</h3>
 
-          
+
 
           <div v-if="form.alertType" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <h4 class="font-medium text-gray-900 dark:text-white mb-4">
-              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }} 
+              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }}
             </h4>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }} 
-             
+              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }}
+
             </p>
 
             <div class="space-y-3">
@@ -106,7 +100,7 @@
               <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }} 
+              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }}
             </button>
           </div>
         </div>
@@ -152,7 +146,7 @@
           </h3>
           <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
             <p v-if="hasAdditionalContacts">✅ {{form.additionalContacts.filter(c => c.value).length}} contacto(s)
-             </p>
+            </p>
           </div>
         </div>
 
@@ -218,18 +212,15 @@ const alertTypes = ref([
 const form = reactive({
   alertName: '',
   alertType: '',
-  alertDescription: '',
   additionalContacts: [{ value: '', name: '' }],
   retryAttempts: 0,
   isActive: true
 })
 
-// Computed properties
 const hasAdditionalContacts = computed(() => {
   return form.additionalContacts.some(contact => contact.value.trim() !== '')
 })
 
-// Función para generar clases CSS dinámicas para inputs
 const inputClasses = (fieldName) => {
   const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white transition-colors'
   const errorClasses = 'border-red-500 focus:ring-red-500'
@@ -238,14 +229,6 @@ const inputClasses = (fieldName) => {
   return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
 }
 
-const getDescriptionPlaceholder = () => {
-  if (form.alertType === 'whatsapp') {
-    return 'Ej: Notificación : la temperatura excede los 90°C'
-  } else if (form.alertType === 'email') {
-    return 'Ej: Notificación : se ha detectado una anomalía en el sistema'
-  }
-  return 'Mensaje de la alerta...'
-}
 
 const addAdditionalContact = () => {
   form.additionalContacts.push({ value: '', name: '' })
@@ -260,7 +243,6 @@ const removeAdditionalContact = (index) => {
 const resetForm = () => {
   form.alertName = ''
   form.alertType = ''
-  form.alertDescription = ''
   form.additionalContacts = [{ value: '', name: '' }]
   form.retryAttempts = 0
   form.isActive = true
@@ -279,9 +261,6 @@ const validateForm = () => {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
 
-  if (!form.alertDescription) {
-    errors.value.alertDescription = 'La descripción es requerida'
-  }
 
 
   form.additionalContacts.forEach((contact, index) => {
@@ -310,14 +289,13 @@ const handleSubmit = () => {
     const dataToSend = {
       name: form.alertName,
       type: form.alertType.toUpperCase(),
-      description: form.alertDescription,
       isActive: form.isActive,
       attempts: form.retryAttempts,
       contacts: form.additionalContacts
         .filter(contact => contact.value.trim() !== '')
         .map(contact => ({
           name: contact.name || 'Sin nombre',
-          addressee: contact.value   
+          addressee: contact.value
         }))
 
     }

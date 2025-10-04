@@ -15,6 +15,11 @@ export async function updateAlerts(payload, id) {
 
 
 export async function allAlerts() {
+  const { data } = await client.get(ALERT.LIST_ROOT)
+  return data
+}
+
+export async function listAlerts() {
   const { data } = await client.get(ALERT.LIST)
   return data
 }

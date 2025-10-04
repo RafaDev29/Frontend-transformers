@@ -56,7 +56,8 @@ export const RULE = {
 export const ALERT = {
   CREATE: '/alert/add',
   UPDATE: '/alert/update',
-  LIST: '/alert/all',
+  LIST_ROOT: '/alert/all',
+  LIST: '/alert/list',
   DELETE: '/alert/delete',
 }
 

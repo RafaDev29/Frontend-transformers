@@ -18,12 +18,8 @@
     <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
       @save="handleCreate" />
 
-    <FormUpdateComponent 
-      v-if="showUpdateModal"
-      :show="showUpdateModal" 
-      :alertData="selectedCustomer"
-      @close="closeUpdateModal"
-      @update="handleUpdate"  />
+    <FormUpdateComponent v-if="showUpdateModal" :show="showUpdateModal" :alertData="selectedCustomer"
+      @close="closeUpdateModal" @update="handleUpdate" />
   </div>
 </template>
 
@@ -34,7 +30,7 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allAlerts , createAlerts , updateAlerts , deleteAlerts } from '../services/alertService'
+import { allAlerts, createAlerts, updateAlerts, deleteAlerts, listAlerts } from '../services/alertService'
 
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
@@ -55,7 +51,16 @@ const listItems = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const  response = await allAlerts();
+
+    let response
+    if (role === 'ROOT') {
+      response = await allAlerts()
+    } else if (role === 'FACTORY' || role === 'CUSTOMER') {
+      response = await listAlerts()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
 
     if (response) {
       dataItem.value = response.data
@@ -117,12 +122,12 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateAlerts(updateData.data , updateData.uid)
+    const response = await updateAlerts(updateData.data, updateData.uid)
 
     if (response) {
       bus?.emit?.('success', 'Alerta actualizado correctamente')
       closeUpdateModal()
-      listItems() 
+      listItems()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al actualizar alerta'
