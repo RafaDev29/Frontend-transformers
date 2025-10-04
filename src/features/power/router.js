@@ -6,7 +6,7 @@ export default [
     path: 'power',              
     name: 'power',
     component: Power,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT' , 'CUSTOMER'] }
   },
 
 ]

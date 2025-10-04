@@ -21,7 +21,7 @@ export default [
     path: 'transformerDetail',              
     name: 'transformerDetail',
     component: Dtransformer,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT' , 'CUSTOMER'] }
   },
 
   

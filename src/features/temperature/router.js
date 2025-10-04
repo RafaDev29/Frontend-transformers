@@ -6,7 +6,7 @@ export default [
     path: 'temperature',              
     name: 'temperature',
     component: Temperature,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT', 'CUSTOMER'] }
   },
 
 ]

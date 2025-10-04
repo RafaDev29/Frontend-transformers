@@ -23,8 +23,6 @@
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Tipo
                             </th>
-
-
                             <th
                                 class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                                 Creado por
@@ -46,7 +44,7 @@
 
                     <tbody class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300">
-                        <tr v-for="row in rows" :key="row.uid"
+                        <tr v-for="row in filteredRows" :key="row.uid"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
 
                             <td
@@ -88,7 +86,6 @@
                                     {{ row.type }}
                                 </span>
                             </td>
-
 
                             <td class="px-4 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
@@ -162,7 +159,8 @@
 
                                     <button @click="deleteRow(row)"
                                         class="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300
-                                           hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-all duration-200" title="Eliminar regla">
+                                           hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-all duration-200"
+                                        title="Eliminar regla">
                                         <svg viewBox="0 0 24 24" class="h-4 w-4">
                                             <path
                                                 d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
@@ -178,7 +176,7 @@
         </div>
 
         <!-- Estado vacío -->
-        <div v-if="!rows.length" class="text-center py-12">
+        <div v-if="!filteredRows.length" class="text-center py-12">
             <div class="text-slate-400 dark:text-slate-500">
                 <svg class="mx-auto h-12 w-12 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
@@ -192,7 +190,11 @@
 
 <script setup>
 import { defineProps, computed, defineEmits } from 'vue'
+import { useAuthStore } from '@/features/auth/stores/authStore'
+
 const emit = defineEmits(['edit', 'delete'])
+const auth = useAuthStore()
+
 const props = defineProps({
     items: {
         type: Array,
@@ -212,13 +214,54 @@ const rows = computed(() => {
         alerts: item.alerts || [],
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
+        createdBy: item.createdBy,
         createdByUser: item.createdByUser,
         userRoleLabel: getUserRoleLabel(item.createdByUser?.role),
-        factoryIds: item.factoryIds,
-        customerIds: item.customerIds
+        factoryIds: item.factoryIds || [],
+        customerIds: item.customerIds || []
     }))
 })
 
+// Computed para filtrar las reglas según el rol del usuario
+const filteredRows = computed(() => {
+    const userRole = auth.user?.role
+    
+    // Si es ROOT, mostrar todas las reglas
+    if (userRole === 'ROOT') {
+        return rows.value
+    }
+    
+    // Para FACTORY y CUSTOMER, aplicar filtros
+    const userId = auth.user?.uid
+    let entityId = null
+    
+    if (userRole === 'FACTORY') {
+        entityId = auth.user?.factory?.uid
+    } else if (userRole === 'CUSTOMER') {
+        entityId = auth.user?.customer?.uid
+    }
+    
+    // Filtrar las reglas
+    return rows.value.filter(row => {
+        // Si fue creado por el usuario actual
+        if (row.createdBy === userId) {
+            return true
+        }
+        
+        // Si es FACTORY y su ID está en factoryIds
+        if (userRole === 'FACTORY' && entityId && row.factoryIds.includes(entityId)) {
+            return true
+        }
+        
+        // Si es CUSTOMER y su ID está en customerIds
+        if (userRole === 'CUSTOMER' && entityId && row.customerIds.includes(entityId)) {
+            return true
+        }
+        
+        // Si no cumple ninguna condición, no mostrar
+        return false
+    })
+})
 
 function getUserRoleLabel(role) {
     switch (role) {
@@ -232,6 +275,7 @@ function getUserRoleLabel(role) {
             return 'N/A'
     }
 }
+
 function editRow(row) {
     emit('edit', row)
 }
@@ -239,6 +283,4 @@ function editRow(row) {
 function deleteRow(row) {
     emit('delete', row)
 }
-
-
 </script>

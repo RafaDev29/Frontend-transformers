@@ -6,7 +6,7 @@ export default [
     path: 'mrule',              
     name: 'mrule',
     component: Rule,
-    meta: { requiresAuth: true, roles: [ 'ROOT'] }
+    meta: { requiresAuth: true, roles: [ 'ROOT' , 'FACTORY' , 'CUSTOMER'] }
   },
 
 ]

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
+  <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
+    @click.self="$emit('close')">
     <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-6xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -14,7 +15,7 @@
 
       <form @submit.prevent="handleSubmit" class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-        
+
           <div>
             <label for="ruleName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre de la Regla *
@@ -43,9 +44,6 @@
           </div>
           <p v-if="errors.ruleType" class="mt-2 text-sm text-red-600">{{ errors.ruleType }}</p>
         </div>
-
-        <!-- Mensaje General -->
-
 
         <!-- Configuración TEMPERATURA -->
         <div v-if="form.ruleType === 'TEMPERATURA'" class="mb-1">
@@ -214,14 +212,14 @@
                   class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                   required />
               </div>
- 
+
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   🌾 Rural (V) *
                 </label>
                 <input v-model.number="form.config.ruralValue.value" type="number"
                   class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                  placeholder="7.5" required  step="any" />
+                  placeholder="7.5" required step="any" />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Mensaje Rural (SOBRETENSIÓN) *
                 </label>
@@ -255,7 +253,7 @@
                   </label>
                   <input v-model.number="form.config.ruralValueNegative.value" type="number"
                     class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
-                    placeholder="-7.5" required  step="any" />
+                    placeholder="-7.5" required step="any" />
                   <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                     Mensaje Rural (SUBTENSIÓN) *
                   </label>
@@ -466,84 +464,83 @@
 
         </div>
 
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <!-- Selección de Fábricas -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Fábricas</h3>
-          <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
-            <div class="flex flex-wrap gap-2 mb-4">
-              <button type="button" @click="selectAllFactories"
-                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
-                Seleccionar Todos
-              </button>
-              <button type="button" @click="clearAllFactories"
-                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
-                Limpiar Selección
-              </button>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" v-if="auth.user.role !== 'FACTORY' && auth.user.role !== 'CUSTOMER'">
 
-            <div v-if="dataFactory.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
-              <div v-for="factory in dataFactory" :key="factory.uid"
-                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                <input :id="`factory-${factory.uid}`" v-model="form.selectedFactories" :value="factory.uid"
-                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
-                <label :for="`factory-${factory.uid}`" class="flex-1 cursor-pointer">
-                  <div class="flex items-center gap-2">
-                    <span class="font-medium text-gray-900 dark:text-white text-sm">{{ factory.name }}</span>
-                    <span
-                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                      {{ factory.code || 'Sin código' }} - {{ factory.businessName || 'Razón social' }}
-                    </span>
-                  </div>
-                </label>
+          <div class="mb-8">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Fábricas</h3>
+            <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <button type="button" @click="selectAllFactories"
+                  class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+                  Seleccionar Todos
+                </button>
+                <button type="button" @click="clearAllFactories"
+                  class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+                  Limpiar Selección
+                </button>
+              </div>
+
+              <div v-if="dataFactory.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
+                <div v-for="factory in dataFactory" :key="factory.uid"
+                  class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <input :id="`factory-${factory.uid}`" v-model="form.selectedFactories" :value="factory.uid"
+                    type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+                  <label :for="`factory-${factory.uid}`" class="flex-1 cursor-pointer">
+                    <div class="flex items-center gap-2">
+                      <span class="font-medium text-gray-900 dark:text-white text-sm">{{ factory.name }}</span>
+                      <span
+                        class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                        {{ factory.code || 'Sin código' }} - {{ factory.businessName || 'Razón social' }}
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
+                <p class="text-sm">No hay fábricas disponibles</p>
               </div>
             </div>
-            <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
-              <p class="text-sm">No hay fábricas disponibles</p>
+          </div>
+
+          <!-- Selección de Clientes -->
+          <div class="mb-8">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Clientes</h3>
+            <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <button type="button" @click="selectAllCustomers"
+                  class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
+                  Seleccionar Todos
+                </button>
+                <button type="button" @click="clearAllCustomers"
+                  class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
+                  Limpiar Selección
+                </button>
+              </div>
+
+              <div v-if="dataCustomer.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
+                <div v-for="customer in dataCustomer" :key="customer.uid"
+                  class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <input :id="`customer-${customer.uid}`" v-model="form.selectedCustomers" :value="customer.uid"
+                    type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
+                  <label :for="`customer-${customer.uid}`" class="flex-1 cursor-pointer">
+                    <div class="flex items-center gap-2">
+                      <span class="font-medium text-gray-900 dark:text-white text-sm">{{ customer.name }}</span>
+                      <span
+                        class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                        {{ customer.code || 'Sin código' }} - {{ customer.businessname || 'Razón social' }}
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
+                <p class="text-sm">No hay clientes disponibles</p>
+              </div>
             </div>
           </div>
         </div>
-        
-        <!-- Selección de Clientes -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Clientes</h3>
-          <div class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
-            <div class="flex flex-wrap gap-2 mb-4">
-              <button type="button" @click="selectAllCustomers"
-                class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-800/50 rounded-md transition-colors">
-                Seleccionar Todos
-              </button>
-              <button type="button" @click="clearAllCustomers"
-                class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 rounded-md transition-colors">
-                Limpiar Selección
-              </button>
-            </div>
 
-            <div v-if="dataCustomer.length > 0" class="space-y-2 max-h-40 overflow-y-auto">
-              <div v-for="customer in dataCustomer" :key="customer.uid"
-                class="flex items-center space-x-3 p-2 border border-gray-100 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                <input :id="`customer-${customer.uid}`" v-model="form.selectedCustomers" :value="customer.uid"
-                  type="checkbox" class="h-4 w-4 text-color1 focus:ring-color1 border-gray-300 rounded" />
-                <label :for="`customer-${customer.uid}`" class="flex-1 cursor-pointer">
-                  <div class="flex items-center gap-2">
-                    <span class="font-medium text-gray-900 dark:text-white text-sm">{{ customer.name }}</span>
-                    <span
-                      class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                      {{ customer.code || 'Sin código' }} - {{ customer.businessname || 'Razón social' }}
-                    </span>
-                  </div>
-                </label>
-              </div>
-            </div>
-            <div v-else class="text-center py-4 text-gray-500 dark:text-gray-400">
-              <p class="text-sm">No hay clientes disponibles</p>
-            </div>
-          </div>
-        </div>
-         </div>
-      
 
-        <!-- Alertas con Buscador -->
         <div v-if="form.ruleType" class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Alertas Asociadas</h3>
           <div v-if="availableAlerts.length > 0" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
@@ -659,10 +656,11 @@
 import { ref, reactive, watch, defineProps, defineEmits, onMounted, computed } from 'vue'
 import { allCustomer } from '@/features/customer/services/customerService'
 import { listFactory } from '@/features/factory/services/factoryService'
-
+import { useAuthStore } from '@/features/auth/stores/authStore'
 const dataCustomer = ref([])
 const dataFactory = ref([])
 const alertSearchTerm = ref('')
+const auth = useAuthStore()
 
 const props = defineProps({
   show: {

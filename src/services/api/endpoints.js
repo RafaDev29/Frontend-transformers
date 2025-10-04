@@ -48,10 +48,10 @@ export const RANGE = {
 export const RULE = {
   CREATE: '/rules/add',
   UPDATE: '/rules/update',
-  LIST: '/rules/all',
+  LIST: '/rules/list',
+  LIST_ROOT: '/rules/all',
   DELETE: '/rules/delete',
 }
-
 
 export const ALERT = {
   CREATE: '/alert/add',
@@ -60,8 +60,6 @@ export const ALERT = {
   LIST: '/alert/list',
   DELETE: '/alert/delete',
 }
-
-
 
 
 export const USER = {

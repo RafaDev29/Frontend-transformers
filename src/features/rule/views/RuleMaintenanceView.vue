@@ -15,16 +15,11 @@
       <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal"
-      @save="handleCreate"   :alerts="dataAlert" />
+    <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal" @save="handleCreate"
+      :alerts="dataAlert" />
 
-    <FormUpdateComponent 
-     :alerts="dataAlert"
-      v-if="showUpdateModal"
-      :show="showUpdateModal" 
-      :ruleData="selectedCustomer"
-      @close="closeUpdateModal"
-      @update="handleUpdate"  />
+    <FormUpdateComponent :alerts="dataAlert" v-if="showUpdateModal" :show="showUpdateModal" :ruleData="selectedCustomer"
+      @close="closeUpdateModal" @update="handleUpdate" />
   </div>
 </template>
 
@@ -35,10 +30,13 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import {  allRule , deleteRule , createRule, updateRule } from '../services/ruleService'
-import{allAlerts} from '@/features/alert/services/alertService'
+import { allRule, deleteRule, createRule, updateRule, listRule } from '../services/ruleService'
+import { allAlerts , listAlerts} from '@/features/alert/services/alertService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
+const auth = useAuthStore()
 
+const role = auth.user?.role
 const dataItem = ref()
 const isLoading = ref(false)
 const errorMsg = ref('')
@@ -51,9 +49,19 @@ const dataAlert = ref()
 
 
 const listAlert = async () => {
+   isLoading.value = true
   errorMsg.value = ''
   try {
-    const  response = await allAlerts();
+
+    let response
+    if (role === 'ROOT') {
+      response = await allAlerts()
+    } else if (role === 'FACTORY' || role === 'CUSTOMER') {
+      response = await listAlerts()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
 
     if (response) {
       dataAlert.value = response.data
@@ -61,13 +69,22 @@ const listAlert = async () => {
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al cargar alertas'
     bus?.emit?.('error', errorMsg.value)
+  } finally {
+    isLoading.value = false
   }
 }
 const listItems = async () => {
   isLoading.value = true
   errorMsg.value = ''
   try {
-    const  response = await allRule();
+    let response
+    if (role === 'ROOT') {
+      response = await allRule()
+    } else if (role === 'FACTORY' || role === 'CUSTOMER') {
+      response = await listRule()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
 
     if (response) {
       dataItem.value = response.data
@@ -129,12 +146,12 @@ const handleUpdate = async (updateData) => {
 
   try {
 
-    const response = await updateRule(updateData.data , updateData.uid)
+    const response = await updateRule(updateData.data, updateData.uid)
 
     if (response) {
       bus?.emit?.('success', 'Regla actualizado correctamente')
       closeUpdateModal()
-      listItems() 
+      listItems()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al actualizar Regla'

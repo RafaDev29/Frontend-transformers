@@ -6,7 +6,7 @@ export default [
     path: 'frequency',              
     name: 'frequency',
     component: Frequency,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT', 'CUSTOMER'] }
   },
 
 ]

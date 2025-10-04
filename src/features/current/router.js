@@ -6,7 +6,7 @@ export default [
     path: 'current',              
     name: 'current',
     component: Strain,
-    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT'] }
+    meta: { requiresAuth: true, roles: ['FACTORY', 'ROOT', 'CUSTOMER'] }
   },
 
 ]

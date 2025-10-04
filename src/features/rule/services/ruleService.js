@@ -16,9 +16,15 @@ export async function updateRule(payload, id) {
 
 
 export async function allRule() {
+  const { data } = await client.get(RULE.LIST_ROOT)
+  return data
+}
+
+export async function listRule() {
   const { data } = await client.get(RULE.LIST)
   return data
 }
+
 
 
 export async function deleteRule(id) {
