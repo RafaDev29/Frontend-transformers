@@ -75,7 +75,7 @@
 
         <!-- Versión compacta para rail mode -->
         <template v-if="rail">
-          <v-tooltip text="Mi Perfil" location="end">
+          <v-tooltip :disabled="isTouchDevice" text="Mi Perfil" location="end">
             <template #activator="{ props: tooltipProps }">
               <button v-bind="tooltipProps" @click="$emit('profile')"
                 class="w-full flex items-center justify-center p-2.5 border border-color1/10 dark:border-color3/20 rounded-xl cursor-pointer transition-all duration-300 bg-gradient-to-r from-color1/8 to-transparent dark:from-color3/12 dark:to-transparent hover:from-color1/12 dark:hover:from-color3/15 hover:scale-110">
@@ -89,7 +89,7 @@
             </template>
           </v-tooltip>
 
-          <v-tooltip text="Soporte" location="end">
+          <v-tooltip :disabled="isTouchDevice" text="Soporte" location="end">
             <template #activator="{ props: tooltipProps }">
               <button v-bind="tooltipProps" @click="$emit('support')"
                 class="w-full flex items-center justify-center p-2.5 border border-color1/10 dark:border-color3/20 rounded-xl cursor-pointer transition-all duration-300 bg-gradient-to-r from-color1/8 to-transparent dark:from-color3/12 dark:to-transparent hover:from-color1/12 dark:hover:from-color3/15 hover:scale-110">
@@ -103,7 +103,7 @@
             </template>
           </v-tooltip>
 
-          <v-tooltip :text="isDarkMode ? 'Modo Claro' : 'Modo Oscuro'" location="end">
+          <v-tooltip :disabled="isTouchDevice" :text="isDarkMode ? 'Modo Claro' : 'Modo Oscuro'" location="end">
             <template #activator="{ props: tooltipProps }">
               <button v-bind="tooltipProps" @click="toggleTheme"
                 class="w-full flex items-center justify-center p-2.5 border border-color3/15 dark:border-color4/25 rounded-xl cursor-pointer transition-all duration-300 bg-gradient-to-r from-color3/8 to-transparent dark:from-color4/12 dark:to-transparent hover:from-color3/12 dark:hover:from-color4/15 hover:scale-110">
@@ -231,13 +231,13 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps, onMounted, watch } from 'vue'
+import { ref, defineEmits, defineProps, onMounted, watch , computed } from 'vue'
 
 defineProps({
   user: { type: Object, default: null },
   rail: { type: Boolean, default: false }
 })
-
+const isTouchDevice = computed(() => 'ontouchstart' in window || navigator.maxTouchPoints > 0)
 const emit = defineEmits(['profile', 'logout', 'theme-toggle', 'support', 'menu-toggle'])
 
 const open = ref(false)
