@@ -1,178 +1,27 @@
-
-  
-  tension
-  "config": {
-    "ruralValue": {
-      "value": 220,
-      "message": "La tension"
+{
+    "uid": "93ba3b0c-a7a2-4ada-9e7a-88f5f60fef56",
+    "username": "fabrica01",
+    "role": "FACTORY",
+    "images": [
+        {
+            "uid": "0b9cdbbc-bb0d-496f-9827-184f18ecdb1f",
+            "url": "https://minio.s3.dyasolutions.es/simtra/users/93ba3b0c-a7a2-4ada-9e7a-88f5f60fef56/logo-1758951959002-Captura de pantalla 2025-09-27 a las 0.32.32.png",
+            "key": "users/93ba3b0c-a7a2-4ada-9e7a-88f5f60fef56/logo-1758951959002-Captura de pantalla 2025-09-27 a las 0.32.32.png"
+        }
+    ],
+    "factory": {
+        "uid": "9d586239-5a07-4609-ab7b-79ca46be33e0",
+        "ruc": "20512718159",
+        "code": "F001",
+        "businessName": "FARADAY SAC",
+        "address": "coop marañon Mz D lote 9",
+        "distric": "ate",
+        "isActive": true,
+        "user": {
+            "uid": "93ba3b0c-a7a2-4ada-9e7a-88f5f60fef56",
+            "username": "fabrica01",
+            "role": "FACTORY"
+        }
     },
-    "urbanValue": {
-      "value": 240,
-      "message": "La tension"
-    },
-    "ruralValueNegative": {
-      "value": -220,
-      "message": "La tension"
-    },
-    "urbanValueNegative": {
-      "value": -234,
-      "message": "La tension"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-  corriente 
-
- "config": {
-    "normalValue": {
-      "value": 220,
-      "message": "La corriente"
-    },
-    "warningValue": {
-      "value": 240,
-      "message": "La corriente"
-    },
-    "criticalValue": {
-      "value": 240,
-      "message": "La corriente"
-    },
-    "normalValueNegative": {
-      "value": -220,
-      "message": "La corriente"
-    },
-    "warningValueNegative": {
-      "value": -234,
-      "message": "La corriente"
-    },
-     "criticalValueNegative": {
-      "value": -234,
-      "message": "La corriente"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-
-  frecuencia :
-  "config": {
-  
-    "criticalValue": {
-      "value": 0.001,
-      "message": "La frecuencia"
-    },
-     "criticalValueNegative": {
-      "value": -0.001,
-      "message": "La frecuencia"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-
-  potencia 
-
- "config": {
-    "normalValue": {
-      "value": 220,
-      "message": "La potencia"
-    },
-    "warningValue": {
-      "value": 240,
-      "message": "La potencia"
-    },
-    "criticalValue": {
-      "value": 240,
-      "message": "La potencia"
-    },
-    "normalValueNegative": {
-      "value": -220,
-      "message": "La potencia"
-    },
-    "warningValueNegative": {
-      "value": -234,
-      "message": "La potencia"
-    },
-     "criticalValueNegative": {
-      "value": -234,
-      "message": "La potencia"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-  THDV
-
-   "config": {
-  
-    "criticalValue": {
-      "value": -4,
-      "message": "La THDV"
-    },
-     "criticalValueNegative": {
-      "value": -5,
-      "message": "La THDV"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-  THDI 
-
-   "config": {
-  
-    "criticalValue": {
-      "value": 18,
-      "message": "La THDI "
-    },
-     "criticalValueNegative": {
-      "value": -18,
-      "message": "La THDI "
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
-
-  Temperatura
- "config": {
-    "normalValue": {
-      "value": 220,
-      "message": "La Temperatura"
-    },
-    "warningValue": {
-      "value": 240,
-      "message": "La Temperatura"
-    },
-    "criticalValue": {
-      "value": 240,
-      "message": "La Temperatura"
-    },
-    "normalValueNegative": {
-      "value": -220,
-      "message": "La Temperatura"
-    },
-    "warningValueNegative": {
-      "value": -234,
-      "message": "La Temperatura"
-    },
-     "criticalValueNegative": {
-      "value": -234,
-      "message": "La Temperatura"
-    },
-   "general1Value": {
-      "value": ,
-      "message": "aqui va un mensaje general"
-    }
-  }
+    "customer": null
+}

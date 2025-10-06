@@ -10,7 +10,6 @@
       class="bg-white border border-green-200 rounded-2xl shadow-2xl 
              p-6 max-w-md mx-auto text-center relative animate-toast"
     >
-      <!-- Header -->
       <div class="flex items-center justify-center mb-4">
         <v-icon class="mr-2 text-4xl text-accent-success">mdi-check-circle</v-icon>
         <span class="text-2xl font-bold text-accent-success">¡Éxito!</span>
@@ -21,7 +20,6 @@
         <span>{{ message }}</span>
       </div>
 
-      <!-- Barra inferior con animación -->
       <div
         class="absolute bottom-0 left-0 w-full h-1 bg-accent-success rounded-b-2xl"
         :class="{ 'animate-fadeout': visible }"
@@ -43,7 +41,7 @@ export default {
     eventBus.on('success', (msg) => {
       message.value = msg;
       visible.value = true;
-      setTimeout(() => (visible.value = false), 3000); // 3 segundos como en ErrorAlert
+      setTimeout(() => (visible.value = false), 2000); 
     });
 
     return {

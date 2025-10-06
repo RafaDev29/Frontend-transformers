@@ -119,7 +119,7 @@ const handleLogin = async (credentials) => {
 
     auth.setSession({ access_token, user })
 
-    bus?.emit?.('success', 'Sesión iniciada correctamente')
+   // bus?.emit?.('success', 'Sesión iniciada correctamente')
     router.push(route.query.redirect || '/')
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Credenciales inválidas'

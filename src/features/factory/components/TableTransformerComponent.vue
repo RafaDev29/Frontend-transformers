@@ -5,7 +5,7 @@
              bg-gradient-to-br from-white via-slate-50 to-white
              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800
              shadow-sm backdrop-blur-sm transition-all duration-300"
-    >
+    > 
       <table class="min-w-full">
         <thead
           class="bg-gradient-to-r from-color1/95 via-color2/85 to-color1/95

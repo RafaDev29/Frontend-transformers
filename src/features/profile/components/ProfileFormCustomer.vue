@@ -1,15 +1,17 @@
 <template>
-  <div class="h-auto  bg-gradient-to-br from-slate-50 to-color5 py-2 px-2">
-    <div class=" max-w-5xl mx-auto p-2 overflow-hidden">
+  <div class="bg-gradient-to-br from-petroleum to-color5 overflow-y-auto h-full px-1 
+              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800">
+    <div class="max-w-5xl mx-auto p-2">
 
 
       <!-- Form Card -->
-      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 h-[650px] overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden 
+                  dark:bg-gradient-to-br dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 
+                  dark:border-slate-700/60">
         <form @submit.prevent="handleSubmit" class="p-8 overflow-y-auto h-full">
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- Left Column - Photo Upload -->
             <div class="lg:col-span-1">
               <div class="sticky top-8">
                 <h3 class="text-lg font-semibold text-colorDark1 mb-4">Logo del Cliente</h3>
@@ -17,7 +19,9 @@
                 <div class="text-center">
                   <div class="relative inline-block">
                     <div
-                      class="w-32 h-32 rounded-2xl bg-gradient-to-r from-color1 to-color2 flex items-center justify-center shadow-lg overflow-hidden">
+                      class="w-32 h-32 rounded-2xl bg-gradient-to-r from-color1 to-color2 
+                             dark:from-color3/90 dark:to-color4/90 flex items-center justify-center 
+                             shadow-lg overflow-hidden">
                       <img v-if="photoPreview" :src="photoPreview" alt="Logo Preview"
                         class="w-full h-full object-cover">
                       <svg v-else class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -26,7 +30,6 @@
                       </svg>
                     </div>
 
-                    <!-- Upload Button -->
                     <label
                       class="absolute -bottom-3 -right-3 w-10 h-10 bg-accent-primary hover:bg-color1 text-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl">
                       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -46,18 +49,22 @@
 
               <!-- Business Name -->
               <div class="space-y-2">
-                <label class="block text-sm font-semibold text-colorDark1">
+                <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                   Nombre de la Empresa *
                 </label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                       <path
                         d="M12,7V3H2V21H22V7H12M6,19H4V17H6V19M6,15H4V13H6V15M6,11H4V9H6V11M6,7H4V5H6V7M10,19H8V17H10V19M10,15H8V13H10V15M10,11H8V9H10V11M10,7H8V5H10V7M20,19H12V17H20V19M20,15H12V13H20V15M20,11H12V9H20V11Z" />
                     </svg>
                   </div>
                   <input v-model="form.businessname" type="text"
-                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                     placeholder="Ej: Minera Antamina S.A." required>
                 </div>
               </div>
@@ -76,7 +83,11 @@
                       </svg>
                     </div>
                     <input v-model="form.ruc" type="text" maxlength="11" pattern="[0-9]{11}"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="20123456710" required>
                   </div>
                   <p class="text-xs text-neutral-medium">11 dígitos numéricos</p>
@@ -94,7 +105,11 @@
                       </svg>
                     </div>
                     <input v-model="form.username" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="antamina" required>
                   </div>
                 </div>
@@ -113,7 +128,11 @@
                     </svg>
                   </div>
                   <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
-                    class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                    class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                     placeholder="Dejar en blanco para no cambiar">
                   <button type="button" @click="showPassword = !showPassword"
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-medium hover:text-colorDark1 transition-colors">
@@ -147,7 +166,11 @@
                       </svg>
                     </div>
                     <input v-model="form.address" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Av. Principal 123, Lima" required>
                   </div>
                 </div>
@@ -165,7 +188,11 @@
                       </svg>
                     </div>
                     <input v-model="form.distric" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="San Isidro" required>
                   </div>
                 </div>
@@ -251,10 +278,8 @@ const fileInput = ref(null)
 
 onMounted(() => {
   if (authStore.user) {
-    // Precargar datos del usuario
     form.value.username = authStore.user.username || ''
     
-    // Precargar datos del cliente desde el store
     if (authStore.user.customer) {
       form.value.businessname = authStore.user.customer.businessname || ''
       form.value.ruc = authStore.user.customer.ruc || ''
@@ -262,7 +287,6 @@ onMounted(() => {
       form.value.distric = authStore.user.customer.distric || ''
     }
     
-    // Precargar foto si existe
     if (authStore.user.images && authStore.user.images.length > 0) {
       photoPreview.value = authStore.user.images[0].url
     }
@@ -300,7 +324,7 @@ const updateClientProfile = async (clientData, clientUid) => {
     const response = await updateCustomer(clientData, clientUid)
     
     if (response && response.status) {
-      return response.data // Ya es un objeto JavaScript, no necesita .json()
+      return response.data 
     } else {
       throw new Error(response?.message || 'Error al actualizar el perfil del cliente')
     }
@@ -329,7 +353,6 @@ const handleSubmit = async () => {
   successMessage.value = ''
 
   try {
-    // Preparar payload - solo incluir contraseña si no está vacía
     const clientData = {
       username: form.value.username,
       businessname: form.value.businessname,
@@ -349,13 +372,40 @@ const handleSubmit = async () => {
       throw new Error('No se encontró el UID del usuario')
     }
 
-    // Actualizar perfil del cliente
     const updatedClientData = await updateClientProfile(clientData, clientUid)
     
-    // Actualizar el store con los nuevos datos usando la respuesta del servidor
+    // Actualizar el store manteniendo la estructura completa
     if (updatedClientData && updatedClientData.user) {
-      // Usar los datos completos del usuario que vienen del servidor
-      authStore.updateUser(updatedClientData.user)
+      // Hacer merge correcto preservando datos existentes
+      const updatedUser = {
+        ...authStore.user, // Mantener datos actuales
+        username: updatedClientData.user.username || authStore.user.username,
+        customer: {
+          ...authStore.user.customer, // Mantener datos existentes de customer
+          ...updatedClientData.user.customer, // Sobrescribir con nuevos datos
+          businessname: clientData.businessname,
+          ruc: clientData.ruc,
+          address: clientData.address,
+          distric: clientData.distric
+        }
+      }
+      
+      authStore.updateUser(updatedUser)
+    } else {
+      // Si no viene la respuesta completa, actualizar manualmente
+      const updatedUser = {
+        ...authStore.user,
+        username: clientData.username,
+        customer: {
+          ...authStore.user.customer,
+          businessname: clientData.businessname,
+          ruc: clientData.ruc,
+          address: clientData.address,
+          distric: clientData.distric
+        }
+      }
+      
+      authStore.updateUser(updatedUser)
     }
 
     // Subir logo si se seleccionó uno nuevo
@@ -365,23 +415,20 @@ const handleSubmit = async () => {
 
       const logoResponse = await uploadClientLogo(formData)
       
-      // Actualizar el store con la nueva imagen
       if (logoResponse && logoResponse.data) {
-        const newImageUrl = logoResponse.data.url
-        
         const newImage = {
           uid: logoResponse.data.uid,
-          url: newImageUrl,
+          url: logoResponse.data.url,
           key: logoResponse.data.key
         }
         
         const updatedUser = {
           ...authStore.user,
-          images: [newImage] // Reemplazar con la nueva imagen
+          images: [newImage]
         }
         
         authStore.updateUser(updatedUser)
-        photoPreview.value = newImageUrl
+        photoPreview.value = logoResponse.data.url
       }
     }
 

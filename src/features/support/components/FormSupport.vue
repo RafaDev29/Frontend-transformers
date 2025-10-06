@@ -1,10 +1,11 @@
 <template>
-  <div class="bg-gradient-to-br from-petroleum to-color5 overflow-y-auto h-full px-1 " >
+  <div class="bg-gradient-to-br from-petroleum to-color5 overflow-y-auto h-full px-1 
+              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800">
     <div class="mx-auto">
 
-      <!-- Header Section -->
+
       <div class="text-center mb-2">
-        <!-- SIMTRA Logo -->
+
         <div class="z-10 text-center">
           <h1 class="text-3xl mt-1 font-extrabold tracking-wider">
             <span class="text-color1 dark:text-colorDark1">S</span>
@@ -19,16 +20,19 @@
       </div>
 
       <!-- Support Info Card -->
-      <div class="bg-gradient-to-r from-petroleum to-color2 text-white rounded-2xl p-2 mb-2 shadow-lg">
+      <div class="bg-gradient-to-r from-petroleum to-color2 text-white rounded-2xl p-2 mb-2 shadow-lg
+                  dark:from-color3/90 dark:to-color4/90">
         <h2 class="text-sm font-bold mb-1">¿Necesitas Soporte?</h2>
-        <p class="text-color5 text-sm leading-relaxed">
+        <p class="text-color5 text-sm leading-relaxed dark:text-slate-300">
           Si tienes un problema con la aplicación o necesitas ayuda, por favor contáctanos a través de este formulario y
           te responderemos lo antes posible.
         </p>
       </div>
 
       <!-- Form Card -->
-      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden
+                  dark:bg-gradient-to-br dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 
+                  dark:border-slate-700/60">
         <form @submit.prevent="handleSubmit" class="p-6">
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -38,37 +42,45 @@
               <!-- Name and Contact Row -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-colorDark1">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                     Nombre Completo *
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                      <svg viewBox="0 0 24 24" class="h-5 w-5 text-neutral-medium dark:text-slate-400">
                         <path :d="$icons.account" fill="currentColor" />
                       </svg>
                     </div>
                     <input v-model="form.name" type="text"
-                      class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
+                      class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 
+                             bg-slate-50 focus:bg-white text-sm
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Tu nombre completo" required>
                   </div>
                 </div>
 
                 <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-colorDark1">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                     Teléfono *
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                      <svg viewBox="0 0 24 24" class="h-5 w-5 text-neutral-medium dark:text-slate-400">
                         <path :d="$icons.cellphone" fill="currentColor" />
                       </svg>
                     </div>
                     <input v-model="form.telefono" type="tel"
-                      class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
+                      class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 
+                             bg-slate-50 focus:bg-white text-sm
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="+34 696 576 114" required @blur="touched.telefono = true"
-                      :class="{ 'border-red-300': touched.telefono && !phoneRegex.test(form.telefono) }">
+                      :class="{ 'border-red-300 dark:border-red-500': touched.telefono && !phoneRegex.test(form.telefono) }">
                   </div>
-                  <p v-if="touched.telefono && !phoneRegex.test(form.telefono)" class="text-xs text-red-500">
+                  <p v-if="touched.telefono && !phoneRegex.test(form.telefono)" class="text-xs text-red-500 dark:text-red-400">
                     Debe tener 9 dígitos
                   </p>
                 </div>
@@ -76,93 +88,107 @@
 
               <!-- Email -->
               <div class="space-y-1">
-                <label class="block text-sm font-semibold text-colorDark1">
+                <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                   Correo Electrónico *
                 </label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg viewBox="0 0 24 24" class="h-5 w-5">
+                    <svg viewBox="0 0 24 24" class="h-5 w-5 text-neutral-medium dark:text-slate-400">
                         <path :d="$icons.email" fill="currentColor" />
                       </svg>
                   </div>
                   <input v-model="form.email" type="email"
-                    class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white text-sm"
+                    class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg 
+                           focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 
+                           bg-slate-50 focus:bg-white text-sm
+                           dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                           dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                     placeholder="tu@email.com" required @blur="touched.email = true"
-                    :class="{ 'border-red-300': touched.email && !emailRegex.test(form.email) }">
+                    :class="{ 'border-red-300 dark:border-red-500': touched.email && !emailRegex.test(form.email) }">
                 </div>
-                <p v-if="touched.email && !emailRegex.test(form.email)" class="text-xs text-red-500">
+                <p v-if="touched.email && !emailRegex.test(form.email)" class="text-xs text-red-500 dark:text-red-400">
                   Correo inválido
                 </p>
               </div>
 
 
               <div class="space-y-2">
-                <label class="block text-sm font-semibold text-colorDark1">
+                <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                   Mensaje *
                 </label>
                 <div class="relative">
                   <div class="absolute top-3 left-3 pointer-events-none">
-                     <svg viewBox="0 0 24 24" class="h-5 w-5">
+                     <svg viewBox="0 0 24 24" class="h-5 w-5 text-neutral-medium dark:text-slate-400">
                         <path :d="$icons.message" fill="currentColor" />
                       </svg>
                   </div>
                   <textarea v-model="form.mensaje" rows="6"
-                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white resize-none text-sm"
+                    class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg 
+                           focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 
+                           bg-slate-50 focus:bg-white resize-none text-sm
+                           dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                           dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                     placeholder="Describe tu problema o consulta en detalle..." required></textarea>
                 </div>
-                <p class="text-xs text-neutral-medium">Mínimo 10 caracteres</p>
+                <p class="text-xs text-neutral-medium dark:text-slate-500">Mínimo 10 caracteres</p>
               </div>
             </div>
 
             <div class="space-y-5">
               <!-- File Upload Field -->
               <div class="space-y-2">
-                <label class="block text-sm font-semibold text-colorDark1">
+                <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                   Adjuntar Archivo
                 </label>
                 <div
-                  class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:border-color1 transition-colors duration-200 h-40 flex items-center justify-center">
+                  class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center 
+                         hover:border-color1 transition-colors duration-200 h-40 flex items-center justify-center
+                         dark:border-slate-600 dark:hover:border-color3">
                   <div v-if="!selectedFile" class="space-y-2">
                     <div
-                      class="mx-auto w-10 h-10 bg-gradient-to-r from-color1 to-color2 rounded-full flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" class="h-5 w-5">
+                      class="mx-auto w-10 h-10 bg-gradient-to-r from-color1 to-color2 
+                             dark:from-color3 dark:to-color4 rounded-full flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" class="h-5 w-5 text-white">
                         <path :d="$icons.document" fill="currentColor" />
                       </svg>
                     </div>
                     <div>
                       <label class="cursor-pointer">
-                        <span class="text-color1 hover:text-color2 font-medium text-sm">Haz clic para subir</span>
-                        <span class="text-neutral-medium text-sm"> o arrastra y suelta</span>
+                        <span class="text-color1 hover:text-color2 dark:text-color3 dark:hover:text-color4 font-medium text-sm">
+                          Haz clic para subir
+                        </span>
+                        <span class="text-neutral-medium dark:text-slate-400 text-sm"> o arrastra y suelta</span>
                         <input ref="fileInput" type="file" @change="handleFileSelect" class="hidden"
                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.zip,.rar">
                       </label>
                     </div>
-                    <p class="text-xs text-neutral-medium">
+                    <p class="text-xs text-neutral-medium dark:text-slate-500">
                       PDF, DOC, IMG, TXT, ZIP (Máx. 10MB)
                     </p>
                   </div>
 
                   <!-- File Selected -->
-                  <div v-else class="flex items-center justify-between bg-color5 rounded-lg p-3 w-full">
+                  <div v-else class="flex items-center justify-between bg-color5 dark:bg-slate-700/70 rounded-lg p-3 w-full">
                     <div class="flex items-center space-x-3">
                       <div
-                        class="w-8 h-8 bg-gradient-to-r from-color1 to-color2 rounded-lg flex items-center justify-center flex-shrink-0">
+                        class="w-8 h-8 bg-gradient-to-r from-color1 to-color2 
+                               dark:from-color3 dark:to-color4 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                           <path
                             d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                         </svg>
                       </div>
                       <div class="text-left min-w-0">
-                        <p class="text-sm font-medium text-colorDark1 truncate">
+                        <p class="text-sm font-medium text-colorDark1 dark:text-slate-200 truncate">
                           {{ selectedFile.name }}
                         </p>
-                        <p class="text-xs text-neutral-medium">
+                        <p class="text-xs text-neutral-medium dark:text-slate-400">
                           {{ formatFileSize(selectedFile.size) }}
                         </p>
                       </div>
                     </div>
                     <button type="button" @click="removeFile"
-                      class="text-red-500 hover:text-red-700 transition-colors flex-shrink-0">
+                      class="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors flex-shrink-0">
                       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
@@ -174,9 +200,10 @@
 
               <!-- Loading/Error Messages -->
               <div v-if="loading || error || successMessage" class="space-y-2">
-                <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700
+                                          dark:bg-red-900/20 dark:border-red-800/30 dark:text-red-400">
                   <div class="flex">
-                    <svg class="w-4 h-4 text-red-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-red-400 dark:text-red-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                         clip-rule="evenodd" />
@@ -185,9 +212,10 @@
                   </div>
                 </div>
                 <div v-if="successMessage"
-                  class="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-700">
+                  class="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-700
+                         dark:bg-green-900/20 dark:border-green-800/30 dark:text-green-400">
                   <div class="flex">
-                    <svg class="w-4 h-4 text-green-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor"
+                    <svg class="w-4 h-4 text-green-400 dark:text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor"
                       viewBox="0 0 20 20">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -201,11 +229,17 @@
               <!-- Submit Button -->
               <div class="flex flex-col sm:flex-row gap-4 pt-4">
                 <button type="button" @click="$emit('close')"
-                  class="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
+                  class="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 
+                         text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200
+                         dark:from-slate-700/70 dark:to-slate-600/70 dark:hover:from-slate-600/70 
+                         dark:hover:to-slate-500/70 dark:text-slate-200">
                   Cerrar
                 </button>
                 <button type="submit" :disabled="loading || !isFormValid"
-                  class="w-full bg-gradient-to-r from-color1 to-color2 text-white py-3 px-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                  class="w-full bg-gradient-to-r from-color1 to-color2 dark:from-color3 dark:to-color4 
+                         text-white py-3 px-3 rounded-lg font-semibold shadow-lg hover:shadow-xl 
+                         transform hover:scale-[1.02] transition-all duration-200 
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
                   <div v-if="loading" class="flex items-center justify-center">
                     <svg class="animate-spin -ml-1 mr-3 h-4 w-2 text-white" fill="none" viewBox="0 0 24 24">
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
@@ -228,27 +262,29 @@
       </div>
 
       <!-- WhatsApp Contact Info -->
-      <div class="bg-green-50 border border-green-200 rounded-xl p-4 mt-2">
+      <div class="bg-green-50 border border-green-200 rounded-xl p-4 mt-2
+                  dark:bg-green-900/20 dark:border-green-800/30">
         <div class="flex flex-col md:flex-row items-center justify-between gap-2">
 
           <!-- Encabezado -->
           <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+            <div class="w-10 h-10 bg-green-500 dark:bg-green-600 rounded-full flex items-center justify-center">
               <!-- Icono WhatsApp principal -->
-              <svg viewBox="0 0 24 24" class="h-5 w-5">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 text-white">
                 <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
             </div>
             <div>
-              <h3 class="text-xs font-semibold text-green-800">Soporte en Línea vía WhatsApp</h3>
-              <p class="text-xs text-green-700">Contacta con nosotros a los siguientes números:</p>
+              <h3 class="text-xs font-semibold text-green-800 dark:text-green-300">Soporte en Línea vía WhatsApp</h3>
+              <p class="text-xs text-green-700 dark:text-green-400">Contacta con nosotros a los siguientes números:</p>
             </div>
           </div>
 
           <!-- Botones con ícono + número -->
           <div class="flex flex-col sm:flex-row gap-1">
             <a href="https://wa.me/34696576114" target="_blank"
-              class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
+              class="inline-flex items-center bg-green-500 hover:bg-green-600 
+                     dark:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
               <svg viewBox="0 0 24 24" class="h-5 w-5">
                 <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
@@ -256,7 +292,8 @@
             </a>
 
             <a href="https://wa.me/34687050685" target="_blank"
-              class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
+              class="inline-flex items-center bg-green-500 hover:bg-green-600 
+                     dark:bg-green-600 dark:hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
               <svg viewBox="0 0 24 24" class="h-5 w-5">
                 <path :d="$icons.whatsapp" fill="currentColor" />
               </svg>
@@ -270,7 +307,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, computed } from 'vue'
 import eventBus from '@/plugins/eventBus'

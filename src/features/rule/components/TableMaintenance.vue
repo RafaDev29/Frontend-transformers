@@ -87,19 +87,16 @@
                                 </span>
                             </td>
 
-                            <td class="px-4 py-4 whitespace-nowrap">
+                      <td class="px-4 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
                                     <div class="flex-shrink-0 w-6 h-6">
-                                        <img v-if="row.createdByUser?.images?.[0]?.url"
-                                            :src="row.createdByUser.images[0].url" :alt="row.createdByUser.username"
-                                            class="w-6 h-6 rounded-full object-cover border border-slate-200 dark:border-slate-600">
-                                        <div v-else
-                                            class="w-6 h-6 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center">
-                                            <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="currentColor"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                                    clip-rule="evenodd" />
+                                        <img v-if="row.createdByUser?.images?.[0]?.url" 
+                                             :src="row.createdByUser.images[0].url" 
+                                             :alt="row.createdByUser.username"
+                                             class="w-6 h-6 rounded-full object-cover border border-slate-200 dark:border-slate-600">
+                                        <div v-else class="w-6 h-6 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center">
+                                            <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                             </svg>
                                         </div>
                                     </div>
@@ -109,11 +106,11 @@
                                         </span>
                                         <span :class="[
                                             'text-xs px-1.5 py-0.5 rounded font-medium',
-                                            row.userRoleLabel === 'Fábrica'
+                                            row.userRoleLabel === 'Fábrica' 
                                                 ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                                                : row.userRoleLabel === 'Cliente'
-                                                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                                                    : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                                                : row.userRoleLabel === 'Cliente' 
+                                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                                                : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
                                         ]">
                                             {{ row.userRoleLabel }}
                                         </span>

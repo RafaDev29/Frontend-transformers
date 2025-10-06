@@ -56,7 +56,7 @@ const maintenanceItems = computed(() => {
       title: 'Transformadores',
       icon: 'transformer',
       to: '/app/mtransformer',
-      roles: ['ROOT', 'CUSTOMER' , 'FACTORY'],
+      roles: ['ROOT' , 'FACTORY'],
       category: 'maintenance'
     },
 
@@ -138,9 +138,21 @@ function onSettings() {
   }
 }
 
+@supports (height: 100dvh) {
+  .main-layout {
+    height: 100dvh; 
+  }
+}
+
+
+
+.content-shell,
 .content-bleed {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; 
+  padding: 2px;
+  margin: 2px;
 }
 </style>

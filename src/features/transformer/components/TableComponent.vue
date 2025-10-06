@@ -1,19 +1,19 @@
-<template>
-  <div class="">
-    <div class="overflow-hidden border border-slate-200/70 dark:border-slate-700/60
+<template> 
+  <div class="overflow-x-auto">
+    <div class="inline-block min-w-full border border-slate-200/70 dark:border-slate-700/60
              bg-gradient-to-br from-white via-slate-50 to-white
              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800
              shadow-sm backdrop-blur-sm transition-all duration-300">
-      <table class="min-w-full">
+      <table class="min-w-full table-auto">
         <thead class="bg-gradient-to-r from-color1/95 via-color2/85 to-color1/95
                  dark:from-color3/90 dark:via-color4/80 dark:to-color3/90
                  text-white">
           <tr>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Código</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Número de serie</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Potencia (KVA)</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Tipo</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase">Año Fabricación</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Código</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Número de serie</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Potencia (KVA)</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Tipo</th>
+            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Año Fabricación</th>
           </tr>
         </thead>
 
@@ -34,7 +34,7 @@
                 <div class="px-6 py-4 whitespace-nowrap font-mono font-semibold text-slate-700 dark:text-slate-200">
                   {{ transformer.code }}
                 </div>
-                <div class="px-6 py-4 whitespace-nowrap font-mono font-semibold text-slate-700 dark:text-slate-200">
+                <div class="px-1 py-4 whitespace-nowrap font-semibold text-slate-700 dark:text-slate-200">
                   {{ transformer.serialNumber }}
                 </div>
                 <div class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-slate-200">

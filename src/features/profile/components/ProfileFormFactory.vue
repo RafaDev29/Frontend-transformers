@@ -1,23 +1,27 @@
 <template>
-  <div class=" bg-gradient-to-br from-slate-50 to-color5 py-2 px-2">
-    <div class=" max-w-5xl mx-auto p-2">
+  <div class="bg-gradient-to-br from-petroleum to-color5 overflow-y-auto h-full px-1 
+              dark:from-slate-800 dark:via-slate-850 dark:to-slate-800">
+    <div class="max-w-5xl mx-auto p-2">
 
-
-      <!-- Form Card -->
-      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden 
+                  dark:bg-gradient-to-br dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 
+                  dark:border-slate-700/60">
         <form @submit.prevent="handleSubmit" class="p-8">
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- Left Column - Photo Upload -->
             <div class="lg:col-span-1">
               <div class="sticky top-8">
-                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Logo de la fabrica</h3>
+                <h3 class="text-lg font-semibold text-colorDark1 mb-4 dark:text-slate-200">
+                  Logo de la fabrica
+                </h3>
 
                 <div class="text-center">
                   <div class="relative inline-block">
                     <div
-                      class="w-32 h-32 rounded-2xl bg-gradient-to-r from-color1 to-color2 flex items-center justify-center shadow-lg overflow-hidden">
+                      class="w-32 h-32 rounded-2xl bg-gradient-to-r from-color1 to-color2 
+                             dark:from-color3/90 dark:to-color4/90 flex items-center justify-center 
+                             shadow-lg overflow-hidden">
                       <img v-if="photoPreview" :src="photoPreview" alt="Logo Preview"
                         class="w-full h-full object-cover">
                       <svg v-else class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -28,15 +32,22 @@
 
                     <!-- Upload Button -->
                     <label
-                      class="absolute -bottom-3 -right-3 w-10 h-10 bg-accent-primary hover:bg-color1 text-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl">
+                      class="absolute -bottom-3 -right-3 w-10 h-10 bg-accent-primary hover:bg-color1 
+                             dark:bg-color3 dark:hover:bg-color4 text-white rounded-full 
+                             flex items-center justify-center cursor-pointer transition-all duration-200 
+                             shadow-lg hover:shadow-xl">
                       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
                       </svg>
                       <input ref="fileInput" type="file" accept="image/*" @change="handleFileSelect" class="hidden">
                     </label>
                   </div>
-                  <p class="text-sm text-neutral-medium mt-3">Haz clic para cambiar el logo</p>
-                  <p class="text-xs text-neutral-medium mt-1">Máximo 5MB</p>
+                  <p class="text-sm text-neutral-medium mt-3 dark:text-slate-400">
+                    Haz clic para cambiar el logo
+                  </p>
+                  <p class="text-xs text-neutral-medium mt-1 dark:text-slate-500">
+                    Máximo 5MB
+                  </p>
                 </div>
               </div>
             </div>
@@ -47,38 +58,49 @@
               <!-- Usuario Row -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-colorDark1">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                     Usuario *
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                       </svg>
                     </div>
                     <input v-model="form.username" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Ingresa tu usuario" required>
                   </div>
                 </div>
 
                 <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-colorDark1">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                     Contraseña
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M18,8h-1V6c0-2.76-2.24-5-5-5S7,3.24,7,6v2H6c-1.1,0-2,0.9-2,2v10c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V10C20,8.9,19.1,8,18,8z M12,17c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S13.1,17,12,17z M15.1,8H8.9V6c0-1.71,1.39-3.1,3.1-3.1c1.71,0,3.1,1.39,3.1,3.1V8z" />
                       </svg>
                     </div>
                     <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
-                      class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Dejar en blanco para no cambiar">
                     <button type="button" @click="showPassword = !showPassword"
-                      class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-medium hover:text-colorDark1 transition-colors">
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center 
+                             text-neutral-medium hover:text-colorDark1 
+                             dark:text-slate-400 dark:hover:text-slate-200 
+                             transition-colors">
                       <svg v-if="showPassword" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
@@ -89,46 +111,58 @@
                       </svg>
                     </button>
                   </div>
-                  <p class="text-xs text-neutral-medium">Deja en blanco si no deseas cambiar la contraseña</p>
+                  <p class="text-xs text-neutral-medium dark:text-slate-500">
+                    Deja en blanco si no deseas cambiar la contraseña
+                  </p>
                 </div>
               </div>
 
               <!-- Company Info Section -->
-              <div class="border-t border-slate-200 pt-6">
-                <h3 class="text-lg font-semibold text-colorDark1 mb-4">Información de la fabrica</h3>
+              <div class="border-t border-slate-200 dark:border-slate-700/60 pt-6">
+                <h3 class="text-lg font-semibold text-colorDark1 dark:text-slate-200 mb-4">
+                  Información de la fabrica
+                </h3>
 
                 <!-- RUC and Business Name -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-colorDark1">
+                    <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                       RUC
                     </label>
                     <div class="relative">
                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                           <path
                             d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                         </svg>
                       </div>
                       <input v-model="form.ruc" type="text" maxlength="11"
-                        class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                        class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                               focus:ring-2 focus:ring-color1 focus:border-transparent 
+                               transition-all duration-200 bg-slate-50 focus:bg-white
+                               dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                               dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                         placeholder="20123456789">
                     </div>
                   </div>
 
                   <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-colorDark1">
+                    <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200">
                       Razón Social
                     </label>
                     <div class="relative">
                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                           <path
                             d="M12,7V3H2V21H22V7H12M6,19H4V17H6V19M6,15H4V13H6V15M6,11H4V9H6V11M6,7H4V5H6V7M10,19H8V17H10V19M10,15H8V13H10V15M10,11H8V9H10V11M10,7H8V5H10V7M20,19H12V17H20V19M20,15H12V13H20V15M20,11H12V9H20V11Z" />
                         </svg>
                       </div>
                       <input v-model="form.businessName" type="text"
-                        class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                        class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                               focus:ring-2 focus:ring-color1 focus:border-transparent 
+                               transition-all duration-200 bg-slate-50 focus:bg-white
+                               dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                               dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                         placeholder="Mi fabrica SAC">
                     </div>
                   </div>
@@ -136,36 +170,44 @@
 
                 <!-- Address -->
                 <div class="mb-6">
-                  <label class="block text-sm font-semibold text-colorDark1 mb-2">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200 mb-2">
                     Dirección
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                       </svg>
                     </div>
                     <input v-model="form.address" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Av. Principal 123">
                   </div>
                 </div>
 
                 <!-- District -->
                 <div class="mb-6">
-                  <label class="block text-sm font-semibold text-colorDark1 mb-2">
+                  <label class="block text-sm font-semibold text-colorDark1 dark:text-slate-200 mb-2">
                     Distrito
                   </label>
                   <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-neutral-medium" fill="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-5 w-5 text-neutral-medium dark:text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                         <path
                           d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H5C3.89,1 3,1.89 3,3V7H9V9H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V9H21Z" />
                       </svg>
                     </div>
                     <input v-model="form.distric" type="text"
-                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-color1 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                      class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl 
+                             focus:ring-2 focus:ring-color1 focus:border-transparent 
+                             transition-all duration-200 bg-slate-50 focus:bg-white
+                             dark:bg-slate-700/70 dark:border-slate-600 dark:text-slate-200 
+                             dark:focus:bg-slate-600/70 dark:focus:ring-color3 dark:placeholder-slate-400"
                       placeholder="Lima, San Isidro, etc.">
                   </div>
                 </div>
@@ -173,9 +215,10 @@
 
               <!-- Loading/Error Messages -->
               <div v-if="loading || error || successMessage" class="space-y-2">
-                <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
+                <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700
+                                          dark:bg-red-900/20 dark:border-red-800/30 dark:text-red-400">
                   <div class="flex">
-                    <svg class="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 text-red-400 dark:text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                         clip-rule="evenodd" />
@@ -184,9 +227,10 @@
                   </div>
                 </div>
                 <div v-if="successMessage"
-                  class="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-700">
+                  class="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-700
+                         dark:bg-green-900/20 dark:border-green-800/30 dark:text-green-400">
                   <div class="flex">
-                    <svg class="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 text-green-400 dark:text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                         clip-rule="evenodd" />
@@ -199,11 +243,21 @@
               <!-- Submit Button -->
               <div class="flex justify-end pt-4">
                 <button type="button" @click="$emit('close')"
-                  class="flex-1 pr-2 mr-2 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200">
+                  class="flex-1 pr-2 mr-2 bg-gradient-to-r from-slate-200 to-slate-300 
+                         hover:from-slate-300 hover:to-slate-400 text-slate-700 
+                         py-2.5 px-4 rounded-lg font-medium shadow-sm hover:shadow-md 
+                         transition-all duration-200
+                         dark:from-slate-700/70 dark:to-slate-600/70 dark:hover:from-slate-600/70 
+                         dark:hover:to-slate-500/70 dark:text-slate-200">
                   Cerrar
                 </button>
                 <button type="submit" :disabled="loading"
-                  class="bg-gradient-to-r from-color1 to-color2 text-white py-3 px-8 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[160px]">
+                  class="bg-gradient-to-r from-color1 to-color2 
+                         dark:from-color3 dark:to-color4 text-white 
+                         py-3 px-8 rounded-lg font-semibold shadow-lg hover:shadow-xl 
+                         transform hover:scale-[1.02] transition-all duration-200 
+                         disabled:opacity-50 disabled:cursor-not-allowed 
+                         disabled:transform-none min-w-[160px]">
                   <div v-if="loading" class="flex items-center justify-center">
                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
@@ -223,7 +277,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
@@ -250,18 +303,14 @@ const fileInput = ref(null)
 
 onMounted(() => {
   if (authStore.user) {
-    // Precargar datos del usuario
     form.value.username = authStore.user.username || authStore.user.usuario || ''
 
-    // Precargar datos de la fábrica desde el store
     if (authStore.user.factory) {
       form.value.ruc = authStore.user.factory.ruc || ''
       form.value.businessName = authStore.user.factory.businessName || ''
       form.value.address = authStore.user.factory.address || ''
       form.value.distric = authStore.user.factory.distric || ''
     }
-
-    // Precargar foto si existe
     if (authStore.user.images && authStore.user.images.length > 0) {
       photoPreview.value = authStore.user.images[0].url
     }
@@ -346,39 +395,59 @@ const handleSubmit = async () => {
       throw new Error('No se encontró el UID del usuario')
     }
 
-    // Actualizar perfil de la fábrica
     const updatedFactoryData = await updateCompanyProfile(payload, uidFactory)
 
-    // Actualizar el store con los nuevos datos usando la respuesta del servidor
     if (updatedFactoryData && updatedFactoryData.user) {
-      // Usar los datos completos del usuario que vienen del servidor
-      authStore.updateUser(updatedFactoryData.user)
+      const updatedUser = {
+        ...authStore.user, 
+        username: updatedFactoryData.user.username || authStore.user.username,
+        factory: {
+          ...authStore.user.factory, 
+          ...updatedFactoryData.user.factory, 
+          ruc: payload.ruc,
+          businessName: payload.businessName,
+          address: payload.address,
+          distric: payload.distric
+        }
+      }
+      
+      authStore.updateUser(updatedUser)
+    } else {
+      const updatedUser = {
+        ...authStore.user,
+        username: payload.username,
+        factory: {
+          ...authStore.user.factory,
+          ruc: payload.ruc,
+          businessName: payload.businessName,
+          address: payload.address,
+          distric: payload.distric
+        }
+      }
+      
+      authStore.updateUser(updatedUser)
     }
 
-    // Subir logo si se seleccionó uno nuevo
     if (selectedFile.value) {
       const formData = new FormData()
       formData.append('file', selectedFile.value)
 
       const logoResponse = await uploadCompanyLogo(formData, uid)
 
-      // Actualizar el store con la nueva imagen
       if (logoResponse && logoResponse.data) {
-        const newImageUrl = logoResponse.data.url
-
         const newImage = {
           uid: logoResponse.data.uid,
-          url: newImageUrl,
+          url: logoResponse.data.url,
           key: logoResponse.data.key
         }
 
         const updatedUser = {
           ...authStore.user,
-          images: [newImage] // Reemplazar con la nueva imagen
+          images: [newImage]
         }
 
         authStore.updateUser(updatedUser)
-        photoPreview.value = newImageUrl
+        photoPreview.value = logoResponse.data.url
       }
     }
 
