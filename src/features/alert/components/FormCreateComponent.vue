@@ -215,7 +215,7 @@ const form = reactive({
   additionalContacts: [{ value: '', name: '' }],
   retryAttempts: 0,
   isActive: true
-})
+}) 
 
 const hasAdditionalContacts = computed(() => {
   return form.additionalContacts.some(contact => contact.value.trim() !== '')

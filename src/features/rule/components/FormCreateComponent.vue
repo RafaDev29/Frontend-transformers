@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
     @click.self="$emit('close')">
-    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-6xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Crear Nueva Regla de Monitoreo
@@ -9,11 +9,11 @@
         <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          </svg> 
         </button>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="p-6">
+      <form @submit.prevent="handleSubmit" class="p-6 ">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
 
           <div>
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Tipo de Regla -->
-        <div class="mb-6">
+        <div class="mb-6 ">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Tipo de Regla</h3>
           <div class="grid grid-cols-2 md:grid-cols-7 gap-2">
             <div v-for="ruleType in ruleTypes" :key="ruleType.value" class="relative">
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Configuración TEMPERATURA -->
-        <div v-if="form.ruleType === 'TEMPERATURA'" class="mb-1">
+        <div v-if="form.ruleType === 'TEMPERATURA'" class="mb-1 bg-white/100 dark:bg-slate-800/100">
           <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
               <div class="flex-shrink-0">
