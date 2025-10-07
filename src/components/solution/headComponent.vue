@@ -3,14 +3,12 @@
     class="relative w-full min-h-[14rem] md:min-h-[18rem] flex flex-col items-center justify-center 
            text-center bg-gradient-to-r from-color1 via-color2 to-color3 overflow-hidden px-3 sm:px-6 md:px-8">
 
-    <!-- Imagen de fondo -->
     <img
       src="@/assets/solution/solution.jpg"
       alt="Monitoreo de transformadores"
       class="absolute inset-0 w-full h-full object-cover opacity-30"
     />
 
-    <!-- Contenido principal -->
     <div class="relative z-10 text-white max-w-3xl mx-auto">
       <h1
         class="text-lg sm:text-xl md:text-3xl font-semibold tracking-wide drop-shadow-lg leading-snug sm:leading-normal"
