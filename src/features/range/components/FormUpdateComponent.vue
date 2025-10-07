@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
     <div
-      class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
       
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
@@ -25,7 +25,7 @@
             Código *
           </label>
           <input id="code" v-model="form.code" type="text" 
-            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-white border-gray-300 dark:border-slate-600 focus:ring-color1 focus:outline-none" />
+            class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200" />
         </div>
 
         <!-- Tipo -->
@@ -34,7 +34,7 @@
             Tipo *
           </label>
           <input id="type" v-model="form.type" type="text" 
-            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-white border-gray-300 dark:border-slate-600 focus:ring-color1 focus:outline-none" />
+            class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200" />
         </div>
 
         <div>
@@ -43,7 +43,7 @@
           </label>
           <div v-for="(voltage, index) in form.voltageValue" :key="index" class="flex items-center gap-2 mb-2">
             <input v-model="form.voltageValue[index]" type="text"
-              class="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-white border-gray-300 dark:border-slate-600 focus:ring-color1 focus:outline-none" />
+              class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200" />
             <button type="button" @click="removeVoltage(index)"
               class="px-2 py-1 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
               ✕

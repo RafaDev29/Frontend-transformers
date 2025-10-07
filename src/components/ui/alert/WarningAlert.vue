@@ -10,9 +10,7 @@
       class="bg-white border border-accent-warning rounded-2xl shadow-2xl 
              p-6 max-w-md mx-auto text-center relative"
     >
-      <!-- Header -->
       <div class="flex items-center justify-center mb-4">
-        <v-icon class="mr-2 text-4xl text-accent-warning">mdi-alert-circle</v-icon>
         <span class="text-2xl font-semibold text-accent-warning">¡Advertencia!</span>
       </div>
 

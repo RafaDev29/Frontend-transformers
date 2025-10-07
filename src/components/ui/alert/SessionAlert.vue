@@ -9,10 +9,9 @@ const show = ref(false)
 const countdown = ref(0)
 let countdownInterval = null
 
-// Mostrar alerta con countdown
 const showWarning = () => {
   if (auth.isAuthenticated) {
-    countdown.value = 30 // segundos hasta logout
+    countdown.value = 30 
     show.value = true
 
     clearInterval(countdownInterval)
@@ -54,7 +53,6 @@ onUnmounted(() => {
     <div
       class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-md w-full p-6 animate-fade-in"
     >
-      <!-- Header -->
       <div class="flex items-center gap-2 text-accent-primary">
         <svg viewBox="0 0 24 24" class="h-6 w-6">
           <path :d="$icons.alert" fill="currentColor" />
@@ -62,7 +60,6 @@ onUnmounted(() => {
         <h2 class="text-lg font-semibold">Sesión por expirar</h2>
       </div>
 
-      <!-- Content -->
       <p class="mt-3 text-slate-600 dark:text-slate-300">
         Tu sesión está a punto de expirar por inactividad.
       </p>
@@ -74,7 +71,6 @@ onUnmounted(() => {
         <span class="text-accent-success font-bold">{{ countdown }}</span> segundos.
       </p>
 
-      <!-- Actions -->
       <div class="mt-6 flex justify-end gap-3">
         <button
           @click="eventBus.emit('keep-alive'); hide()"

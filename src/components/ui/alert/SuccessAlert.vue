@@ -11,11 +11,10 @@
              p-6 max-w-md mx-auto text-center relative animate-toast"
     >
       <div class="flex items-center justify-center mb-4">
-        <v-icon class="mr-2 text-4xl text-accent-success">mdi-check-circle</v-icon>
         <span class="text-2xl font-bold text-accent-success">¡Éxito!</span>
       </div>
 
-      <!-- Mensaje -->
+
       <div class="text-slate-700 mb-6">
         <span>{{ message }}</span>
       </div>

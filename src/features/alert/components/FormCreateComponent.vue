@@ -2,7 +2,7 @@
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
     @click.self="$emit('close')">
     <div
-      class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
+      class=" mt-10 bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Crear Nueva Alerta
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Tipo de Alerta -->
-        <div class="mb-8">
+        <div class="mb-8 w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Tipo de Alerta</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div v-for="alertType in alertTypes" :key="alertType.value" class="relative">
@@ -222,7 +222,7 @@ const hasAdditionalContacts = computed(() => {
 })
 
 const inputClasses = (fieldName) => {
-  const baseClasses = 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white dark:bg-slate-700 text-gray-900 dark:text-white transition-colors'
+  const baseClasses = 'w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200'
   const errorClasses = 'border-red-500 focus:ring-red-500'
   const normalClasses = 'border-gray-300 dark:border-slate-600 focus:ring-accent-primary'
 

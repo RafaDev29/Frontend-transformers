@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
     @click.self="$emit('close')">
-    <div class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div class=" mt-10 bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Crear Nueva Regla de Monitoreo
@@ -21,14 +21,14 @@
               Nombre de la Regla *
             </label>
             <input id="ruleName" v-model="form.ruleName" type="text"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
               placeholder="Ej: Alerta por alta temperatura" required />
             <p v-if="errors.ruleName" class="mt-1 text-sm text-red-600">{{ errors.ruleName }}</p>
           </div>
         </div>
 
         <!-- Tipo de Regla -->
-        <div class="mb-6 ">
+        <div class="mb-6 w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Tipo de Regla</h3>
           <div class="grid grid-cols-2 md:grid-cols-7 gap-2">
             <div v-for="ruleType in ruleTypes" :key="ruleType.value" class="relative">
@@ -67,13 +67,13 @@
                   Normal (°C) *
                 </label>
                 <input v-model.number="form.config.normalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="70" required />
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
                   Mensaje Normal (SOBRETEMPERATURA) *
                 </label>
                 <input v-model="form.config.normalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -83,13 +83,13 @@
                   Precaución (°C) *
                 </label>
                 <input v-model.number="form.config.warningValue.value" type="number"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="80" required />
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
                   Mensaje Precaución (SOBRETEMPERATURA) *
                 </label>
                 <input v-model="form.config.warningValue.message" type="text"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -98,13 +98,13 @@
                   Crítico (°C) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="90" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico (SOBRETEMPERATURA)*
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -135,13 +135,13 @@
                   Normal (%) *
                 </label>
                 <input v-model.number="form.config.normalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="70" min="0" max="100" required />
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
                   Mensaje Normal (SOBREPOTENCIA) *
                 </label>
                 <input v-model="form.config.normalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -151,13 +151,13 @@
                   Precaución (%) *
                 </label>
                 <input v-model.number="form.config.warningValue.value" type="number"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="80" min="0" max="100" required />
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
                   Mensaje Precaución (SOBREPOTENCIA) *
                 </label>
                 <input v-model="form.config.warningValue.message" type="text"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -166,13 +166,13 @@
                   Crítico (%) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="90" min="0" max="100" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico (SOBREPOTENCIA) *
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -203,13 +203,13 @@
                   🏢 Urbano (V) *
                 </label>
                 <input v-model.number="form.config.urbanValue.value" type="number"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="5" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Mensaje Urbano (SOBRETENSIÓN)*
                 </label>
                 <input v-model="form.config.urbanValue.message" type="text"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -218,13 +218,13 @@
                   🌾 Rural (V) *
                 </label>
                 <input v-model.number="form.config.ruralValue.value" type="number"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="7.5" required step="any" />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                   Mensaje Rural (SOBRETENSIÓN) *
                 </label>
                 <input v-model="form.config.ruralValue.message" type="text"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -237,13 +237,13 @@
                     🏢 Urbano (V) *
                   </label>
                   <input v-model.number="form.config.urbanValueNegative.value" type="number"
-                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                     placeholder="-5" required />
                   <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                     Mensaje Urbano (SUBTENSIÓN) *
                   </label>
                   <input v-model="form.config.urbanValueNegative.message" type="text"
-                    class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                     required />
                 </div>
 
@@ -252,13 +252,13 @@
                     🌾 Rural (V) *
                   </label>
                   <input v-model.number="form.config.ruralValueNegative.value" type="number"
-                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                     placeholder="-7.5" required step="any" />
                   <label class="block text-sm font-medium text-red-700 dark:text-red-300 mb-2">
                     Mensaje Rural (SUBTENSIÓN) *
                   </label>
                   <input v-model="form.config.ruralValueNegative.message" type="text"
-                    class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                    class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                     required />
                 </div>
               </div>
@@ -288,13 +288,13 @@
                   Normal (%) *
                 </label>
                 <input v-model.number="form.config.normalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="220" required />
                 <label class="block text-sm font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
                   Mensaje Normal (DESCALANCE)*
                 </label>
                 <input v-model="form.config.normalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-green-300 dark:border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -304,13 +304,13 @@
                   Precaución (%) *
                 </label>
                 <input v-model.number="form.config.warningValue.value" type="number"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="240" required />
                 <label class="block text-sm font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
                   Mensaje Precaución (DESCALANCE) *
                 </label>
                 <input v-model="form.config.warningValue.message" type="text"
-                  class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -319,13 +319,13 @@
                   Crítico (%) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="260" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico (DESCALANCE)*
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -354,13 +354,13 @@
                   Crítico (Hz) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number" step="any"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="0.001" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico (SOBREFRECUENCIA)*
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -369,13 +369,13 @@
                   Crítico (Hz) *
                 </label>
                 <input v-model.number="form.config.criticalValueNegative.value" type="number" step="any"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="-0.001" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico (SUBFRECUENCIA) *
                 </label>
                 <input v-model="form.config.criticalValueNegative.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -403,13 +403,13 @@
                   Crítico (%) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="5" min="0" max="100" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico *
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
 
@@ -437,13 +437,13 @@
                   Crítico (%) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="18" min="0" max="100" required />
                 <label class="block text-sm font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
                   Mensaje Crítico *
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
-                  class="w-full px-3 py-2 border border-red-300 dark:border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                  class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   required />
               </div>
             </div>
@@ -457,7 +457,7 @@
               {{ messageLabels[form.ruleType] || 'Mensaje' }}
             </label>
             <input id="general1Message" v-model="form.config.general1Value.message" type="text"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-color1 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
               placeholder="Mensaje general para la regla" required />
             <p v-if="errors.general1Message" class="mt-1 text-sm text-red-600">{{ errors.general1Message }}</p>
           </div>
@@ -541,7 +541,7 @@
         </div>
 
 
-        <div v-if="form.ruleType" class="mb-8">
+        <div v-if="form.ruleType" class="mb-8 ">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Alertas Asociadas</h3>
           <div v-if="availableAlerts.length > 0" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -549,7 +549,7 @@
             </p>
 
             <!-- Buscador de Alertas -->
-            <div class="mb-4">
+            <div class="mb-4 w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200">
               <div class="relative">
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none"
                   stroke="currentColor" viewBox="0 0 24 24">

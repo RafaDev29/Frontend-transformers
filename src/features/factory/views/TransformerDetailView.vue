@@ -2,24 +2,23 @@
   <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1 flex flex-col">
     <!-- Navigation arriba (NO se mueve) -->
     <div class="py-1">
-      <NavigationComponent
-        :breadcrumbs="[
-          { label: 'Panel de Fábrica', path: '/app/factory' },
-          { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
-          { label: 'Panel Detalle Transformador', path: '/app/factoryTransformerDetail' },
-        ]"
-      />
+      <NavigationComponent :breadcrumbs="[
+        { label: 'Panel de Fábrica', path: '/app/factory' },
+        { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
+        { label: 'Panel Detalle Transformador', path: '/app/factoryTransformerDetail' },
+      ]" />
     </div>
 
-    <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-0">
-      <!-- Card 50% a la izquierda -->
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0">
+
       <div class=" flex items-center justify-center  pl-2 pr-2 rounded-3xl ">
         <CardDetailComponent />
       </div>
 
-      <div class="hidden md:block h-full  w-full  ">
-        <div class="transformer-layer h-[600px] w-full rounded-3xl " :style="bgStyle"></div>
+      <div class="hidden lg:block h-full w-full">
+        <div class="transformer-layer h-[600px] w-full rounded-3xl" :style="bgStyle"></div>
       </div>
+
     </div>
   </div>
 </template>
@@ -50,22 +49,13 @@ const bgStyle = computed(() => {
 </script>
 
 <style scoped>
-
-
 .transformer-layer {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover; 
+  background-size: cover;
 }
 
-.image{
+.image {
   display: block;
-}
-
-@media (max-width : 760px) {
-  .imagen{
-    display: none;
-  }
-  
 }
 </style>

@@ -210,13 +210,11 @@
       <div
         class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900">
 
-        <!-- Modo normal: mostrar UserActionsCard completo -->
         <div v-if="!rail" class="p-2.5">
           <UserActionsCard :user="user" :rail="false" @profile="goToProfile" @support="goToSupport"
             @logout="$emit('logout')" />
         </div>
 
-        <!-- Modo rail: mostrar UserActionsCard minimizado -->
         <div v-else class="flex justify-center py-3">
           <UserActionsCard :user="user" :rail="true" @profile="goToProfile" @support="goToSupport"
             @logout="$emit('logout')" />

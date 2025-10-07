@@ -21,7 +21,7 @@
       >
         Nuestra plataforma se integra con sensores y equipos IoT para capturar variables críticas de los transformadores
         (<span class="italic">tensión, corriente, temperatura, carga, aceite</span> y más), analiza su desempeño en tiempo real y genera
-        alertas tempranas para prevenir fallas, optimizar la operación y reducir costos de mantenimiento y energía.
+        alertas tempranas para prevenir fallas, optimizar la operación.
       </p>
 
       <div class="mt-5 flex justify-center">

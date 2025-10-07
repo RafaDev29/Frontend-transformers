@@ -15,10 +15,10 @@
       <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <FormCreateComponent v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal" @save="handleCreate"
+    <FormCreateComponent class="backdrop-blur-md" v-if="showCreateModal" :show="showCreateModal" @close="closeCreateModal" @save="handleCreate"
       :alerts="dataAlert" />
 
-    <FormUpdateComponent :alerts="dataAlert" v-if="showUpdateModal" :show="showUpdateModal" :ruleData="selectedCustomer"
+    <FormUpdateComponent class="backdrop-blur-md" :alerts="dataAlert" v-if="showUpdateModal" :show="showUpdateModal" :ruleData="selectedCustomer"
       @close="closeUpdateModal" @update="handleUpdate" />
   </div>
 </template>

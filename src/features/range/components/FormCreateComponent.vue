@@ -44,7 +44,7 @@
                     </label>
                     <div v-for="(voltage, index) in form.voltageValue" :key="index" class="flex items-center gap-2 mb-2">
                         <input v-model="form.voltageValue[index]" type="text" 
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-white border-gray-300 dark:border-slate-600 focus:ring-color1 focus:outline-none" />
+                            class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200" />
                         <button type="button" @click="removeVoltage(index)"
                             class="px-2 py-1 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
                             ✕
@@ -143,7 +143,7 @@ watch(() => props.show, (newVal) => {
 
 const inputClass = (hasError) => [
     'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-    hasError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+    hasError ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
 ]
 </script>

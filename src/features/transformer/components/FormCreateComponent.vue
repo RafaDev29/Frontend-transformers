@@ -2,11 +2,11 @@
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]"
     @click.self="$emit('close')">
     <div
-      class="bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+      class="mt-10 bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           Crear Nuevo Transformador
-        </h2> 
+        </h2>
         <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -28,8 +28,8 @@
               </label>
               <select id="type" v-model="form.type" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.type ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.type ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" required>
                 <option value="">Seleccionar tipo</option>
                 <option value="SECO">SECO</option>
@@ -45,8 +45,8 @@
               </label>
               <select id="zone" v-model="form.zone" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.zone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.zone ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" required>
                 <option value="">Seleccionar zona</option>
                 <option value="URBANO">Urbano</option>
@@ -62,8 +62,8 @@
               </label>
               <select id="phases" v-model.number="form.phases" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.phases ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.phases ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" required>
                 <option value="">Seleccionar fases</option>
                 <option :value="1">1 Fase</option>
@@ -80,8 +80,8 @@
               </label>
               <input id="serialNumber" v-model="form.serialNumber" type="text" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.serialNumber ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.serialNumber ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" placeholder="TR-2025-01" required />
               <p v-if="errors.serialNumber" class="mt-1 text-sm text-red-600">{{ errors.serialNumber }}</p>
             </div>
@@ -93,8 +93,8 @@
               </label>
               <input id="brand" v-model="form.brand" type="text" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.brand ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.brand ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" placeholder="ABB" required />
               <p v-if="errors.brand" class="mt-1 text-sm text-red-600">{{ errors.brand }}</p>
             </div>
@@ -106,8 +106,8 @@
               <input id="yearManufacture" v-model.number="form.yearManufacture" type="number" :min="1900"
                 :max="new Date().getFullYear()" :class="[
                   'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  errors.yearManufacture ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  errors.yearManufacture ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                  'text-gray-900 dark:text-white'
                 ]" placeholder="2024" required />
               <p v-if="errors.yearManufacture" class="mt-1 text-sm text-red-600">{{ errors.yearManufacture }}</p>
             </div>
@@ -133,8 +133,8 @@
                 </label>
                 <select id="primaryRange" v-model="form.primaryRangeUid" @change="resetPrimaryVoltage" :class="[
                   'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  errors.primaryRangeUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  errors.primaryRangeUid ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                  'text-gray-900 dark:text-white'
                 ]" required>
                   <option value="">Seleccionar rango</option>
                   <option v-for="range in dataRange" :key="range.uid" :value="range.uid">
@@ -151,8 +151,8 @@
                 <select id="primaryVoltage" v-model.number="form.primaryVoltage" @change="calculateRegulatedVoltages"
                   :disabled="!form.primaryRangeUid" :class="[
                     'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                    errors.primaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                    errors.primaryVoltage ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                    'text-gray-900 dark:text-white',
                     !form.primaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
@@ -170,9 +170,9 @@
                 </label>
                 <input id="primaryCurrent" v-model.number="form.primaryCurrent" type="number" step="0.01" min="0"
                   :class="[
-                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                     'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                    'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white'
                   ]" placeholder="43.3" />
               </div>
             </div>
@@ -187,8 +187,8 @@
                 </label>
                 <select id="secondaryRange" v-model="form.secondaryRangeUid" @change="resetSecondaryVoltage" :class="[
                   'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  errors.secondaryRangeUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  errors.secondaryRangeUid ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                  'text-gray-900 dark:text-white'
                 ]" required>
                   <option value="">Seleccionar rango</option>
                   <option v-for="range in dataRange" :key="range.uid" :value="range.uid">
@@ -205,8 +205,8 @@
                 <select id="secondaryVoltage" v-model.number="form.secondaryVoltage" :disabled="!form.secondaryRangeUid"
                   :class="[
                     'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                    errors.secondaryVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                    errors.secondaryVoltage ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                    'text-gray-900 dark:text-white',
                     !form.secondaryRangeUid ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión</option>
@@ -223,14 +223,13 @@
                 </label>
                 <input id="secondaryCurrent" v-model.number="form.secondaryCurrent" type="number" step="0.01" min="0"
                   :class="[
-                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                     'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                    'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white'
                   ]" placeholder="1968" />
               </div>
             </div>
 
-            <!-- SUBSECCIÓN: REGULACIÓN Y TENSIONES -->
             <div class="p-3 border border-cyan-300 dark:border-cyan-600 rounded-md bg-cyan-50/20 dark:bg-cyan-900/5">
               <h4 class="text-xs font-semibold text-cyan-700 dark:text-cyan-400 mb-3 uppercase">Regulación</h4>
 
@@ -242,9 +241,9 @@
                 </label>
                 <select id="regulationPercentage" v-model="regulationPercentage" @change="calculateRegulatedVoltages"
                   :disabled="!form.primaryVoltage" :class="[
-                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                    'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                     'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                    'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white',
                     !form.primaryVoltage ? 'opacity-50 cursor-not-allowed' : ''
                   ]">
                   <option value="">Seleccionar porcentaje</option>
@@ -260,8 +259,8 @@
                 <select id="regulatedVoltage" v-model.number="form.regulatedVoltage"
                   :disabled="regulatedVoltageOptions.length === 0" :class="[
                     'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                    errors.regulatedVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                    'bg-white dark:bg-slate-700 text-gray-900 dark:text-white',
+                    errors.regulatedVoltage ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                    'text-gray-900 dark:text-white',
                     regulatedVoltageOptions.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
                   ]" required>
                   <option value="">Seleccionar tensión de operación</option>
@@ -272,15 +271,14 @@
                 <p v-if="errors.regulatedVoltage" class="mt-1 text-sm text-red-600">{{ errors.regulatedVoltage }}</p>
               </div>
 
-              <!-- Tensión Nominal -->
               <div>
                 <label for="nominalVoltage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Tensión Nominal (V) *
                 </label>
                 <input id="nominalVoltage" v-model.number="form.nominalVoltage" type="number" min="0" step="1" :class="[
                   'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  errors.nominalVoltage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  errors.nominalVoltage ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                  'text-gray-900 dark:text-white'
                 ]" placeholder="220" required />
                 <p v-if="errors.nominalVoltage" class="mt-1 text-sm text-red-600">{{ errors.nominalVoltage }}</p>
               </div>
@@ -294,8 +292,8 @@
               <input id="apparentPowerKVA" v-model.number="form.apparentPowerKVA" type="number" min="1" step="0.01"
                 :class="[
                   'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                  errors.apparentPowerKVA ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  errors.apparentPowerKVA ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                  'text-gray-900 dark:text-white'
                 ]" placeholder="750" required />
               <p v-if="errors.apparentPowerKVA" class="mt-1 text-sm text-red-600">{{ errors.apparentPowerKVA }}</p>
             </div>
@@ -306,8 +304,8 @@
               </label>
               <input id="altitude" v-model.number="form.altitude" type="number" min="0" step="1" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.altitude ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.altitude ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" placeholder="1000" required />
               <p v-if="errors.altitude" class="mt-1 text-sm text-red-600">{{ errors.altitude }}</p>
             </div>
@@ -318,8 +316,8 @@
               </label>
               <input id="frequency" v-model.number="form.frequency" type="number" min="0" step="0.1" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.frequency ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.frequency ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" placeholder="60" required />
               <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
             </div>
@@ -330,9 +328,9 @@
               </label>
               <input id="copperTemperature" v-model.number="form.copperTemperature" :disabled="form.type === 'ACEITE'"
                 type="number" step="0.1" :class="[
-                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                   'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white'
                 ]" placeholder="65" />
             </div>
 
@@ -342,9 +340,9 @@
               </label>
               <input id="oilTemperature" v-model.number="form.oilTemperature" :disabled="form.type === 'SECO'"
                 type="number" step="0.1" :class="[
-                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                  'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                   'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                  'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                  'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white'
                 ]" placeholder="75" />
             </div>
 
@@ -353,9 +351,9 @@
                 Temperatura Ambiente (°C)
               </label>
               <input id="ambientTemperature" v-model.number="form.ambientTemperature" type="number" step="0.1" :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
+                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm',
                 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                'bg-green-50/70 dark:bg-green-900/20 text-gray-900 dark:text-white'
               ]" placeholder="25" />
             </div>
           </div>
@@ -373,8 +371,8 @@
               </label>
               <select id="factoryUid" v-model="form.factoryUid" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.factoryUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.factoryUid ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" required>
                 <option value="">Seleccionar fábrica</option>
                 <option v-for="factory in dataFactory" :key="factory.uid" :value="factory.uid">
@@ -390,8 +388,8 @@
               </label>
               <select id="customerUid" v-model="form.customerUid" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.customerUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.customerUid ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]">
                 <option value="">Seleccionar cliente</option>
                 <option v-for="customer in dataCustomer" :key="customer.uid" :value="customer.uid">
@@ -407,9 +405,9 @@
                 Fecha de venta
               </label>
               <input id="saleDate" v-model="form.saleDate" type="date" :class="[
-                'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.saleDate ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                'w-full  py-2 border rounded-md focus:outline-none focus:ring-2',
+                errors.saleDate ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                'text-gray-900 dark:text-white'
               ]" />
               <p v-if="errors.saleDate" class="mt-1 text-sm text-red-600">{{ errors.saleDate }}</p>
             </div>
@@ -464,7 +462,7 @@ const dataCustomer = ref([])
 const dataRange = ref([])
 const isLoading = ref(false)
 const errors = ref({})
-const regulationPercentage = ref('') 
+const regulationPercentage = ref('')
 const regulatedVoltageOptions = ref([])
 const auth = useAuthStore()
 const role = auth.user?.role

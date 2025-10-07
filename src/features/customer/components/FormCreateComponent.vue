@@ -25,8 +25,8 @@
             </label>
             <input id="username" v-model="form.username" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.username ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.username ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" placeholder="" required />
             <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
           </div>
@@ -34,13 +34,13 @@
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Contraseña *
+              Contraseñas *
             </label>
             <div class="relative">
               <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'" :class="[
                 'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-                errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-                'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+                errors.password ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
               ]" placeholder="" />
 
               <button type="button" @click="showPassword = !showPassword"
@@ -60,8 +60,8 @@
             </label>
             <input id="ruc" v-model="form.ruc" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.ruc ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.ruc ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" placeholder="" required />
             <p v-if="errors.ruc" class="mt-1 text-sm text-red-600">{{ errors.ruc }}</p>
           </div>
@@ -72,8 +72,8 @@
             </label>
             <input id="businessname" v-model.number="form.businessname" type="text" min="1" step="0.01" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.businessname ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.businessname ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" required />
             <p v-if="errors.businessname" class="mt-1 text-sm text-red-600">{{ errors.businessname }}</p>
           </div>
@@ -88,8 +88,8 @@
             </label>
             <input id="address" v-model="form.address" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.address ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.address ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" placeholder="" required />
             <p v-if="errors.address" class="mt-1 text-sm text-red-600">{{ errors.address }}</p>
           </div>
@@ -100,8 +100,8 @@
             </label>
             <input id="distric" v-model="form.distric" type="text" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.distric ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.distric ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" placeholder="" required />
             <p v-if="errors.distric" class="mt-1 text-sm text-red-600">{{ errors.distric }}</p>
           </div>
@@ -115,8 +115,8 @@
             </label>
             <select id="factoryUid" v-model="form.factoryUid" :class="[
               'w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2',
-              errors.factoryUid ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-slate-600 focus:ring-color1',
-              'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
+              errors.factoryUid ? 'border-red-500 focus:ring-red-500 bg-red-50/70 dark:bg-red-900/20' : 'border-gray-300 dark:border-slate-600 focus:ring-color1 bg-green-50/70 dark:bg-green-900/20',
+                            'text-gray-900 dark:text-white'
             ]" required>
               <option value="">Seleccionar fábrica</option>
               <option v-for="factory in dataFactory" :key="factory.uid" :value="factory.uid">
