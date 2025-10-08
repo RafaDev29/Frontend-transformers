@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :theme="vuetifyTheme">
     <SidebarComponent v-model="drawer" :rail="!sidebarOpen" :items="allMenuItems" :user="auth.user"
       @toggle="toggleSidebar" @logout="onLogout" @settings="onSettings" app :width="280" :rail-width="90" />
 
@@ -12,12 +12,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
 import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import { useFactoryStore } from '@/features/factory/store/factoryStore'
 import { useTransformerStore } from '@/features/transformer/store/transformerStore'
+
 const router = useRouter()
 const transformer = useTransformerStore()
 const factory = useFactoryStore()
@@ -25,6 +27,30 @@ const auth = useAuthStore()
 const drawer = ref(true)
 const sidebarOpen = ref(true)
 
+// 👇 Manejo del tema
+const theme = useTheme()
+const vuetifyTheme = ref('dark')
+
+// Inicializar tema al montar
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
+  vuetifyTheme.value = initialTheme
+  
+  // Aplicar clase dark a html (para Tailwind)
+  document.documentElement.classList.toggle('dark', initialTheme === 'dark')
+  
+  // Sincronizar con Vuetify
+  theme.global.name.value = initialTheme
+})
+
+// Observar cambios en el tema de Vuetify (cuando se cambia desde UserMenuComponent)
+watch(() => theme.global.name.value, (newTheme) => {
+  vuetifyTheme.value = newTheme
+  document.documentElement.classList.toggle('dark', newTheme === 'dark')
+})
 
 const monitoringItems = computed(() => {
   const role = auth.user?.role
@@ -40,7 +66,6 @@ const monitoringItems = computed(() => {
   return items.filter(i => !i.roles || i.roles.includes(role))
 })
 
-
 const maintenanceItems = computed(() => {
   const role = auth.user?.role
   const items = [
@@ -51,15 +76,13 @@ const maintenanceItems = computed(() => {
       roles: ['ROOT'],
       category: 'maintenance'
     },
-
     {
       title: 'Transformadores',
       icon: 'transformer',
       to: '/app/mtransformer',
-      roles: ['ROOT' , 'FACTORY'],
+      roles: ['ROOT', 'FACTORY'],
       category: 'maintenance'
     },
-
     {
       title: 'Clientes',
       icon: 'customer',
@@ -67,7 +90,6 @@ const maintenanceItems = computed(() => {
       roles: ['ROOT', 'FACTORY'],
       category: 'maintenance'
     },
-
     {
       title: 'Rangos',
       icon: 'range',
@@ -79,18 +101,16 @@ const maintenanceItems = computed(() => {
       title: 'Alertas',
       icon: 'Bell',
       to: '/app/malert',
-      roles: ['ROOT' , 'CUSTOMER' , 'FACTORY'],
+      roles: ['ROOT', 'CUSTOMER', 'FACTORY'],
       category: 'maintenance'
     },
     {
       title: 'Reglas',
       icon: 'rule',
       to: '/app/mrule',
-      roles: ['ROOT' , 'CUSTOMER' , 'FACTORY'],
+      roles: ['ROOT', 'CUSTOMER', 'FACTORY'],
       category: 'maintenance'
     },
-
-
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
 })
@@ -115,14 +135,13 @@ function onSettings() {
 }
 </script>
 
-<style scoped>
+<style>
 .main-layout {
   height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
-
 
 .content-shell {
   flex: 1;
@@ -134,17 +153,14 @@ function onSettings() {
 
 @media (min-width: 960px) {
   .content-shell {
-    @apply dark:bg-slate-900/100;
   }
 }
 
 @supports (height: 100dvh) {
   .main-layout {
-    height: 100dvh; 
+    height: 100dvh;
   }
 }
-
-
 
 .content-shell,
 .content-bleed {

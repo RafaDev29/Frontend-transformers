@@ -244,19 +244,43 @@
 
 <script setup>
 import { ref, defineEmits, defineProps, onMounted, watch, computed } from 'vue'
+import { useTheme } from 'vuetify' // 👈 Importa useTheme de Vuetify
 
 defineProps({
   user: { type: Object, default: null },
   rail: { type: Boolean, default: false }
 })
+
 const isTouchDevice = computed(() => 'ontouchstart' in window || navigator.maxTouchPoints > 0)
 const emit = defineEmits(['profile', 'logout', 'theme-toggle', 'support', 'menu-toggle'])
 
 const open = ref(false)
 const isDarkMode = ref(false)
+const vuetifyTheme = useTheme() // 👈 Obtén la instancia del tema de Vuetify
 
 onMounted(() => {
-  isDarkMode.value = document.documentElement.classList.contains('dark')
+  const savedTheme = localStorage.getItem('theme')
+
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    isDarkMode.value = prefersDark
+  }
+  
+  // Sincronizar tanto Tailwind como Vuetify
+  document.documentElement.classList.toggle('dark', isDarkMode.value)
+  vuetifyTheme.global.name.value = isDarkMode.value ? 'dark' : 'light' // 👈 Sincroniza Vuetify
+
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  const updateTheme = e => {
+    if (!localStorage.getItem('theme')) {
+      isDarkMode.value = e.matches
+      document.documentElement.classList.toggle('dark', e.matches)
+      vuetifyTheme.global.name.value = e.matches ? 'dark' : 'light' 
+    }
+  }
+  mediaQuery.addEventListener('change', updateTheme)
 })
 
 watch(open, (newValue) => {
@@ -274,32 +298,16 @@ function closeMenu() {
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value
   const htmlEl = document.documentElement
+  
+  // Sincronizar Tailwind
   htmlEl.classList.toggle('dark', isDarkMode.value)
+  
+  // 👇 Sincronizar Vuetify
+  vuetifyTheme.global.name.value = isDarkMode.value ? 'dark' : 'light'
+  
+  // Guardar preferencia
   localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light')
 }
-
-
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-
-  if (savedTheme) {
-    isDarkMode.value = savedTheme === 'dark'
-  } else {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    isDarkMode.value = prefersDark
-  }
-  document.documentElement.classList.toggle('dark', isDarkMode.value)
-
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  const updateTheme = e => {
-    if (!localStorage.getItem('theme')) {
-      isDarkMode.value = e.matches
-      document.documentElement.classList.toggle('dark', e.matches)
-    }
-  }
-  mediaQuery.addEventListener('change', updateTheme)
-})
-
 </script>
 
 <style scoped>
