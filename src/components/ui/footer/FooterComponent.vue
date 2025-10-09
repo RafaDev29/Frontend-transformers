@@ -4,7 +4,16 @@
       <div class="flex flex-col items-center justify-center text-center">
 
         <div class="mb-4">
-          <h3 class="text-xl font-bold text-color3 mb-2">SIMTRA</h3>
+
+<div class="text-xl font-bold text-color3 mb-2">
+   <span class="text-color1">S</span>
+            <span class="text-accent-success">I</span>
+            <span class="text-color2">M</span>
+            <span class="text-color3">T</span>
+            <span class="text-color4">R</span>
+            <span class="text-accent-primary">A</span>
+</div>
+         
           <p class="text-sm text-color5">Sistema Inteligente de Monitoreo de Transformadores en Tiempo Real</p>
         </div>
         
