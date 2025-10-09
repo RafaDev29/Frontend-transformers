@@ -62,7 +62,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                class="p-3 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-xs font-medium text-green-700 dark:text-green-300 mb-2">
                   Normal (°C) *
                 </label>
@@ -130,7 +130,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                class="p-3 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-xs font-medium text-green-700 dark:text-green-300 mb-2">
                   Normal (%) *
                 </label>
@@ -283,7 +283,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div
-                class="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                class="p-3 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-xs font-medium text-green-700 dark:text-green-300 mb-2">
                   Normal (%) *
                 </label>
