@@ -333,7 +333,7 @@
           </div>
         </div>
 
-        <!-- Configuración FRECUENCIAAA -->
+        <!-- Configuración FRECUENCIAAAaa -->
         <div v-else-if="form.ruleType === 'FRECUENCIA'" class="mb-1">
           <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start space-x-3 mb-4">
