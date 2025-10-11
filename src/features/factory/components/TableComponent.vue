@@ -14,9 +14,10 @@
                  text-white"
         >
           <tr>
+             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Código</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">RUC</th>
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Razón Social</th>
-            <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Código</th>
+           
             <th class="px-6 py-3 text-left text-[11px] tracking-wider font-bold uppercase whitespace-nowrap">Distrito</th>
           </tr>
         </thead>
@@ -38,15 +39,17 @@
                    dark:odd:bg-slate-800/70 dark:even:bg-slate-800/60
                    transition-all duration-300"
           >
+
+            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-600 dark:text-slate-300">
+              {{ factory.code }}
+            </td>
             <td class="px-6 py-4 whitespace-nowrap font-mono text-slate-700 dark:text-slate-200">
               {{ factory.ruc }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap font-semibold text-slate-700 dark:text-slate-200">
               {{ factory.businessName }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-600 dark:text-slate-300">
-              {{ factory.code }}
-            </td>
+          
             <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300 capitalize">
               {{ factory.distric }}
             </td>
