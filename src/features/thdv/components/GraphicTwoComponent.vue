@@ -25,7 +25,7 @@
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
-                Monitoreo de Distorsión Armónica de Tesión, valores min. y max.
+                Monitoreo de Distorsión Armónica de Tensión, valores min. y max.
               </p>
             </div>
 

@@ -18,7 +18,7 @@
                   </svg>
                 </div>
                 <h2 class="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                  Monitoreo de Distorsión Armónica de Tesión
+                  Monitoreo de Distorsión Armónica de Tensión
                 </h2>
               </div>
               <p class="text-slate-600 dark:text-slate-400 font-medium">
