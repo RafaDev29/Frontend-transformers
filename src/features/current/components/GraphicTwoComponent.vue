@@ -199,7 +199,7 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Mínimo: ${globalMin.value}V`,
+          text: `Mínimo: ${globalMin.value}A`,
           position: 'right',
           offsetX: 0,
           style: {
@@ -223,7 +223,7 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Máximo: ${globalMax.value}V`,
+          text: `Máximo: ${globalMax.value}A`,
           position: 'right',
           offsetX: 0,
           style: {

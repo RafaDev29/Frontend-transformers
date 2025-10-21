@@ -203,7 +203,7 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Mínimo: ${globalMin.value}`,
+          text: `Mínimo: ${globalMin.value}kVA`,
           position: 'right',
           style: {
             color: '#fff',
@@ -221,7 +221,7 @@ const chartOptions = computed(() => ({
         strokeDashArray: 8,
         opacity: 0.8,
         label: {
-          text: `Máximo: ${globalMax.value}`,
+          text: `Máximo: ${globalMax.value}kW`,
           position: 'right',
           style: {
             color: '#fff',
