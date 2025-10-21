@@ -107,7 +107,7 @@ const filteredBreadcrumbs = computed(() => {
   const role = auth.user.role
 
   if (role === 'FACTORY' || role === 'CUSTOMER') {
-    return props.breadcrumbs.filter(b => b.label !== 'Panel de Fábrica')
+    return props.breadcrumbs.filter(b => b.label !== 'Panel de Fábricas')
   }
 
   return props.breadcrumbs

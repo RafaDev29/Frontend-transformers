@@ -2,7 +2,7 @@
 <template>
   <v-app>
     <Navbar />
-    <v-main class="bg-gray-100 min-h-screen">
+    <v-main class="bg-gray-100 ">
       <router-view />
     </v-main>
   </v-app>

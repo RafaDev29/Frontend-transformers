@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-y-auto h-screen bg-gray-100 ">
+  <div class=" bg-gray-100 ">
     
     <div >
       <div

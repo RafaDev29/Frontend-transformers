@@ -3,7 +3,7 @@
 
     <div class="py-1">
       <NavigationComponent :breadcrumbs="[
-        { label: 'Panel de Fábrica', path: '/app/factory' },
+        { label: 'Panel de Fábricas', path: '/app/factory' },
         { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
         { label: 'Panel  Detalle Transformador', path: '/app/factoryTransformerDetail' },
         { label: 'Panel de Corriente ', path: '/app/current' },

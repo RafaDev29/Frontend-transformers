@@ -1,5 +1,5 @@
 <template >
-  <nav class="bg-gradient-to-r from-petroleum to-colorDark1 text-white shadow-2xl relative z-50">
+  <nav class="bg-gradient-to-r from-petroleum to-colorDark1 text-white shadow-2xl  z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <router-link to="/start" class="flex items-center space-x-4 hover:opacity-90 transition-opacity">

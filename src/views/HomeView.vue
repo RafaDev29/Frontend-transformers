@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-y-auto h-screen bg-gray-100">
+  <div class=" bg-gray-100">
     <div >
       <div v-for="(component, index) in componentsList" :key="index" class="fade-in scale-effect"
         ref="animatedComponents">
