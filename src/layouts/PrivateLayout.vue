@@ -111,6 +111,13 @@ const maintenanceItems = computed(() => {
       roles: ['ROOT', 'CUSTOMER', 'FACTORY'],
       category: 'maintenance'
     },
+      {
+      title: 'Carga',
+      icon: 'upload',
+      to: '/app/mupload',
+      roles: ['ROOT'],
+      category: 'maintenance'
+    },
   ]
   return items.filter(i => !i.roles || i.roles.includes(role))
 })

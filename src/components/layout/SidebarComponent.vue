@@ -4,10 +4,10 @@
            flex flex-col h-screen" elevation="0">
     <div class="flex-shrink-0 sticky top-0 z-50 bg-gradient-to-r from-slate-50 to-slate-100 
                 dark:from-gray-800 dark:to-gray-900 border-b border-slate-200 
-                dark:border-gray-600 backdrop-blur-sm">
+                dark:border-gray-600 backdrop-blur-sm ">
 
-      <div v-if="!rail" class="p-4 flex items-center justify-between">
-        <div class="flex-1">
+      <div v-if="!rail" class="p-4 flex items-center justify-between ">
+        <div class="flex-1 ">
           <div class="text-2xl font-extrabold tracking-wider mb-1">
             <span class="text-color1 dark:text-color3">S</span>
             <span class="text-accent-success dark:text-color4">I</span>
@@ -40,7 +40,7 @@
     </div>
 
 
-    <div class="p-3 flex-1 overflow-y-auto">
+    <div class="p-3 flex-1 overflow-y-auto ">
 
       <div v-for="(item, i) in monitoringItems" :key="`monitoring-${i}`" class="mb-1">
         <v-tooltip :disabled="!rail || isTouchDevice" :text="item.title" location="end">
@@ -95,7 +95,7 @@
         </v-tooltip>
       </div>
 
-      <div v-if="maintenanceItems.length > 0" class=" relative">
+      <div v-if="maintenanceItems.length > 0" class=" relative ">
         <div class="absolute bottom-full left-0 right-0 mb-1 transition-all duration-500 overflow-hidden z-20"
           :class="isMaintenanceExpanded ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 translate-y-4'">
 
@@ -110,7 +110,7 @@
                   <router-link v-bind="rail ? tooltipProps : {}" :to="item.to"
                     class="flex items-center rounded-lg transition-all duration-300 relative overflow-hidden border backdrop-blur-sm group"
                     :class="[
-                      rail ? 'p-2 justify-center mx-1' : 'px-3 py-2 gap-2',
+                   rail ? 'p-1.5 justify-center mx-1' : 'px-2 py-1 gap-1',
                       $route.path === item.to
                         ? 'bg-gradient-to-r from-color2/20 to-color3/15 dark:from-colorDark4/30 dark:to-colorDark3/25 border-color2/30 dark:border-colorDark4/40 shadow-md'
                         : 'bg-gradient-to-r from-white/90 to-slate-50/80 dark:from-slate-700/60 dark:to-slate-600/40 border-slate-200/40 dark:border-slate-600/30 hover:from-slate-100/90 hover:to-color5/30 dark:hover:from-slate-600/70 dark:hover:to-colorDark3/30 hover:border-color3/40 hover:shadow-md hover:translate-x-0.5'
@@ -147,18 +147,18 @@
             </div>
           </div>
         </div>
-        <v-tooltip :disabled="!rail || isTouchDevice" location="end">
-          <template #activator="{ props: tooltipProps }">
+        <v-tooltip :disabled="!rail || isTouchDevice" location="end" >
+          <template #activator="{ props: tooltipProps }" >
             <div v-bind="rail ? tooltipProps : {}" @click="toggleMaintenance" class="bg-gradient-to-br from-slate-50/80 to-slate-100/60 dark:from-slate-800/80 dark:to-slate-700/60 
              border border-slate-200/40 dark:border-slate-600/40 rounded-lg overflow-hidden shadow-sm 
              backdrop-blur-sm transition-all duration-300 hover:shadow-md cursor-pointer group
-             hover:border-color3/30 dark:hover:border-colorDark4/50">
+             hover:border-color3/30 dark:hover:border-colorDark4/50 ">
 
               <div class="px-3 py-2 bg-color2/20 dark:from-slate-700/60 dark:to-slate-600/40 
                   transition-all duration-300 hover:from-slate-100/70 hover:to-color5/20 
                   dark:hover:from-slate-600/70 dark:hover:to-colorDark3/20 rounded-lg ">
-                <div class="flex items-center justify-between pl-1 ">
-                  <div class="flex items-center gap-3">
+                <div class="flex items-center justify-between pl-1  ">
+                  <div class="flex items-center gap-3 ">
                     <div class="w-9 h-9 bg-gradient-to-br from-color2/85 to-color1/75 dark:from-colorDark4/80 dark:to-color2/70 
                         rounded-lg flex items-center justify-center shadow-sm 
                         transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ">
@@ -169,8 +169,8 @@
                       </svg>
                     </div>
 
-                    <div v-if="!rail" class="min-w-0 flex-1">
-                      <h3 class="text-sm font-medium text-slate-800 dark:text-slate-200 tracking-tight mb-0.5 truncate">
+                    <div v-if="!rail" class="min-w-0 flex-1 ">
+                      <h3 class="text-sm font-medium text-slate-800 dark:text-slate-200 tracking-tight  truncate">
                         Mantenimientos
                       </h3>
                       <p class="text-xs text-slate-600 dark:text-slate-400 font-normal">
@@ -193,7 +193,6 @@
             </div>
           </template>
 
-          <!-- SLOT PERSONALIZADO DEL TOOLTIP -->
           <template #default>
             <div class="bg-green-600 text-white px-3 py-1 rounded-md shadow-md text-sm font-medium">
               Mantenimientos

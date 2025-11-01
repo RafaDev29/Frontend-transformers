@@ -21,6 +21,7 @@ import ruleRoute from '@/features/rule/router'
 import alertRoute from '@/features/alert/router'
 import profileRoute from '@/features/profile/router'
 import supportRoute from '@/features/support/router'
+import uploadRoute from '@/features/upload/route'
 import { authGuard } from './guards/auth'
 
 
@@ -61,6 +62,7 @@ const routes = [
       ...alertRoute,
       ...profileRoute,
       ...supportRoute,
+      ...uploadRoute,
 
       { path: '', redirect: '/app/welcome' },
     ],

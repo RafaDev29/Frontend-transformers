@@ -35,6 +35,11 @@ export const CUSTOMER = {
   DELETE_ROOT: '/customers/delete-root'
 }
 
+export const UPLOAD = {
+  CREATE: 'transformer-monitoring/upload',
+  LIST: '/transformer-monitoring/data',
+}
+
 
 export const RANGE = {
   CREATE: '/range/add',
