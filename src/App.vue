@@ -25,7 +25,7 @@ import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue'
 import WarningAlert from '@/components/ui/alert/WarningAlert.vue'
 import LoadingAlert from '@/components/ui/alert/LoadingAlert.vue'
 
-// Router y store
+
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
