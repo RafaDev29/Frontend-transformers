@@ -10,25 +10,24 @@
       ]" />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
-      <DateComponent class="md:col-span-5" />
-      <CardComponent :chart-data="rawData" class="md:col-span-5" />
+      <DateComponent class="md:col-span-5" @update-range="fetchStrain" />
+      <CardComponent :chart-data="temperatureData" class="md:col-span-5" />
 
     </div>
 
 
-    <!-- Carrusel -->
+
     <div class="flex-1">
       <Swiper :modules="[Navigation, Pagination]" navigation pagination :spaceBetween="20" :slides-per-view="1"
         class="h-full">
-
         <SwiperSlide>
-          <GraphicOneComponent :chart-data="rawData" />
+          <GraphicOneComponent :chart-data="temperatureData" />
         </SwiperSlide>
         <SwiperSlide>
-          <GraphicTwoComponent :chart-data="rawData" />
+          <GraphicTwoComponent :chart-data="temperatureData" />
         </SwiperSlide>
         <SwiperSlide>
-          <GraphicThreeComponent :chart-data="rawData" />
+          <GraphicThreeComponent :chart-data="temperatureData" />
         </SwiperSlide>
       </Swiper>
     </div>
@@ -36,6 +35,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
 
@@ -49,5 +49,29 @@ import GraphicThreeComponent from '../components/GraphicThreeComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
-import rawData from '@/features/strain/data/data.json'
+
+import { allStrain } from '@/features/strain/services/strainService'
+
+const temperatureData = ref([])
+const loading = ref(false)
+const serialNumber = 'TR-2025-0415-5' 
+
+async function fetchStrain({ startDate, endDate }) {
+  try {
+    loading.value = true
+    const response = await allStrain(serialNumber, startDate, endDate)
+
+    if (response?.status && Array.isArray(response.data)) {
+      temperatureData.value = response.data
+    } else {
+      temperatureData.value = []
+      console.warn('No se encontraron datos válidos para el rango seleccionado')
+    }
+  } catch (error) {
+    console.error('Error al obtener datos de temperatura:', error)
+    temperatureData.value = []
+  } finally {
+    loading.value = false
+  }
+}
 </script>

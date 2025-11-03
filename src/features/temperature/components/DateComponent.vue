@@ -1,10 +1,10 @@
 <template>
   <div
-    class=" p-2 justify-center rounded-xl shadow-md flex flex-col md:flex-row flex-wrap items-start md:items-center gap-2 w-full
+    class="p-2 justify-center rounded-xl shadow-md flex flex-col md:flex-row flex-wrap items-start md:items-center gap-2 w-full
            dark:text-slate-200 dark:hover:bg-slate-600 text-slate-800 
            transition-colors border"
   >
-    <!-- Botones de rangos rápidos -->
+
     <div class="flex gap-1 flex-wrap w-full md:w-auto">
       <button
         v-for="btn in quickRanges"
@@ -22,7 +22,7 @@
     </div>
 
     <!-- DatePicker -->
-    <div class="w-full md:w-auto  md:mt-0">
+    <div class="w-full md:w-auto md:mt-0">
       <VueDatePicker
         v-model="range"
         range
@@ -36,14 +36,14 @@
   </div>
 </template>
 
-
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, watch , defineEmits } from "vue"
 import dayjs from "dayjs"
 import VueDatePicker from "@vuepic/vue-datepicker"
 import "@vuepic/vue-datepicker/dist/main.css"
 
-// Detecta si Tailwind está en modo dark
+const emit = defineEmits(["update-range"])
+
 const isDark = computed(() =>
   document.documentElement.classList.contains("dark")
 )
@@ -57,6 +57,16 @@ const quickRanges = [
   { label: "Mes", value: "mes" },
   { label: "Año", value: "año" },
 ]
+
+function emitRange() {
+  if (range.value && range.value.length === 2) {
+    const [start, end] = range.value
+    emit("update-range", {
+      startDate: dayjs(start).format("YYYY-MM-DD"),
+      endDate: dayjs(end).format("YYYY-MM-DD"),
+    })
+  }
+}
 
 function setQuickRange(type) {
   active.value = type
@@ -85,7 +95,12 @@ function setQuickRange(type) {
       ]
       break
   }
+
+  emitRange() 
 }
+
+
+watch(range, emitRange)
 
 function isActive(type) {
   return active.value === type
@@ -93,7 +108,6 @@ function isActive(type) {
 </script>
 
 <style>
-/* SOLO sobrescribimos dark mode */
 .dp__input {
   @apply dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600;
 }

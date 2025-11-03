@@ -73,3 +73,15 @@ export const USER = {
 }
 
 
+export const TEMPERATURE = {
+  DATA: '/transformer-monitoring/temperature',
+}
+
+
+export const STRAIN = {
+  DATA: '/transformer-monitoring/voltage',
+}
+
+
+
+
