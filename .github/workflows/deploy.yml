@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main
+      - developer
 
 jobs:
   deploy:
@@ -20,6 +20,6 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/services/frontend/prod/Frontend-transformers
+            cd /var/services/frontend/dev/Frontend-transformers
             git pull
             docker compose up --build -d
