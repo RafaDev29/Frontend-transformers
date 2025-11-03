@@ -55,13 +55,14 @@ import GraphicThreeComponent from '../components/GraphicThreeComponent.vue'
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
-
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 import { allTemperature } from '@/features/temperature/services/temperatureService'
 
 const temperatureData = ref([])
 const loading = ref(false)
-const serialNumber = 'TR-2025-0415-5' 
-
+const transformerStore = useTransformerStore()
+const serialNumber = transformerStore.selectedTransformer?.serialNumber
+ 
 async function fetchTemperature({ startDate, endDate }) {
   try {
     loading.value = true

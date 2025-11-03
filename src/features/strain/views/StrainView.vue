@@ -38,7 +38,6 @@
 import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
-
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -51,12 +50,21 @@ import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
 
 import { allStrain } from '@/features/strain/services/strainService'
+import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 
 const temperatureData = ref([])
 const loading = ref(false)
-const serialNumber = 'TR-2025-0415-5' 
+
+
+const transformerStore = useTransformerStore()
+const serialNumber = transformerStore.selectedTransformer?.serialNumber
 
 async function fetchStrain({ startDate, endDate }) {
+  if (!serialNumber) {
+    console.warn('No hay transformador seleccionado')
+    return
+  }
+
   try {
     loading.value = true
     const response = await allStrain(serialNumber, startDate, endDate)
@@ -68,7 +76,7 @@ async function fetchStrain({ startDate, endDate }) {
       console.warn('No se encontraron datos válidos para el rango seleccionado')
     }
   } catch (error) {
-    console.error('Error al obtener datos de temperatura:', error)
+    console.error('Error al obtener datos de tensión:', error)
     temperatureData.value = []
   } finally {
     loading.value = false
