@@ -27,7 +27,7 @@
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
-import { ref, getCurrentInstance, onMounted } from 'vue'
+import { ref, getCurrentInstance, onMounted , nextTick} from 'vue'
 import { createUpload , listUpload , deleteUpload} from '../services/uploadService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import eventBus from '@/plugins/eventBus'
@@ -87,6 +87,7 @@ const handleCreate = async (formData, serialNumber) => {
     if (response) {
       bus?.emit?.('success', response?.message)
       closeCreateModal()
+       await listBatch()
     }
   } catch (e) {
     errorMsg.value = e?.response?.data?.message || 'Error al cargar data'
@@ -97,8 +98,7 @@ const handleCreate = async (formData, serialNumber) => {
 }
 
 
-const handleDelete = async (payload) => {
-
+const handleDelete = (payload) => {
   eventBus.emit('warning', {
     msg: '¿Seguro que deseas eliminar este registro?',
     action: async () => {
@@ -106,9 +106,9 @@ const handleDelete = async (payload) => {
         const response = await deleteUpload(payload.uid)
         if (response) {
           bus?.emit?.('success', 'Se eliminó correctamente')
+          await nextTick()
           await listBatch()
         }
-         await listBatch()
       } catch (e) {
         errorMsg.value = e?.response?.data?.message || 'Error al eliminar el registro'
         bus?.emit?.('error', errorMsg.value)

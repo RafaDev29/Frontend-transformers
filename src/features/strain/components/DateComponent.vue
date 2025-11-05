@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch , defineEmits } from "vue"
+import { ref, computed, watch, defineEmits, onMounted } from "vue"
 import dayjs from "dayjs"
 import VueDatePicker from "@vuepic/vue-datepicker"
 import "@vuepic/vue-datepicker/dist/main.css"
@@ -48,7 +48,10 @@ const isDark = computed(() =>
   document.documentElement.classList.contains("dark")
 )
 
-const range = ref([dayjs().format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")])
+const range = ref([
+  dayjs().toDate(),
+  dayjs().toDate()
+])
 const active = ref("hoy")
 
 const quickRanges = [
@@ -74,37 +77,41 @@ function setQuickRange(type) {
 
   switch (type) {
     case "hoy":
-      range.value = [today.format("YYYY-MM-DD"), today.format("YYYY-MM-DD")]
+      // ✅ Convertir a Date objects
+      range.value = [today.toDate(), today.toDate()]
       break
     case "semana":
       range.value = [
-        today.startOf("week").format("YYYY-MM-DD"),
-        today.endOf("week").format("YYYY-MM-DD"),
+        today.startOf("week").toDate(),
+        today.endOf("week").toDate(),
       ]
       break
     case "mes":
       range.value = [
-        today.startOf("month").format("YYYY-MM-DD"),
-        today.endOf("month").format("YYYY-MM-DD"),
+        today.startOf("month").toDate(),
+        today.endOf("month").toDate(),
       ]
       break
     case "año":
       range.value = [
-        today.startOf("year").format("YYYY-MM-DD"),
-        today.endOf("year").format("YYYY-MM-DD"),
+        today.startOf("year").toDate(),
+        today.endOf("year").toDate(),
       ]
       break
   }
 
-  emitRange() 
+  emitRange()
 }
-
 
 watch(range, emitRange)
 
 function isActive(type) {
   return active.value === type
 }
+
+onMounted(() => {
+  emitRange() 
+})
 </script>
 
 <style>

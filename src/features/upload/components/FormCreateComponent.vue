@@ -50,7 +50,7 @@
             ]" required>
             <option value="">Seleccionar transformador</option>
             <option v-for="t in filteredTransformers" :key="t.uid" :value="t.serialNumber">
-              {{ t.serialNumber }} - {{ t.code }}
+              {{ t.serialNumber }} ({{ t.code }} )
             </option>
           </select>
           <p v-if="errors.transformerSerialNumber" class="mt-1 text-sm text-red-600">{{ errors.transformerSerialNumber }}</p>

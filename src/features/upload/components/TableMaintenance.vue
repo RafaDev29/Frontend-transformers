@@ -25,6 +25,10 @@
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Fábrica
               </th>
+
+              <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                Transformador
+              </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Fecha 
               </th>
@@ -57,6 +61,10 @@
 
               <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
                 {{ row.factoryName }}
+              </td>
+
+              <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
+               {{ row.serialNumber }} ({{ row.code }} )
               </td>
 
               <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
@@ -120,6 +128,8 @@ const rows = computed(() => {
     fileName: item.fileName,
     uploadType: item.uploadType,
     createdAt: item.createdAt,
+    serialNumber : item.transformer?.serialNumber,
+    code : item.transformer?.code,
     customerName: item.transformer?.customer?.businessname || '—',
     factoryName: item.transformer?.factory?.businessName || '—'
   }))
