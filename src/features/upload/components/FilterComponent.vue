@@ -38,7 +38,7 @@
 <script setup>
 import { ref, onMounted, defineEmits } from "vue"
 import { listTransformerRoot } from "@/features/transformer/services/transformerService"
-
+import { listFactory } from "@/features/factory/services/factoryService"
 const emit = defineEmits(["onSearch"])
 const transformers = ref([])
 const selectedTransformer = ref("")

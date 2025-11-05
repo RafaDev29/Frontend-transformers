@@ -7,13 +7,16 @@ export async function createUpload(payload , code) {
   return res.data?.data
 }
 
-export async function listUpload(code) {
-  const { data } = await client.get(`${UPLOAD.LIST}/${code}`)
+export async function listUpload() {
+  const { data } = await client.get(`${UPLOAD.LIST}/batches?uploadType=MANUAL`)
   return data
 }
 
 
 
-
+export async function deleteUpload(uid) {
+  const { data } = await client.delete(`${UPLOAD.DELETE}/${uid}`)
+  return data
+}
 
 

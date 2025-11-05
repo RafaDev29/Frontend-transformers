@@ -37,7 +37,8 @@ export const CUSTOMER = {
 
 export const UPLOAD = {
   CREATE: 'transformer-monitoring/upload',
-  LIST: '/transformer-monitoring/data',
+  LIST: '/transformer-monitoring',
+  DELETE : '/transformer-monitoring/batch',
 }
 
 

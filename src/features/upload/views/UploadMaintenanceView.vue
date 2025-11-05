@@ -1,24 +1,25 @@
 <template>
-  <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-4">
-    <!-- Navigation -->
-    <div class="mb-6">
-      <NavigationComponent :breadcrumbs="[
-        { label: 'Mantenimiento de Cargas', path: '/app/mUpload' },
-      ]" />
+  <div class="min-h-screen bg-slate-50 dark:bg-slate-900 p-1">
+    <div class="px-2 py-1 flex items-center justify-between">
+      <div class="flex-grow">
+        <NavigationComponent :breadcrumbs="[
+          { label: 'Mantenimiento de Cargas', path: '/app/mUpload' },
+        ]" />
+
+      </div>
+
+      <div class="w-[5%] flex ml-4  justify-end">
+        <createButton @click="openCreateModal" />
+      </div>
+
     </div>
 
-    <!-- Botón centrado -->
-    <div class="flex items-center justify-center min-h-[60vh]">
-      <createButton @click="openCreateModal" />
+    <div class="px-2 pb-1">
+      <TableMaintenance :items="dataItem" @edit="handleEdit" @delete="handleDelete" />
     </div>
 
-    <FormCreateComponent
-      class="backdrop-blur-md"
-      v-if="showCreateModal"
-      :show="showCreateModal"
-      @close="closeCreateModal"
-      @save="handleCreate"
-    />
+    <FormCreateComponent class="backdrop-blur-md" v-if="showCreateModal" :show="showCreateModal"
+      @close="closeCreateModal" @save="handleCreate" />
   </div>
 </template>
 
@@ -26,16 +27,40 @@
 import NavigationComponent from '@/components/ui/head/NavigationComponent.vue'
 import FormCreateComponent from '../components/FormCreateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
-import { ref, getCurrentInstance } from 'vue'
-import { createUpload } from '../services/uploadService'
+import { ref, getCurrentInstance, onMounted } from 'vue'
+import { createUpload , listUpload , deleteUpload} from '../services/uploadService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 import eventBus from '@/plugins/eventBus'
-
+import TableMaintenance from '@/features/upload/components/TableMaintenance.vue'
 const auth = useAuthStore()
 const role = auth.user?.role
 const errorMsg = ref('')
 const showCreateModal = ref(false)
 const bus = getCurrentInstance()?.appContext.config.globalProperties.$bus
+const dataItem = ref()
+
+
+const listBatch = async () => {
+  try {
+    let response
+
+    if (role === 'ROOT') {
+      response = await listUpload()
+    } else if (role === 'FACTORY') {
+      response = await listUpload()
+    } else {
+      throw new Error('Rol no autorizado')
+    }
+
+    if (response) {
+      dataItem.value = response.data
+    }
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'Error al cargar clientes'
+    bus?.emit?.('error', errorMsg.value)
+  } 
+}
+
 
 const openCreateModal = () => {
   showCreateModal.value = true
@@ -47,10 +72,9 @@ const closeCreateModal = () => {
 
 const handleCreate = async (formData, serialNumber) => {
   errorMsg.value = ''
-  
-  // Activar loading alert
+
   eventBus.emit('loading', true)
-  
+
   try {
     let response
 
@@ -68,8 +92,28 @@ const handleCreate = async (formData, serialNumber) => {
     errorMsg.value = e?.response?.data?.message || 'Error al cargar data'
     bus?.emit?.('error', errorMsg.value)
   } finally {
-    // Desactivar loading alert
     eventBus.emit('loading', false)
   }
 }
+
+
+const handleDelete = async (payload) => {
+
+  try {
+    const response = await deleteUpload(payload.uid)
+
+    if (response) {
+      bus?.emit?.('success', 'Se eliminó correctamente')
+      listBatch()
+    }
+  } catch (e) {
+    errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
+    bus?.emit?.('error', errorMsg.value)
+  } 
+}
+
+
+onMounted(() => {
+  listBatch()
+})
 </script>
