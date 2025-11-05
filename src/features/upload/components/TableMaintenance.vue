@@ -60,7 +60,7 @@
               </td>
 
               <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-                {{ formatDate(row.startDate) }}
+                {{ formatDate(row.createdAt) }}
               </td>
 
               <td class="px-4 py-4 whitespace-nowrap">
@@ -119,7 +119,7 @@ const rows = computed(() => {
     uid: item.uid,
     fileName: item.fileName,
     uploadType: item.uploadType,
-    startDate: item.startDate,
+    createdAt: item.createdAt,
     customerName: item.transformer?.customer?.businessname || '—',
     factoryName: item.transformer?.factory?.businessName || '—'
   }))

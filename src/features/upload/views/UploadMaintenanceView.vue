@@ -99,17 +99,22 @@ const handleCreate = async (formData, serialNumber) => {
 
 const handleDelete = async (payload) => {
 
-  try {
-    const response = await deleteUpload(payload.uid)
-
-    if (response) {
-      bus?.emit?.('success', 'Se eliminó correctamente')
-      listBatch()
-    }
-  } catch (e) {
-    errorMsg.value = e?.response?.data?.message || 'error al eliminar transformadores'
-    bus?.emit?.('error', errorMsg.value)
-  } 
+  eventBus.emit('warning', {
+    msg: '¿Seguro que deseas eliminar este registro?',
+    action: async () => {
+      try {
+        const response = await deleteUpload(payload.uid)
+        if (response) {
+          bus?.emit?.('success', 'Se eliminó correctamente')
+          await listBatch()
+        }
+         await listBatch()
+      } catch (e) {
+        errorMsg.value = e?.response?.data?.message || 'Error al eliminar el registro'
+        bus?.emit?.('error', errorMsg.value)
+      }
+    },
+  })
 }
 
 
