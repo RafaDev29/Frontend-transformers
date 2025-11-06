@@ -57,81 +57,106 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => []
+  },
+  dateRange: {
+    type: Object,
+    required: true,
+    default: () => ({ startDate: '', endDate: '' })
   }
 })
 
+// Series con TODOS los datos reales
 const series = computed(() => [
   { 
     name: "Fase 1", 
-    data: props.chartData.map(d => d.ch1),
+    data: props.chartData.map(d => ({ x: d.datetime, y: d.ch1 })),
     color: '#059669'
   },
   { 
     name: "Fase 2", 
-    data: props.chartData.map(d => d.ch2),
+    data: props.chartData.map(d => ({ x: d.datetime, y: d.ch2 })),
     color: '#dc2626'
   },
   { 
     name: "Fase 3", 
-    data: props.chartData.map(d => d.ch3),
+    data: props.chartData.map(d => ({ x: d.datetime, y: d.ch3 })),
     color: '#0891b2'
   }
 ])
 
-// Función para calcular días entre fechas
-const getDaysDifference = (data) => {
-  if (!data || data.length < 2) return 0
+const chartOptions = computed(() => {
+  if (!props.dateRange.startDate || !props.dateRange.endDate) {
+    return {}
+  }
   
-  const firstDate = new Date(data[0].datetime)
-  const lastDate = new Date(data[data.length - 1].datetime)
-  const diffTime = Math.abs(lastDate - firstDate)
+  const start = new Date(props.dateRange.startDate + 'T00:00:00')
+  const end = new Date(props.dateRange.endDate + 'T23:59:59')
+  const diffTime = Math.abs(end - start)
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   
-  return diffDays
-}
-
-
-const formatDateForRange = (datetime, daysDiff, index, totalPoints) => {
-  const date = new Date(datetime)
+  let xAxisTitle = "Tiempo"
+  if (diffDays <= 1) xAxisTitle = "Hora del Día"
+  else if (diffDays <= 7) xAxisTitle = "Día de la Semana"
+  else if (diffDays <= 365) xAxisTitle = "Fecha"
+  else xAxisTitle = "Mes"
   
-  const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  // Generar ticks personalizados según el rango
+  let customTicks = []
   
-  const dayName = days[date.getDay()]
-  const day = date.getDate()
-  const month = months[date.getMonth()]
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-  
-  // 1 día: mostrar hora
-  if (daysDiff <= 1) {
-    return `${hours}:${minutes}`
-  }
-  // 2-7 días: mostrar día de la semana y fecha
-  else if (daysDiff <= 7) {
-    return `${dayName} ${day}`
-  }
-  // Más de 7 días: mostrar solo los meses
-  else {
-    // Mostrar etiqueta vacía para la mayoría de puntos
-    // Solo mostrar el mes en puntos estratégicos
-    const interval = Math.floor(totalPoints / 6)
-    if (index % interval === 0 || index === totalPoints - 1) {
-      return month
+  // 1 día: generar cada hora desde 00:00 hasta 23:00
+  if (diffDays <= 1) {
+    for (let hour = 0; hour <= 23; hour++) {
+      const tickDate = new Date(start)
+      tickDate.setHours(hour, 0, 0, 0)
+      customTicks.push(tickDate.getTime())
     }
-    return ''
   }
-}
-
-const chartOptions = computed(() => {
-  const daysDiff = getDaysDifference(props.chartData)
-  
-  // Calcular tickAmount dinámicamente
-  let tickAmount = 10
-  if (daysDiff <= 1) tickAmount = 24
-  else if (daysDiff <= 7) tickAmount = daysDiff
-  else if (daysDiff <= 30) tickAmount = 15
-  else tickAmount = 12
+  // 2-7 días: generar cada día desde el lunes (o primer día) hasta el domingo (o último día)
+  else if (diffDays <= 7) {
+    for (let i = 0; i <= diffDays; i++) {
+      const tickDate = new Date(start)
+      tickDate.setDate(start.getDate() + i)
+      tickDate.setHours(12, 0, 0, 0)
+      customTicks.push(tickDate.getTime())
+    }
+  }
+  // 8-365 días: generar ticks cada 2-3 días
+  else if (diffDays <= 365) {
+    const interval = Math.ceil(diffDays / 15)
+    for (let i = 0; i <= diffDays; i += interval) {
+      const tickDate = new Date(start)
+      tickDate.setDate(start.getDate() + i)
+      tickDate.setHours(12, 0, 0, 0)
+      customTicks.push(tickDate.getTime())
+    }
+    // Asegurar que el último día esté incluido
+    const lastTick = new Date(end)
+    lastTick.setHours(12, 0, 0, 0)
+    if (customTicks[customTicks.length - 1] !== lastTick.getTime()) {
+      customTicks.push(lastTick.getTime())
+    }
+  }
+  // Más de 365 días: generar el primer día de cada mes
+  else {
+    const startMonth = start.getMonth()
+    const startYear = start.getFullYear()
+    const endMonth = end.getMonth()
+    const endYear = end.getFullYear()
+    
+    let currentMonth = startMonth
+    let currentYear = startYear
+    
+    while (currentYear < endYear || (currentYear === endYear && currentMonth <= endMonth)) {
+      const tickDate = new Date(currentYear, currentMonth, 1, 12, 0, 0, 0)
+      customTicks.push(tickDate.getTime())
+      
+      currentMonth++
+      if (currentMonth > 11) {
+        currentMonth = 0
+        currentYear++
+      }
+    }
+  }
   
   return {
     chart: {
@@ -164,19 +189,47 @@ const chartOptions = computed(() => {
       yaxis: { lines: { show: true } }
     },
     xaxis: {
-      type: "category", 
-      tickAmount: tickAmount,
-      categories: props.chartData.map((d, idx) => 
-        formatDateForRange(d.datetime, daysDiff, idx, props.chartData.length)
-      ),
+      type: "datetime",
+      min: start.getTime(),
+      max: end.getTime(),
+      tickAmount: customTicks.length - 1,
       labels: {
-        rotate: 0,
+        rotate: diffDays > 30 ? -45 : 0,
         rotateAlways: false,
+        datetimeUTC: false,
         style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-        trim: false
+        formatter: (val, timestamp) => {
+          if (!timestamp) return ''
+          
+          const date = new Date(timestamp)
+          const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+          const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+          
+          // 1 día: mostrar horas (00:00 - 23:00)
+          if (diffDays <= 1) {
+            const hours = String(date.getHours()).padStart(2, '0')
+            return `${hours}:00`
+          } 
+          // 2-7 días: mostrar cada día
+          else if (diffDays <= 7) {
+            const dayName = days[date.getDay()]
+            const day = date.getDate()
+            return `${dayName} ${day}`
+          } 
+          // 8-365 días: mostrar fechas
+          else if (diffDays <= 365) {
+            const day = date.getDate()
+            const month = months[date.getMonth()]
+            return `${day} ${month}`
+          } 
+          // Más de 365: mostrar meses
+          else {
+            return months[date.getMonth()]
+          }
+        }
       },
       title: {
-        text: daysDiff <= 1 ? "Hora" : daysDiff <= 7 ? "Día de la Semana" : "Meses",
+        text: xAxisTitle,
         style: { color: "#475569", fontSize: "12px", fontWeight: "600" }
       },
       axisBorder: {
@@ -185,7 +238,7 @@ const chartOptions = computed(() => {
         height: 2
       },
       axisTicks: {
-        show: false
+        show: true
       },
     },
     yaxis: {
@@ -197,7 +250,7 @@ const chartOptions = computed(() => {
       max: 250,
       labels: {
         style: { colors: '#64748b', fontSize: '12px', fontWeight: '500' },
-        formatter: (val) => `${val}V`
+        formatter: (val) => val ? `${val.toFixed(1)}V` : ''
       },
       axisBorder: {
         show: true,
@@ -220,21 +273,19 @@ const chartOptions = computed(() => {
       style: { fontSize: '12px' },
       marker: { show: true },
       x: {
-        formatter: (val, { dataPointIndex }) => {
-          // Mostrar fecha completa en el tooltip con segundos
-          const datetime = props.chartData[dataPointIndex].datetime
-          const fullDate = new Date(datetime)
+        format: 'dd MMM yyyy HH:mm:ss',
+        formatter: (val) => {
+          const date = new Date(val)
+          const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+          const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
           
-          const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-          const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-          
-          const dayName = days[fullDate.getDay()]
-          const day = String(fullDate.getDate()).padStart(2, '0')
-          const month = months[fullDate.getMonth()]
-          const year = fullDate.getFullYear()
-          const hours = String(fullDate.getHours()).padStart(2, '0')
-          const minutes = String(fullDate.getMinutes()).padStart(2, '0')
-          const seconds = String(fullDate.getSeconds()).padStart(2, '0')
+          const dayName = days[date.getDay()]
+          const day = String(date.getDate()).padStart(2, '0')
+          const month = months[date.getMonth()]
+          const year = date.getFullYear()
+          const hours = String(date.getHours()).padStart(2, '0')
+          const minutes = String(date.getMinutes()).padStart(2, '0')
+          const seconds = String(date.getSeconds()).padStart(2, '0')
           
           return `${dayName} ${day} ${month} ${year} - ${hours}:${minutes}:${seconds}`
         }
@@ -242,7 +293,7 @@ const chartOptions = computed(() => {
     },
     markers: {
       size: 0,
-      hover: { size: 8, sizeOffset: 3 }
+      hover: { size: 6, sizeOffset: 3 }
     }
   }
 })

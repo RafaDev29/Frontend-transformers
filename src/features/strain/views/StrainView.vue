@@ -10,7 +10,7 @@
       ]" />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
-      <DateComponent class="md:col-span-5" @update-range="fetchStrain" />
+      <DateComponent class="md:col-span-5" @update-range="handleRangeUpdate" />
       <CardComponent :chart-data="temperatureData" class="md:col-span-5" />
 
     </div>
@@ -21,7 +21,7 @@
       <Swiper :modules="[Navigation, Pagination]" navigation pagination :spaceBetween="20" :slides-per-view="1"
         class="h-full">
         <SwiperSlide>
-          <GraphicOneComponent :chart-data="temperatureData" />
+          <GraphicOneComponent :chart-data="temperatureData" :date-range="dateRange" />
         </SwiperSlide>
         <SwiperSlide>
           <GraphicTwoComponent :chart-data="temperatureData" />
@@ -54,10 +54,18 @@ import { useTransformerStore } from '@/features/transformer/store/transformerSto
 
 const temperatureData = ref([])
 const loading = ref(false)
-
+const dateRange = ref({ startDate: '', endDate: '' })
 
 const transformerStore = useTransformerStore()
 const serialNumber = transformerStore.selectedTransformer?.serialNumber
+
+async function handleRangeUpdate({ startDate, endDate }) {
+  // Guardar el rango
+  dateRange.value = { startDate, endDate }
+  
+  // Fetch data
+  await fetchStrain({ startDate, endDate })
+}
 
 async function fetchStrain({ startDate, endDate }) {
   if (!serialNumber) {
