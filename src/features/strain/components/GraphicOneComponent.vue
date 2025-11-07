@@ -91,8 +91,9 @@ const chartOptions = computed(() => {
   
   const start = new Date(props.dateRange.startDate + 'T00:00:00')
   const end = new Date(props.dateRange.endDate + 'T23:59:59')
-  const diffTime = Math.abs(end - start)
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+ const diffDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1
+
   
   let xAxisTitle = "Tiempo"
   if (diffDays <= 1) xAxisTitle = "Hora del Día"
@@ -104,23 +105,25 @@ const chartOptions = computed(() => {
   let customTicks = []
   
   // 1 día: generar cada hora desde 00:00 hasta 23:00
-  if (diffDays <= 1) {
-    for (let hour = 0; hour <= 23; hour++) {
-      const tickDate = new Date(start)
-      tickDate.setHours(hour, 0, 0, 0)
-      customTicks.push(tickDate.getTime())
-    }
+ if (diffDays <= 1) {
+  for (let hour = 0; hour < 24; hour++) { // de 0 a 24
+    const tickDate = new Date(start)
+    tickDate.setHours(hour, 0, 0, 0)
+    customTicks.push(tickDate.getTime())
   }
+}
+
   // 2-7 días: generar cada día desde el lunes (o primer día) hasta el domingo (o último día)
   else if (diffDays <= 7) {
-    for (let i = 0; i <= diffDays; i++) {
-      const tickDate = new Date(start)
-      tickDate.setDate(start.getDate() + i)
-      tickDate.setHours(12, 0, 0, 0)
-      customTicks.push(tickDate.getTime())
-    }
+  for (let i = 0; i < diffDays; i++) { // 👈 aquí el cambio
+    const tickDate = new Date(start)
+    tickDate.setDate(start.getDate() + i)
+    tickDate.setHours(12, 0, 0, 0)
+    customTicks.push(tickDate.getTime())
   }
-  // 8-365 días: generar ticks cada 2-3 días
+}
+
+
   else if (diffDays <= 365) {
     const interval = Math.ceil(diffDays / 15)
     for (let i = 0; i <= diffDays; i += interval) {
@@ -129,7 +132,7 @@ const chartOptions = computed(() => {
       tickDate.setHours(12, 0, 0, 0)
       customTicks.push(tickDate.getTime())
     }
-    // Asegurar que el último día esté incluido
+
     const lastTick = new Date(end)
     lastTick.setHours(12, 0, 0, 0)
     if (customTicks[customTicks.length - 1] !== lastTick.getTime()) {
@@ -137,26 +140,34 @@ const chartOptions = computed(() => {
     }
   }
   // Más de 365 días: generar el primer día de cada mes
-  else {
-    const startMonth = start.getMonth()
-    const startYear = start.getFullYear()
-    const endMonth = end.getMonth()
-    const endYear = end.getFullYear()
-    
-    let currentMonth = startMonth
-    let currentYear = startYear
-    
-    while (currentYear < endYear || (currentYear === endYear && currentMonth <= endMonth)) {
-      const tickDate = new Date(currentYear, currentMonth, 1, 12, 0, 0, 0)
-      customTicks.push(tickDate.getTime())
-      
-      currentMonth++
-      if (currentMonth > 11) {
-        currentMonth = 0
-        currentYear++
-      }
+else {
+  const startMonth = start.getMonth()
+  const startYear = start.getFullYear()
+  const endMonth = end.getMonth()
+  const endYear = end.getFullYear()
+  
+  let currentMonth = start.getDate() === 1 ? startMonth : startMonth + 1
+  let currentYear = startYear
+
+  while (currentYear < endYear || (currentYear === endYear && currentMonth <= endMonth)) {
+    const tickDate = new Date(currentYear, currentMonth, 1, 12, 0, 0, 0)
+    customTicks.push(tickDate.getTime())
+
+    currentMonth++
+    if (currentMonth > 11) {
+      currentMonth = 0
+      currentYear++
     }
   }
+
+  // Garantiza incluir el último mes si no cayó exacto
+  const lastTick = new Date(end.getFullYear(), end.getMonth(), 1, 12, 0, 0, 0)
+  if (customTicks[customTicks.length - 1] !== lastTick.getTime()) {
+    customTicks.push(lastTick.getTime())
+  }
+}
+
+
   
   return {
     chart: {
