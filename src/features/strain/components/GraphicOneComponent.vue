@@ -150,6 +150,7 @@ const getChartOptions = () => {
    axes: [
   {
     label: xAxisTitle,
+     side: 2,
     labelSize: 24,
     labelFont: '600 12px Inter, system-ui, sans-serif',
     stroke: '#475569',
@@ -160,37 +161,44 @@ const getChartOptions = () => {
     },
     ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
 
-    // --- Ticks dinámicos según rango ---
+   border: {
+      show: true,
+      stroke: '#475569',
+      width: 2,
+    },
     splits: (() => {
-      if (diffDays === 1) {
-        // 1️⃣ un día → cada hora
-        return () => {
-          const ticks = []
-          const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-          for (let h = 0; h <= 24; h++) ticks.push(base + h * 3600)
-          return ticks
-        }
-      }
+     if (diffDays === 1) {
+  // 1️⃣ un día → cada hora hasta las 23:00
+  return () => {
+    const ticks = []
+    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+    for (let h = 0; h < 24; h++) ticks.push(base + h * 3600)
+    return ticks
+  }
+}
+
 
       if (diffDays > 1 && diffDays <= 7) {
-        // 2️⃣ menos de 1 semana → cada día
-        return () => {
-          const ticks = []
-          const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-          for (let d = 0; d <= diffDays; d++) ticks.push(base + d * 86400)
-          return ticks
-        }
-      }
+  // 2️⃣ menos de 1 semana → cada día hasta el último día incluido
+  return () => {
+    const ticks = []
+    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+    for (let d = 0; d < diffDays; d++) ticks.push(base + d * 86400)
+    return ticks
+  }
+}
 
-      if (diffDays > 7 && diffDays <= 60) {
-        // 3️⃣ de 1 semana a 2 meses → cada 2 días
-        return () => {
-          const ticks = []
-          const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-          for (let d = 0; d <= diffDays; d += 2) ticks.push(base + d * 86400)
-          return ticks
-        }
-      }
+
+    if (diffDays > 7 && diffDays <= 60) {
+  // 3️⃣ de 1 semana a 2 meses → cada 2 días (hasta el último día incluido)
+  return () => {
+    const ticks = []
+    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+    for (let d = 0; d < diffDays; d += 2) ticks.push(base + d * 86400)
+    return ticks
+  }
+}
+
 
       if (diffDays > 60 && diffDays <= 180) {
         // 4️⃣ de 2 a 6 meses → cada 15 días
@@ -488,20 +496,3 @@ onBeforeUnmount(() => {
   }
 })
 </script>
-
-<style>
-/* Estilos personalizados para uPlot */
-.u-legend {
-  display: none !important;
-}
-
-.u-wrap {
-  font-family: Inter, system-ui, sans-serif;
-}
-
-.u-cursor-pt {
-  background: #fff;
-  border: 2px solid;
-  border-radius: 50%;
-}
-</style>
