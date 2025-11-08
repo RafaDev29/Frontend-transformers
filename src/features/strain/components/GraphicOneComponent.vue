@@ -97,7 +97,7 @@ const getChartOptions = () => {
   const end = new Date(props.dateRange.endDate + 'T23:59:59')
   const diffDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1
 
- 
+
 
   // Título del eje X
   let xAxisTitle = 'Tiempo'
@@ -147,140 +147,146 @@ const getChartOptions = () => {
         range: [210, 250]
       }
     },
-   axes: [
-  {
-    label: xAxisTitle,
-     side: 2,
-    labelSize: 24,
-    labelFont: '600 12px Inter, system-ui, sans-serif',
-    stroke: '#475569',
-    grid: {
-      show: true,
-      stroke: 'rgba(148,163,184,0.15)',
-      width: 1,
-    },
-    ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
+    axes: [
+      {
+        label: xAxisTitle,
+        side: 2,
+        labelSize: 24,
+        labelFont: '600 12px Inter, system-ui, sans-serif',
+        stroke: '#475569',
+        grid: {
+          show: true,
+          stroke: 'rgba(148,163,184,0.15)',
+          width: 1,
+        },
+        ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
 
-   border: {
-      show: true,
-      stroke: '#475569',
-      width: 2,
-    },
-    splits: (() => {
-     if (diffDays === 1) {
-  // 1️⃣ un día → cada hora hasta las 23:00
-  return () => {
-    const ticks = []
-    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-    for (let h = 0; h < 24; h++) ticks.push(base + h * 3600)
-    return ticks
-  }
-}
-
-
-      if (diffDays > 1 && diffDays <= 7) {
-  // 2️⃣ menos de 1 semana → cada día hasta el último día incluido
-  return () => {
-    const ticks = []
-    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-    for (let d = 0; d < diffDays; d++) ticks.push(base + d * 86400)
-    return ticks
-  }
-}
+        border: {
+          show: true,
+          stroke: '#475569',
+          width: 2,
+        },
+        splits: (() => {
+          if (diffDays === 1) {
+            // 1️⃣ un día → cada hora hasta las 23:00
+            return () => {
+              const ticks = []
+              const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+              for (let h = 0; h < 24; h++) ticks.push(base + h * 3600)
+              return ticks
+            }
+          }
 
 
-    if (diffDays > 7 && diffDays <= 60) {
-  // 3️⃣ de 1 semana a 2 meses → cada 2 días (hasta el último día incluido)
-  return () => {
-    const ticks = []
-    const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-    for (let d = 0; d < diffDays; d += 2) ticks.push(base + d * 86400)
-    return ticks
-  }
-}
+          if (diffDays > 1 && diffDays <= 7) {
+            // 2️⃣ menos de 1 semana → cada día hasta el último día incluido
+            return () => {
+              const ticks = []
+              const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+              for (let d = 0; d < diffDays; d++) ticks.push(base + d * 86400)
+              return ticks
+            }
+          }
 
 
-      if (diffDays > 60 && diffDays <= 180) {
-        // 4️⃣ de 2 a 6 meses → cada 15 días
-        return () => {
-          const ticks = []
-          const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
-          for (let d = 0; d <= diffDays; d += 15) ticks.push(base + d * 86400)
-          return ticks
-        }
-      }
+          if (diffDays > 7 && diffDays <= 60) {
+            // 3️⃣ de 1 semana a 2 meses → cada 2 días (hasta el último día incluido)
+            return () => {
+              const ticks = []
+              const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+              for (let d = 0; d < diffDays; d += 2) ticks.push(base + d * 86400)
+              return ticks
+            }
+          }
 
-      // 5️⃣ más de 6 meses → dejar automático
-      return null
-    })(),
 
-    // --- Etiquetas del eje X ---
-    values: (self, ticks) => {
-      const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+          if (diffDays > 60 && diffDays <= 180) {
+            // 4️⃣ de 2 a 6 meses → cada 15 días
+            return () => {
+              const ticks = []
+              const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
+              for (let d = 0; d <= diffDays; d += 15) ticks.push(base + d * 86400)
+              return ticks
+            }
+          }
 
-      if (diffDays === 1) {
-        // Horas
-        return ticks.map(v => {
-          const d = new Date(v * 1000)
-          return d.getHours().toString().padStart(2, '0') + ':00'
-        })
-      }
+          // 5️⃣ más de 6 meses → dejar automático
+          return null
+        })(),
 
-      if (diffDays <= 7) {
-        // Días con nombre corto
-        return ticks.map(v => {
-          const d = new Date(v * 1000)
-          return `${days[d.getDay()]} ${d.getDate()}`
-        })
-      }
+        // --- Etiquetas del eje X ---
+        values: (self, ticks) => {
+          const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+          const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
-      if (diffDays > 7 && diffDays <= 60) {
-        // Días abreviados con mes
-        return ticks.map(v => {
-          const d = new Date(v * 1000)
-          return `${d.getDate()} ${months[d.getMonth()]}`
-        })
-      }
+          if (diffDays === 1) {
+            // Horas
+            return ticks.map(v => {
+              const d = new Date(v * 1000)
+              return d.getHours().toString().padStart(2, '0') + ':00'
+            })
+          }
 
-      if (diffDays > 60 && diffDays <= 180) {
-        // Saltos de 15 días → mostrar día y mes
-        return ticks.map(v => {
-          const d = new Date(v * 1000)
-          return `${d.getDate()} ${months[d.getMonth()]}`
-        })
-      }
+          if (diffDays <= 7) {
+            // Días con nombre corto
+            return ticks.map(v => {
+              const d = new Date(v * 1000)
+              return `${days[d.getDay()]} ${d.getDate()}`
+            })
+          }
 
-      if (diffDays > 180 && diffDays <= 365) {
-        // Meses con año
-        return ticks.map(v => {
-          const d = new Date(v * 1000)
-          return `${months[d.getMonth()]} ${d.getFullYear()}`
-        })
-      }
+          if (diffDays > 7 && diffDays <= 60) {
+            // Días abreviados con mes
+            return ticks.map(v => {
+              const d = new Date(v * 1000)
+              return `${d.getDate()} ${months[d.getMonth()]}`
+            })
+          }
 
-      // Años
-      return ticks.map(v => new Date(v * 1000).getFullYear())
-    },
+          if (diffDays > 60 && diffDays <= 180) {
+            // Saltos de 15 días → mostrar día y mes
+            return ticks.map(v => {
+              const d = new Date(v * 1000)
+              return `${d.getDate()} ${months[d.getMonth()]}`
+            })
+          }
 
-    font: '500 12px Inter, system-ui, sans-serif',
-    size: diffDays > 30 ? 80 : 60,
-  },
+          if (diffDays > 180 && diffDays <= 365) {
+            // Meses con año
+            return ticks.map(v => {
+              const d = new Date(v * 1000)
+              return `${months[d.getMonth()]} ${d.getFullYear()}`
+            })
+          }
 
-  // --- Eje Y ---
-  {
-    label: 'Tensión (V)',
-    labelSize: 30,
-    labelFont: '600 14px Inter, system-ui, sans-serif',
-    stroke: '#475569',
-    grid: { stroke: '#e2e8f0', width: 1 },
-    ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
-    values: (self, ticks) => ticks.map(v => v.toFixed(1) + ' V'),
-    font: '500 12px Inter, system-ui, sans-serif',
-    size: 60,
-  },
-]
-,
+          // Años
+          return ticks.map(v => new Date(v * 1000).getFullYear())
+        },
+
+        font: '500 12px Inter, system-ui, sans-serif',
+        size: diffDays > 30 ? 80 : 60,
+      },
+
+      // --- Eje Y ---
+      {
+        label: 'Tensión (V)',
+        labelSize: 30,
+        labelFont: '600 14px Inter, system-ui, sans-serif',
+        stroke: '#475569',
+        grid: { stroke: '#e2e8f0', width: 1 },
+        ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
+        values: (self, ticks) => ticks.map(v => v.toFixed(1) + ' V'),
+        font: '500 12px Inter, system-ui, sans-serif',
+        size: 60,
+          border: {
+          show: true,
+          stroke: '#475569',
+          width: 2,
+        },
+
+      },
+    ]
+    ,
 
     legend: {
       show: false
