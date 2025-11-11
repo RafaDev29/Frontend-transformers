@@ -12,7 +12,7 @@
     </div> 
 
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
-      <DateComponent class="md:col-span-5" @update-range="fetchTemperature" />
+      <DateComponent class="md:col-span-5"  @update-range="handleRangeUpdate" />
       <CardComponent :chart-data="temperatureData" class="md:col-span-5" />
     </div>
 
@@ -26,7 +26,7 @@
         class="h-full"
       >
         <SwiperSlide>
-          <GraphicOneComponent :chart-data="temperatureData" />
+          <GraphicOneComponent :chart-data="temperatureData"  :date-range="dateRange"/>
         </SwiperSlide>
         <SwiperSlide>
           <GraphicTwoComponent :chart-data="temperatureData" />
@@ -56,12 +56,21 @@ import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
 import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 import { allTemperature } from '@/features/temperature/services/temperatureService'
-
+ 
 const temperatureData = ref([])
 const loading = ref(false)
 const transformerStore = useTransformerStore()
 const serialNumber = transformerStore.selectedTransformer?.serialNumber
- 
+ const dateRange = ref({ startDate: '', endDate: '' })
+
+ async function handleRangeUpdate({ startDate, endDate }) {
+  // Guardar el rango
+  dateRange.value = { startDate, endDate }
+  
+  // Fetch data
+  await fetchTemperature({ startDate, endDate })
+}
+
 async function fetchTemperature({ startDate, endDate }) {
   try {
     loading.value = true

@@ -21,7 +21,7 @@
       <Swiper :modules="[Navigation, Pagination]" navigation pagination :spaceBetween="20" :slides-per-view="1"
         class="h-full">
         <SwiperSlide>
-          <GraphicOneComponent :chart-data="temperatureData" :date-range="dateRange" />
+          <GraphicOneComponent :chart-data="temperatureData" :date-range="dateRange"/>
         </SwiperSlide>
         <SwiperSlide>
           <GraphicTwoComponent :chart-data="temperatureData" />
