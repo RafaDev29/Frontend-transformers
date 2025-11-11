@@ -47,19 +47,19 @@ const props = defineProps({
 
 // Calcular min y max por fase
 const ranges = computed(() => {
-  if (!props.chartData.length) return { amp1: { min: 0, max: 0 }, amp2: { min: 0, max: 0 }, aamp3: { min: 0, max: 0 } }
+  if (!props.chartData.length) return { ch1: { min: 0, max: 0 }, ch2: { min: 0, max: 0 }, ch3: { min: 0, max: 0 } }
 
-  const values = { amp1: [], amp2: [], amp3: [] }
+  const values = { ch1: [], ch2: [], ch3: [] }
   props.chartData.forEach(d => {
-    values.amp1.push(Number(d.amp1) || 0)
-    values.amp2.push(Number(d.amp2) || 0)
-    values.amp3.push(Number(d.amp3) || 0)
+    values.ch1.push(Number(d.ch1) || 0)
+    values.ch2.push(Number(d.ch2) || 0)
+    values.ch3.push(Number(d.ch3) || 0)
   })
 
   return {
-    amp1: { min: Math.min(...values.amp1), max: Math.max(...values.amp1) },
-    amp2: { min: Math.min(...values.amp2), max: Math.max(...values.amp2) },
-    amp3: { min: Math.min(...values.amp3), max: Math.max(...values.amp3) }
+    ch1: { min: Math.min(...values.ch1), max: Math.max(...values.ch1) },
+    ch2: { min: Math.min(...values.ch2), max: Math.max(...values.ch2) },
+    ch3: { min: Math.min(...values.ch3), max: Math.max(...values.ch3) }
   }
 })
 
@@ -67,11 +67,11 @@ const ranges = computed(() => {
 const series = computed(() => [
   {
     name: "Mínimo",
-    data: [ranges.value.amp1.min, ranges.value.amp2.min, ranges.value.amp3.min]
+    data: [ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min]
   },
   {
     name: "Máximo",
-    data: [ranges.value.amp1.max, ranges.value.amp2.max, ranges.value.amp3.max]
+    data: [ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max]
   }
 ])
 

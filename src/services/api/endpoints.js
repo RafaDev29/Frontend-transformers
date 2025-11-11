@@ -83,6 +83,10 @@ export const STRAIN = {
   DATA: '/transformer-monitoring/voltage',
 }
 
+export const CURRENT = {
+  DATA: '/transformer-monitoring/current',
+}
+
 
 
 
