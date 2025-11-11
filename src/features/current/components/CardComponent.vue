@@ -52,17 +52,17 @@ const currentVoltages = computed(() => {
   if (props.chartData?.length) {
     const last = props.chartData[props.chartData.length - 1]
     return {
-      amp1: last.amp1?.toFixed(1) || "--",
-      amp2: last.amp2?.toFixed(1) || "--",
-      amp3: last.amp3?.toFixed(1) || "--",
+      ch1: last.ch1?.toFixed(1) || "--",
+      ch2: last.ch2?.toFixed(1) || "--",
+      ch3: last.ch3?.toFixed(1) || "--",
     }
   }
-  return { amp1: "--", amp2: "--", amp3: "--" }
+  return { ch1: "--", ch2: "--", ch3: "--" }
 })
 
 const phases = [
   {
-    key: "amp1",
+    key: "ch1",
     label: "F. 1",
     bg: "bg-gradient-to-r from-green-400 via-green-500 to-green-600",
     dot: "bg-green-500",
@@ -71,7 +71,7 @@ const phases = [
     sub: "text-green-600 dark:text-green-300",
   },
   {
-    key: "amp2",
+    key: "ch2",
     label: "F. 2",
     bg: "bg-gradient-to-r from-red-400 via-red-500 to-red-600",
     dot: "bg-red-500",
@@ -80,7 +80,7 @@ const phases = [
     sub: "text-red-600 dark:text-red-300",
   },
   {
-    key: "amp3",
+    key: "ch3",
     label: "F. 3",
     bg: "bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600",
     dot: "bg-blue-500",

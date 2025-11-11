@@ -1,32 +1,24 @@
 <template>
   <div class="min-h-screen dark:bg-slate-900 flex flex-col">
     <div class="py-1">
-      <NavigationComponent
-        :breadcrumbs="[
-          { label: 'Panel de Fábricas', path: '/app/factory' },
-          { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
-          { label: 'Panel Detalle Transformador', path: '/app/factoryTransformerDetail' },
-          { label: 'Panel de Temperatura', path: '/app/temperature' },
-        ]"
-      />
-    </div> 
+      <NavigationComponent :breadcrumbs="[
+        { label: 'Panel de Fábricas', path: '/app/factory' },
+        { label: 'Panel de Transformadores', path: '/app/factoryTransformer' },
+        { label: 'Panel Detalle Transformador', path: '/app/factoryTransformerDetail' },
+        { label: 'Panel de Temperatura', path: '/app/temperature' },
+      ]" />
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
-      <DateComponent class="md:col-span-5"  @update-range="handleRangeUpdate" />
+      <DateComponent class="md:col-span-5" @update-range="handleRangeUpdate" />
       <CardComponent :chart-data="temperatureData" class="md:col-span-5" />
     </div>
 
     <div class="flex-1">
-      <Swiper
-        :modules="[Navigation, Pagination]"
-        navigation
-        pagination
-        :spaceBetween="20"
-        :slides-per-view="1"
-        class="h-full"
-      >
+      <Swiper :modules="[Navigation, Pagination]" navigation pagination :spaceBetween="20" :slides-per-view="1"
+        class="h-full">
         <SwiperSlide>
-          <GraphicOneComponent :chart-data="temperatureData"  :date-range="dateRange"/>
+          <GraphicOneComponent :chart-data="temperatureData" :date-range="dateRange" />
         </SwiperSlide>
         <SwiperSlide>
           <GraphicTwoComponent :chart-data="temperatureData" />
@@ -56,17 +48,17 @@ import CardComponent from '../components/CardComponent.vue'
 import DateComponent from '../components/DateComponent.vue'
 import { useTransformerStore } from '@/features/transformer/store/transformerStore'
 import { allTemperature } from '@/features/temperature/services/temperatureService'
- 
+
 const temperatureData = ref([])
 const loading = ref(false)
 const transformerStore = useTransformerStore()
 const serialNumber = transformerStore.selectedTransformer?.serialNumber
- const dateRange = ref({ startDate: '', endDate: '' })
+const dateRange = ref({ startDate: '', endDate: '' })
 
- async function handleRangeUpdate({ startDate, endDate }) {
+async function handleRangeUpdate({ startDate, endDate }) {
   // Guardar el rango
   dateRange.value = { startDate, endDate }
-  
+
   // Fetch data
   await fetchTemperature({ startDate, endDate })
 }

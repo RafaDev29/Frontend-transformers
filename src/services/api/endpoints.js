@@ -87,6 +87,11 @@ export const CURRENT = {
   DATA: '/transformer-monitoring/current',
 }
 
+export const FREQUENCY = {
+  DATA: '/transformer-monitoring/frequency',
+}
+
+
 
 
 
