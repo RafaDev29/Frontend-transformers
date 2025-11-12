@@ -97,6 +97,15 @@ export const POWER = {
 }
 
 
+export const THDI = {
+  DATA: '/transformer-monitoring/thdi',
+}
+
+
+export const THDV = {
+  DATA: '/transformer-monitoring/thdv',
+}
+
 
 
 

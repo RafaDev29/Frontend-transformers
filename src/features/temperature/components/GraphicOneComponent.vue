@@ -259,7 +259,7 @@ const getChartOptions = () => {
 
       // --- Eje Y ---
       {
-        text: "Temperatura (°C)",
+        label: "Temperatura (°C)",
         labelSize: 30,
         labelFont: '600 14px Inter, system-ui, sans-serif',
         stroke: '#475569',

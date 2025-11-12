@@ -249,7 +249,7 @@ const getChartOptions = () => {
 
       // --- Eje Y ---
       {
-        text: "Frecuencia (Hz)",
+        label: 'Frecuencia (Hz)',
         labelSize: 30,
         labelFont: '600 14px Inter, system-ui, sans-serif',
         stroke: '#475569',
@@ -257,7 +257,7 @@ const getChartOptions = () => {
         ticks: { show: true, stroke: '#475569', width: 1, size: 6 },
         values: (self, ticks) => ticks.map(v => v.toFixed(1) + 'Hz'),
         font: '500 12px Inter, system-ui, sans-serif',
-        size: 60,
+        size: 60, 
         border: {
           show: true,
           stroke: '#475569',

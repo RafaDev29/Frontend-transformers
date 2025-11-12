@@ -352,7 +352,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #16a34a;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 1:</span>
-                <span style="font-weight: 600; color: #16a34a;">${ch1Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #16a34a;">${ch1Val.toFixed(2)}kW</span>
               </div>
             `
           }
@@ -362,7 +362,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 2:</span>
-                <span style="font-weight: 600; color: #ef4444;">${ch2Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #ef4444;">${ch2Val.toFixed(2)}kvar</span>
               </div>
             `
           }
@@ -372,7 +372,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #0891b2;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 3:</span>
-                <span style="font-weight: 600; color: #0891b2;">${ch3Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #0891b2;">${ch3Val.toFixed(2)}kVA</span>
               </div>
             `
           }

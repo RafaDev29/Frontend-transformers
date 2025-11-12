@@ -261,7 +261,7 @@ const getChartOptions = () => {
           width: 1, 
           size: 6 
         },
-        values: (self, ticks) => ticks.map(v => v.toFixed(1) + 'V'),
+        values: (self, ticks) => ticks.map(v => v.toFixed(1) + ' P'),
         font: '500 12px Inter, system-ui, sans-serif',
         size: 60,
         border: {
@@ -334,7 +334,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #1e7f14;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 1:</span>
-                <span style="font-weight: 600; color: #1e7f14;">${ch1Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #1e7f14;">${ch1Val.toFixed(2)}kW</span>
               </div>
             `
           }
@@ -344,7 +344,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #dc2626;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 2:</span>
-                <span style="font-weight: 600; color: #dc2626;">${ch2Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #dc2626;">${ch2Val.toFixed(2)}kvar</span>
               </div>
             `
           }
@@ -354,7 +354,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #0891b2;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 3:</span>
-                <span style="font-weight: 600; color: #0891b2;">${ch3Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #0891b2;">${ch3Val.toFixed(2)}kVA</span>
               </div>
             `
           }
@@ -441,13 +441,13 @@ const getChartOptions = () => {
               ctx.fillStyle = '#ef4444'
               ctx.fillRect(u.bbox.left + u.bbox.width - 120, minY - 14, 110, 26)
               ctx.fillStyle = '#ffffff'
-              ctx.fillText(`Mínimo: ${min.toFixed(1)}V`, u.bbox.left + u.bbox.width - 10, minY + 5)
+              ctx.fillText(`Mínimo: ${min.toFixed(1)}kW`, u.bbox.left + u.bbox.width - 10, minY + 5)
               
               // Etiqueta máxima
               ctx.fillStyle = '#10b981'
               ctx.fillRect(u.bbox.left + u.bbox.width - 120, maxY - 14, 110, 26)
               ctx.fillStyle = '#ffffff'
-              ctx.fillText(`Máximo: ${max.toFixed(1)}V`, u.bbox.left + u.bbox.width - 10, maxY + 5)
+              ctx.fillText(`Máximo: ${max.toFixed(1)}kVA`, u.bbox.left + u.bbox.width - 10, maxY + 5)
               ctx.restore()
             }
           ]

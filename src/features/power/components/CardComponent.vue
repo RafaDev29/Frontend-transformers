@@ -47,31 +47,31 @@ const currentPowers = computed(() => {
   if (props.chartData?.length) {
     const last = props.chartData[props.chartData.length - 1]
     return {
-      kW: last.kW ? `${last.kW.toFixed(1)} kW` : "--",
-      kvar: last.kvar ? `${last.kvar.toFixed(1)} kvar` : "--",
-      kVA: last.kVA ? `${last.kVA.toFixed(1)} kVA` : "--",
+      ch1: last.ch1 ? `${last.ch1.toFixed(1)} kW` : "--",
+      ch2: last.ch2 ? `${last.ch2.toFixed(1)} kvar` : "--",
+      ch3: last.ch3 ? `${last.ch3.toFixed(1)} kVA` : "--",
     }
   }
-  return { kW: "--", kvar: "--", kVA: "--" }
+  return { ch1: "--", ch2: "--", ch3: "--" }
 })
 
 const phases = [
   {
-    key: "kW",
+    key: "ch1",
     label: "Activa",
     bg: "bg-gradient-to-r from-green-400 via-green-500 to-green-600",
     value: "text-green-900 dark:text-green-100",
     sub: "text-green-600 dark:text-green-300",
   },
   {
-    key: "kvar",
+    key: "ch2",
     label: "Reactiva",
     bg: "bg-gradient-to-r from-red-400 via-red-500 to-red-600",
     value: "text-red-900 dark:text-red-100",
     sub: "text-red-600 dark:text-red-300",
   },
   {
-    key: "kVA",
+    key: "ch3",
     label: "Aparente",
     bg: "bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600",
     value: "text-blue-900 dark:text-blue-100",

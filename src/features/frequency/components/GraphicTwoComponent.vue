@@ -324,7 +324,7 @@ const getChartOptions = () => {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #16a34a;"></div>
                 <span style="color: #64748b; min-width: 50px;">Fase 1:</span>
-                <span style="font-weight: 600; color: #16a34a;">${ch1Val.toFixed(2)}V</span>
+                <span style="font-weight: 600; color: #16a34a;">${ch1Val.toFixed(2)}Hz</span>
               </div>
             `
           }
@@ -412,13 +412,13 @@ const getChartOptions = () => {
               ctx.fillStyle = '#ef4444'
               ctx.fillRect(u.bbox.left + u.bbox.width - 120, minY - 14, 110, 26)
               ctx.fillStyle = '#ffffff'
-              ctx.fillText(`Mínimo: ${min.toFixed(1)}V`, u.bbox.left + u.bbox.width - 10, minY + 5)
+              ctx.fillText(`Mínimo: ${min.toFixed(1)}Hz`, u.bbox.left + u.bbox.width - 10, minY + 5)
 
               // Etiqueta máxima
               ctx.fillStyle = '#10b981'
               ctx.fillRect(u.bbox.left + u.bbox.width - 120, maxY - 14, 110, 26)
               ctx.fillStyle = '#ffffff'
-              ctx.fillText(`Máximo: ${max.toFixed(1)}V`, u.bbox.left + u.bbox.width - 10, maxY + 5)
+              ctx.fillText(`Máximo: ${max.toFixed(1)}Hz`, u.bbox.left + u.bbox.width - 10, maxY + 5)
               ctx.restore()
             }
           ]
