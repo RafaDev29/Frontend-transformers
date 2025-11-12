@@ -92,6 +92,11 @@ export const FREQUENCY = {
 }
 
 
+export const POWER = {
+  DATA: '/transformer-monitoring/power',
+}
+
+
 
 
 

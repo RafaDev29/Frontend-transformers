@@ -142,9 +142,6 @@ const getChartOptions = () => {
         max: diffDays === 1
           ? new Date(end).setHours(23, 59, 59, 999) / 1000
           : end.getTime() / 1000,
-      },
-      y: {
-        range: [210, 250]
       }
     },
     axes: [

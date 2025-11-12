@@ -48,19 +48,19 @@ const props = defineProps({
 })
 
 const ranges = computed(() => {
-  if (!props.chartData.length) return { kW: { min: 0, max: 0 }, kvar: { min: 0, max: 0 }, kVA: { min: 0, max: 0 } }
+  if (!props.chartData.length) return { ch1: { min: 0, max: 0 }, ch2: { min: 0, max: 0 }, ch3: { min: 0, max: 0 } }
 
-  const values = { kW: [], kvar: [], kVA: [] }
+  const values = { ch1: [], ch2: [], ch3: [] }
   props.chartData.forEach(d => {
-    values.kW.push(Number(d.kW) || 0)
-    values.kvar.push(Number(d.kvar) || 0)
-    values.kVA.push(Number(d.kVA) || 0)
+    values.ch1.push(Number(d.ch1) || 0)
+    values.ch2.push(Number(d.ch2) || 0)
+    values.ch3.push(Number(d.ch3) || 0)
   })
 
   return {
-    kW: { min: Math.min(...values.kW), max: Math.max(...values.kW) },
-    kvar: { min: Math.min(...values.kvar), max: Math.max(...values.kvar) },
-    kVA: { min: Math.min(...values.kVA), max: Math.max(...values.kVA) }
+    ch1: { min: Math.min(...values.ch1), max: Math.max(...values.ch1) },
+    ch2: { min: Math.min(...values.ch2), max: Math.max(...values.ch2) },
+    ch3: { min: Math.min(...values.ch3), max: Math.max(...values.ch3) }
   }
 })
 
@@ -68,11 +68,11 @@ const ranges = computed(() => {
 const series = computed(() => [
   {
     name: "Valor Mínimo",
-    data: [ranges.value.kW.min, ranges.value.kvar.min, ranges.value.kVA.min]
+    data: [ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min]
   },
   {
     name: "Valor Máximo",
-    data: [ranges.value.kW.max, ranges.value.kvar.max, ranges.value.kVA.max]
+    data: [ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max]
   }
 ])
 
@@ -100,7 +100,7 @@ const chartOptions = computed(() => ({
   dataLabels: {
     enabled: true,
     formatter: (val, opts) => {
-      const categories = ["kW", "kvar", "kVA"];
+      const categories = ["ch1", "ch2", "ch3"];
       const unit = categories[opts.dataPointIndex];
       return `${val} ${unit}`;
     },
@@ -143,12 +143,12 @@ const chartOptions = computed(() => ({
     },
   },
  yaxis: {
-  min: ranges.value.kW.min < ranges.value.kvar.min && ranges.value.kW.min < ranges.value.kVA.min 
-    ? ranges.value.kW.min 
-    : Math.min(ranges.value.kW.min, ranges.value.kvar.min, ranges.value.kVA.min),
-  max: Math.max(ranges.value.kW.max, ranges.value.kvar.max, ranges.value.kVA.max),
+  min: ranges.value.ch1.min < ranges.value.ch2.min && ranges.value.ch1.min < ranges.value.ch3.min 
+    ? ranges.value.ch1.min 
+    : Math.min(ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min),
+  max: Math.max(ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max),
   title: {
-    text: "Potencia (kW / kvar / kVA)",
+    text: "Potencia kW / kvar / kVA)",
     style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
   },
   labels: {
@@ -181,7 +181,7 @@ const chartOptions = computed(() => ({
     theme: "light",
     y: {
       formatter: (val, opts) => {
-        const categories = ["kW", "kvar", "kVA"];
+        const categories = ["ch1", "ch2", "ch3"];
         const unit = categories[opts.dataPointIndex];
         return `${val} ${unit}`;
       }

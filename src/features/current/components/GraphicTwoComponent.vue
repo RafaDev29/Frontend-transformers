@@ -221,9 +221,6 @@ const getChartOptions = () => {
     scales: {
       x: {
         time: true
-      },
-      y: {
-        range: [Math.max(10, globalMin.value - 5), Math.min(2000, globalMax.value + 5)]
       }
     },
     axes: [
