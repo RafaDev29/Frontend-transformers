@@ -389,7 +389,7 @@ const getChartOptions = () => {
           const tooltipRect = tooltipEl.getBoundingClientRect()
           const chartRect = u.root.getBoundingClientRect()
 
-          let tooltipLeft = chartRect.left + left + 15
+          let tooltipLeft = chartRect.left + left + 110
           let tooltipTop = chartRect.top + top - tooltipRect.height / 2
 
           // Ajustar si se sale por la derecha
