@@ -126,14 +126,17 @@ const chartOptions = computed(() => ({
     animations: { enabled: true, easing: "easeinout", speed: 800 }
   },
   plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: "60%",
-      borderRadius: 8,
-      dataLabels: { position: 'top' }
-    }
-  },
-  colors: ["#10b981", "#f59e0b", "#f97316", "#ef4444"],
+  bar: {
+    distributed: true,
+    horizontal: false,
+    columnWidth: "60%",
+    borderRadius: 8,
+    dataLabels: { position: 'top' }
+  }
+},
+
+colors: ["#22c55e", "#15803d", "#f59e0b", "#ef4444"],
+
   dataLabels: {
     enabled: true,
     formatter: function(val, opts) {

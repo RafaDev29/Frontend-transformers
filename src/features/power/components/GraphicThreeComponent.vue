@@ -96,11 +96,12 @@ const chartOptions = computed(() => ({
       dataLabels: { position: "top" }
     }
   },
-  colors: ["#3b82f6", "#10b981"], // azul para mínimo, verde para máximo
-  dataLabels: {
-    enabled: true,
+ colors: ["#ef4444", "#22c55e"], 
+
+  dataLabels: { 
+    enabled: true, 
     formatter: (val, opts) => {
-      const categories = ["ch1", "ch2", "ch3"];
+      const categories = ["kW", "kvar", "kVA"];
       const unit = categories[opts.dataPointIndex];
       return `${val} ${unit}`;
     },
