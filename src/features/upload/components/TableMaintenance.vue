@@ -25,12 +25,14 @@
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Fábrica
               </th>
-
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Transformador
               </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                Fecha 
+                Rango de Registro
+              </th>
+              <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
+                Fecha de Carga
               </th>
               <th class="px-4 py-3 text-center text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Acciones
@@ -65,6 +67,14 @@
 
               <td class="px-4 py-4 text-slate-700 dark:text-slate-200 whitespace-nowrap">
                {{ row.serialNumber }} ({{ row.code }} )
+              </td>
+
+              <td class="px-4 py-4 text-slate-600 dark:text-slate-300">
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs">{{ formatDate(row.startDate) }}</span>
+                  <span class="text-xs text-slate-400 dark:text-slate-500">hasta</span>
+                  <span class="text-xs">{{ formatDate(row.endDate) }}</span>
+                </div>
               </td>
 
               <td class="px-4 py-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
@@ -128,6 +138,8 @@ const rows = computed(() => {
     fileName: item.fileName,
     uploadType: item.uploadType,
     createdAt: item.createdAt,
+    startDate: item.startDate,
+    endDate: item.endDate,
     serialNumber : item.transformer?.serialNumber,
     code : item.transformer?.code,
     customerName: item.transformer?.customer?.businessname || '—',
