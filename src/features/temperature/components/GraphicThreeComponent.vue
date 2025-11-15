@@ -16,16 +16,13 @@
           </p>
         </div>
 
-        <!-- Gauge Container -->
         <div class="relative flex items-center justify-center">
-          <!-- SVG Gauge -->
           <div class="relative">
             <svg width="300" height="180" viewBox="0 0 300 200" class="drop-shadow-lg">
-              <!-- Background Arc -->
+
               <path d="M 50 150 A 100 100 0 0 1 250 150" fill="none" :stroke="darkMode ? '#334155' : '#e2e8f0'"
                 stroke-width="20" stroke-linecap="round" />
 
-              <!-- Progress Arc -->
               <path :d="progressPath" fill="none" :stroke="gaugeColor" stroke-width="20" stroke-linecap="round"
                 class="transition-all duration-1000 ease-out" :stroke-dasharray="circumference"
                 :stroke-dashoffset="offset" />
@@ -199,31 +196,30 @@ const statusText = computed(() => {
 
 const minCardColor = computed(() => {
   const t = parseFloat(minTemp.value)
-  if (t < 60) return 'from-color5 to-color4'
+  if (t < 60) return 'from-green-700 to-green-800'
   if (t < 80) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
 })
 
 const avgCardColor = computed(() => {
   const t = parseFloat(avgTemp.value)
-  if (t < 60) return 'from-color5 to-color4'
+  if (t < 60) return 'from-green-700 to-green-800'
   if (t < 80) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
 })
 
 const maxCardColor = computed(() => {
   const t = parseFloat(maxTemp.value)
-  if (t < 60) return 'from-color5 to-color4'
+  if (t < 60) return 'from-green-700 to-green-800'
   if (t < 80) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
 })
 
 
-// Temperature markers for the gauge
 const markers = computed(() => {
   const temps = [0, 20, 40, 60, 80, 100, 120]
   return temps.map(temp => {
-    const angle = (temp / maxGaugeTemp) * Math.PI // 0 to π (180 degrees)
+    const angle = (temp / maxGaugeTemp) * Math.PI 
     const innerRadius = 80
     const outerRadius = 95
     const textRadius = 110

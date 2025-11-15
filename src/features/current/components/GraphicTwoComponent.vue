@@ -169,7 +169,7 @@ const getChartOptions = () => {
   // Función para formatear etiquetas
   const formatXLabels = (self, ticks) => {
     if (diffHours <= 24) {
-      // Menos de 24 horas: DD/MM HH:mm
+      // Menos de 24 horas: mostrar fecha + hora
       return ticks.map(v => {
         const d = new Date(v * 1000)
         const day = d.getDate().toString().padStart(2, '0')
@@ -179,17 +179,16 @@ const getChartOptions = () => {
         return `${day}/${month} ${hour}:${min}`
       })
     } else {
-      // Más de 24 horas: DD/MM/YYYY HH:mm
+      // Mayor a 1 día: solo fecha
       return ticks.map(v => {
         const d = new Date(v * 1000)
         const day = d.getDate().toString().padStart(2, '0')
         const month = (d.getMonth() + 1).toString().padStart(2, '0')
         const year = d.getFullYear()
-        const hour = d.getHours().toString().padStart(2, '0')
-        const min = d.getMinutes().toString().padStart(2, '0')
-        return `${day}/${month}/${year} ${hour}:${min}`
+        return `${day}/${month}/${year}`
       })
     }
+
   }
 
   return {
