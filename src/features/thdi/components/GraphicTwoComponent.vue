@@ -43,8 +43,8 @@
           </div>
         </div>
 
-        <!-- Área del gráfico -->
-        <div class="pb-6 mb-10">
+
+        <div class="pb-6 mb-10 ml-4 pl-1">
           <div ref="chartContainer" class="w-full"></div>
         </div>
       </div>
@@ -94,7 +94,6 @@ const prepareData = () => {
   return [timestamps, ch1, ch2, ch3]
 }
 
-// Configurar opciones del gráfico
 const getChartOptions = () => {
   const data = prepareData()
   if (!data[0].length) return null
@@ -160,10 +159,10 @@ const getChartOptions = () => {
     return ticks
   }
   
-  // Función para formatear etiquetas
+
   const formatXLabels = (self, ticks) => {
    if (diffHours <= 24) {
-  // Menos de 24 horas: mostrar fecha + hora
+
   return ticks.map(v => {
     const d = new Date(v * 1000)
     const day = d.getDate().toString().padStart(2, '0')
@@ -173,7 +172,7 @@ const getChartOptions = () => {
     return `${day}/${month} ${hour}:${min}`
   })
 } else {
-  // Mayor a 1 día: solo fecha
+
   return ticks.map(v => {
     const d = new Date(v * 1000)
     const day = d.getDate().toString().padStart(2, '0')

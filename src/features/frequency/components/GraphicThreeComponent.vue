@@ -3,7 +3,7 @@
     <div class="relative group">
       <!-- Fondo con gradiente -->
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
       <!-- Contenedor -->
@@ -99,6 +99,15 @@ const series = computed(() => [
       frequencyAnalysis.value.alert,
       frequencyAnalysis.value.critical
     ]
+  },
+  {
+    name: "Estadísticas",
+    data: [
+      frequencyAnalysis.value.min.toFixed(2),
+      frequencyAnalysis.value.max.toFixed(2),
+      frequencyAnalysis.value.avg.toFixed(2),
+      frequencyAnalysis.value.stdDev.toFixed(3)
+    ]
   }
 ])
 
@@ -115,108 +124,80 @@ const chartOptions = computed(() => ({
       horizontal: false,
       columnWidth: "55%",
       borderRadius: 8,
-      dataLabels: { 
-        position: 'top',
-        orientation: 'vertical'
-      }
+      dataLabels: { position: 'top' }
     }
   },
-  colors: ["#22c55e", "#f59e0b", "#fb923c", "#ef4444"],
+  colors: ["#22c55e", "#15803d", "#f59e0b", "#ef4444"],
   dataLabels: {
     enabled: true,
-    formatter: function(val) {
-      return val > 0 ? val : ''
+    formatter: function(val, opts) {
+      if (opts.seriesIndex === 0) {
+        return val > 0 ? val : ''
+      } else {
+        return val + (opts.dataPointIndex < 3 ? 'Hz' : '')
+      }
     },
     style: { 
-      colors: ["#1e293b"], 
-      fontWeight: "700",
-      fontSize: '12px'
+      colors: ["#fff"], 
+      fontWeight: "600",
+      fontSize: '11px'
     },
-    offsetY: -25,
-    background: {
-      enabled: true,
-      foreColor: '#fff',
-      padding: 6,
-      borderRadius: 4,
-      borderWidth: 1,
-      borderColor: '#e2e8f0',
-      opacity: 0.95
-    }
+    offsetY: -5
   },
   xaxis: {
-    categories: [
-      "Estable\n(49.5-50.5Hz)", 
-      "Desviación\n(±0.5-1.0Hz)", 
-      "Alerta\n(±1.0-2.0Hz)", 
-      "Crítico\n(>±2.0Hz)"
-    ],
+    categories: ["Estable\n(49.5-50.5Hz)", "Desviación\n(±0.5-1.0Hz)", "Alerta\n(±1.0-2.0Hz)", "Crítico\n(>±2.0Hz)"],
     labels: { 
       style: { 
         colors: "#64748b", 
-        fontSize: "11px", 
-        fontWeight: "600"
+        fontSize: "12px", 
+        fontWeight: "500"
       },
       rotate: 0,
-      offsetY: 0,
-      trim: false
+      textAnchor: "middle"  
     },
     title: {
       text: "Rangos de Operación",
-      offsetY: 10,
-      style: { 
-        color: "#475569", 
-        fontSize: "13px", 
-        fontWeight: "700" 
-      }
+      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
     axisBorder: {
       show: true,
-      color: '#cbd5e1',
-      height: 1,
-      offsetY: 0
+      color: '#475569',
+      height: 2
     },
     axisTicks: {
-      show: false
+      show: true,
+      color: '#475569',
+      height: 6
     }
   },
-  yaxis: {
-    title: {
-      text: "Número de Mediciones",
-      style: { 
-        color: "#475569", 
-        fontSize: "13px", 
-        fontWeight: "700" 
-      }
-    },
-    labels: {
-      style: { 
-        colors: "#64748b", 
-        fontSize: "11px",
-        fontWeight: "500"
+  yaxis: [
+    {
+      title: {
+        text: "Número de Mediciones",
+        style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
       },
-      formatter: function(val) {
-        return Math.round(val)
+      labels: {
+        style: { colors: "#64748b", fontSize: "12px" }
+      },
+      axisBorder: {
+        show: true,
+        color: '#475569'
+      },
+      axisTicks: {
+        show: true,
+        color: '#475569'
       }
-    },
-    axisBorder: {
-      show: true,
-      color: '#cbd5e1'
-    },
-    axisTicks: {
-      show: true,
-      color: '#cbd5e1'
     }
-  },
+  ],
   grid: {
     borderColor: "#e2e8f0",
-    strokeDashArray: 4,
+    strokeDashArray: 3,
     xaxis: { lines: { show: false } },
-    yaxis: { lines: { show: true } },
     padding: {
-      top: 20,
-      right: 20,
-      bottom: 10,
-      left: 10
+      left: 10,
+      right: 10,
+      top: 10,
+      bottom: 10
     }
   },
   legend: {
@@ -224,22 +205,15 @@ const chartOptions = computed(() => ({
   },
   tooltip: {
     theme: "light",
-    style: {
-      fontSize: '12px',
-      fontWeight: '500'
-    },
     y: {
-      formatter: function(val) {
-        return val + " mediciones"
-      },
-      title: {
-        formatter: function() {
-          return "Total:"
+      formatter: function(val, opts) {
+        if (opts.seriesIndex === 0) {
+          return val + " mediciones"
+        } else {
+          const labels = ['Mínimo: ', 'Máximo: ', 'Promedio: ', 'Desv. Std: ']
+          return labels[opts.dataPointIndex] + val + (opts.dataPointIndex < 3 ? 'Hz' : '')
         }
       }
-    },
-    marker: {
-      show: true
     }
   },
   annotations: {
@@ -247,23 +221,15 @@ const chartOptions = computed(() => ({
       y: frequencyAnalysis.value.avg,
       borderColor: '#3b82f6',
       borderWidth: 2,
-      strokeDashArray: 5,
-      opacity: 0.6,
+      strokeDashArray: 4,
+      opacity: 0.7,
       label: {
         text: `Promedio: ${frequencyAnalysis.value.avg.toFixed(2)}Hz`,
-        position: 'left',
-        offsetX: 5,
+        position: 'right',
         style: {
           color: '#fff',
           background: '#3b82f6',
-          fontSize: '11px',
-          fontWeight: '600',
-          padding: {
-            left: 8,
-            right: 8,
-            top: 4,
-            bottom: 4
-          }
+          fontSize: '10px'
         }
       }
     }]

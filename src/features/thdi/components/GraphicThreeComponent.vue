@@ -5,8 +5,7 @@
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
-      <div
-        class="">
+      <div class="">
 
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
@@ -27,7 +26,7 @@
         </div>
 
         <!-- Gráfico -->
-        <div class="pb-6 mb-10">
+        <div class="pb-6 mb-10 ml-4 pl-1">
           <ApexChart type="bar" height="340" :options="chartOptions" :series="series" />
         </div>
       </div>
@@ -90,7 +89,7 @@ const chartOptions = computed(() => ({
       borderRadius: 8
     }
   },
-  colors: ["#ef4444", "#10b981"], 
+  colors: ["#ef4444", "#10b981"],
   dataLabels: {
     enabled: true,
     formatter: (val) => `${val}%`,
@@ -103,7 +102,7 @@ const chartOptions = computed(() => ({
       text: "Fases",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-     axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569',
       height: 2
@@ -123,7 +122,7 @@ const chartOptions = computed(() => ({
       style: { colors: "#64748b", fontSize: "12px" },
       formatter: (val) => `${val}%`
     },
-      axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569'
     },

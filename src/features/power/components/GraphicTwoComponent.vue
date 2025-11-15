@@ -44,7 +44,7 @@
         </div>
 
         <!-- Área del gráfico -->
-        <div class="pb-6 mb-6">
+        <div class="pb-6 mb-6 ml-4 pl-1">
           <div ref="chartContainer" class="w-full"></div>
         </div>
       </div>
@@ -69,7 +69,7 @@ const chartContainer = ref(null)
 let chart = null
 let tooltipEl = null
 
-// Calcular mínimo y máximo globales
+
 const globalMin = computed(() => {
   if (!props.chartData.length) return 0
   const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
@@ -82,7 +82,6 @@ const globalMax = computed(() => {
   return Math.max(...allValues.filter(val => val != null && !isNaN(val)))
 })
 
-// Preparar datos para uPlot
 const prepareData = () => {
   if (!props.chartData.length) return [[], [], [], []]
 
@@ -94,7 +93,7 @@ const prepareData = () => {
   return [timestamps, ch1, ch2, ch3]
 }
 
-// Configurar opciones del gráfico
+
 const getChartOptions = () => {
   const data = prepareData()
   if (!data[0].length) return null
@@ -105,18 +104,15 @@ const getChartOptions = () => {
   const diffHours = diffMs / (1000 * 60 * 60)
   const diffDays = diffHours / 24
   
-  // Función para calcular splits inteligentes
   const getSmartSplits = () => {
     const ticks = []
     
     if (diffHours <= 24) {
-      // Menos de 24 horas: cada 2-3 horas
       const interval = Math.ceil(diffHours / 8) * 3600
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 7) {
-      // Menos de 1 semana: cada día
       const startDay = new Date(minTime * 1000)
       startDay.setHours(0, 0, 0, 0)
       let current = startDay.getTime() / 1000

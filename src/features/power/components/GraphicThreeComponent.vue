@@ -26,7 +26,7 @@
         </div>
 
         <!-- Gráfico -->
-        <div class="pb-6 mb-10">
+        <div class="pb-6 mb-10 ml-4 pl-1">
           <ApexChart type="bar" height="340" :options="chartOptions" :series="series" />
         </div>
 

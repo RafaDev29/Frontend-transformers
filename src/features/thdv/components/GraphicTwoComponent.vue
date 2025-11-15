@@ -43,8 +43,7 @@
           </div>
         </div>
 
-        <!-- Área del gráfico -->
-        <div class="pb-6 mb-10">
+        <div class="pb-6 mb-10 ml-4 pl-1">
           <div ref="chartContainer" class="w-full"></div>
         </div>
       </div>
@@ -69,7 +68,6 @@ const chartContainer = ref(null)
 let chart = null
 let tooltipEl = null
 
-// Calcular mínimo y máximo globales
 const globalMin = computed(() => {
   if (!props.chartData.length) return 0
   const allValues = props.chartData.flatMap(d => [d.ch1, d.ch2, d.ch3])
@@ -82,7 +80,6 @@ const globalMax = computed(() => {
   return Math.max(...allValues.filter(val => val != null && !isNaN(val)))
 })
 
-// Preparar datos para uPlot
 const prepareData = () => {
   if (!props.chartData.length) return [[], [], [], []]
 
@@ -94,7 +91,6 @@ const prepareData = () => {
   return [timestamps, ch1, ch2, ch3]
 }
 
-// Configurar opciones del gráfico
 const getChartOptions = () => {
   const data = prepareData()
   if (!data[0].length) return null
@@ -105,12 +101,10 @@ const getChartOptions = () => {
   const diffHours = diffMs / (1000 * 60 * 60)
   const diffDays = diffHours / 24
   
-  // Función para calcular splits inteligentes
   const getSmartSplits = () => {
     const ticks = []
     
     if (diffHours <= 24) {
-      // Menos de 24 horas: cada 2-3 horas
       const interval = Math.ceil(diffHours / 8) * 3600
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
@@ -126,31 +120,26 @@ const getChartOptions = () => {
         current += 86400
       }
     } else if (diffDays <= 30) {
-      // 1 semana a 1 mes: cada 3 días
       const interval = 3 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 90) {
-      // 1 a 3 meses: cada semana
       const interval = 7 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 180) {
-      // 3 a 6 meses: cada 2 semanas
       const interval = 14 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 365) {
-      // 6 meses a 1 año: cada mes
       const interval = 30 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else {
-      // Más de 1 año: cada 2-3 meses
       const interval = Math.ceil(diffDays / 365 * 60) * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)

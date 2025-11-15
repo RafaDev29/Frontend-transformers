@@ -1,7 +1,6 @@
 <template>
   <div class="p-4 mb-10">
     <div class="relative group">
-      <!-- Gradiente de fondo animado -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
@@ -126,19 +125,16 @@ const getChartOptions = () => {
         current += 86400
       }
     } else if (diffDays <= 30) {
-      // 1 semana a 1 mes: cada 3 días
       const interval = 3 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 90) {
-      // 1 a 3 meses: cada semana
       const interval = 7 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
       }
     } else if (diffDays <= 180) {
-      // 3 a 6 meses: cada 2 semanas
       const interval = 14 * 86400
       for (let t = minTime; t <= maxTime; t += interval) {
         ticks.push(t)
