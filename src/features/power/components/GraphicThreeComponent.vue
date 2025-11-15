@@ -5,8 +5,7 @@
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
-      <div
-        class="">
+      <div class="">
         <!-- Header -->
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
@@ -26,11 +25,9 @@
         </div>
 
         <!-- Gráfico -->
-        <div class="pb-6 mb-10 ml-4 pl-1">
-          <ApexChart type="bar" height="340" :options="chartOptions" :series="series" />
+        <div class="p-6">
+          <ApexChart type="bar" height="320" :options="chartOptions" :series="series" />
         </div>
-
-       
       </div>
     </div>
   </div>
@@ -64,14 +61,13 @@ const ranges = computed(() => {
   }
 })
 
-
 const series = computed(() => [
   {
-    name: "Valor Mínimo",
+    name: "Mínimo",
     data: [ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min]
   },
   {
-    name: "Valor Máximo",
+    name: "Máximo",
     data: [ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max]
   }
 ])
@@ -81,58 +77,32 @@ const chartOptions = computed(() => ({
     type: "bar",
     background: "transparent",
     toolbar: { show: false },
-    animations: { 
-      enabled: true, 
-      easing: "easeinout", 
-      speed: 800,
-      animateGradually: { enabled: true, delay: 150 }
-    }
+    animations: { enabled: true, easing: "easeinout", speed: 800 }
   },
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: "55%",
-      borderRadius: 8,
-      dataLabels: { position: "top" }
+      columnWidth: "45%",
+      borderRadius: 8
     }
   },
- colors: ["#ef4444", "#22c55e"], 
-
-  dataLabels: { 
-    enabled: true, 
+  colors: ["#ef4444", "#10b981"],
+  dataLabels: {
+    enabled: true,
     formatter: (val, opts) => {
-      const categories = ["kW", "kvar", "kVA"];
-      const unit = categories[opts.dataPointIndex];
-      return `${val} ${unit}`;
+      const units = ["kW", "kvar", "kVA"];
+      return `${val}${units[opts.dataPointIndex]}`;
     },
-    style: { 
-      colors: ["#ffffff"], 
-      fontWeight: "600",
-      fontSize: "11px"
-    },
-    background: {
-      enabled: true,
-      foreColor: "#000",
-      borderRadius: 4,
-      padding: 4,
-      opacity: 0.8
-    }
+    style: { colors: ["#fff"], fontWeight: "600" }
   },
   xaxis: {
     categories: ["Potencia Activa", "Potencia Reactiva", "Potencia Aparente"],
-    labels: { 
-      style: { 
-        colors: "#64748b", 
-        fontSize: "13px", 
-        fontWeight: "500" 
-      },
-      rotate: -15
-    },
+    labels: { style: { colors: "#64748b", fontSize: "13px", fontWeight: "500" } },
     title: {
       text: "Tipos de Potencia",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-      axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569',
       height: 2
@@ -141,60 +111,46 @@ const chartOptions = computed(() => ({
       show: true,
       color: '#475569',
       height: 6
+    }
+  },
+  yaxis: {
+    min: Math.min(ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min),
+    max: Math.max(ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max),
+    title: {
+      text: "Potencia (kW / kvar / kVA)",
+      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
+    labels: {
+      style: { colors: "#64748b", fontSize: "12px" },
+      formatter: (val) => `${val}`
+    },
+    axisBorder: {
+      show: true,
+      color: '#475569'
+    },
+    axisTicks: {
+      show: true,
+      color: '#475569'
+    }
   },
- yaxis: {
-  min: ranges.value.ch1.min < ranges.value.ch2.min && ranges.value.ch1.min < ranges.value.ch3.min 
-    ? ranges.value.ch1.min 
-    : Math.min(ranges.value.ch1.min, ranges.value.ch2.min, ranges.value.ch3.min),
-  max: Math.max(ranges.value.ch1.max, ranges.value.ch2.max, ranges.value.ch3.max),
-  title: {
-    text: "Potencia kW / kvar / kVA)",
-    style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-  },
-  labels: {
-    style: { colors: "#64748b", fontSize: "12px" },
-    formatter: (val) => `${val}`
-  },
-  axisBorder: {
-    show: true,
-    color: '#475569'
-  },
-  axisTicks: {
-    show: true,
-    color: '#475569'
-  },
-},
   grid: {
     borderColor: "#e2e8f0",
-    strokeDashArray: 3,
-    xaxis: { lines: { show: false } },
-    yaxis: { lines: { show: true } }
+    strokeDashArray: 3
   },
   legend: {
     position: "top",
     horizontalAlign: "right",
     fontSize: "13px",
-    labels: { colors: "#475569" },
-    markers: { radius: 6 }
+    labels: { colors: "#475569" }
   },
   tooltip: {
     theme: "light",
     y: {
       formatter: (val, opts) => {
-        const categories = ["ch1", "ch2", "ch3"];
-        const unit = categories[opts.dataPointIndex];
-        return `${val} ${unit}`;
+        const units = ["kW", "kvar", "kVA"];
+        return `${val} ${units[opts.dataPointIndex]}`;
       }
-    },
-    style: { fontSize: "12px" }
-  },
-  responsive: [{
-    breakpoint: 768,
-    options: {
-      plotOptions: { bar: { columnWidth: "70%" } },
-      xaxis: { labels: { rotate: -45 } }
     }
-  }]
+  }
 }))
 </script>
