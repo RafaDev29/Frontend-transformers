@@ -44,7 +44,7 @@
         </div>
 
         <!-- Área del gráfico -->
-        <div class="p-6">
+        <div class="pb-6 mb-10">
           <div ref="chartContainer" class="w-full"></div>
         </div>
       </div>

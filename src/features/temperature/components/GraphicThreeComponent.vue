@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 space-y-2">
+  <div class="p-4 pb-6 mb-6 ">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary  via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -20,7 +20,7 @@
         <div class="relative flex items-center justify-center">
           <!-- SVG Gauge -->
           <div class="relative">
-            <svg width="300" height="200" viewBox="0 0 300 200" class="drop-shadow-lg">
+            <svg width="300" height="180" viewBox="0 0 300 200" class="drop-shadow-lg">
               <!-- Background Arc -->
               <path d="M 50 150 A 100 100 0 0 1 250 150" fill="none" :stroke="darkMode ? '#334155' : '#e2e8f0'"
                 stroke-width="20" stroke-linecap="round" />
@@ -77,37 +77,31 @@
           </div>
         </div>
 
-      <!-- Quick Stats -->
-<div class="grid grid-cols-3 gap-4 mt-8">
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-3 gap-4 mt-8">
 
-  <!-- Min -->
-  <div
-    class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
-    :class="minCardColor"
-  >
-    <div class="text-2xl font-bold text-white mb-1">{{ minTemp }}°C</div>
-    <div class="text-xs font-medium text-white/90">Mínima Hoy</div>
-  </div>
+          <!-- Min -->
+          <div class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
+            :class="minCardColor">
+            <div class="text-2xl font-bold text-white mb-1">{{ minTemp }}°C</div>
+            <div class="text-xs font-medium text-white/90">Mínima Hoy</div>
+          </div>
 
-  <!-- Avg -->
-  <div
-    class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
-    :class="avgCardColor"
-  >
-    <div class="text-2xl font-bold text-white mb-1">{{ avgTemp }}°C</div>
-    <div class="text-xs font-medium text-white/90">Promedio</div>
-  </div>
+          <!-- Avg -->
+          <div class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
+            :class="avgCardColor">
+            <div class="text-2xl font-bold text-white mb-1">{{ avgTemp }}°C</div>
+            <div class="text-xs font-medium text-white/90">Promedio</div>
+          </div>
 
-  <!-- Max -->
-  <div
-    class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
-    :class="maxCardColor"
-  >
-    <div class="text-2xl font-bold text-white mb-1">{{ maxTemp }}°C</div>
-    <div class="text-xs font-medium text-white/90">Máxima Hoy</div>
-  </div>
+          <!-- Max -->
+          <div class="text-center p-4 rounded-xl border border-color3 dark:border-colorDark3 bg-gradient-to-br"
+            :class="maxCardColor">
+            <div class="text-2xl font-bold text-white mb-1">{{ maxTemp }}°C</div>
+            <div class="text-xs font-medium text-white/90">Máxima Hoy</div>
+          </div>
 
-</div>
+        </div>
 
       </div>
     </div>

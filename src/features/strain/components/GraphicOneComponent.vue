@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 mb-10">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -48,11 +48,11 @@
         </div>
 
         <div class="p-6">
-          <div ref="chartContainer" class="w-full"></div>
+          <div ref="chartContainer"  class="w-full h-[330px]"></div>
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 </template>
 
 <script setup>
@@ -187,7 +187,6 @@ const getChartOptions = () => {
 
 
           if (diffDays > 7 && diffDays <= 60) {
-            // 3️⃣ de 1 semana a 2 meses → cada 2 días (hasta el último día incluido)
             return () => {
               const ticks = []
               const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
@@ -198,7 +197,6 @@ const getChartOptions = () => {
 
 
           if (diffDays > 60 && diffDays <= 180) {
-            // 4️⃣ de 2 a 6 meses → cada 15 días
             return () => {
               const ticks = []
               const base = new Date(props.dateRange.startDate + 'T00:00:00').getTime() / 1000
@@ -207,7 +205,6 @@ const getChartOptions = () => {
             }
           }
 
-          // 5️⃣ más de 6 meses → dejar automático
           return null
         })(),
 

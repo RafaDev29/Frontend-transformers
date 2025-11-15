@@ -1,14 +1,13 @@
 <template>
-  <div class="p-4 space-y-2">
+  <div class="p-4 mb-10">
     <div class="relative group">
       <!-- Fondo con gradiente -->
       <div
-        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+        class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
       <!-- Contenedor -->
-      <div
-        class="">
+      <div class="">
 
         <!-- Header -->
         <div class="p-6 pb-10 border-b border-slate-200/60 dark:border-slate-700/60">
@@ -28,11 +27,9 @@
           </p>
         </div>
 
-      
-
         <!-- Gráfico -->
-        <div class="px-6 pb-6">
-          <ApexChart type="bar" height="350" :options="chartOptions" :series="series" />
+        <div>
+          <ApexChart type="bar" height="340" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -92,10 +89,6 @@ const frequencyAnalysis = computed(() => {
   }
 })
 
-
-
-
-
 // Series para el gráfico de barras
 const series = computed(() => [
   {
@@ -105,15 +98,6 @@ const series = computed(() => [
       frequencyAnalysis.value.deviation,
       frequencyAnalysis.value.alert,
       frequencyAnalysis.value.critical
-    ]
-  },
-  {
-    name: "Estadísticas",
-    data: [
-      frequencyAnalysis.value.min.toFixed(2),
-      frequencyAnalysis.value.max.toFixed(2),
-      frequencyAnalysis.value.avg.toFixed(2),
-      frequencyAnalysis.value.stdDev.toFixed(3)
     ]
   }
 ])
@@ -126,96 +110,136 @@ const chartOptions = computed(() => ({
     animations: { enabled: true, easing: "easeinout", speed: 800 }
   },
   plotOptions: {
-  bar: {
-    distributed: true,
-    horizontal: false,
-    columnWidth: "60%",
-    borderRadius: 8,
-    dataLabels: { position: 'top' }
-  }
-},
-
-colors: ["#22c55e", "#15803d", "#f59e0b", "#ef4444"],
-
+    bar: {
+      distributed: true,
+      horizontal: false,
+      columnWidth: "55%",
+      borderRadius: 8,
+      dataLabels: { 
+        position: 'top',
+        orientation: 'vertical'
+      }
+    }
+  },
+  colors: ["#22c55e", "#f59e0b", "#fb923c", "#ef4444"],
   dataLabels: {
     enabled: true,
-    formatter: function(val, opts) {
-      if (opts.seriesIndex === 0) {
-        return val > 0 ? val : ''
-      } else {
-        return val + (opts.dataPointIndex < 3 ? 'Hz' : '')
-      }
+    formatter: function(val) {
+      return val > 0 ? val : ''
     },
     style: { 
-      colors: ["#fff"], 
-      fontWeight: "600",
-      fontSize: '11px'
+      colors: ["#1e293b"], 
+      fontWeight: "700",
+      fontSize: '12px'
     },
-    offsetY: -5
+    offsetY: -25,
+    background: {
+      enabled: true,
+      foreColor: '#fff',
+      padding: 6,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderColor: '#e2e8f0',
+      opacity: 0.95
+    }
   },
   xaxis: {
-    categories: ["Estable\n(49.5-50.5Hz)", "Desviación\n(±0.5-1.0Hz)", "Alerta\n(±1.0-2.0Hz)", "Crítico\n(>±2.0Hz)"],
+    categories: [
+      "Estable\n(49.5-50.5Hz)", 
+      "Desviación\n(±0.5-1.0Hz)", 
+      "Alerta\n(±1.0-2.0Hz)", 
+      "Crítico\n(>±2.0Hz)"
+    ],
     labels: { 
       style: { 
         colors: "#64748b", 
-        fontSize: "12px", 
-        fontWeight: "500" 
+        fontSize: "11px", 
+        fontWeight: "600"
       },
-      rotate: 0
+      rotate: 0,
+      offsetY: 0,
+      trim: false
     },
     title: {
       text: "Rangos de Operación",
-      style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
+      offsetY: 10,
+      style: { 
+        color: "#475569", 
+        fontSize: "13px", 
+        fontWeight: "700" 
+      }
     },
     axisBorder: {
       show: true,
-      color: '#475569',
-      height: 2
+      color: '#cbd5e1',
+      height: 1,
+      offsetY: 0
     },
     axisTicks: {
-      show: true,
-      color: '#475569',
-      height: 6
-    },
-  },
-  yaxis: [
-    {
-      title: {
-        text: "Número de Mediciones",
-        style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
-      },
-      labels: {
-        style: { colors: "#64748b", fontSize: "12px" }
-      },
-        axisBorder: {
-      show: true,
-      color: '#475569'
-    },
-    axisTicks: {
-      show: true,
-      color: '#475569'
-    },
+      show: false
     }
-  ],
+  },
+  yaxis: {
+    title: {
+      text: "Número de Mediciones",
+      style: { 
+        color: "#475569", 
+        fontSize: "13px", 
+        fontWeight: "700" 
+      }
+    },
+    labels: {
+      style: { 
+        colors: "#64748b", 
+        fontSize: "11px",
+        fontWeight: "500"
+      },
+      formatter: function(val) {
+        return Math.round(val)
+      }
+    },
+    axisBorder: {
+      show: true,
+      color: '#cbd5e1'
+    },
+    axisTicks: {
+      show: true,
+      color: '#cbd5e1'
+    }
+  },
   grid: {
     borderColor: "#e2e8f0",
-    strokeDashArray: 3,
-    xaxis: { lines: { show: false } }
+    strokeDashArray: 4,
+    xaxis: { lines: { show: false } },
+    yaxis: { lines: { show: true } },
+    padding: {
+      top: 20,
+      right: 20,
+      bottom: 10,
+      left: 10
+    }
   },
   legend: {
     show: false
   },
   tooltip: {
     theme: "light",
+    style: {
+      fontSize: '12px',
+      fontWeight: '500'
+    },
     y: {
-      formatter: function(val, opts) {
-        if (opts.seriesIndex === 0) {
-          return val + " mediciones"
-        } else {
-          const labels = ['Mínimo: ', 'Máximo: ', 'Promedio: ', 'Desv. Std: ']
-          return labels[opts.dataPointIndex] + val + (opts.dataPointIndex < 3 ? 'Hz' : '')
+      formatter: function(val) {
+        return val + " mediciones"
+      },
+      title: {
+        formatter: function() {
+          return "Total:"
         }
       }
+    },
+    marker: {
+      show: true
     }
   },
   annotations: {
@@ -223,15 +247,23 @@ colors: ["#22c55e", "#15803d", "#f59e0b", "#ef4444"],
       y: frequencyAnalysis.value.avg,
       borderColor: '#3b82f6',
       borderWidth: 2,
-      strokeDashArray: 4,
-      opacity: 0.7,
+      strokeDashArray: 5,
+      opacity: 0.6,
       label: {
         text: `Promedio: ${frequencyAnalysis.value.avg.toFixed(2)}Hz`,
-        position: 'right',
+        position: 'left',
+        offsetX: 5,
         style: {
           color: '#fff',
           background: '#3b82f6',
-          fontSize: '10px'
+          fontSize: '11px',
+          fontWeight: '600',
+          padding: {
+            left: 8,
+            right: 8,
+            top: 4,
+            bottom: 4
+          }
         }
       }
     }]

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="pl-4 pr-4 pt-4">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -9,11 +9,12 @@
 
         <div class="p-6 pb-4 border-b border-slate-200/60 dark:border-slate-700/60">
           <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
-                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                  </svg>
-                </div>
+            <div
+              class="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-primary to-color2 flex items-center justify-center shadow-lg">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
             <h2
               class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
               Rango de Tensiones por Fase
@@ -26,7 +27,7 @@
 
         <!-- Gráfico -->
         <div class="p-6">
-          <ApexChart type="bar" height="360" :options="chartOptions" :series="series" />
+          <ApexChart type="bar" height="320" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
@@ -88,7 +89,7 @@ const chartOptions = computed(() => ({
       borderRadius: 8
     }
   },
-  colors: ["#ef4444", "#10b981"], // rojo min, verde max
+  colors: ["#ef4444", "#10b981"],
   dataLabels: {
     enabled: true,
     formatter: (val) => `${val}V`,
@@ -101,7 +102,7 @@ const chartOptions = computed(() => ({
       text: "Fases",
       style: { color: "#475569", fontSize: "14px", fontWeight: "600" }
     },
-     axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569',
       height: 2
@@ -121,7 +122,7 @@ const chartOptions = computed(() => ({
       style: { colors: "#64748b", fontSize: "12px" },
       formatter: (val) => `${val}V`
     },
-      axisBorder: {
+    axisBorder: {
       show: true,
       color: '#475569'
     },

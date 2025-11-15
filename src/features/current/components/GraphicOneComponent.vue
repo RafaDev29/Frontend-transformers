@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 mb-10">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -48,7 +48,7 @@
         </div>
 
         <div class="p-6">
-          <div ref="chartContainer" class="w-full"></div>
+          <div ref="chartContainer" class="w-full h-[360px]"></div>
         </div>
       </div>
     </div>

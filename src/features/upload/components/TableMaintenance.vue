@@ -17,7 +17,7 @@
                 Archivo
               </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                Tipo de Carga
+                Tipo
               </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Cliente
@@ -29,7 +29,7 @@
                 Transformador
               </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
-                Rango de Registro
+                Rango
               </th>
               <th class="px-4 py-3 text-left text-xs tracking-wider font-bold uppercase whitespace-nowrap">
                 Fecha de Carga

@@ -47,8 +47,8 @@
           </div>
         </div>
 
-        <div class="p-6">
-          <div ref="chartContainer" class="w-full"></div>
+        <div class="mb-6 pb-6">
+          <div ref="chartContainer" class="w-full "></div>
         </div>
       </div>
     </div>
