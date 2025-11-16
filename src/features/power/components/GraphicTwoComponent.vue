@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 pb-10 mb-5">
     <div class="relative group">
       <!-- Gradiente de fondo animado -->
       <div
@@ -44,8 +44,8 @@
         </div>
 
         <!-- Área del gráfico -->
-        <div class="pb-6 mb-6 ml-4 pl-1">
-          <div ref="chartContainer" class="w-full"></div>
+        <div class="p-6">
+          <div ref="chartContainer" class="w-full h-[330px]"></div>
         </div>
       </div>
     </div>

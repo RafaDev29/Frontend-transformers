@@ -35,7 +35,7 @@
         </div>
 
         <div class="p-6">
-          <div ref="chartContainer" class="w-full"></div>
+          <div ref="chartContainer" class="w-full h-[330px]"></div>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 <template>
   <div class="p-4">
     <div class="relative group">
-      <!-- Gradiente de fondo animado -->
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
@@ -43,8 +42,8 @@
           </div>
         </div>
 
-        <div class="pb-6 mb-10 ml-4 pl-1">
-          <div ref="chartContainer" class="w-full"></div>
+        <div class="p-6">
+          <div ref="chartContainer" class="w-full h-[330px]"></div>
         </div>
       </div>
     </div>

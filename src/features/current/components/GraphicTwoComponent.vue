@@ -51,7 +51,7 @@
 
         <!-- Área del gráfico -->
         <div class="p-6">
-          <div ref="chartContainer" class="w-full h-330px"></div>
+          <div ref="chartContainer" class="w-full h-[360px]"></div>
         </div>
       </div>
     </div>

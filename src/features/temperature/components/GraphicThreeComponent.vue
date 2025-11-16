@@ -1,11 +1,11 @@
 <template>
-  <div class="p-4 pb-6 mb-6 ">
+  <div class="p-4 pb-10 mb-6">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary  via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
       </div>
 
-      <div class="p-6 pb-10 border-b border-slate-200/60 dark:border-slate-700/60">
+      <div class="p-6 pb-3 border-b border-slate-200/60 dark:border-slate-700/60">
         <!-- Header Simple -->
         <div class="text-center mb-8 ">
           <h1 class="text-3xl font-bold bg-gradient-to-r from-color1 to-color2 bg-clip-text text-transparent mb-2">

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 mb-5">
     <div class="relative group">
       <div
         class="absolute -inset-2 bg-gradient-to-r from-accent-primary via-accent-secondary to-color2 rounded-3xl  opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -26,8 +26,8 @@
         </div>
 
         <!-- Gráfico -->
-        <div class="ml-4 pl-2" >
-          <ApexChart type="bar" height="380" :options="chartOptions" :series="series" />
+        <div class="p-4" >
+          <ApexChart type="bar" height="360" :options="chartOptions" :series="series" />
         </div>
       </div>
     </div>
