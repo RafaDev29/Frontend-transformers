@@ -82,8 +82,28 @@ const globalMax = computed(() => {
 const prepareData = () => {
   if (!props.chartData.length) return [[], []]
 
-  const timestamps = props.chartData.map(d => new Date(d.datetime).getTime() / 1000)
-  const ch1 = props.chartData.map(d => d.ch1)
+  const timestamps = []
+  const ch1 = []
+
+  const threshold = 1 * 60 
+
+  for (let i = 0; i < props.chartData.length; i++) {
+    const d = props.chartData[i]
+    const ts = new Date(d.datetime).getTime() / 1000
+
+    if (i > 0) {
+      const prev = timestamps[timestamps.length - 1]
+
+      // Si el salto es mayor al threshold → insertar corte
+      if (ts - prev > threshold) {
+        timestamps.push(prev + threshold)
+        ch1.push(null) // uPlot corta la línea
+      }
+    }
+
+    timestamps.push(ts)
+    ch1.push(d.ch1)
+  }
 
   return [timestamps, ch1]
 }

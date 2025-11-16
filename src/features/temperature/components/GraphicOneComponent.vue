@@ -10,12 +10,15 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             <div>
               <div class="flex items-center gap-3 mb-2">
-               <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg">
+                <div
+                  class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg">
                   <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
+                <h2
+                  class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
                   Monitoreo de Temperatura
                 </h2>
               </div>
@@ -24,8 +27,9 @@
               </p>
             </div>
 
-           <div class="flex flex-wrap items-center justify-end gap-6">
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="flex flex-wrap items-center justify-end gap-6">
+              <div
+                class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-red-500 to-orange-500 shadow-md"></div>
                 <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Temperatura</span>
               </div>
@@ -65,16 +69,36 @@ const chartContainer = ref(null)
 let chart = null
 let tooltipEl = null
 
-// Preparar datos para uPlot
+
 const prepareData = () => {
   if (!props.chartData.length) return [[], []]
 
-  const timestamps = props.chartData.map(d => new Date(d.datetime).getTime() / 1000)
-  const ch1 = props.chartData.map(d => d.ch1)
+  const timestamps = []
+  const ch1 = []
 
+  const threshold = 1 * 60 // 15 minutos en segundos
+
+  for (let i = 0; i < props.chartData.length; i++) {
+    const d = props.chartData[i]
+    const ts = new Date(d.datetime).getTime() / 1000
+
+    if (i > 0) {
+      const prev = timestamps[timestamps.length - 1]
+
+      // Si el salto es mayor al threshold → insertar corte
+      if (ts - prev > threshold) {
+        timestamps.push(prev + threshold)
+        ch1.push(null) // uPlot corta la línea
+      }
+    }
+
+    timestamps.push(ts)
+    ch1.push(d.ch1)
+  }
 
   return [timestamps, ch1]
 }
+
 
 
 // Configurar opciones del gráfico
@@ -103,40 +127,40 @@ const getChartOptions = () => {
     series: [
       {},
       {
-  label: 'Fase 1',
-  stroke: '#ef4444',
-  width: 2.5,
-  points: { show: true, size: 5, stroke: '#ef4444', fill: '#ef4444' },
-  spanGaps: true
-}
+        label: 'Fase 1',
+        stroke: '#ef4444',
+        width: 2.5,
+        points: { show: true, size: 5, stroke: '#ef4444', fill: '#ef4444' },
+        spanGaps: false
+      }
 
 
     ],
-   scales: {
-  x: {
-    time: true,
-    min: diffDays === 1
-      ? new Date(start).setHours(0, 0, 0, 0) / 1000
-      : start.getTime() / 1000,
-    max: diffDays === 1
-      ? new Date(end).setHours(23, 59, 59, 999) / 1000
-      : end.getTime() / 1000,
-  },
-  y: {
-    // Calcular rango automático con un margen
-    range: (self, dataMin, dataMax) => {
-      if (dataMin == null || dataMax == null) {
-        return [10, 60]
+    scales: {
+      x: {
+        time: true,
+        min: diffDays === 1
+          ? new Date(start).setHours(0, 0, 0, 0) / 1000
+          : start.getTime() / 1000,
+        max: diffDays === 1
+          ? new Date(end).setHours(23, 59, 59, 999) / 1000
+          : end.getTime() / 1000,
+      },
+      y: {
+        // Calcular rango automático con un margen
+        range: (self, dataMin, dataMax) => {
+          if (dataMin == null || dataMax == null) {
+            return [10, 60]
+          }
+
+          const margin = (dataMax - dataMin) * 0.1
+          return [
+            Math.floor(dataMin - margin),
+            Math.ceil(dataMax + margin)
+          ]
+        }
       }
-      
-      const margin = (dataMax - dataMin) * 0.1
-      return [
-        Math.floor(dataMin - margin),
-        Math.ceil(dataMax + margin)
-      ]
-    }
-  }
-},
+    },
     axes: [
       {
         label: xAxisTitle,

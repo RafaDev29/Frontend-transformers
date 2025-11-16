@@ -11,7 +11,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             <div>
               <div class="flex items-center gap-3 mb-2">
-              <div
+                <div
                   class="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center shadow-lg">
                   <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,13 +30,13 @@
 
             <!-- Leyenda mejorada -->
             <div class="flex flex-wrap items-center justify-end gap-6">
-              
-               <div
+
+              <div
                 class="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="w-3 h-3 rounded-full bg-gradient-to-r from-green-600 to-teal-500 shadow-md"></div>
                 <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Frecuencia</span>
               </div>
-             
+
             </div>
           </div>
         </div>
@@ -80,15 +80,35 @@ const globalMax = computed(() => {
   return Math.max(...allValues.filter(val => val != null && !isNaN(val)))
 })
 
-// Preparar datos para uPlot
+
 const prepareData = () => {
   if (!props.chartData.length) return [[], []]
 
-  const timestamps = props.chartData.map(d => new Date(d.datetime).getTime() / 1000)
-  const ch1 = props.chartData.map(d => d.ch1)
+  const timestamps = []
+  const ch1 = []
+
+  const threshold = 15 * 60 
+
+  for (let i = 0; i < props.chartData.length; i++) {
+    const d = props.chartData[i]
+    const ts = new Date(d.datetime).getTime() / 1000
+
+    if (i > 0) {
+      const prev = timestamps[timestamps.length - 1]
+
+      if (ts - prev > threshold) {
+        timestamps.push(prev + threshold)
+        ch1.push(null) // uPlot corta la línea
+      }
+    }
+
+    timestamps.push(ts)
+    ch1.push(d.ch1)
+  }
 
   return [timestamps, ch1]
 }
+
 
 // Configurar opciones del gráfico
 const getChartOptions = () => {
@@ -158,26 +178,26 @@ const getChartOptions = () => {
 
   // Función para formatear etiquetas
   const formatXLabels = (self, ticks) => {
-   if (diffHours <= 24) {
-  // Menos de 24 horas: mostrar fecha + hora
-  return ticks.map(v => {
-    const d = new Date(v * 1000)
-    const day = d.getDate().toString().padStart(2, '0')
-    const month = (d.getMonth() + 1).toString().padStart(2, '0')
-    const hour = d.getHours().toString().padStart(2, '0')
-    const min = d.getMinutes().toString().padStart(2, '0')
-    return `${day}/${month} ${hour}:${min}`
-  })
-} else {
-  // Mayor a 1 día: solo fecha
-  return ticks.map(v => {
-    const d = new Date(v * 1000)
-    const day = d.getDate().toString().padStart(2, '0')
-    const month = (d.getMonth() + 1).toString().padStart(2, '0')
-    const year = d.getFullYear()
-    return `${day}/${month}/${year}`
-  })
-}
+    if (diffHours <= 24) {
+      // Menos de 24 horas: mostrar fecha + hora
+      return ticks.map(v => {
+        const d = new Date(v * 1000)
+        const day = d.getDate().toString().padStart(2, '0')
+        const month = (d.getMonth() + 1).toString().padStart(2, '0')
+        const hour = d.getHours().toString().padStart(2, '0')
+        const min = d.getMinutes().toString().padStart(2, '0')
+        return `${day}/${month} ${hour}:${min}`
+      })
+    } else {
+      // Mayor a 1 día: solo fecha
+      return ticks.map(v => {
+        const d = new Date(v * 1000)
+        const day = d.getDate().toString().padStart(2, '0')
+        const month = (d.getMonth() + 1).toString().padStart(2, '0')
+        const year = d.getFullYear()
+        return `${day}/${month}/${year}`
+      })
+    }
 
   }
 
@@ -195,19 +215,19 @@ const getChartOptions = () => {
         points: { show: false }
       }
     ],
-   scales: {
-  x: {
-    time: true
-  },
-  y: {
-    range: () => {
-      const min = globalMin.value || 0
-      const max = globalMax.value || 0
-      const margin = (max - min) * 0.1 || 5 
-      return [min - margin, max + margin]
-    }
-  }
-},
+    scales: {
+      x: {
+        time: true
+      },
+      y: {
+        range: () => {
+          const min = globalMin.value || 0
+          const max = globalMax.value || 0
+          const margin = (max - min) * 0.1 || 5
+          return [min - margin, max + margin]
+        }
+      }
+    },
 
     axes: [
       {

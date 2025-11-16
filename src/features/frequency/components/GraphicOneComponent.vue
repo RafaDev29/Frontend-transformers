@@ -69,18 +69,39 @@ let chart = null
 let tooltipEl = null
 
 // Preparar datos para uPlot
+// Preparar datos para uPlot con corte cuando haya huecos mayores al umbral
 const prepareData = () => {
   if (!props.chartData.length) return [[], []]
 
-  const timestamps = props.chartData.map(d => new Date(d.datetime).getTime() / 1000)
-  const ch1 = props.chartData.map(d => d.ch1)
+  const timestamps = []
+  const ch1 = []
 
+  const threshold = 15 * 60 // 15 minutos en segundos
+
+  for (let i = 0; i < props.chartData.length; i++) {
+    const d = props.chartData[i]
+    const ts = new Date(d.datetime).getTime() / 1000
+
+    if (i > 0) {
+      const prev = timestamps[timestamps.length - 1]
+
+      // Si el salto es mayor al threshold → insertar corte
+      if (ts - prev > threshold) {
+        timestamps.push(prev + threshold)
+        ch1.push(null) // uPlot corta la línea
+      }
+    }
+
+    timestamps.push(ts)
+    ch1.push(d.ch1)
+  }
 
   return [timestamps, ch1]
 }
 
 
-// Configurar opciones del gráfico
+
+
 const getChartOptions = () => {
   if (!props.dateRange.startDate || !props.dateRange.endDate) return null
 
@@ -110,7 +131,7 @@ const getChartOptions = () => {
   stroke: '#16a34a',
   width: 2.5,
   points: { show: true, size: 5, stroke: '#16a34a', fill: '#16a34a' },
-  spanGaps: true
+  spanGaps: false
 }
 
 
