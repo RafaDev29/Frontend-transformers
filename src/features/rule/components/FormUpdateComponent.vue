@@ -632,7 +632,7 @@
               <svg v-if="!isLoading" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z">
-                </path>
+                </path> 
               </svg>
               <svg v-if="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -854,7 +854,7 @@ const validateForm = () => {
     errors.value.general1Message = 'El mensaje general es requerido'
   }
 
-  // Validar según tipo de regla
+
   if (form.ruleType === 'TEMPERATURA' || form.ruleType === 'POTENCIA' || form.ruleType === 'CORRIENTE') {
     if (!form.config.normalValue?.value && form.config.normalValue?.value !== 0) {
       errors.value.normalValue = 'El valor normal es requerido'
@@ -936,15 +936,18 @@ const validateForm = () => {
     }
   }
 
-  if (form.selectedAlerts.length === 0) {
-    errors.value.selectedAlerts = 'Debe seleccionar al menos una alerta'
-  }
+  // if (form.selectedAlerts.length === 0) {
+  //   errors.value.selectedAlerts = 'Debe seleccionar al menos una alerta'
+  // }
 
   return Object.keys(errors.value).length === 0
 }
 
 const handleSubmit = () => {
+ 
   if (validateForm()) {
+   
+
     isLoading.value = true
 
     const updateData = {
