@@ -63,15 +63,15 @@
         <div class="flex justify-center gap-6 mt-8">
           <div class="flex items-center gap-2">
             <div class="w-3 h-3 rounded-full bg-color1"></div>
-            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Estable (49.5-50.5Hz)</span>
+            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">  Estable (49.5-50.5Hz)</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-3 h-3 rounded-full bg-accent-warning"></div>
-            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Precaución (±0.5-1.0Hz)</span>
+            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Precaución (±0.5–1.0 Hz)</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="w-3 h-3 rounded-full bg-accent-danger"></div>
-            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Crítico (>±1.0Hz)</span>
+            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Crítico (>±1.0 Hz)</span>
           </div>
         </div>
 
@@ -118,7 +118,7 @@ const props = defineProps({
   }
 })
 
-// Frequency calculations
+
 const currentFreq = computed(() => {
   if (props.chartData.length > 0) {
     return props.chartData[props.chartData.length - 1].ch1?.toFixed(2) || '50.00'
@@ -149,8 +149,9 @@ const avgFreq = computed(() => {
 })
 
 // Gauge calculations
-const minGaugeFreq = 47 // Minimum frequency for gauge
-const maxGaugeFreq = 53 // Maximum frequency for gauge
+const minGaugeFreq = 57
+const maxGaugeFreq = 63
+
 const circumference = Math.PI * 100 // Half circle circumference
 
 const frequencyPercentage = computed(() => {
@@ -168,7 +169,7 @@ const progressPath = "M 50 150 A 100 100 0 0 1 250 150"
 // Color logic based on frequency deviation from 50Hz
 const gaugeColor = computed(() => {
   const freq = parseFloat(currentFreq.value)
-  const deviation = Math.abs(freq - 50)
+  const deviation = Math.abs(freq - 60)
   if (deviation <= 0.5) return '#1e7f14' // color1 - green
   if (deviation <= 1.0) return '#d97706' // accent-warning - yellow
   return '#dc2626' // accent-danger - red
@@ -176,7 +177,7 @@ const gaugeColor = computed(() => {
 
 const frequencyTextColor = computed(() => {
   const freq = parseFloat(currentFreq.value)
-  const deviation = Math.abs(freq - 50)
+  const deviation = Math.abs(freq - 60)
   if (deviation <= 0.5) return 'text-color1 dark:text-color3'
   if (deviation <= 1.0) return 'text-accent-warning'
   return 'text-accent-danger'
@@ -184,7 +185,7 @@ const frequencyTextColor = computed(() => {
 
 const statusBadgeColor = computed(() => {
   const freq = parseFloat(currentFreq.value)
-  const deviation = Math.abs(freq - 50)
+  const deviation = Math.abs(freq - 60)
   if (deviation <= 0.5) return 'bg-color1'
   if (deviation <= 1.0) return 'bg-accent-warning'
   return 'bg-accent-danger'
@@ -192,7 +193,7 @@ const statusBadgeColor = computed(() => {
 
 const statusText = computed(() => {
   const freq = parseFloat(currentFreq.value)
-  const deviation = Math.abs(freq - 50)
+  const deviation = Math.abs(freq - 60)
   if (deviation <= 0.5) return 'ESTABLE'
   if (deviation <= 1.0) return 'PRECAUCIÓN'
   return 'CRÍTICO'
@@ -200,7 +201,7 @@ const statusText = computed(() => {
 
 const minCardColor = computed(() => {
   const f = parseFloat(minFreq.value)
-  const deviation = Math.abs(f - 50)
+  const deviation = Math.abs(f - 60)
   if (deviation <= 0.5) return 'from-green-700 to-green-800'
   if (deviation <= 1.0) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
@@ -208,7 +209,7 @@ const minCardColor = computed(() => {
 
 const avgCardColor = computed(() => {
   const f = parseFloat(avgFreq.value)
-  const deviation = Math.abs(f - 50)
+  const deviation = Math.abs(f - 60)
   if (deviation <= 0.5) return 'from-green-700 to-green-800'
   if (deviation <= 1.0) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
@@ -216,14 +217,14 @@ const avgCardColor = computed(() => {
 
 const maxCardColor = computed(() => {
   const f = parseFloat(maxFreq.value)
-  const deviation = Math.abs(f - 50)
+  const deviation = Math.abs(f - 60)
   if (deviation <= 0.5) return 'from-green-700 to-green-800'
   if (deviation <= 1.0) return 'from-yellow-500 to-yellow-600 dark:from-yellow-700 dark:to-yellow-800'
   return 'from-red-500 to-red-600 dark:from-red-700 dark:to-red-800'
 })
 
 const markers = computed(() => {
-  const freqs = [47, 48, 49, 50, 51, 52, 53]
+  const freqs = [57, 58, 59, 60, 61, 62, 63]
   return freqs.map(freq => {
     const normalized = (freq - minGaugeFreq) / (maxGaugeFreq - minGaugeFreq)
     const angle = normalized * Math.PI

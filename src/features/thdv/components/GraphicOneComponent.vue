@@ -86,18 +86,17 @@ const prepareData = () => {
   const ch2 = []
   const ch3 = []
 
-  const threshold = 10 * 60; 
+  const threshold = 10 * 60;
 
   for (let i = 0; i < props.chartData.length; i++) {
     const d = props.chartData[i]
     const ts = new Date(d.datetime).getTime() / 1000
-
     if (i > 0) {
       const prev = timestamps[timestamps.length - 1]
 
       if (ts - prev > threshold) {
-
-        timestamps.push(ts - 1) // un segundo antes
+        const midTs = prev + (ts - prev) / 2
+        timestamps.push(midTs)
         ch1.push(null)
         ch2.push(null)
         ch3.push(null)
