@@ -910,6 +910,30 @@ watch(() => form.type, (newType) => {
 })
 
 
+
+watch(() => form.secondaryVoltage, (newVal) => {
+  if (!newVal) return
+
+  // Copia la secundaria a la nominal
+  form.nominalVoltage = newVal
+
+  // Si ya existe un porcentaje seleccionado, recalcular
+  if (regulationPercentage.value) {
+    calculateRegulatedVoltages()
+
+    // Si regulatedVoltage ya existe, verificar si sigue siendo válido
+    if (
+      form.regulatedVoltage &&
+      !regulatedVoltageOptions.value.includes(form.regulatedVoltage)
+    ) {
+      // Si ya no es válido, elegir el más cercano
+      form.regulatedVoltage = regulatedVoltageOptions.value[0] || null
+    }
+  }
+})
+
+
+
 onMounted(() => {
   getCustomer();
   getFactory();
