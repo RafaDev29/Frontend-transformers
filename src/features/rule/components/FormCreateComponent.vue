@@ -291,7 +291,7 @@
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="220" required />
                 <label class="block text-xs font-medium text-green-700 dark:text-green-300 mt-2 mb-2">
-                  Mensaje Normal (DESCALANCE)*
+                  Mensaje Normal (DESBALANCE)*
                 </label>
                 <input v-model="form.config.normalValue.message" type="text"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
@@ -307,7 +307,7 @@
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="240" required />
                 <label class="block text-xs font-medium text-yellow-700 dark:text-yellow-300 mt-2 mb-2">
-                  Mensaje Precaución (DESCALANCE) *
+                  Mensaje Precaución (DESBALANCE) *
                 </label>
                 <input v-model="form.config.warningValue.message" type="text"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
@@ -322,7 +322,7 @@
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
                   placeholder="260" required />
                 <label class="block text-xs font-medium text-red-700 dark:text-red-300 mt-2 mb-2">
-                  Mensaje Crítico (DESCALANCE)*
+                  Mensaje Crítico (DESBALANCE)*
                 </label>
                 <input v-model="form.config.criticalValue.message" type="text"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
