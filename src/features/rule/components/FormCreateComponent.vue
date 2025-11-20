@@ -64,7 +64,7 @@
               <div
                 class="p-3 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
                 <label class="block text-xs font-medium text-green-700 dark:text-green-300 mb-2">
-                  Normal (°C) *
+                  Normal  (%) *
                 </label>
                 <input v-model.number="form.config.normalValue.value" type="number"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
@@ -80,7 +80,7 @@
               <div
                 class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                 <label class="block text-xs font-medium text-yellow-700 dark:text-yellow-300 mb-2">
-                  Precaución (°C) *
+                  Precaución  (%) *
                 </label>
                 <input v-model.number="form.config.warningValue.value" type="number"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
@@ -95,7 +95,7 @@
 
               <div class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
                 <label class="block text-xs font-medium text-red-700 dark:text-red-300 mb-2">
-                  Crítico (°C) *
+                  Crítico  (%) *
                 </label>
                 <input v-model.number="form.config.criticalValue.value" type="number"
                   class="w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200"
@@ -685,7 +685,7 @@ const ruleTypes = ref([
   { value: 'POTENCIA', label: 'Potencia', icon: '💪', unit: 'Porcentaje (%)' },
   { value: 'THDV', label: 'THDV', icon: '📈', unit: 'Porcentaje (%)' },
   { value: 'THDI', label: 'THDI', icon: '📉', unit: 'Porcentaje (%)' },
-  { value: 'TEMPERATURA', label: 'Temperatura', icon: '🌡️', unit: 'Celsius (°C)' }
+  { value: 'TEMPERATURA', label: 'Temperatura', icon: '🌡️', unit: 'Porcentaje (%)' }
 ])
 
 const defaultConfigs = {
