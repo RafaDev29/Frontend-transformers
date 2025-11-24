@@ -1,6 +1,6 @@
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[2000]" @click.self="$emit('close')">
-    <div class=" mt-10 bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div class="mt-10 bg-white/100 dark:bg-slate-800/100 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-600">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
           {{ alertData && alertData.uid ? 'Actualizar Alerta' : 'Crear Nueva Alerta' }}
@@ -15,8 +15,6 @@
       <form @submit.prevent="handleSubmit" class="p-6">
         <!-- Información General -->
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-          
-
           <div>
             <label for="alertName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Nombre de la Alerta *
@@ -35,8 +33,7 @@
         <div class="mb-8 w-full px-3 py-2 border rounded-md bg-green-50/70 dark:bg-green-900/20 backdrop-blur-sm border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-color1 transition-all duration-200">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Tipo de Alerta</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div v-for="alertType in alertTypes" :key="alertType.value" 
-                 class="relative">
+            <div v-for="alertType in alertTypes" :key="alertType.value" class="relative">
               <input :id="alertType.value" 
                      v-model="form.alertType" 
                      :value="alertType.value"
@@ -57,59 +54,97 @@
           <p v-if="errors.alertType" class="mt-2 text-sm text-red-600">{{ errors.alertType }}</p>
         </div>
 
-      
         <!-- Destinatarios -->
         <div class="mb-8">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Destinatarios</h3>
           
-          
-          <!-- Contactos adicionales -->
           <div v-if="form.alertType" class="border border-gray-200 dark:border-slate-600 rounded-lg p-4">
             <h4 class="font-medium text-gray-900 dark:text-white mb-4">
-              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }} 
+              {{ form.alertType === 'whatsapp' ? 'Números' : 'Emails' }}
             </h4>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }} adicionales que no estén en las entidades principales.
+              Agregue {{ form.alertType === 'whatsapp' ? 'números de WhatsApp' : 'direcciones de email' }}
             </p>
             
             <div class="space-y-3">
-              <div v-for="(contact, index) in form.additionalContacts" :key="index" class="flex gap-3 items-start">
-                <div class="flex-1">
-                  <input v-model="contact.value" 
-                         :type="form.alertType === 'whatsapp' ? 'tel' : 'email'"
-                         :class="inputClasses('additionalContact')"
-                         :placeholder="form.alertType === 'whatsapp' ? '+51 999 999 999' : 'correo@ejemplo.com'" />
-                  <p v-if="errors[`additionalContact${index}`]" class="mt-1 text-sm text-red-600">{{ errors[`additionalContact${index}`] }}</p>
+              <div v-for="(contact, index) in form.additionalContacts" :key="index" class="flex gap-3 items-start flex-wrap">
+                
+                <!-- Selector de tipo de contacto -->
+                <div class="flex-1 min-w-[200px]">
+                  <select v-model="contact.type" :class="inputClasses('contactType')" @change="onContactTypeChange(index)">
+                    <option value="">Seleccionar tipo</option>
+                    <option value="customer">Cliente</option>
+                    <option value="factory">Fábrica</option>
+                  </select>
+                  <p v-if="errors[`contactType${index}`]" class="mt-1 text-sm text-red-600">
+                    {{ errors[`contactType${index}`] }}
+                  </p>
                 </div>
-                <div class="flex-1">
-                  <input v-model="contact.name" 
-                         type="text" 
-                         :class="inputClasses('contactName')"
-                         placeholder="Nombre del contacto" />
+
+                <!-- Selector de Cliente o Fábrica -->
+                <div v-if="contact.type" class="flex-1 min-w-[200px]">
+                  <select v-if="contact.type === 'customer'" v-model="contact.customerUid"
+                    :class="inputClasses('customerUid')" @change="onCustomerChange(index)">
+                    <option value="">Seleccionar cliente</option>
+                    <option v-for="customer in dataCustomers" :key="customer.uid" :value="customer.uid">
+                      {{ customer.businessname }}
+                    </option>
+                  </select>
+                  
+                  <select v-else-if="contact.type === 'factory'" v-model="contact.factoryUid"
+                    :class="inputClasses('factoryUid')" @change="onFactoryChange(index)">
+                    <option value="">Seleccionar fábrica</option>
+                    <option v-for="factory in dataFactories" :key="factory.uid" :value="factory.uid">
+                      {{ factory.businessName }}
+                    </option>
+                  </select>
+                  <p v-if="errors[`entity${index}`]" class="mt-1 text-sm text-red-600">
+                    {{ errors[`entity${index}`] }}
+                  </p>
                 </div>
-                <button type="button" 
-                        @click="removeAdditionalContact(index)"
-                        :disabled="form.additionalContacts.length === 1"
-                        :class="[
-                          'px-3 py-2 rounded-md transition-colors',
-                          form.additionalContacts.length === 1 
-                            ? 'text-gray-400 cursor-not-allowed'
-                            : 'text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200 hover:bg-red-50 dark:hover:bg-red-900/20'
-                        ]">
+
+                <!-- Nombre del contacto -->
+                <div class="flex-1 min-w-[200px]">
+                  <input v-model="contact.name" type="text" :class="inputClasses('contactName')"
+                    placeholder="Nombre del contacto" />
+                  <p v-if="errors[`contactName${index}`]" class="mt-1 text-sm text-red-600">
+                    {{ errors[`contactName${index}`] }}
+                  </p>
+                </div>
+
+                <!-- Email o número -->
+                <div class="flex-1 min-w-[200px]">
+                  <input v-model="contact.value" :type="form.alertType === 'whatsapp' ? 'tel' : 'email'"
+                    :class="inputClasses('additionalContact')"
+                    :placeholder="form.alertType === 'whatsapp' ? '+51 999 999 999' : 'correo@ejemplo.com'" />
+                  <p v-if="errors[`additionalContact${index}`]" class="mt-1 text-sm text-red-600">
+                    {{ errors[`additionalContact${index}`] }}
+                  </p>
+                </div>
+
+                <!-- Botón eliminar -->
+                <button type="button" @click="removeAdditionalContact(index)"
+                  :disabled="form.additionalContacts.length === 1" :class="[
+                    'px-3 py-2 rounded-md transition-colors',
+                    form.additionalContacts.length === 1
+                      ? 'text-gray-400 cursor-not-allowed'
+                      : 'text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200 hover:bg-red-50 dark:hover:bg-red-900/20'
+                  ]">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
                   </svg>
                 </button>
               </div>
             </div>
             
-            <button type="button" 
-                    @click="addAdditionalContact"
-                    class="mt-3 flex items-center text-sm text-accent-primary hover:text-color1 dark:text-color2 dark:hover:text-color1">
+            <button type="button" @click="addAdditionalContact"
+              class="mt-3 flex items-center text-sm text-accent-primary hover:text-color1 dark:text-color2 dark:hover:text-color1">
               <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }} adicional
+              Agregar {{ form.alertType === 'whatsapp' ? 'número' : 'email' }}
             </button>
           </div>
         </div>
@@ -146,7 +181,7 @@
         </div>
 
         <!-- Vista Previa -->
-        <div v-if="form.alertType && ( hasAdditionalContacts)" 
+        <div v-if="form.alertType && hasAdditionalContacts" 
              class="mb-8 p-4 bg-accent-primary/5 dark:bg-colorDark1/20 border border-accent-primary/20 dark:border-colorDark2/30 rounded-lg">
           <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +191,7 @@
             Vista Previa de Destinatarios
           </h3>
           <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-            <p v-if="hasAdditionalContacts">✅ {{ form.additionalContacts.filter(c => c.value).length }} contacto(s) adicional(es)</p>
+            <p>✅ {{ form.additionalContacts.filter(c => c.value && (c.customerUid || c.factoryUid)).length }} contacto(s) válido(s)</p>
           </div>
         </div>
 
@@ -188,7 +223,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, defineProps, defineEmits } from 'vue'
+import { ref, reactive, computed, watch, defineProps, defineEmits, onMounted } from 'vue'
+import { allCustomer } from '@/features/customer/services/customerService'
+import { listFactory } from '@/features/factory/services/factoryService'
 
 const props = defineProps({
   show: {
@@ -205,6 +242,9 @@ const emit = defineEmits(['close', 'save', 'update'])
 
 const isLoading = ref(false)
 const errors = ref({})
+const dataCustomers = ref([])
+const dataFactories = ref([])
+const isLoadingData = ref(false)
 
 // Tipos de alertas disponibles
 const alertTypes = ref([
@@ -225,14 +265,22 @@ const alertTypes = ref([
 const form = reactive({
   alertName: '',
   alertType: '',
-  additionalContacts: [{ value: '', name: '' }],
+  additionalContacts: [{ 
+    type: '', 
+    customerUid: '', 
+    factoryUid: '', 
+    value: '', 
+    name: '' 
+  }],
   retryAttempts: 0,
   isActive: true
 })
 
 // Computed properties
 const hasAdditionalContacts = computed(() => {
-  return form.additionalContacts.some(contact => contact.value.trim() !== '')
+  return form.additionalContacts.some(contact => 
+    contact.value.trim() !== '' && (contact.customerUid || contact.factoryUid)
+  )
 })
 
 // Función para generar clases CSS dinámicas para inputs
@@ -244,22 +292,103 @@ const inputClasses = (fieldName) => {
   return `${baseClasses} ${errors.value[fieldName] ? errorClasses : normalClasses}`
 }
 
+// Cargar clientes
+const loadCustomers = async () => {
+  try {
+    isLoadingData.value = true
+    const response = await allCustomer()
+    if (response) {
+      dataCustomers.value = response.data
+    }
+  } catch (e) {
+    console.error('Error al cargar clientes:', e?.response?.data?.message || e.message)
+  } finally {
+    isLoadingData.value = false
+  }
+}
+
+// Cargar fábricas
+const loadFactories = async () => {
+  try {
+    isLoadingData.value = true
+    const response = await listFactory()
+    if (response) {
+      dataFactories.value = response.data
+    }
+  } catch (e) {
+    console.error('Error al cargar fábricas:', e)
+  } finally {
+    isLoadingData.value = false
+  }
+}
+
+// Cuando cambia el tipo de contacto, limpiar selecciones
+const onContactTypeChange = (index) => {
+  form.additionalContacts[index].customerUid = ''
+  form.additionalContacts[index].factoryUid = ''
+  form.additionalContacts[index].name = ''
+  form.additionalContacts[index].value = ''
+}
+
+// Autocompletar datos cuando selecciona un cliente
+const onCustomerChange = (index) => {
+  const customer = dataCustomers.value.find(
+    c => c.uid === form.additionalContacts[index].customerUid
+  )
+  if (customer) {
+    form.additionalContacts[index].name = customer.name
+    if (form.alertType === 'email' && customer.email) {
+      form.additionalContacts[index].value = customer.email
+    } else if (form.alertType === 'whatsapp' && customer.phone) {
+      form.additionalContacts[index].value = customer.phone
+    }
+  }
+}
+
+// Autocompletar datos cuando selecciona una fábrica
+const onFactoryChange = (index) => {
+  const factory = dataFactories.value.find(
+    f => f.uid === form.additionalContacts[index].factoryUid
+  )
+  if (factory) {
+    form.additionalContacts[index].name = factory.name
+    if (form.alertType === 'email' && factory.email) {
+      form.additionalContacts[index].value = factory.email
+    } else if (form.alertType === 'whatsapp' && factory.phone) {
+      form.additionalContacts[index].value = factory.phone
+    }
+  }
+}
+
+const addAdditionalContact = () => {
+  form.additionalContacts.push({ 
+    type: '', 
+    customerUid: '', 
+    factoryUid: '', 
+    value: '', 
+    name: '' 
+  })
+}
+
 const removeAdditionalContact = (index) => {
   if (form.additionalContacts.length > 1) {
     form.additionalContacts.splice(index, 1)
   }
 }
+
+const resetForm = () => {
   form.alertName = ''
   form.alertType = ''
-  form.additionalContacts = [{ value: '', name: '' }]
+  form.additionalContacts = [{ 
+    type: '', 
+    customerUid: '', 
+    factoryUid: '', 
+    value: '', 
+    name: '' 
+  }]
   form.retryAttempts = 0
   form.isActive = true
   errors.value = {}
-
-
-
-const addAdditionalContact = () => {
-  form.additionalContacts.push({ value: '', name: '' })
 }
 
 const fillForm = (data) => {
@@ -272,19 +401,49 @@ const fillForm = (data) => {
   form.retryAttempts = data.attempts || 0
   form.isActive = Boolean(data.isActive)
 
-  // Llenar contactos adicionales
+  // Llenar contactos adicionales con la estructura completa
   if (data.contacts && Array.isArray(data.contacts)) {
-    form.additionalContacts = data.contacts.map(contact => ({
-      name: contact.name || '',
-      value: contact.addressee || contact.phoneNumber || contact.email || ''
-    }))
+    form.additionalContacts = data.contacts.map(contact => {
+      // Determinar el tipo de contacto basado en si tiene customer o factory
+      let type = ''
+      let customerUid = ''
+      let factoryUid = ''
+
+      if (contact.customer && contact.customer.uid) {
+        type = 'customer'
+        customerUid = contact.customer.uid
+      } else if (contact.factory && contact.factory.uid) {
+        type = 'factory'
+        factoryUid = contact.factory.uid
+      }
+
+      return {
+        type: type,
+        customerUid: customerUid,
+        factoryUid: factoryUid,
+        name: contact.name || '',
+        value: contact.addressee || ''
+      }
+    })
   } else {
-    form.additionalContacts = [{ value: '', name: '' }]
+    form.additionalContacts = [{ 
+      type: '', 
+      customerUid: '', 
+      factoryUid: '', 
+      value: '', 
+      name: '' 
+    }]
   }
 
   // Si no hay contactos adicionales, asegurar al menos uno vacío
   if (form.additionalContacts.length === 0) {
-    form.additionalContacts = [{ value: '', name: '' }]
+    form.additionalContacts = [{ 
+      type: '', 
+      customerUid: '', 
+      factoryUid: '', 
+      value: '', 
+      name: '' 
+    }]
   }
 
   console.log('Formulario después de llenar:', { ...form })
@@ -292,7 +451,6 @@ const fillForm = (data) => {
 
 const validateForm = () => {
   errors.value = {}
-
 
   if (!form.alertName) {
     errors.value.alertName = 'El nombre de la alerta es requerido'
@@ -302,8 +460,23 @@ const validateForm = () => {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
 
-
   form.additionalContacts.forEach((contact, index) => {
+    // Validar que tenga tipo seleccionado
+    if (!contact.type) {
+      errors.value[`contactType${index}`] = 'Debe seleccionar un tipo'
+    }
+
+    // Validar que tenga cliente o fábrica seleccionada
+    if (contact.type && !contact.customerUid && !contact.factoryUid) {
+      errors.value[`entity${index}`] = `Debe seleccionar un ${contact.type === 'customer' ? 'cliente' : 'fábrica'}`
+    }
+
+    // Validar que tenga nombre
+    if (!contact.name || contact.name.trim() === '') {
+      errors.value[`contactName${index}`] = 'El nombre es requerido'
+    }
+
+    // Validar email o teléfono
     if (contact.value) {
       if (form.alertType === 'email') {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -316,6 +489,8 @@ const validateForm = () => {
           errors.value[`additionalContact${index}`] = 'Número inválido'
         }
       }
+    } else {
+      errors.value[`additionalContact${index}`] = 'Este campo es requerido'
     }
   })
 
@@ -332,10 +507,12 @@ const handleSubmit = () => {
       isActive: form.isActive,
       attempts: form.retryAttempts,
       contacts: form.additionalContacts
-        .filter(contact => contact.value.trim() !== '')
+        .filter(contact => contact.value.trim() !== '' && (contact.customerUid || contact.factoryUid))
         .map(contact => ({
-          name: contact.name || 'Sin nombre',
-          addressee: contact.value
+          name: contact.name,
+          addressee: contact.value,
+          customerUid: contact.customerUid || undefined,
+          factoryUid: contact.factoryUid || undefined
         }))
     }
 
@@ -363,11 +540,16 @@ const handleSubmit = () => {
 watch(() => props.show, (newVal) => {
   if (newVal) {
     console.log('Modal abierto, datos de la alerta:', props.alertData)
-    //resetForm()
+    resetForm()
+    loadCustomers()
+    loadFactories()
 
     // Llenar el formulario si hay datos para editar
     if (props.alertData && Object.keys(props.alertData).length > 0) {
-      fillForm(props.alertData)
+      // Dar tiempo para que se carguen los datos antes de llenar el formulario
+      setTimeout(() => {
+        fillForm(props.alertData)
+      }, 100)
     }
   } else {
     isLoading.value = false
@@ -385,10 +567,21 @@ watch(() => props.alertData, (newData) => {
   immediate: true
 })
 
-watch(() => form.alertType, () => {
-  // Solo resetear contactos si no estamos cargando datos existentes
-  if (!props.alertData || Object.keys(props.alertData).length === 0) {
-    form.additionalContacts = [{ value: '', name: '' }]
+watch(() => form.alertType, (newType, oldType) => {
+  // Solo resetear contactos si cambia el tipo y no estamos cargando datos existentes
+  if (oldType && newType !== oldType && (!props.alertData || Object.keys(props.alertData).length === 0)) {
+    form.additionalContacts = [{ 
+      type: '', 
+      customerUid: '', 
+      factoryUid: '', 
+      value: '', 
+      name: '' 
+    }]
   }
+})
+
+onMounted(() => {
+  loadCustomers()
+  loadFactories()
 })
 </script>

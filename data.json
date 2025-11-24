@@ -1,0 +1,13 @@
+{
+    "name": "alerta prueba",
+    "type": "EMAIL",
+    "isActive": true,
+    "attempts": 3,
+    "contacts": [
+        {
+            "name": "prueba",
+            "addressee": "prueba@gmail.com",
+            "customerUid": "6901f25d-1cba-46f0-84c8-19f4a9302741"
+        }
+    ]
+}

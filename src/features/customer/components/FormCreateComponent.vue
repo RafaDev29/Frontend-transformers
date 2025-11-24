@@ -161,7 +161,7 @@
 
 <script setup>
 import { ref, reactive, watch, defineProps, defineEmits, onMounted } from 'vue'
-import { listFactory } from '@/features/factory/services/factoryService'
+  import { listFactory } from '@/features/factory/services/factoryService'
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const props = defineProps({
@@ -200,7 +200,7 @@ const getFactory = async () => {
     console.error("error al listar fabricas")
   }
 }
-
+  
 
 
 
