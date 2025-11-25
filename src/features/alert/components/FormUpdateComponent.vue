@@ -106,7 +106,7 @@
                 <!-- Campo de entidad (readonly) para FACTORY/CUSTOMER -->
                 <div v-if="isFactory || isCustomer" class="flex-1 min-w-[200px]">
                   <input 
-                    :value="isFactory ? authStore.user?.factory?.businessName : authStore.user?.customer?.businessName" 
+                    :value="isFactory ? authStore.user?.factory?.businessName : authStore.user?.customer?.businessname" 
                     type="text" 
                     class="w-full px-3 py-2 border rounded-md bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white cursor-not-allowed"
                     readonly
@@ -311,7 +311,7 @@ const initializeContactsByRole = () => {
       customerUid: customerUid.value,
       factoryUid: '',
       value: '',
-      name: authStore.user?.customer?.businessName || ''
+      name: authStore.user?.customer?.businessname || ''
     }]
   } else {
     form.additionalContacts = [{
@@ -425,7 +425,7 @@ const addAdditionalContact = () => {
   } else if (isCustomer.value && customerUid.value) {
     newContact.type = 'customer'
     newContact.customerUid = customerUid.value
-    newContact.name = authStore.user?.customer?.businessName || ''
+    newContact.name = authStore.user?.customer?.businessname || ''
   }
   
   form.additionalContacts.push(newContact)
