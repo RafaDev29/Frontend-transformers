@@ -568,7 +568,7 @@ watch(() => props.alertData, (newData) => {
 })
 
 watch(() => form.alertType, (newType, oldType) => {
-  // Solo resetear contactos si cambia el tipo y no estamos cargando datos existentes
+
   if (oldType && newType !== oldType && (!props.alertData || Object.keys(props.alertData).length === 0)) {
     form.additionalContacts = [{ 
       type: '', 

@@ -63,8 +63,8 @@
               <div v-for="(contact, index) in form.additionalContacts" :key="index"
                 class="flex gap-3 items-start flex-wrap">
                 
-                <!-- Selector de tipo de contacto -->
-                <div class="flex-1 min-w-[200px]">
+                <!-- Selector de tipo de contacto - Solo visible para usuarios sin rol específico -->
+                <div v-if="!isFactory && !isCustomer" class="flex-1 min-w-[200px]">
                   <select v-model="contact.type" :class="inputClasses('contactType')" @change="onContactTypeChange(index)">
                     <option value="">Seleccionar tipo</option>
                     <option value="customer">Cliente</option>
@@ -75,8 +75,8 @@
                   </p>
                 </div>
 
-                <!-- Selector de Cliente o Fábrica -->
-                <div v-if="contact.type" class="flex-1 min-w-[200px]">
+                <!-- Selector de Cliente o Fábrica - Solo visible para usuarios sin rol específico -->
+                <div v-if="!isFactory && !isCustomer && contact.type" class="flex-1 min-w-[200px]">
                   <select v-if="contact.type === 'customer'" v-model="contact.customerUid"
                     :class="inputClasses('customerUid')" @change="onCustomerChange(index)">
                     <option value="">Seleccionar cliente</option>
@@ -95,6 +95,16 @@
                   <p v-if="errors[`entity${index}`]" class="mt-1 text-sm text-red-600">
                     {{ errors[`entity${index}`] }}
                   </p>
+                </div>
+
+                <!-- Campo de entidad (readonly) para FACTORY/CUSTOMER -->
+                <div v-if="isFactory || isCustomer" class="flex-1 min-w-[200px]">
+                  <input 
+                    :value="isFactory ? authStore.user?.factory?.businessName : authStore.user?.customer?.businessName" 
+                    type="text" 
+                    class="w-full px-3 py-2 border rounded-md bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white cursor-not-allowed"
+                    readonly
+                  />
                 </div>
 
                 <!-- Nombre del contacto -->
@@ -219,6 +229,7 @@
 import { ref, reactive, computed, watch, defineProps, defineEmits, onMounted } from 'vue'
 import { allCustomer } from '@/features/customer/services/customerService'
 import { listFactory } from '@/features/factory/services/factoryService'
+import { useAuthStore } from '@/features/auth/stores/authStore'
 
 const props = defineProps({
   show: {
@@ -229,11 +240,19 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save'])
 
+const authStore = useAuthStore()
 const isLoading = ref(false)
 const errors = ref({})
 const dataCustomers = ref([])
 const dataFactories = ref([])
 const isLoadingData = ref(false)
+
+// Obtener el rol del usuario actual
+const userRole = computed(() => authStore.user?.role)
+const isFactory = computed(() => userRole.value === 'FACTORY')
+const isCustomer = computed(() => userRole.value === 'CUSTOMER')
+const factoryUid = computed(() => authStore.user?.factory?.uid)
+const customerUid = computed(() => authStore.user?.customer?.uid)
 
 // Tipos de alertas disponibles
 const alertTypes = ref([
@@ -264,6 +283,35 @@ const form = reactive({
   retryAttempts: 0,
   isActive: true
 })
+
+// Inicializar contactos según el rol
+const initializeContactsByRole = () => {
+  if (isFactory.value && factoryUid.value) {
+    form.additionalContacts = [{
+      type: 'factory',
+      customerUid: '',
+      factoryUid: factoryUid.value,
+      value: '',
+      name: authStore.user?.factory?.businessName || ''
+    }]
+  } else if (isCustomer.value && customerUid.value) {
+    form.additionalContacts = [{
+      type: 'customer',
+      customerUid: customerUid.value,
+      factoryUid: '',
+      value: '',
+      name: authStore.user?.customer?.businessName || ''
+    }]
+  } else {
+    form.additionalContacts = [{
+      type: '',
+      customerUid: '',
+      factoryUid: '',
+      value: '',
+      name: ''
+    }]
+  }
+}
 
 const hasAdditionalContacts = computed(() => {
   return form.additionalContacts.some(contact => 
@@ -348,13 +396,26 @@ const onFactoryChange = (index) => {
 }
 
 const addAdditionalContact = () => {
-  form.additionalContacts.push({ 
+  const newContact = { 
     type: '', 
     customerUid: '', 
     factoryUid: '', 
     value: '', 
     name: '' 
-  })
+  }
+  
+  // Si es factory o customer, pre-llenar los datos
+  if (isFactory.value && factoryUid.value) {
+    newContact.type = 'factory'
+    newContact.factoryUid = factoryUid.value
+    newContact.name = authStore.user?.factory?.businessName || ''
+  } else if (isCustomer.value && customerUid.value) {
+    newContact.type = 'customer'
+    newContact.customerUid = customerUid.value
+    newContact.name = authStore.user?.customer?.businessName || ''
+  }
+  
+  form.additionalContacts.push(newContact)
 }
 
 const removeAdditionalContact = (index) => {
@@ -366,16 +427,10 @@ const removeAdditionalContact = (index) => {
 const resetForm = () => {
   form.alertName = ''
   form.alertType = ''
-  form.additionalContacts = [{ 
-    type: '', 
-    customerUid: '', 
-    factoryUid: '', 
-    value: '', 
-    name: '' 
-  }]
   form.retryAttempts = 0
   form.isActive = true
   errors.value = {}
+  initializeContactsByRole()
 }
 
 const validateForm = () => {
@@ -390,13 +445,13 @@ const validateForm = () => {
   }
 
   form.additionalContacts.forEach((contact, index) => {
-    // Validar que tenga tipo seleccionado
-    if (!contact.type) {
+    // Para usuarios sin rol específico, validar que tengan tipo seleccionado
+    if (!isFactory.value && !isCustomer.value && !contact.type) {
       errors.value[`contactType${index}`] = 'Debe seleccionar un tipo'
     }
 
-    // Validar que tenga cliente o fábrica seleccionada
-    if (contact.type && !contact.customerUid && !contact.factoryUid) {
+    // Para usuarios sin rol específico, validar que tenga cliente o fábrica seleccionada
+    if (!isFactory.value && !isCustomer.value && contact.type && !contact.customerUid && !contact.factoryUid) {
       errors.value[`entity${index}`] = `Debe seleccionar un ${contact.type === 'customer' ? 'cliente' : 'fábrica'}`
     }
 
@@ -463,17 +518,12 @@ watch(() => props.show, (newVal) => {
 })
 
 watch(() => form.alertType, () => {
-  form.additionalContacts = [{ 
-    type: '', 
-    customerUid: '', 
-    factoryUid: '', 
-    value: '', 
-    name: '' 
-  }]
+  initializeContactsByRole()
 })
 
 onMounted(() => {
   loadCustomers()
   loadFactories()
+  initializeContactsByRole()
 })
 </script>
