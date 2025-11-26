@@ -89,7 +89,7 @@
                     :class="inputClasses('factoryUid')" @change="onFactoryChange(index)">
                     <option value="">Seleccionar fábrica</option>
                     <option v-for="factory in dataFactories" :key="factory.uid" :value="factory.uid">
-                      {{ factory.businessname }}
+                      {{ factory.businessName }}
                     </option>
                   </select>
                   <p v-if="errors[`entity${index}`]" class="mt-1 text-sm text-red-600">

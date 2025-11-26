@@ -67,7 +67,7 @@
             </p>
             
             <div class="space-y-3">
-              <div v-for="(contact, index) in form.additionalContacts" :key="index" class="flex gap-3 items-start flex-wrap">
+              <div v-for="(contact, index) in filteredContacts" :key="index" class="flex gap-3 items-start flex-wrap">
                 
                 <!-- Selector de tipo de contacto - Solo visible para usuarios sin rol específico -->
                 <div v-if="!isFactory && !isCustomer" class="flex-1 min-w-[200px]">
@@ -133,10 +133,10 @@
                 </div>
 
                 <!-- Botón eliminar -->
-                <button type="button" @click="removeAdditionalContact(index)"
-                  :disabled="form.additionalContacts.length === 1" :class="[
+                <button type="button" @click="removeAdditionalContact(contact.originalIndex)"
+                  :disabled="filteredContacts.length === 1" :class="[
                     'px-3 py-2 rounded-md transition-colors',
-                    form.additionalContacts.length === 1
+                    filteredContacts.length === 1
                       ? 'text-gray-400 cursor-not-allowed'
                       : 'text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200 hover:bg-red-50 dark:hover:bg-red-900/20'
                   ]">
@@ -201,7 +201,7 @@
             Vista Previa de Destinatarios
           </h3>
           <div class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-            <p>✅ {{ form.additionalContacts.filter(c => c.value && (c.customerUid || c.factoryUid)).length }} contacto(s) válido(s)</p>
+            <p>✅ {{ filteredContacts.filter(c => c.value && (c.customerUid || c.factoryUid)).length }} contacto(s) válido(s)</p>
           </div>
         </div>
 
@@ -262,6 +262,7 @@ const isLoadingData = ref(false)
 const userRole = computed(() => authStore.user?.role)
 const isFactory = computed(() => userRole.value === 'FACTORY')
 const isCustomer = computed(() => userRole.value === 'CUSTOMER')
+const isRoot = computed(() => userRole.value === 'ROOT')
 const factoryUid = computed(() => authStore.user?.factory?.uid)
 const customerUid = computed(() => authStore.user?.customer?.uid)
 
@@ -295,6 +296,37 @@ const form = reactive({
   isActive: true
 })
 
+// Computed para filtrar contactos según el rol del usuario
+const filteredContacts = computed(() => {
+  // Si es ROOT, mostrar todos los contactos
+  if (isRoot.value) {
+    return form.additionalContacts.map((contact, index) => ({
+      ...contact,
+      originalIndex: index
+    }))
+  }
+
+  // Si es FACTORY, solo mostrar contactos que pertenecen a su fábrica
+  if (isFactory.value && factoryUid.value) {
+    return form.additionalContacts
+      .map((contact, index) => ({ ...contact, originalIndex: index }))
+      .filter(contact => contact.factoryUid === factoryUid.value)
+  }
+
+  // Si es CUSTOMER, solo mostrar contactos que pertenecen a su cliente
+  if (isCustomer.value && customerUid.value) {
+    return form.additionalContacts
+      .map((contact, index) => ({ ...contact, originalIndex: index }))
+      .filter(contact => contact.customerUid === customerUid.value)
+  }
+
+  // Por defecto, mostrar todos
+  return form.additionalContacts.map((contact, index) => ({
+    ...contact,
+    originalIndex: index
+  }))
+})
+
 // Inicializar contactos según el rol
 const initializeContactsByRole = () => {
   if (isFactory.value && factoryUid.value) {
@@ -326,7 +358,7 @@ const initializeContactsByRole = () => {
 
 // Computed properties
 const hasAdditionalContacts = computed(() => {
-  return form.additionalContacts.some(contact => 
+  return filteredContacts.value.some(contact => 
     contact.value.trim() !== '' && (contact.customerUid || contact.factoryUid)
   )
 })
@@ -504,7 +536,10 @@ const validateForm = () => {
     errors.value.alertType = 'El tipo de alerta es requerido'
   }
 
-  form.additionalContacts.forEach((contact, index) => {
+  // Solo validar los contactos filtrados que el usuario puede ver
+  filteredContacts.value.forEach((contact, index) => {
+   // const originalIndex = contact.originalIndex
+    
     // Para usuarios sin rol específico, validar que tengan tipo seleccionado
     if (!isFactory.value && !isCustomer.value && !contact.type) {
       errors.value[`contactType${index}`] = 'Debe seleccionar un tipo'
