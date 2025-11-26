@@ -50,7 +50,7 @@
 
                     <tbody class="divide-y divide-slate-200/70 dark:divide-slate-700/60
                  text-[13px] bg-white/90 dark:bg-slate-800/70 transition-colors duration-300">
-                        <tr v-for="row in rows" :key="row.uid"
+                        <tr v-for="row in filteredRows" :key="row.uid"
                             class="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200">
 
                             <td
@@ -114,11 +114,8 @@
                                 </div>
                             </td>
 
-                           
-
                             <td class="px-4 py-4 whitespace-nowrap text-center">
                                 <div class="flex flex-col gap-1">
-                                  
                                     <span v-if="row.contactsCount > 0" 
                                           class="text-xs text-slate-500 dark:text-slate-400">
                                         +{{ row.contactsCount }} contactos
@@ -178,7 +175,7 @@
         </div>
 
         <!-- Estado vacío -->
-        <div v-if="!rows.length" class="text-center py-12">
+        <div v-if="!filteredRows.length" class="text-center py-12">
             <div class="text-slate-400 dark:text-slate-500">
                 <svg class="mx-auto h-12 w-12 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
@@ -192,7 +189,11 @@
 
 <script setup>
 import { defineProps, computed, defineEmits } from 'vue'
+import { useAuthStore } from '@/features/auth/stores/authStore'
+
 const emit = defineEmits(['edit', 'delete'])
+const authStore = useAuthStore()
+
 const props = defineProps({
     items: {
         type: Array,
@@ -216,6 +217,58 @@ const rows = computed(() => {
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
     }))
+})
+
+const filteredRows = computed(() => {
+    const user = authStore.user
+    
+    // Si no hay usuario autenticado, no mostrar nada
+    if (!user) return []
+    
+    const userRole = user.role
+    const userUid = user.uid
+    
+    // ROOT ve todas las alertas
+    if (userRole === 'ROOT') {
+        return rows.value
+    }
+    
+    // FACTORY: ve alertas que creó + alertas donde su factory.uid aparece en contacts
+    if (userRole === 'FACTORY') {
+        const factoryUid = user.factory?.uid
+        
+        return rows.value.filter(alert => {
+            // Alertas creadas por el usuario
+            const isCreatedByUser = alert.createdByUser?.uid === userUid
+            
+            // Alertas donde el factory.uid aparece en algún contacto
+            const hasFactoryInContacts = alert.contacts?.some(contact => 
+                contact.factory?.uid === factoryUid
+            )
+            
+            return isCreatedByUser || hasFactoryInContacts
+        })
+    }
+    
+    // CUSTOMER: ve alertas que creó + alertas donde su customer.uid aparece en contacts
+    if (userRole === 'CUSTOMER') {
+        const customerUid = user.customer?.uid
+        
+        return rows.value.filter(alert => {
+            // Alertas creadas por el usuario
+            const isCreatedByUser = alert.createdByUser?.uid === userUid
+            
+            // Alertas donde el customer.uid aparece en algún contacto
+            const hasCustomerInContacts = alert.contacts?.some(contact => 
+                contact.customer?.uid === customerUid
+            )
+            
+            return isCreatedByUser || hasCustomerInContacts
+        })
+    }
+    
+    // Si el rol no es reconocido, no mostrar nada
+    return []
 })
 
 function getUserRoleLabel(role) {

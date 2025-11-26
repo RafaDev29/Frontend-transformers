@@ -30,7 +30,7 @@ import FormCreateComponent from '../components/FormCreateComponent.vue'
 import FormUpdateComponent from '../components/FormUpdateComponent.vue'
 import createButton from '@/components/ui/button/createButton.vue'
 import { ref, getCurrentInstance, onMounted } from 'vue'
-import { allAlerts, createAlerts, updateAlerts, deleteAlerts, listAlerts } from '../services/alertService'
+import { allAlerts, createAlerts, updateAlerts, deleteAlerts } from '../services/alertService'
 
 import { useAuthStore } from '@/features/auth/stores/authStore'
 
@@ -56,7 +56,7 @@ const listItems = async () => {
     if (role === 'ROOT') {
       response = await allAlerts()
     } else if (role === 'FACTORY' || role === 'CUSTOMER') {
-      response = await listAlerts()
+      response = await allAlerts()
     } else {
       throw new Error('Rol no autorizado')
     }
