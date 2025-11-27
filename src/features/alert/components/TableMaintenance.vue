@@ -202,21 +202,45 @@ const props = defineProps({
 })
 
 const rows = computed(() => {
-    return props.items.map(item => ({
-        uid: item.uid,
-        code: item.code,
-        name: item.name,
-        type: item.type,
-        description: item.description,
-        isActive: item.isActive ? 'Activo' : 'Inactivo',
-        attempts: item.attempts,
-        contactsCount: item.contacts ? item.contacts.length : 0,
-        contacts: item.contacts || [],
-        createdByUser: item.createdByUser,
-        userRoleLabel: getUserRoleLabel(item.createdByUser?.role),
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt
-    }))
+    const user = authStore.user
+    const userRole = user?.role
+    const factoryUid = user?.factory?.uid
+    const customerUid = user?.customer?.uid
+
+    return props.items.map(item => {
+        let contactsCount = 0
+        
+        if (userRole === 'ROOT') {
+            // ROOT ve todos los contactos
+            contactsCount = item.contacts ? item.contacts.length : 0
+        } else if (userRole === 'FACTORY' && factoryUid) {
+            // FACTORY solo cuenta contactos con su factoryUid
+            contactsCount = item.contacts 
+                ? item.contacts.filter(contact => contact.factory?.uid === factoryUid).length 
+                : 0
+        } else if (userRole === 'CUSTOMER' && customerUid) {
+            // CUSTOMER solo cuenta contactos con su customerUid
+            contactsCount = item.contacts 
+                ? item.contacts.filter(contact => contact.customer?.uid === customerUid).length 
+                : 0
+        }
+
+        return {
+            uid: item.uid,
+            code: item.code,
+            name: item.name,
+            type: item.type,
+            description: item.description,
+            isActive: item.isActive ? 'Activo' : 'Inactivo',
+            attempts: item.attempts,
+            contactsCount: contactsCount,
+            contacts: item.contacts || [],
+            createdByUser: item.createdByUser,
+            userRoleLabel: getUserRoleLabel(item.createdByUser?.role),
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt
+        }
+    })
 })
 
 const filteredRows = computed(() => {
